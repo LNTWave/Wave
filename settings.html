@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Cel-Fi Wave</title>        
+        <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">-->
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+         
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap-toggle.min.css">
+        <link rel="stylesheet" href="css/common.css">                                    
+                            
+    </head>
+    <body>
+    	<div id="menu" class="panelMenu" role="navigation">
+    		<div class='panelLogoWrapper'>
+    			<div class='panelLogo'></div>
+    		</div>
+    		<div class='panelMenuList'>
+    			<ul>
+        		<li>
+        			<a id='' href='javascript:void(0)'>
+            			<div class='menuIcns' id='finderIcn'></div>
+						<span>Signal Finder</span>
+						<div class="cb"></div>
+					</a>
+        		</li>
+        		<li>
+        			<a id='' href='javascript:void(0)'>
+            			<div class='menuIcns' id='aboutIcn'></div>
+						<span>About</span>
+						<div class="cb"></div>
+					</a>
+        		</li>
+        		<li>
+        			<a id='' href='javascript:void(0)'>
+            			<div class='menuIcns' id='feedBackIcn'></div>
+						<span>Send Feedback</span>
+						<div class="cb"></div>
+					</a>
+        		</li>
+        		<li>
+        			<a id='' href='javascript:void(0)'>
+            			<div class='menuIcns' id='policyIcn'></div>
+						<span>Privacy Policy</span>
+						<div class="cb"></div>
+					</a>
+        		</li>
+        		<li>
+        			<a id='' href='javascript:void(0)'>
+            			<div class='menuIcns' id='registerIcn'></div>
+						<span>Register Booster</span>
+						<div class="cb"></div>
+					</a>
+        		</li>
+    		</ul>
+    		</div>
+    		<div class='socialLinkWrapper'>
+    			<div class='socialLinkTitle'>Follow us:</div>
+    			<div class='socialLinkIcnWrapper'>
+    				<div class='socialIcns' id='facebookIcn'></div>
+    				<div class='socialIcns' id='twitterIcn'></div>
+    				<div class='socialIcns' id='linkedinIcn'></div>
+    				<div class='socialIcns' id='googleIcn'></div>    				
+    			</div>
+    		</div>    		
+		</div>
+    	<div id="mainContainer" class="push">
+		    <div class='headerContainer' id='headerContainer'>
+		        <div class='titlebarWrapper'>
+		            <div class='sliderMenuWrapper col-xs-2 col-sm-2'>
+		                <a href="#menu" class="menu-link">
+		                    <div class='sliderMenuIcn'></div>
+		                </a>
+		            </div>
+		            <div class='logoWrapper col-xs-8 col-sm-8'>
+		                <div class='logoImg'></div>
+		            </div>
+		            <div class='faqIcnWrapper col-xs-2 col-sm-2'>
+		                <div class='faqIcn'></div>
+		            </div>
+		        </div>
+		        <div class='menuWrapper'>
+		            <div class='col-xs-4 col-sm-2' id='dashboardMenu' onclick="window.location='dashboard.html'">
+		                <div>DASHBOARD</div>
+		            </div>
+		            <div class='col-xs-4 col-sm-2 selectedTab' id='settingsMenu'>
+		                <div>SETTINGS</div>
+		            </div>
+		            <div class='col-xs-4 col-sm-2' id='advancedMenu' onclick="window.location='advanced.html'">
+		                <div>ADVANCED</div>
+		            </div>
+		        </div>
+		    </div>
+		    <div class="cb"></div>
+		    <div id='bodyContainer'>		    	
+		        <div id='settingsDataWrapper' class='col-sm-12'>		        	
+			        	<div class="panel panel-default">
+				        	<div class="panel-group" id="settingsDataContainer">
+				        		<div class="panel-heading dropDown" id='operatorTitle'>
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#settingsDataWrapper" href="#collapseOne">
+											<div><div class='settingsDropIcns' id='operatorIcn'></div>Operator</div>
+											<span class="pull-right">
+												<span class="toggle-icon glyphicon glyphicon-chevron-up"></span>
+											</span>
+										</a>
+									</h4>
+								</div>
+								<div id="collapseOne" class="panel-collapse collapse in">
+									<div class="panel-body">
+										<div>
+											<div class="operatorList col-xs-8">
+												<button type="button" class="form-control">
+													<span data-bind="label" id='operatorVal'>Verizon</span>
+													</span>&nbsp;<span class="caret"></span>
+												</button>
+												<div class='operatorListWrapper'>
+													<ul>
+														<li>AT&T</li>
+														<li>T-Mobile</li>
+														<li class='selectedListVal'>Verizon</li>
+														<li>I don't see my Operator</li>										
+													</ul>
+												</div>
+											</div>
+										</div>												                   				               																							                   
+									</div>
+								</div>
+				        	</div>
+			        	</div>
+		        		
+		        		<div class="panel panel-default">
+			        		<div class="panel-heading dropDown" id='deviceTitle'>
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#settingsDataWrapper" href="#collapseTwo">
+										<div><div class='settingsDropIcns' id='deviceIcn'></div>Device</div>										
+										<span class="pull-right">
+											<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+										</span>
+									</a>
+								</h4>
+							</div>
+							<div id="collapseTwo" class="panel-collapse collapse">
+								<div class="panel-body">
+									<div id='deviceDetailsWrapper'>									
+										<div id='devicesFoundLbl'>Devices Found</div>
+										<div class="deviceList">
+											<button type="button" class="form-control">
+												<span data-bind="label" id='deviceVal'>Device 2</span>
+												</span>&nbsp;<span class="caret"></span>
+											</button>
+											<div class='deviceListWrapper'>
+												<ul>
+													<li>Device 1</li>
+													<li class='selectedListVal'>Device 2</li>
+													<li>Device 3</li>
+													<li>Device 4</li>										
+												</ul>
+											</div>
+										</div>
+										<div class="cb"></div>
+										<div class="hr"></div>
+										<div id='devicesFoundLbl'>Give your Device a name</div>
+										<input type="text" id='deviceInput' class='col-xs-12'>
+										<div class="form-group" align="right">
+											<button type="button" class="defaultButton" id="deviceUpdate" onclick="">Update</button>
+										</div>
+									</div>												                   				               																							                   
+								</div>
+							</div>		        			        			    		        
+			        	</div>
+		        			        	
+		        		<div class="panel panel-default">
+			        		<div class="panel-heading dropDown" id='softwareTitle'>
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#settingsDataWrapper" href="#collapseThree">
+										<div><div class='settingsDropIcns' id='versionIcn'></div>Software Version</div>										
+										<span class="pull-right">
+											<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+										</span>
+									</a>
+								</h4>
+							</div>
+							<div id="collapseThree" class="panel-collapse collapse">
+								<div class="panel-body">
+									<div id='versionWrapper'>
+										<div class="versionLbl fl">Please update your software</div>
+										<div class="form-group" align="right">
+											<button type="button" class="primaryButton" id="versionUpdate" onclick="">Update</button>
+										</div>
+										
+										<div class="versionLbl fl">You're up-to-date</div>
+										<div class='doneTick'></div>																		
+									</div>												                   				               																							                   
+								</div>
+							</div>		        			        			    		        
+			        	</div>		        	
+		        			        	
+		        	<div class="panel panel-default col-sm-6">
+			        		<div class="panel-heading dropDown">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#settingsDataWrapper" href="#collapseFour">
+										<div><div class='settingsDropIcns' id='antennaIcn'></div>Antenna Settings</div>										
+										<span class="pull-right">
+											<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+										</span>
+									</a>
+								</h4>
+							</div>
+							<div id="collapseFour" class="panel-collapse collapse">
+								<div class="panel-body">								
+									<div class='antennaDetailsWrapper'>
+										<div class='antennaLbl fl'>
+											Antenna Control:
+										</div>
+										<div class='antennaRadioWrapper col-sm-4'>
+											<div class='radioButtonWrapper'>
+												<label class='radioBtnWrapper radioBtnSelected col-xs-6' for='antennaAuto'></label>
+												<div for='auto' class='boosterSelectedTxt'>Auto</div>
+												<input type="radio" name="antennaCtrl" value="auto" id="antennaAuto"/>
+											</div>
+											<div class='cb'></div>
+											<div class='radioButtonWrapper'>
+												<label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='3g_4g'></label>
+												<div for='3g_4g' class='boosterUnSelectedTxt'>3G/4G</div>
+												<input type="radio" name="antennaCtrl" value="manual" id="antennaManual"/>
+											</div>									
+										</div>
+						        	</div>							        						        						        				        
+						        	<div class="hr"></div>
+						        	<div class='antennaDetailsWrapper'>					        	
+							        	<div class='antennaLbl fl'>
+											Band 17 (700):
+										</div>
+										<div class='antennaRadioWrapper col-sm-4'>
+											<div class='radioButtonWrapper'>
+												<label class='radioBtnWrapper radioBtnSelected col-xs-6' for='band_1_internal'></label>
+												<div for='band_1_internal' class='boosterSelectedTxt'>Internal</div>
+												<input type="radio" name="antennaCtrl" value="internal" id="band_1_internal"/>
+											</div>
+											<div class='cb'></div>
+											<div class='radioButtonWrapper'>
+												<label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='band_1_external'></label>
+												<div for='band_1_external' class='boosterUnSelectedTxt'>3G/4G</div>
+												<input type="radio" name="antennaCtrl" value="external" id="band_1_external"/>
+											</div>									
+										</div>
+									</div>
+									<div class="hr"></div>
+						        	<div class='antennaDetailsWrapper'>					        	
+							        	<div class='antennaLbl fl'>
+											Band 4 (1700):
+										</div>
+										<div class='antennaRadioWrapper col-sm-4'>
+											<div class='radioButtonWrapper'>
+												<label class='radioBtnWrapper radioBtnSelected col-xs-6' for='band_2_internal'></label>
+												<div for='band_1_internal' class='boosterSelectedTxt'>Internal</div>
+												<input type="radio" name="antennaCtrl" value="internal" id="band_2_internal"/>
+											</div>
+											<div class='cb'></div>
+											<div class='radioButtonWrapper'>
+												<label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='band_2_external'></label>
+												<div for='band_1_external' class='boosterUnSelectedTxt'>3G/4G</div>
+												<input type="radio" name="antennaCtrl" value="external" id="band_2_external"/>
+											</div>									
+										</div>
+									</div>
+									<div class="hr"></div>
+						        	<div class='antennaDetailsWrapper'>					        	
+							        	<div class='antennaLbl disabledToggle fl'>
+											Band 5 (850):
+										</div>
+										<div class='antennaRadioWrapper col-sm-4'>
+											<div class='radioButtonWrapper'>
+												<label class='radioBtnWrapper radioBtnSelected col-xs-6' for='band_3_internal'></label>
+												<div for='band_1_internal' class='boosterSelectedTxt'>Internal</div>
+												<input type="radio" name="antennaCtrl" value="internal" id="band_1_internal"/>
+											</div>
+											<div class='cb'></div>
+											<div class='radioButtonWrapper'>
+												<label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='band_3_external'></label>
+												<div for='band_1_external' class='boosterUnSelectedTxt'>3G/4G</div>
+												<input type="radio" name="antennaCtrl" value="external" id="band_3_external"/>
+											</div>									
+										</div>
+									</div>
+									<div class="hr"></div>
+						        	<div class='antennaDetailsWrapper'>					        	
+							        	<div class='antennaLbl fl'>
+											Band 2 (1900):
+										</div>
+										<div class='antennaRadioWrapper col-sm-4'>
+											<div class='radioButtonWrapper'>
+												<label class='radioBtnWrapper radioBtnSelected col-xs-6' for='band_4_internal'></label>
+												<div for='band_1_internal' class='boosterSelectedTxt'>Internal</div>
+												<input type="radio" name="antennaCtrl" value="internal" id="band_1_internal"/>
+											</div>
+											<div class='cb'></div>
+											<div class='radioButtonWrapper'>
+												<label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='band_4_external'></label>
+												<div for='band_1_external' class='boosterUnSelectedTxt'>3G/4G</div>
+												<input type="radio" name="antennaCtrl" value="external" id="band_1_external"/>
+											</div>									
+										</div>
+									</div>					        												                   				               																							                   
+								</div>
+							</div>		        			        			    		        
+			        	</div>
+		        		<div class="panel panel-default">
+			        		<div class="panel-heading dropDown">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#settingsDataWrapper" href="#collapseFive">
+										<div><div class='settingsDropIcns' id='boosterIcn'></div>Booster Settings</div>										
+										<span class="pull-right">
+											<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+										</span>
+									</a>
+								</h4>
+							</div>
+							<div id="collapseFive" class="panel-collapse collapse">
+								<div class="panel-body">
+									<div id='boosterWrapper'>
+										<div class="boosterLbl">Select by Technology:</div>
+										<div class='cb'></div>
+										<div class='radioButtonWrapper'>
+											<label class='radioBtnWrapper radioBtnSelected col-xs-6' for='auto'></label>
+											<div for='auto' class='boosterSelectedTxt'>Auto</div>
+											<input type="radio" name="technologyType" value="auto" id="auto"/>
+										</div>
+										<div class='radioButtonWrapper'>
+											<label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='3g_4g'></label>
+											<div for='3g_4g' class='boosterUnSelectedTxt'>3G/4G</div>
+											<input type="radio" name="technologyType" value="3g_4g" id="3g_4g"/>
+										</div>
+										<div class='radioButtonWrapper'>
+											<label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='lte'></label>
+											<div for='lte' class='boosterUnSelectedTxt'>LTE</div>
+											<input type="radio" name="technologyType" value="lte" id="lte"/>
+										</div>	
+										
+										<div class="boosterLbl">Select by Band (Advanced):</div>
+										<div class='cb'></div>
+										<div class='radioButtonWrapper'>
+											<label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='band3'></label>
+											<div for='band3' class='boosterUnSelectedTxt'>Band 3</div>
+											<input type="radio" name="technologyType" value="band3" id="band3"/>
+										</div>
+										<div class='radioButtonWrapper'>
+											<label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='band5'></label>
+											<div for='band5' class='boosterUnSelectedTxt'>Band 5</div>
+											<input type="radio" name="technologyType" value="band5" id="band5"/>
+										</div>
+										<div class='radioButtonWrapper'>
+											<label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='band28'></label>
+											<div for='band28' class='boosterUnSelectedTxt'>Band 28</div>
+											<input type="radio" name="technologyType" value="band28" id="band28"/>
+										</div>																							
+									</div>												                   				               																							                   
+								</div>
+							</div>		        			        			    		        
+			        	</div>
+		        </div>	
+		    </div>
+		</div>
+        <!-- <script type="text/javascript" src="cordova.js"></script>-->
+        <script type="text/javascript" src="lib/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="lib/bootstrap.min.js"></script>
+        <script type="text/javascript" src="lib/bootstrap-toggle.min.js"></script>
+        <script type="text/javascript" src="lib/bigSlide.min.js"></script>
+        <script>
+    		$(document).ready(function() {
+        		$('.menu-link').bigSlide();
+        		
+        		$('a[data-toggle="collapse"]').click(function () {
+					$('span.toggle-icon').not($(this).find('span.toggle-icon')).removeClass('glyphicon-chevron-up');
+					$('span.toggle-icon').not($(this).find('span.toggle-icon')).addClass('glyphicon-chevron-down');
+					$(this).find('span.toggle-icon').toggleClass('glyphicon-chevron-up glyphicon-chevron-down');
+				});																			
+				
+				$('.operatorList').click(function (e) {
+					e.preventDefault();					
+					$('.operatorListWrapper > ul').toggle();
+				});
+				
+				$('#operatorTitle').click(function (e) {
+					e.preventDefault();					
+					$('.operatorListWrapper > ul').css('display', 'none');
+				});
+								
+				$('.deviceList').click(function (e) {
+					e.preventDefault();					
+					$('.deviceListWrapper > ul').toggle();
+				});
+				
+				$('#deviceTitle').click(function (e) {
+					e.preventDefault();					
+					$('.deviceListWrapper > ul').css('display', 'none');
+				});
+				
+				$(".menu-toggle").click(function(e) {
+		       	 	e.preventDefault();
+	        		$("#wrapper").toggleClass("toggled");
+	    		});				
+    		});
+		</script>				    	    	    
+	    <script>					
+			   $(document.body).on('click', '.operatorListWrapper > ul li', function(event) {
+					var $target = $(event.currentTarget);											
+      				$('#operatorVal').html($target.text());      								
+      				return false;
+   				});	
+   				
+   				$(document.body).on('click', '.deviceListWrapper > ul li', function(event) {
+					var $target = $(event.currentTarget);											
+      				$('#deviceVal').html($target.text());      								
+      				return false;
+   				});	
+		</script>
+    </body>
+</html>

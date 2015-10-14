@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<title>Wave</title>
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/common.css">
+        <script src="js/config.js"></script>
+        <script src="js/util.js"></script>
+        <script src="lib/jquery-1.11.3.min.js"></script>
+  		<script src="lib/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div id="appHeaderDashboard" class="page-header">
+        	<div id="headerContainer">
+		  		<div class="col-xs-2 col-sm-1" align="left"></div>
+		        <div class="col-xs-8 col-sm-10" align="center"><img src="img/assets/logos/WaveLogoSMWhite.svg"/></div>
+		        <div class="col-xs-2 col-sm-1 headerIcon" align="center"><img src="img/assets/icons/HelpOutline.svg"/></div>
+		  	</div>		  	
+        </div>
+       
+		<div id="registrationFormContainer" class="container">
+			<div class="pageTitleContainer">Please register your device</div>
+			<div class="registerFaq">Why do I need to register?</div>
+			<form role="form" name="inputUser">
+				<div class="col-sm-12">
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="text">First name</label>
+							<input type="text" class="form-control" name='fName' id='fName'>
+						</div>
+						<div class="errorContainer" id="errFn">Please enter your First name</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="text">Last name</label>
+							<input type="text" class="form-control" name='lName' id='lName'>
+						</div>
+						<div class="errorContainer" id="errLn">Please enter your Last name</div>
+					</div>	
+				</div>
+				
+				<div class="col-sm-12">
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="text">Address line 1</label>
+							<input type="text" class="form-control" name='addr1' id='addr1'>
+						</div>
+						<div class="errorContainer" id="errAddr">Please enter Address Line 1</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="text">Address line 2</label>
+							<input type="text" class="form-control" name='addr2' id='addr2'>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-sm-12">
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="text">City </label>
+							<input type="text" class="form-control" name='city' id='city'>
+						</div>
+						<div class="errorContainer" id="errCity">Please enter your City</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="text">State/Province/Region</label>
+							<input type="text" class="form-control" name='state' id='state'>
+						</div>
+						<div class="errorContainer" id="errState">Please enter your State/Province/Region</div>
+					</div>
+				</div>
+				
+				<div class="col-sm-12">
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="text">ZIP/Postal Code</label>
+							<input type="text" class="form-control" name='zip' id='zip'>
+						</div>
+						<div class="errorContainer" id="errZip">Please enter your ZIP/Postal Code</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="text">Country</label>
+							<select class="form-control" name='country' id='country'>
+								<option value="USA">United States</option>
+								<option value="CAN">Canada</option>
+							</select>
+						</div>
+						<div class="errorContainer" id="errCtry">Please select your Country</div>
+					</div>
+				</div>
+				
+				<div class="col-sm-12">
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="text">Phone Number</label>
+							<input type="text" class="form-control" name='phone' id='phone'>
+						</div>
+						<div class="errorContainer" id="errPN">Please enter your Phone Number</div>
+					</div>
+					<div class="col-sm-6">
+						
+					</div>
+				</div>
+				
+				<div class="col-sm-12 regBtnContainer">
+					<div class="col-sm-6"></div>
+					<div class="col-sm-6">
+						<div class="form-group buttonContainer" align="right">
+							<input type="button" value="Skip" class="defaultButton skipButton" >
+							<button type="button" class="defaultButton" id="regButton" onclick="javascript:return ValidateUserData();">Register</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+        
+        <!--<script type="text/javascript" src="cordova.js"></script>-->
+        <script src="js/reg.js"></script>
+    </body>
+</html>

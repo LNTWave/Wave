@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Cel-Fi Wave</title>        
+        <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">-->
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+         
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/common.css">                                    
+                            
+    </head>
+    <body>
+    	<div id="menu" class="panelMenu" role="navigation">
+    		<div class='panelLogoWrapper'>
+    			<div class='panelLogo'></div>
+    		</div>
+    		<div class='panelMenuList'>
+    			<ul>
+        		<li>
+        			<a id='' href='javascript:void(0)'>
+            			<div class='menuIcns' id='finderIcn'></div>
+						<span>Signal Finder</span>
+						<div class="cb"></div>
+					</a>
+        		</li>
+        		<li>
+        			<a id='' href='javascript:void(0)'>
+            			<div class='menuIcns' id='aboutIcn'></div>
+						<span>About</span>
+						<div class="cb"></div>
+					</a>
+        		</li>
+        		<li>
+        			<a id='' href='javascript:void(0)'>
+            			<div class='menuIcns' id='feedBackIcn'></div>
+						<span>Send Feedback</span>
+						<div class="cb"></div>
+					</a>
+        		</li>
+        		<li>
+        			<a id='' href='javascript:void(0)'>
+            			<div class='menuIcns' id='policyIcn'></div>
+						<span>Privacy Policy</span>
+						<div class="cb"></div>
+					</a>
+        		</li>
+        		<li>
+        			<a id='' href='javascript:void(0)'>
+            			<div class='menuIcns' id='loginIcn'></div>
+						<span>Login</span>
+						<div class="cb"></div>
+					</a>
+        		</li>
+        		<li>
+        			<a id='' href='javascript:void(0)'>
+            			<div class='menuIcns' id='registerIcn'></div>
+						<span>Register Booster</span>
+						<div class="cb"></div>
+					</a>
+        		</li>
+    		</ul>
+    		</div>
+    		<div class='socialLinkWrapper'>
+    			<div class='socialLinkTitle'>Follow us:</div>
+    			<div class='socialLinkIcnWrapper'>
+    				<div class='socialIcns' id='facebookIcn'></div>
+    				<div class='socialIcns' id='twitterIcn'></div>
+    				<div class='socialIcns' id='linkedinIcn'></div>
+    				<div class='socialIcns' id='googleIcn'></div>    				
+    			</div>
+    		</div>    		
+		</div>
+    	<div id="mainContainer" class="splashscreen push">
+    		<div class='headerContainer' id='headerContainer'>
+    			<div class='titlebarWrapper'>
+    				<div class='sliderMenuWrapper col-xs-2 col-sm-2'>
+    					<a href="#menu" class="menu-link"><div class='sliderMenuIcn'></div></a>
+    					
+    				</div>
+    				<div class='logoWrapper col-xs-8 col-sm-8'>
+    					<div class='logoImg'></div>
+    				</div>
+    				<div class='faqIcnWrapper col-xs-2 col-sm-2'>
+    					<div class='faqIcn'></div>
+    				</div>
+    			</div>
+    			<div class='menuWrapper'>
+    				<div class='col-xs-4 col-sm-2' id='dashboardMenu' onclick="window.location='dashboard.html'">
+    					<div>DASHBOARD</div>    					
+    				</div>
+    				<div class='col-xs-4 col-sm-2' id='settingsMenu' onclick="window.location='settings.html'">
+    					<div>SETTINGS</div>    					
+    				</div>
+    				<div class='col-xs-4 col-sm-2 selectedTab' id='advancedMenu'>
+    					<div>ADVANCED</div>    					
+    				</div>
+    			</div>
+    		</div>
+    		<div class="cb"></div>
+    		<div id='bodyContainer'>
+    			<div class='advancedIcnContainer col-xs-12 col-sm-12' >										
+					<div id='sendIcnWrapper'>
+						<div id='sendIcn'></div>
+					   <div class='advancedIcnLbl' data-toggle="modal" data-target="#fsModal">Send</div>
+
+					</div>
+					<div id='refreshIcnWrapper'>
+						<div id='refreshIcn'></div>
+						<div class='advancedIcnLbl'>Refresh</div>
+					</div>
+    			</div>
+    			<div class="cb"></div>
+    			  				
+				<div id="advancedContentwrapper">				    				       
+		            <div class="panel-group" id="advancedDataContainer">
+		                <div class="divider">OVERVIEW</div>
+		                <div class="panel panel-default col-sm-6">
+		                    <div class="panel-heading dropDown">
+		                        <h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#advancedContentwrapper" href="#collapseOne">
+										<div>Network Strength</div>
+										<span class="pull-right">								 
+											<span class="toggle-icon glyphicon glyphicon-chevron-up"></span>
+										</span>
+									</a>
+								</h4>
+		                    </div>
+		                    <div id="collapseOne" class="panel-collapse collapse in">
+		                        <div class="panel-body">
+		                            <div id='networkDataContainer'>
+		                                <div id='networkData1' class='col-xs-3 col-sm-3 networkData'>
+		                                	<div class='networkTitle'>A</div>
+		                                	<div class='networkStrength'>
+					    						<div class='signalContainerSM'>
+						    						<div class='networkSignalIndiSM activeStatus networkBar1'></div>
+						    						<div class='networkSignalIndiSM activeStatus networkBar2'></div>
+						    						<div class='networkSignalIndiSM activeStatus networkBar3'></div>
+						    						<div class='networkSignalIndiSM deactiveStatus networkBar4'></div>
+						    						<div class='networkSignalIndiSM deactiveStatus networkBar5'></div>
+					    						</div>
+					    					</div>
+		                                	<div class='networkStatus'>
+		                                		<div class='networkStatusLbl'>LTE</div>
+		                                		<div class='networkFreq'>739 MHz</div>
+		                                	</div>
+		                                </div>	
+		                                <div id='networkData2' class='col-xs-3 col-sm-3 networkData'>
+		                                	<div class='networkTitle'>B</div>
+		                                	<div class='networkStrength'>
+					    						<div class='signalContainerSM'>
+						    						<div class='networkSignalIndiSM activeStatus networkBar1'></div>
+						    						<div class='networkSignalIndiSM activeStatus networkBar2'></div>
+						    						<div class='networkSignalIndiSM activeStatus networkBar3'></div>
+						    						<div class='networkSignalIndiSM deactiveStatus networkBar4'></div>
+						    						<div class='networkSignalIndiSM deactiveStatus networkBar5'></div>
+					    						</div>
+					    					</div>
+		                                	<div class='networkStatus'>
+		                                		<div class='networkStatusLbl'>LTE</div>
+		                                		<div class='networkFreq'>739 MHz</div>
+		                                	</div>
+		                                </div>	
+		                                <div id='networkData3' class='col-xs-3 col-sm-3 networkData'>
+		                                	<div class='networkTitle'>C</div>
+		                                	<div class='networkStrength'>
+					    						<div class='signalContainerSM'>
+						    						<div class='networkSignalIndiSM activeStatus networkBar1'></div>
+						    						<div class='networkSignalIndiSM activeStatus networkBar2'></div>
+						    						<div class='networkSignalIndiSM activeStatus networkBar3'></div>
+						    						<div class='networkSignalIndiSM activeStatus networkBar4'></div>
+						    						<div class='networkSignalIndiSM deactiveStatus networkBar5'></div>
+					    						</div>
+					    					</div>
+		                                	<div class='networkStatus'>
+		                                		<div class='networkStatusLbl'>LTE</div>
+		                                		<div class='networkFreq'>739 MHz</div>
+		                                	</div>
+		                                </div>	
+		                                <div id='networkData4' class='col-xs-3 col-sm-3 networkData'>
+		                                	<div class='networkTitle'>D</div>
+		                                	<div class='networkStrength'>
+					    						<div class='signalContainerSM'>
+						    						<div class='networkSignalIndiSM activeStatus networkBar1'></div>
+						    						<div class='networkSignalIndiSM activeStatus networkBar2'></div>
+						    						<div class='networkSignalIndiSM deactiveStatus networkBar3'></div>
+						    						<div class='networkSignalIndiSM deactiveStatus networkBar4'></div>
+						    						<div class='networkSignalIndiSM deactiveStatus networkBar5'></div>
+					    						</div>
+					    					</div>
+		                                	<!-- <div class='networkStrength'>
+		                                		<ul class='signal-strength'>
+													<li class="weak"><div></div></li>
+													<li class="strong"><div></div></li>
+													<li class="pretty-strong"><div></div></li>
+												</ul>
+		                                	</div> -->
+		                                	<div class='networkStatus'>
+		                                		<div class='networkStatusLbl'>LTE</div>
+		                                		<div class='networkFreq'>739 MHz</div>
+		                                	</div>
+		                                </div>				                                				                                				                              
+		                            </div>				                            
+		                        </div>				                      
+		                    </div>
+		                </div>				                
+						<div class="cb"></div>
+		                <div class="divider">SUPER CHANNELS</div>
+		                <div class='firstGroup col-sm-6'>
+			                <div class="panel panel-default">
+			                    <div class="panel-heading drop-green dropDown">
+			                        <h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#advancedContentwrapper" href="#collapseTwo">
+										<div>Radio A Band 17: LTE (Boosting)</div>
+											<span class="pull-right">
+												<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+											</span>
+										</a>
+									</h4>
+			                    </div>
+			                    
+			                    <div id="collapseTwo" class="panel-collapse collapse">
+			                        <div class="panel-body">
+			                        	<div class='dropDownList'>
+			                        		<div class='dropDownInnerTitle '>
+			                        			<div class='col-xs-8 col-sm-8'>Description</div>
+			                        			<div class='col-xs-4 col-sm-4'>Value</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Bandwidth</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Download centre freq.</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Uplink centre freq.</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>PRI Cell_ID</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Donor RSSI</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Donor RSCP</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Donor RSRQ</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Donor SINR</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Ext. antenna in use</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        	</div>				                            
+			                        </div>				                        
+			                    </div>				                    
+			                </div>				                
+			                <div class="panel panel-default">
+			                    <div class="panel-heading drop-green dropDown">
+			                        <h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#advancedContentwrapper" href="#collapseThree">
+											<div>Radio B Band 4: LTE (Idle)</div>
+											<span class="pull-right">
+												<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+											</span>
+										</a>
+									</h4>
+			                    </div>				                    
+			                    <div id="collapseThree" class="panel-collapse collapse">
+			                        <div class="panel-body">
+			                            <div class='dropDownList'>
+			                        		<div class='dropDownInnerTitle '>
+			                        			<div class='col-xs-8 col-sm-8'>Description</div>
+			                        			<div class='col-xs-4 col-sm-4'>Value</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Bandwidth</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Download centre freq.</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Uplink centre freq.</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>PRI Cell_ID</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Donor RSSI</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Donor RSCP</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Donor RSRQ</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Donor SINR</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Ext. antenna in use</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        	</div>
+			                        </div>				                        
+			                    </div>				                    
+			                </div>
+		                </div>
+		                <div class='secondGroup col-sm-6'>				                
+			                <div class="panel panel-default">
+			                    <div class="panel-heading drop-red dropDown">
+			                        <h4 class="panel-title">
+			                        	<a data-toggle="collapse" data-parent="#advancedContentwrapper" href="#collapseFour">
+			                        		<div>Radio C: Unused</div>
+			                        		<span class="pull-right">
+			                        			<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+			                        		</span>
+			                        	</a>
+			                        </h4>
+			                    </div>				                    
+			                    <div id="#collapseFour" class="panel-collapse collapse">
+			                        <div class="panel-body">
+			                            <div class='dropDownList'>
+			                        		<div class='dropDownInnerTitle '>
+			                        			<div class='col-xs-8 col-sm-8'>Description</div>
+			                        			<div class='col-xs-4 col-sm-4'>Value</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Bandwidth</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Download centre freq.</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Uplink centre freq.</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>PRI Cell_ID</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Donor RSSI</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Donor RSCP</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Donor RSRQ</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Donor SINR</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Ext. antenna in use</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        	</div>
+			                        </div>				                        
+			                    </div>				                    
+			                </div>				                
+			                <div class="panel panel-default">
+			                    <div class="panel-heading drop-red dropDown">
+			                        <h4 class="panel-title">
+			                        	<a data-toggle="collapse" data-parent="#advancedContentwrapper" href="#collapseFive">
+			                        		<div>Radio D: Unused</div>
+			                        		<span class="pull-right">
+			                        			<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+			                        		</span>
+			                        	</a>
+			                        </h4>
+			                    </div>				                    
+			                    <div id="#collapseFive" class="panel-collapse collapse">
+			                        <div class="panel-body">
+			                            <div class='dropDownList'>
+			                        		<div class='dropDownInnerTitle '>
+			                        			<div class='col-xs-8 col-sm-8'>Description</div>
+			                        			<div class='col-xs-4 col-sm-4'>Value</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Bandwidth</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Download centre freq.</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Uplink centre freq.</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>PRI Cell_ID</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Donor RSSI</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Donor RSCP</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Donor RSRQ</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Donor SINR</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Ext. antenna in use</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        	</div>
+			                        </div>				                        
+			                    </div>				                    
+			                </div>				                
+						</div>
+						<div class="cb"></div>
+		                <div class="divider">SYSTEM OVERVIEW</div>
+		                <div class="panel panel-default col-sm-6">
+		                    <div class="panel-heading drop-violet dropDown">
+		                        <h4 class="panel-title">
+		                        	<a data-toggle="collapse" data-parent="#advancedContentwrapper" href="#collapseSix">
+		                        		<div>Device State</div>
+		                        		<span class="pull-right">
+		                        			<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+		                        		</span>
+		                        	</a>
+		                        </h4>
+		                    </div>
+		                    
+		                    <div id="collapseSix" class="panel-collapse collapse">
+		                        <div class="panel-body">
+		                            <div class='dropDownList'>
+		                        		<div class='dropDownInnerTitle '>
+		                        			<div class='col-xs-8 col-sm-8'>Description</div>
+		                        			<div class='col-xs-4 col-sm-4'>Value</div>
+		                        		</div>
+		                        		<div class='dropDownListValue'>
+		                        			<div class='col-xs-8 col-sm-8'>Bandwidth</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue'>
+		                        			<div class='col-xs-8 col-sm-8'>Download centre freq.</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue'>
+		                        			<div class='col-xs-8 col-sm-8'>Uplink centre freq.</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue'>
+		                        			<div class='col-xs-8 col-sm-8'>PRI Cell_ID</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue'>
+		                        			<div class='col-xs-8 col-sm-8'>Donor RSSI</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue'>
+		                        			<div class='col-xs-8 col-sm-8'>Donor RSCP</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue'>
+		                        			<div class='col-xs-8 col-sm-8'>Donor RSRQ</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue '>
+		                        			<div class='col-xs-8 col-sm-8'>Donor SINR</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue '>
+		                        			<div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue '>
+		                        			<div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue '>
+		                        			<div class='col-xs-8 col-sm-8'>Ext. antenna in use</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        	</div>
+		                        </div>				                        
+		                    </div>				                    
+		                </div>				                
+						<div class="cb"></div>
+		                <div class="divider">TECH DATA</div>
+		                <div class="panel panel-default col-sm-6">
+		                    <div class="panel-heading drop-yellow dropDown">
+		                        <h4 class="panel-title">
+		                        	<a data-toggle="collapse" data-parent="#advancedContentwrapper" href="#collapseSeven">
+		                        		<div>Stuff you won't understand</div>
+		                        		<span class="pull-right">
+		                        			<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+		                        		</span>
+		                        	</a>			
+		                        </h4>
+		                    </div>				                    
+		                    <div id="collapseSeven" class="panel-collapse collapse">				                        			                       
+		                    </div>				                    
+		                </div>				                
+		                <div class="cb"></div>
+		                <div class="divider">DEVICE VERSION</div>
+		                <div class="panel panel-default col-sm-6">
+		                    <div class="panel-heading drop-lite-green dropDown">
+		                        <h4 class="panel-title">
+		                        	<a data-toggle="collapse" data-parent="#advancedContentwrapper" href="#collapseTeehree">
+		                        		<div>Software Versions</div>
+		                        		<span class="pull-right">
+		                        			<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+		                        		</span>
+		                        	</a>
+		                        </h4>
+		                    </div>				                    
+		                    <div id="collapseTeehree" class="panel-collapse collapse">
+		                        <div class="panel-body">
+		                            <div class='dropDownList'>
+		                        		<div class='dropDownInnerTitle '>
+		                        			<div class='col-xs-8 col-sm-8'>Description</div>
+		                        			<div class='col-xs-4 col-sm-4'>Value</div>
+		                        		</div>
+		                        		<div class='dropDownListValue'>
+		                        			<div class='col-xs-8 col-sm-8'>Bandwidth</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue'>
+		                        			<div class='col-xs-8 col-sm-8'>Download centre freq.</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue'>
+		                        			<div class='col-xs-8 col-sm-8'>Uplink centre freq.</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue'>
+		                        			<div class='col-xs-8 col-sm-8'>PRI Cell_ID</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue'>
+		                        			<div class='col-xs-8 col-sm-8'>Donor RSSI</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue'>
+		                        			<div class='col-xs-8 col-sm-8'>Donor RSCP</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue'>
+		                        			<div class='col-xs-8 col-sm-8'>Donor RSRQ</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue '>
+		                        			<div class='col-xs-8 col-sm-8'>Donor SINR</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue '>
+		                        			<div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue '>
+		                        			<div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue '>
+		                        			<div class='col-xs-8 col-sm-8'>Ext. antenna in use</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        	</div>
+		                        </div>				                        
+		                    </div>				                    
+		                </div>				                			            			       
+				    </div>
+				</div>    			    			    
+    		</div>
+    	</div>
+		
+		<div class='modalWrapper'>
+			<div class='modalHeaderWrapper' class='col-xs-12 col-sm-12'>
+				<div id='modalTitle'>Signal Finder</div>
+				<div class='modalCloseBtn'></div>				
+			</div>
+			<div class='modalBodyWrapper'>
+				<div id='modalContentWrapper'>
+					<div class='singnalFinderWrappper'>
+						<div class="pageTitleContainer modalContentTitle">Signal strength meter</div>
+						<div id='signalFinderText'>Walk around your home/office and this meter will show where you have the strongest cellular signal.</div>						
+						<div id='signalStrengthWrapper'></div>								
+						<div id='signalStrengthBtnWrapper'>							
+							<div class='signalLeftBtnContainer'>
+								<div id='signalResetBtn'></div>
+								<div class='signalBtnText'>Reset</div>
+							</div>							
+							<div class='signalRightBtnContainer'> 
+								<div class='signalBtnText'>Install Guide</div>
+								<div id='installGuideBtn'></div>								
+								
+							</div>							
+						</div>
+					</div>
+				</div>
+			</div>
+			<div></div>
+		</div>
+
+		
+        <!-- <script type="text/javascript" src="cordova.js"></script>-->
+        <script type="text/javascript" src="lib/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="lib/bootstrap.min.js"></script>
+        <script type="text/javascript" src="lib/bigSlide.min.js"></script>
+        <script>
+    		$(document).ready(function() {
+        		$('.menu-link').bigSlide();
+        		
+        		$('a[data-toggle="collapse"]').click(function () {
+					$('span.toggle-icon').not($(this).find('span.toggle-icon')).removeClass('glyphicon-chevron-up');
+					$('span.toggle-icon').not($(this).find('span.toggle-icon')).addClass('glyphicon-chevron-down');
+					$(this).find('span.toggle-icon').toggleClass('glyphicon-chevron-up glyphicon-chevron-down');
+				});
+				document.addEventListener("backbutton", function(){
+					navigator.app.exitApp();
+				}, false);
+    		});
+		</script>				    
+	    <script>
+	    	$(".menu-toggle").click(function(e) {
+		        e.preventDefault();
+	        	$("#wrapper").toggleClass("toggled");
+	    	});
+	    </script>
+    </body>
+</html>

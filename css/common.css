@@ -1,0 +1,1776 @@
+*{
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding: 0 !important;
+}
+
+input, select, button{
+	outline: 0;
+}
+
+.vh100{
+	height:100vh;
+}
+
+.h100{
+	height: 100%;
+}
+
+.w100{
+	width:100%;
+}
+
+.w50{
+	width:50%;
+}
+
+.cb{
+	clear:both;
+}
+
+.fl {
+	float: left;
+}
+
+.fr {
+	float: right;
+}
+
+@font-face {
+    font-family: Roboto-Medium;
+    src: url("../img/assets/fonts/Roboto-Medium.ttf");
+}
+
+@font-face {
+    font-family: Roboto-Bold;
+    src: url("../img/assets/fonts/Roboto-Bold.ttf");
+}
+
+@font-face {
+    font-family: Roboto-Italic;
+    src: url("../img/assets/fonts/Roboto-Italic.ttf");
+}
+
+@font-face {
+    font-family: Roboto-Light;
+    src: url("../img/assets/fonts/Roboto-Light.ttf");
+}
+
+@font-face {
+    font-family: Roboto-Regular;
+    src: url("../img/assets/fonts/Roboto-Regular.ttf");
+}
+
+@font-face {
+    font-family: Roboto-Thin;
+    src: url("../img/assets/fonts/Roboto-Thin.ttf");
+}
+
+#blackOverlay{
+	width:100%;
+	height:100vh;
+	background:rgba(67,73,84,0.50);
+	opacity:0.6;
+	z-index:1005;
+	position:fixed;
+	top:0;
+}
+
+#mainContainer{
+	width:100%;
+	height:100vh;
+	position: relative;	
+	overflow-x: hidden;
+}
+
+.headerContainer {
+	width: 100%;	
+	background: #4faee0;
+	position: fixed;
+	z-index: 1002;
+	/* display: none; */
+}
+
+#bodyContainer {	
+	margin: 0px 6px 0px 6px;
+	position: relative;
+	padding-top: 100px !important;
+	overflow-y: auto;
+	background: #F5F7FA;
+	height: 100%;
+	/* display: none; */	
+}
+
+.titlebarWrapper {	
+	width: 100%;
+	height: 60px;
+	padding-top: 15px !important;		
+}
+
+.sliderMenuIcn {
+	width: 22px;
+	height: 22px;
+	margin-left: 20px;
+	background: url('../img/assets/icons/Hamburger.svg') no-repeat;
+	background-size: 100% 100%;
+	float: left;
+	margin-left: 20px;	
+}
+
+.logoImg {
+	width: 80px;
+	height: 30px;
+	background: url('../img/assets/logos/WaveLogoSMWhite.svg') no-repeat;
+	background-size: 100% 100%;
+	margin: auto;	
+}
+
+.faqIcn {
+	width: 22px;
+	height: 22px;
+	background: url('../img/assets/icons/HelpOutline.svg') no-repeat;
+	background-size: 100% 100%;
+	float: right;
+	margin-right: 20px;		
+}
+
+.menuWrapper {
+	width: 100%;
+	height: 40px;
+	text-align: center;	
+}
+
+.menuWrapper > div > div{
+	font-family: Roboto-Regular;
+	color: #96CEEC;
+	height: 36px;
+	line-height: 36px;
+	font-size: 14px;
+}
+
+.selectedTab{
+	border-bottom: 4px solid #fcbf4c;
+}
+
+.selectedTab > div{
+	color:#FFFFFF !important;
+}
+
+#blackOverlay{
+	width:100%;
+	height:100vh;
+	background:rgba(67,73,84,0.50);
+	opacity:0.6;
+	z-index:1005;
+	position:fixed;
+	top:0;
+}
+
+.defaultButton, .primaryButton {
+	font-face: Roboto-Regular;
+	color: #FFFFFF;
+	font-size: 16px;
+	background: #4FAEE0;
+	padding-left: 40px !important;
+	padding-right:40px !important;
+	height: 40px;
+	border-radius: 40px;
+	border:none;
+	margin-top:20px;
+}
+
+.defaultButtonDisabled {
+	color: #ABB0B8 !important;
+	background: #CCD1D9;
+	font-face: Roboto-Regular;
+	font-size: 16px;
+	padding-left: 40px !important;
+	padding-right:40px !important;
+	height: 40px;
+	border-radius: 40px;
+	border:none;
+	margin-top:20px;
+}
+
+.defaultButton:hover{
+	background: #72BEE6 !important;
+	outline: 0;
+}
+
+.defaultButton:active{
+	background: #72BEE6 !important;
+	box-shadow: inset 0px 2px 1px 0px rgba(0,0,0,0.20);
+}
+
+.primaryButton{
+	background: #FBB034 !important;
+}
+
+.primaryButton:hover{
+	background: #FCBF4C !important;
+}
+
+.primaryButton:active{
+	background: #FCBF4C !important;
+	box-shadow: inset 0px 2px 1px 0px rgba(0,0,0,0.20);
+}
+
+#privacyCheckbox {
+    display:none;
+}
+
+#privacyCheckbox + label {
+    display:inline-block;
+    width:100%;
+    height:100%;
+    background:url('../img/assets/icons/CheckBoxUnchecked.svg') no-repeat;
+    background-size:100%;
+}
+
+#privacyCheckbox:checked + label {
+    background:url('../img/assets/icons/CheckBoxChecked.svg') no-repeat;
+    background-size:100%;
+}
+
+.searchIconContainer{
+	background: url('../img/assets/icons/DeviceSearch.svg') no-repeat;
+	background-size: 100%;
+	width:50px;
+	height:50px;
+	z-index:1004;
+	display: inline-block;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+}
+
+#appHeader{
+	background: #4FAEE0;
+	margin:0px !important;
+	padding:14px 6px 14px 6px !important;
+	height:60px !important;
+	width:100%;
+	position:fixed;
+	top:0;
+	z-index:1002;
+	border-bottom:0px !important;
+}
+
+#appHeaderDashboard{
+	background: #4FAEE0;
+	margin:0px !important;
+	padding:14px 6px 14px 6px !important;
+	height:auto !important;
+	width:100%;
+	position:fixed;
+	top:0;
+	z-index:1002;
+	border-bottom:0px !important;
+}
+
+#registrationFormContainer{
+	width:100%;
+	top:60px;
+	position:absolute;
+	z-index:1001;
+}
+
+
+
+#searchMessageBox{
+	height:30px;
+	position:fixed;
+	top:70px;
+	font-face: Roboto-Regular;
+	color: #FFFFFF;
+	font-size: 18px;
+}
+
+.pageTitleContainer{
+	font-family: Roboto-Medium;
+	font-size: 20px;
+	color: #434A54;
+	padding: 20px 0px 5px 0px !important;	
+}
+
+.registerFaq{
+	color: #4FAEE0;
+	font-family: Roboto-Medium;
+	font-size:14px;
+	padding-bottom: 20px !important;
+}
+
+#registrationFormContainer label{
+	color:#656D78;
+	font-family: Roboto-Regular;
+	font-size: 14px;
+	line-height: 22px;
+}
+
+#registrationFormContainer input, #registrationFormContainer select{
+	color:#434A54;
+	font-family: Roboto-Regular;
+	font-size: 14px;
+	background: #FFFFFF;
+	border:1px solid #AAB2BD;
+	border-radius:4px;
+	height:40px;
+}
+
+.buttonContainer{
+	padding-bottom: 10px !important;
+}
+
+.skipButton{
+	color:#4FAEE0 !important;
+	background: #FFFFFF !important;
+	border:none !important;
+	padding-right:20px !important;
+	padding-left:20px !important;
+}
+
+.skipButton:active{
+	border: 1px solid transparent !important;
+	outline: none !important;
+}
+
+.errorContainer{
+	display:none;
+	color:#EA305D;
+}
+
+.regErrorBorder{
+	border:1px solid #EA305D !important;
+}
+
+
+/*
+=============================================== SLIDER MENU ===============================================
+*/
+
+.panelMenu {
+	width: 290px;
+	height: 100vh;
+	background: #72bee6;
+	box-shadow: inset -3px 0px 4px 0px rgba(0,0,0,0.40);
+	font-family: Roboto-Regular;		
+	padding-left: 22px !important; 
+	position: fixed;
+    left: -290px;
+    border-radius:0px !important;
+    z-index: 1002;
+}
+
+.panelLogoWrapper {
+	width: 100%;
+	height: 100px;
+}
+
+.panelLogo {
+	width: 98px;
+	height: 40px;
+	background: url('../img/assets/logos/WaveLogoSMWhite.svg') no-repeat;
+	background-size: 100% 100%;	
+	margin-top: 15px !important;
+}
+
+.panelMenuList > ul {
+	list-style: none;
+	position: relative;
+}
+
+.panelMenuList ul li{
+	height: 42px !important;
+}
+
+.panelMenuList ul div {
+	float: left;
+} 
+
+.panelMenuList ul span {
+	color: #ffffff;
+	font-size: 18px;	
+	line-height: 22px;
+	float: left;
+	margin-left: 16px !important;
+}
+
+.menuIcns {
+	width: 22px;
+	height: 22px;	
+}
+
+#finderIcn {
+	background: url('../img/assets/icons/SignalFinder.svg') no-repeat;
+	background-size: 100% 100%; 		
+}
+
+#aboutIcn {
+	background: url('../img/assets/icons/Info.svg') no-repeat;
+	background-size: 100% 100%;
+}
+
+#feedBackIcn {
+	background: url('../img/assets/icons/SendFeedback.svg') no-repeat;
+	background-size: 100% 100%;
+}
+
+#policyIcn {
+	background: url('../img/assets/icons/Lock.svg') no-repeat;
+	background-size: 100% 100%;
+}
+
+#loginIcn {
+	background: url('../img/assets/icons/Person.svg') no-repeat;
+	background-size: 100% 100%;
+}
+
+#registerIcn {
+	background: url('../img/assets/icons/RegisterDevice.svg') no-repeat;
+	background-size: 100% 100%;
+}
+
+.socialLinkWrapper {
+	width: 265px; 
+	height: 100px;
+	position: absolute;
+	bottom: 0;
+	padding-left: 10px !important; 
+}
+
+.socialLinkTitle {
+	color: #ffffff;
+	font-size: 12px;
+	margin-bottom: 15px;
+}
+
+.socialIcns {
+	width: 36px;
+	height: 36px;
+	float: left;
+	margin-right: 22px;	
+}
+
+#facebookIcn {
+	background: url('../img/assets/icons/SocialFaceBook.svg') no-repeat;
+	background-size: 100% 100%;
+}
+
+#twitterIcn {
+	background: url('../img/assets/icons/SocialTwitter.svg') no-repeat;
+	background-size: 100% 100%;
+}
+
+#linkedinIcn {
+	background: url('../img/assets/icons/SocialLinkedin.svg') no-repeat;
+	background-size: 100% 100%;
+}
+
+#googleIcn {
+	background: url('../img/assets/icons/SocialGooglePlus.svg') no-repeat;
+	background-size: 100% 100%;
+}
+
+/*
+=============================================== END OF SLIDER MENU ===============================================
+*/
+
+
+/*
+=============================================== ADVANCED MENU PAGE VIEW ==========================================
+*/
+
+.advancedIcnContainer {	
+	width: 100%;
+	height: 50px;
+	position: relative;
+}
+
+.advancedIcnContainer > div  {
+	float: right;
+	margin-right: 15px;
+	padding-top: 15px !important;
+}
+
+.advancedIcnContainer > div > div {
+	float: left;
+	margin-left: 5px;	
+}
+
+#refreshIcn {
+	width: 22px;
+	height: 22px;
+	background: url('../img/assets/icons/Refresh.svg') no-repeat;
+	background-size: 100% 100%;
+}
+
+#sendIcn {
+	width: 22px;
+	height: 22px;
+	background: url('../img/assets/icons/Send.svg') no-repeat;
+	background-size: 100% 100%;
+}
+
+.advancedIcnLbl {
+	font-family: Roboto-Regular;
+	font-size: 14px;
+	color: #4faee0;
+}
+
+.networkStrength {
+	height: 50% !important;
+}
+
+a,a:ACTIVE,a:AFTER {
+	text-decoration: none !important;
+}
+
+.dropDown {
+	height: 54px !important;		
+}
+
+.drop-green {
+	border-left: 4px solid #8BC34A !important;
+}
+
+.drop-red {
+	border-left: 4px solid #9E0024 !important;
+}
+
+.drop-violet {
+	border-left: 4px solid #9A7BD2 !important;
+}
+
+.drop-yellow {
+	border-left: 4px solid #FBBE49 !important;
+}
+
+.drop-lite-green {
+	border-left: 4px solid #68F0AD !important;
+}
+
+.divider {
+  position: relative;
+  overflow: hidden;
+  font-family: Roboto-Regular;
+  font-size: 12px;
+  color:#AAB2BD;
+  padding-bottom: 10px !important;
+  margin-top:5px;
+}
+
+.divider:after {
+  display: inline-block;
+  content: "";
+  height: 1.2px;
+  background: #ececec;
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  margin-top: -6px;
+  margin-left: 10px;
+}
+
+.hr {	
+	height: 1px;
+  	background: #AAB2BD;
+  	opacity: 0.5;
+  	margin: 5px 10px 5px 10px;  	
+}
+
+
+.panel-default {
+	margin-bottom: 10px !important;	
+}
+
+.panel-default>.panel-heading {
+    background-color: #ffffff !important;
+}
+
+#networkDataContainer {
+	width: 100%;
+	height: 175px;	
+}
+
+.networkStrengthContainer{
+	height:100%;	
+}
+
+.networkData {	
+	height: 175px;
+	text-align: center;	
+	float: left;
+	padding-top: 25px !important;
+}
+
+
+.panel-title div {
+	padding: 18px 0px 0px 10px !important;
+	font-family: Roboto-Medium !important;
+	font-size: 12pt !important;
+	color: #434A54 !important;
+}
+
+.panel-title span {
+	margin-top: -15px;
+	paddin: 0px !important;	
+	padding-right: 16px !important;
+}
+
+.dropDownList div{	
+	height: 44px;
+	font-size: 14px;	
+	line-height: 54px;	
+}
+
+.dropDownList > div > div {
+	padding-left: 10px !important;
+}
+
+.dropDownInnerTitle div {
+	font-family: Roboto-Medium;
+	color: #aab2bd;
+	border-bottom: 1px solid #e0e0e0;	
+}
+
+.dropDownListValue div {
+	font-family: Roboto-Regular;
+	color: #656d78;
+}
+
+.panel-body {
+	border: none !important;	
+}
+
+.networkBar1{
+	height:15% !important;
+	top: 85%;
+}
+
+.networkBar2{
+	height:25% !important;
+	top:75%;
+}
+
+.networkBar3{
+	height:35% !important;
+	top: 65%;
+}
+
+.networkBar4{
+	height:45% !important;
+	top: 55%;
+}
+
+.networkBar5{
+	height:55% !important;
+	top: 45%;
+}
+
+.networkSignalIndiSM{
+	width: 6px;
+	height:15%;
+	margin-left:3px;
+	float:left;
+	border-radius: 2px;
+	position:relative;
+}
+
+.signalContainerSM{
+	margin:auto;
+	height:90%;
+	width: 59%;
+	bottom: 10px !important;
+    position: relative;
+}
+
+/*
+=============================================== END OF ADVANCED MENU PAGE VIEW ===============================================
+*/
+
+
+
+/*
+=============================================== SETTINGS MENU PAGE VIEW ===============================================
+*/
+
+#settingsDataWrapper {	
+	margin-top: 10px;	
+}
+
+#settingsDataWrapper .panel-default>.panel-heading {
+	border: none !important;
+}
+
+.settingsDropIcns {
+	width: 25px;
+	height: 25px;
+	float: left;
+	margin-top: -3px;		
+}
+
+#settingsDataWrapper .panel-title div {
+	text-indent: 10px;
+}
+
+#settingsDataContainer.panel-group {
+	margin-bottom: 0px !important;
+}
+
+#operatorIcn {
+	background: url("../img/assets/icons/Operator.svg") no-repeat;
+	background-size: 100% 100%;	
+}
+
+#deviceIcn {	
+	background: url("../img/assets/icons/DeviceSelection.svg") no-repeat;
+	background-size: 100% 100%;	
+}
+
+#versionIcn {
+	background: url("../img/assets/icons/SoftwareDownload.svg") no-repeat;
+	background-size: 100% 100%;	
+}
+
+#antennaIcn {
+	background: url("../img/assets/icons/Antenna.svg") no-repeat;
+	background-size: 100% 100%;	
+}
+
+#boosterIcn {
+	background: url("../img/assets/icons/Boost.svg") no-repeat;
+	background-size: 100% 100%;	
+}
+
+#operatorVal, #deviceVal {
+	padding-left: 10px !important;
+}
+
+.operatorList, .deviceList {
+	padding: 0 0 15px 10px !important;	
+}
+
+.form-control {
+	text-align: left;	
+}
+
+.form-control .caret {
+   margin-top: -1px;   
+   float: right;
+   margin-right: 16px !important;
+   margin-top: 8px;   
+}
+
+.operatorListWrapper, .deviceListWrapper {
+	box-shadow: 0px 3px 8px 0px rgba(0,0,0,0.26);
+	border-radius: 2px;
+}
+
+.operatorListWrapper > ul, .deviceListWrapper > ul {
+	display: none;	
+}
+
+.operatorListWrapper > ul li, .deviceListWrapper > ul li{
+	height: 30px;
+	padding: 5px 10px 5px 10px !important;
+	white-space: nowrap;
+    overflow:hidden !important;
+    text-overflow: ellipsis;    
+}
+
+.selectedListVal {
+	color: #4faee0;
+}
+
+#deviceInput {
+	font-family: Roboto-Regular !important;
+	font-size: 14px;
+	color: #434a54;
+	background: #ffffff;
+	border: 1px solid #aab2bd;
+	border-radius: 4px !important;
+	height: 30px;
+	margin: 0 0 10px 10px !important;
+	padding-right: 10px !important;
+	
+}
+
+#deviceUpdate, #versionUpdate {
+	font-family: Roboto-Regular !important;
+	color: #ffffff;
+	font-size: 16px;	
+	padding: 0 40px 0 40px !important;
+	height: 40px;
+	border-radius: 40px !important;
+}
+
+.versionLbl, #devicesFoundLbl, .antennaLbl, .boosterLbl {
+	color: #656D78 !important;
+	font-family: Roboto-Regular !important;	
+	font-size: 14px !important;
+	padding: 10px 0 5px 10px !important;
+}
+
+.antennaLbl, .boosterLbl {
+	float: left;
+	margin-top: 5px;
+}
+
+.doneTick {
+	width: 30px;
+	height: 30px;
+	background: url("../img/assets/icons/Done.svg") no-repeat;
+	background-size: 100% 100%;	
+	float: left;
+	margin-left: 10px;
+}
+
+.antennaDetailsWrapper {
+	height: 70px;	
+}
+
+.toggleSwitch {
+	width: 170px;
+	height: 40px;
+	font-face: Roboto-Regular;	
+	font-size: 14px;			
+	border-radius: 40px;			
+	float: right;
+	margin: 5px 10px 10px 0 !important;	
+}
+
+.toggleSwitch > label {
+	width: 78px;
+	height: 100%;	
+	float: left !important;
+	text-align: center;	
+	line-height: 40px;		
+}
+
+.toggleSwitch input[type=radio], .radioButtonWrapper input[type=radio] {
+	visibility: hidden !important;
+}
+
+
+.leftToggle {	
+	border-top-left-radius: 40px;
+	border-bottom-left-radius: 40px;
+}
+
+.rightToggle {
+	border-top-right-radius: 40px;
+	border-bottom-right-radius: 40px;
+}
+
+.on {			
+	background: #ffffff;
+	color: #656d78;
+	border: 1px solid #4FAEE0;	
+}
+
+.off {
+	background: #4FAEE0;
+	color: #ffffff;	
+}
+
+.disabledToggle {
+	color: #ccd1d9 !important; 	
+}
+
+.disabledOn {
+	color: #ccd1d9;
+	background: #ffffff;
+	border: 1px solid #e6e9ed;
+}
+
+.disabledOff {
+	color: #f5f7fa;
+	background: #e6e9ed;	
+}
+
+.radioBtnWrapper {
+	width: 25px;
+	height: 25px;	
+}
+
+.radioBtnSelected {	
+	background: url("../img/assets/icons/RadioButtonChecked.svg") no-repeat;
+	background-size: 100% 100%;	
+}
+
+.radioBtnUnSelected {
+	background: url("../img/assets/icons/RadioButtonUnchecked.svg") no-repeat;
+	background-size: 100% 100%;	
+}
+
+.boosterSelectedTxt {
+	color:  #4FAEE0;
+	text-indent: 16px;	
+}
+
+.boosterUnSelectedTxt {
+	color:  #434a54;
+	text-indent: 16px;	
+}
+
+.radioButtonWrapper {
+	font-family: Roboto-Regular !important;
+	font-size: 16px !important;
+	padding-left: 20px !important;
+}
+
+.selectedRadioText {
+	
+}
+
+.radioBtnText {	
+	padding: 1px 0 0 30px !important;
+	font-size: 16px;
+	font-family: Roboto-Regular !important; 
+}
+
+/*
+==============================================	Tablet view styles ==========================================================
+*/
+
+.settingsTabViewWrapper {
+	width: 49.5%;
+	box-shadow: 0 1px 3px 0 rgba(0,0,0,0.28);	
+	margin-bottom: 20px !important;
+	padding: 10px !important;
+}
+
+.settingsTabViewWrapper {
+	text-indent: 10px;
+}
+
+.settingsTabViewWrapper > div > div:nth-child(2) {
+	margin-top: 10px !important;
+	margin-left: -5px;
+	text-indent: 0px;
+}
+
+.settingsTabViewWrapper #deviceInput,
+.settingsTabViewWrapper .form-control {
+	height: 40px !important;
+	border-radius: 4px !important;	
+}
+
+.antennaRadioWrapper .radioButtonWrapper div {
+	float: left;
+}
+
+
+/*
+=============================================== END OF SETTINGS MENU PAGE VIEW ===============================================
+*/
+
+.dashboardPanel1{
+	height:250px;
+	padding:22px !important;
+	background-color: #F5F7FA !important;
+}
+
+.dashboardPanel2{
+	background-color: #FFFFFF;
+	padding:30px !important;
+}
+
+.userGreets{
+	height:55px !important;
+	font-family: Roboto-Regular;
+	color: #656D78;
+	font-size: 18px;
+	line-height: 24px;
+}
+
+.good{
+	color: #8BC34A;
+}
+
+.ok{
+	color: #FBB034;
+}
+
+.problem{
+	color: #E60038;
+}
+
+.deviceSerialNumber{
+	height:25px;
+	font-family: Roboto-Regular;
+	color: #656D78;
+	font-size: 8px;
+	text-align: center;
+}
+
+.graphicalRep{
+	width:100%;
+	height:80%;
+}
+
+.dataTypeTitle{
+	width:100%;
+	height:20%;
+	font-family: Roboto-Regular;
+	color: #AAB2BD;
+	font-size: 11px;
+	vertical-align: middle;
+}
+
+#boostGauge{
+	width:100%;
+}
+
+#boosterLevel{
+	font-family: Roboto-Light;
+	color: #656D78;
+	font-size: 36px;
+	margin-top: -50px !important
+}
+
+#boostGauge canvas{
+	background:#F5F3F3;
+}
+
+#operatorContainer, #coverageNamecontainer{
+	font-family: Roboto-Light;
+	color: #656D78;
+	font-size: 36px;
+	line-height:48px;
+	overflow: hidden;
+	display:table;
+}
+
+#operatorContainer > span, #coverageNamecontainer > span{
+	width:100%;
+	height:100%;
+	vertical-align:middle;
+	display:table-cell;
+}
+
+.networkSignalIndi{
+	width: 12px;
+	height:15%;
+	margin-left:5px;
+	float:left;
+	border-radius: 2px;
+	position:relative;
+}
+
+.signalContainer{
+	margin:auto;
+	height:90%;
+	width: 85px;
+	
+}
+
+#networkSignal1{
+	height:15% !important;
+	top: 85%;
+}
+
+#networkSignal2{
+	height:25% !important;
+	top:75%;
+}
+
+#networkSignal3{
+	height:35% !important;
+	top: 65%;
+}
+
+#networkSignal4{
+	height:45% !important;
+	top: 55%;
+}
+
+#networkSignal5{
+	height:55% !important;
+	top: 45%;
+}
+
+.activeStatus{
+	background: #8BC34A;
+}
+
+.deactiveStatus{
+	background: #F5F3F3;
+}
+
+
+/*
+=============================================== MODAL PAGE VIEW ===============================================
+*/
+
+.modalWrapper {
+	width: 100%;	
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	display: none;		
+	background: #F5F7FA !important;
+}
+
+.modalHeaderWrapper {
+	width: 100%;
+	height: 60px;
+	padding: 10px !important;
+	background: #4faee0;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1002;  	
+}
+
+#modalTitle {
+	text-align: center;
+	line-height: 60px !important;
+	font-family: Roboto-Medium !important;
+	font-size: 20px;
+	color: #FFFFFF;		
+}
+
+.modalCloseBtn {
+	width: 22px !important;
+	height: 22px !important;
+	background: url('../img/assets/icons/Close.svg') no-repeat;
+	background-size: 100% 100%;
+	position: absolute;
+	right: 10px !important;
+	top: 19px;
+}
+
+.modalBodyWrapper {
+	background: #F5F7FA !important;	
+	margin-top: 70px;overflow-y: auto;			
+}
+
+#modalContentWrapper {
+	margin: 10px 6px 10px 6px !important;		
+	background: #ffffff;	
+	box-shadow: 0px 3px 8px 0px rgba(0,0,0,0.26);			
+}
+
+.modalContentTitle {
+	margin-bottom: 10px !important;
+}
+
+.feedbackSendWrappper, .singnalFinderWrappper {
+	margin: 10px 6px 10px 6px !important;
+	position: relative;
+}
+
+.feedbackSendWrappper .label {
+	font-family: Roboto-Regular !important;
+	font-size: 14px;
+	color: #8F959C;
+	text-align: left !important;	
+}
+
+.feedbackSendWrappper textarea {
+	width: 100%;
+	resize: none;	
+	margin: 5px 0 25px 0 !important;
+	border-radius: 4px !important;
+	outline: none !important;
+	padding: 5px !important;
+	/* color: #B3BBC4; */
+}
+
+.feedbackSendWrappper button {	
+	margin: 0 0 10px 20px !important;	
+	float: right;
+}
+
+
+/*
+=============================================== END OF MODAL PAGE VIEW ===============================================
+*/
+
+
+/*
+=============================================== SIGNAL FINDER PAGE VIEW ===============================================
+*/
+
+
+
+#signalFinderText {
+	font-size: 16px;
+	color: #8F959C;
+	text-align: left;
+}
+
+#signalStrengthWrapper {
+	border: 1px solid red;
+	width: 60%;
+	margin: auto;	
+	margin-top: 20px;	
+}
+
+#signalStrengthBtnWrapper {		
+	width: 100%;
+	height: 40px;	
+	margin-top: 50px;	
+}
+
+.signalLeftBtnContainer,  
+.signalLeftBtnContainer div {
+	float: left;
+}
+
+.signalRightBtnContainer, 
+.signalRightBtnContainer div {
+	float: right;
+}
+
+#signalStrengthBtnWrapper > div div {		
+	margin-left: 10px;	
+}
+
+#signalResetBtn {
+	width: 25px;
+	height: 25px;
+	background: url('../img/assets/icons/Refresh.svg') no-repeat;
+	background-size: 100% 100%;
+}
+
+#installGuideBtn {
+	width: 25px;
+	height: 25px;
+	background: url('../img/assets/icons/HelpOutlineBlue.svg') no-repeat;
+	background-size: 100% 100%;
+}
+
+.signalBtnText {
+	color: #4faee0;
+	font-size: 14px;
+	margin-top: 2px;
+}
+
+
+/*
+=============================================== END OF SIGNAL FINDER PAGE VIEW ===============================================
+*/
+
+/*Media Query css*/
+@media (min-width:300px){
+	.connectionBG{
+		background: url('../img/assets/images/backgroundImages/Connections1.png') bottom left no-repeat fixed;
+	    background-size:100%;
+	    background-color: #4FAEE0;
+	}
+	
+	.commonPopup{
+		display: inline-block;
+	    position: fixed;
+	    top: 0;
+	    bottom: 0;
+	    left: 0;
+	    right: 0;
+	    width: 90%;
+	    min-height: 100px;
+	    max-height:220px;
+	    margin: auto;
+	    border-radius: 5px;
+		padding: 5% 5% 2% 5% !important;
+	    background-color: #F5F7FA;
+	    z-index: 1006;
+	}
+	
+	.privacyPolicy{
+		max-height:260px !important;
+	}
+	
+	#popupHeader{
+		width:100%;
+		height:30px;
+		font-family: Roboto-Medium;
+		font-size: 20px;
+		white-space: nowrap;
+	    overflow:hidden !important;
+	    text-overflow: ellipsis;
+	}
+	
+	#popupBody{
+		width:100%;
+		min-height: 65px;
+		max-height:140px;
+		margin-top: 5px;
+		line-height: 22px;
+		font-family: Roboto-Regular;
+		font-size: 14px;
+		color: #656D78;
+		overflow:hidden !important;
+	}
+	
+	#popupFooter{
+		width:100%;
+		height:80px;
+	}
+	
+	#popupFooter > div{
+		float:left;
+	}
+	
+	.promptPopup{
+		display: inline-block;
+	    position: fixed;
+	    top: 0;
+	    bottom: 0;
+	    left: 0;
+	    right: 0;
+	    width: 80%;
+	    min-height: 60px;
+	    opacity:0.9;
+	    max-height:145px;
+	    margin: auto;
+	    border-radius: 10px;
+		background-color: #F5F7FA;
+	    z-index: 1006;
+	}
+	
+	#promptBody{
+		width:100%;
+		min-height: 90px;
+		margin-top: 5px;
+		line-height: 22px;
+		padding:20px !important;
+		font-family: Roboto-Medium;
+		font-size: 20px;
+		color: #000;
+		text-align: center;
+		overflow:hidden;
+	}
+	
+	#promptFooter{
+		width:100%;
+		height: 50px;
+		border-top:1px solid rgba(0, 0, 0, 0.3);
+	}
+	
+	#promptFooter div{
+		font-family: Roboto-Medium;
+		font-size: 20px;
+		color: #4FAEE0;
+		text-align: center;
+		float:left;
+	}
+	
+	#promptFooter > div > div{
+		padding-top:10px !important;
+	}
+	
+	
+	.errorIcon{
+		width:20px;
+		height:20px;
+		margin-top:4px;
+		margin-right: 10px;
+		background: url('../img/assets/icons/WarningRed.svg') no-repeat;
+		background-size: 100%;
+		float:left;
+	}
+	
+	.errTitleContainer{
+		float: left;
+	}
+	
+	.errorHeader{
+		color: #E60038 !important;	
+	}
+	
+	.privacyAcceptanceTextContainer{
+		float:left;
+		width:80%;
+	}
+	
+	.privacyCheckboxContainer{
+		float:right;
+		width:25px;
+		height:25px;
+	}
+	
+	.privacyAcceptanceContainer{
+		margin-top:20px;
+	}
+	
+	#popupHeader{
+		color:#434A54;
+	}
+	
+	#popupBody{
+		color:#656D78;
+	}
+	#searchBoxContainer{
+		width:500px;
+		height:500px;
+		overflow-y: hidden;
+	}
+	#phoneNumber{
+		width:75%;
+	}
+	
+	#zipcode{
+		width:45%;
+	}
+	
+	#registrationFormContainer .col-sm-12, #registrationFormContainer .col-sm-6{
+		margin:0px !important;
+		padding:0px !important;
+	}	
+	
+	.container{
+		padding-left:22px !important;
+		padding-right:22px !important;
+	}
+	
+	#promptFooter > #buttonDiv1{
+		border-right: 1px solid rgba(0,0,0,0.3);
+	}
+	
+	#skipUpgrade{
+		font-family: Roboto-Regular;
+		font-size: 16px;
+		color: #4FAEE0;
+		text-align: center;
+		margin-top: 30px;
+	}
+	
+	.deviceDUO{
+		background: URL('../img/assets/images/deviceImages/Pro.png')no-repeat;
+		background-size: 100%;
+		height:170px;
+	}
+	
+	.deviceSerialNumber{
+		bottom:20px;
+	}
+	
+	.dashboardContent{
+		border-right:1px solid #F5F7FA;
+		border-bottom: 1px solid #F5F7FA;
+	}
+	
+	.dashboardContent:nth-child(2), .dashboardContent:nth-child(4){
+		border-right:none;
+	}
+	
+	.dashboardContent:nth-child(3), .dashboardContent:nth-child(4){
+		border-bottom:none;
+	}
+	
+	.dashboardPanel2{
+		height:350px;
+	}
+	
+	.dashboardContent{
+		height:145px;
+		text-align: center;
+	}
+	
+	#boosterLevel{
+		margin-top: -25px !important
+	}
+	
+	.trblShtBtn{
+		background: url('../img/assets/icons/HelpOutlineBlue.svg') no-repeat left !important;
+		color: #4FAEE0;
+		padding-left: 25px !important;
+    	padding-right: 15px !important;
+		margin-right: 20px;
+	}
+	
+	.sgnlFndrBtn{
+		background: url('../img/assets/icons/SignalFinderBlue.svg') no-repeat left !important;
+		color: #4FAEE0;
+		padding-left: 25px !important;
+    	padding-right: 15px !important;
+		margin-right: 20px;
+	}
+	
+	.sgnlFndrBtn {
+		padding-left: 28px !important;
+		padding-right: 20px !important;
+	}
+	
+	.noSignalError > .defaultButton:first-child{
+		padding-left: 30px !important;
+		padding-right: 30px !important;
+	}
+	
+	.spinnerDialog{
+		display: inline-block;
+	    position: fixed;
+	    top: 0;
+	    bottom: 0;
+	    left: 0;
+	    right: 0;
+	    width: 200px;
+	    height: 60px;
+	    margin: auto;
+	    border-radius: 5px;
+		padding: 5px !important;
+	    background-color: #F5F7FA;
+	    z-index: 1006;
+	    box-shadow: inset -2px -2px 1px 0px rgba(0,0,0,0.20);
+	}
+}
+
+@media (min-width:700px){
+	#bodyContainer {
+		margin: 0px 12px 0px 12px;
+	}
+	
+	.connectionBG{
+		background: url('../img/assets/images/backgroundImages/Connections1.png') bottom left no-repeat fixed, url('../img/assets/images/backgroundImages/Connections2.png') top right no-repeat fixed;
+	    background-size: 50%;
+	    background-color: #4FAEE0;
+	}
+	
+	.commonPopup{
+		width:36%;
+		margin-left: 32%;
+		max-height:225px;
+		z-index:1006;
+		padding: 1.5% 2% 0.5% 2% !important;
+	}
+	
+	.promptPopup{
+		width:36%;
+	}
+	
+	#registrationFormContainer input, #registrationFormContainer select{
+		width:90%;
+	}
+	
+	.container{
+		padding-left:50px !important;
+		padding-right:50px !important;
+	}
+	
+	#phoneNumber, .skipButton{
+		width:50% !important;
+	}
+	
+	#zipcode{
+		width:30% !important;
+	}
+	
+	.buttonContainer{
+		padding-right:10% !important;
+	}
+	
+	#showhide{
+    display:block;
+    }
+    
+	#popupHeader{
+		font-size: 22px;
+	}
+	
+	#popupBody{
+		font-size: 16px;
+		min-height: 75px;
+		margin-top: 10px;
+	}
+	
+	#searchBoxContainer{
+		width:500px;
+		height:500px;
+		display: inline-block;
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		margin: auto;
+	}
+    
+    .panelMenuList ul li{
+		height: 48px !important;
+	}
+	
+	.firstGroup {
+		float: left;
+		padding-right: 5px !important;
+	}
+	 .secondGroup  {
+	 	float: right;
+	 	padding-left: 5px !important;
+	 }
+	
+	.deviceSerialNumber{
+		text-align: right !important;
+	}
+	
+	.deviceDUO{
+		background: URL('../img/assets/images/deviceImages/Pro.png')no-repeat 0px 0px;
+		background-size: 100%;
+		height: 208px;
+    	margin-top: 20px;
+	}
+	
+	.deviceSerialNumber{
+		margin-top: 210px;
+		text-align: left !important;
+		font-size: 8pt !important;
+	}
+	
+	.signalContainerSM{
+		width: 39% !important;
+	}
+	
+	.group1 > div, .group3 > div {
+		padding: 0 5px 0 5px !important;
+	}
+	
+	/* .group3 > div {
+		padding: 0 5px 0 5px !important;
+	} */
+}
+
+@media (min-width:700px) and (orientation:portrait) {
+	.dashboardContent{
+		border-right:1px solid #F5F7FA !important;
+		border-bottom: none;
+	}
+	
+	.dashboardContent:nth-child(4){
+		border-right:none !important;
+	}
+	
+	.dashboardPanel2{
+		height:350px;
+	}
+	
+	.dashboardContent{
+		height:200px;
+		text-align: center;
+	}
+	
+	.signalContainerSM {
+	    width: 49% !important;
+	}
+	
+	.privacyPolicy{
+		max-height:280px !important;
+	}
+}
+
+@media (min-width:700px) and (orientation:landscape) {
+	.dashboardContent{
+		border-right:1px solid #F5F7FA !important;
+		border-bottom:none !important;
+	}
+	
+	.dashboardContent:nth-child(4){
+		border-right:none !important;
+	}
+	
+	.dashboardPanel2{
+		height:350px;
+	}
+	
+	.dashboardContent{
+		height:200px;
+		text-align: center;
+	}
+	
+	.deviceDUO{
+		background-size: 80% !important;
+	}
+	
+	#boosterLevel{
+		margin-top: -60px !important
+	}
+	
+	.privacyPolicy{
+		max-height:230px !important;
+	}
+}
+
+
+/*-------------------------------Stylesheet for splinner loader Starts here---------------------------------------*/
+
+#spinnerImgContainer{
+	width:22px;
+	height:22px;
+	margin-top: 14px;
+	margin-left: 10px;
+}
+
+.spinnerTextContainer{
+	width: 150px;
+	margin-left: 8px;
+	height:50px;
+	text-align: center;
+	line-height: 50px;
+}
+
+.spinnerTextContainer span {
+	display: inline-block;
+	vertical-align: middle;
+	line-height: normal;      
+}
+
+@-moz-keyframes waitLoader {
+  0% {
+    -moz-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes waitLoader {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes waitLoader {
+  0% {
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+/* :not(:required) hides this rule from IE9 and below */
+.waitLoader:not(:required) {
+  -moz-animation: waitLoader 1250ms infinite linear;
+  -webkit-animation: waitLoader 1250ms infinite linear;
+  animation: waitLoader 1250ms infinite linear;
+  border: 2px solid #4FAEE0;
+  border-right-color: transparent;
+  border-radius: 16px;
+  box-sizing: border-box;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  text-indent: -9999px;
+  width: 100%;
+  height: 100%;
+}
+
+/*-------------------------------Stylesheet for splinner loader Ends here---------------------------------------*/

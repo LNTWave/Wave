@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Cel-Fi Wave</title>        
+        <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">-->
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+         
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/common.css">
+        
+        <script src="lib/jquery-1.11.3.min.js"></script>
+        <script src="lib/bootstrap.min.js"></script>
+        <script src="lib/gauge.js"></script>
+        <script type="text/javascript" src="lib/bigSlide.min.js"></script>     
+        
+    </head>
+    <body>
+    	<div id="menu" class="panelMenu" role="navigation">
+    		<div class='panelLogoWrapper'>
+    			<div class='panelLogo'></div>
+    		</div>
+    		<div class='panelMenuList'>
+    			<ul>
+        		<li>
+        			<a id='' href='javascript:void(0)'>
+            			<div class='menuIcns' id='finderIcn'></div>
+						<span>Signal Finder</span>
+						<div class="cb"></div>
+					</a>
+        		</li>
+        		<li>
+        			<a id='' href='javascript:void(0)'>
+            			<div class='menuIcns' id='aboutIcn'></div>
+						<span>About</span>
+						<div class="cb"></div>
+					</a>
+        		</li>
+        		<li>
+        			<a id='' href='javascript:void(0)'>
+            			<div class='menuIcns' id='feedBackIcn'></div>
+						<span>Send Feedback</span>
+						<div class="cb"></div>
+					</a>
+        		</li>
+        		<li>
+        			<a id='' href='javascript:void(0)'>
+            			<div class='menuIcns' id='policyIcn'></div>
+						<span>Privacy Policy</span>
+						<div class="cb"></div>
+					</a>
+        		</li>
+        		<li>
+        			<a id='' href='javascript:void(0)'>
+            			<div class='menuIcns' id='registerIcn'></div>
+						<span>Register Booster</span>
+						<div class="cb"></div>
+					</a>
+        		</li>
+    		</ul>
+    		</div>
+    		<div class='socialLinkWrapper'>
+    			<div class='socialLinkTitle'>Follow us:</div>
+    			<div class='socialLinkIcnWrapper'>
+    				<div class='socialIcns' id='facebookIcn'></div>
+    				<div class='socialIcns' id='twitterIcn'></div>
+    				<div class='socialIcns' id='linkedinIcn'></div>
+    				<div class='socialIcns' id='googleIcn'></div>    				
+    			</div>
+    		</div>    		
+		</div>
+    	<div id="mainContainer" class="push">
+    		<div class='headerContainer' id='headerContainer'>
+    			<div class='titlebarWrapper'>
+    				<div class='sliderMenuWrapper col-xs-2 col-sm-2'>
+    					<a href="#menu" class="menu-link"><div class='sliderMenuIcn'></div></a>
+    				</div>
+    				<div class='logoWrapper col-xs-8 col-sm-8'>
+    					<div class='logoImg'></div>
+    				</div>
+    				<div class='faqIcnWrapper col-xs-2 col-sm-2'>
+    					<div class='faqIcn'></div>
+    				</div>
+    			</div>
+    			<div class='menuWrapper'>
+    				<div class='col-xs-4 col-sm-2 selectedTab' id='dashboardMenu'>
+    					<div>DASHBOARD</div>    					
+    				</div>
+    				<div class='col-xs-4 col-sm-2' id='settingsMenu' onclick="window.location='settings.html'">
+    					<div>SETTINGS</div>    					
+    				</div>
+    				<div class='col-xs-4 col-sm-2' id='advancedMenu' onclick="window.location='advanced.html'">
+    					<div>ADVANCED</div>    					
+    				</div>
+    			</div>
+    		</div>
+    		
+    		<!-- Application Body container -->
+    		<div id='bodyContainer'>
+    			<div class='dashboardPanel1 w100'>
+    				<div class='col-xs-12 col-sm-3 userGreets'>
+    					Welcome back <span id='userDpName'>Vinoth,</span>
+    					<br><span id='userDeviceStatusLine'>Things look </span>
+    					<span id='deviceStatus' class='good'>Good</span>
+    				</div>
+    				<div class='col-xs-12 col-sm-7 deviceDUO'></div>
+    				<div class='col-xs-12 col-sm-2 deviceSerialNumber'>
+    					Device Serial Number: MN1234567890
+    				</div>
+    			</div>
+    			
+    			<div class='dashboardPanel2 w100'>
+    				<div class='col-xs-6 col-sm-3 dashboardContent'>
+    					<div id='gaugeContainer' class='graphicalRep'>
+    						<canvas id="boostGauge"></canvas>
+    						<div id='boosterLevel'>7</div>
+    					</div>
+    					<div class='dataTypeTitle'>BOOST</div>
+    				</div>
+    				<div class='col-xs-6 col-sm-3 dashboardContent'>
+    					<div id='signalStrengthContainer' class='graphicalRep'>
+    						<div class='signalContainer'>
+	    						<div id='networkSignal1' class='networkSignalIndi activeStatus'></div>
+	    						<div id='networkSignal2' class='networkSignalIndi activeStatus'></div>
+	    						<div id='networkSignal3' class='networkSignalIndi activeStatus'></div>
+	    						<div id='networkSignal4' class='networkSignalIndi deactiveStatus'></div>
+	    						<div id='networkSignal5' class='networkSignalIndi deactiveStatus'></div>
+    						</div>
+    					</div>
+    					<div class='dataTypeTitle'>NETWORK STREGNTH</div>
+    				</div>
+    				<div class='col-xs-6 col-sm-3 dashboardContent'>
+    					<div id='operatorContainer' class='graphicalRep'>
+    						<span>T-Mobile</span>
+    					</div>
+    					<div class='dataTypeTitle'>OPERATOR</div>
+    				</div>
+    				<div class='col-xs-6 col-sm-3 dashboardContent'>
+    					<div id='coverageNamecontainer' class='graphicalRep'>
+    						<span>LTE</span>
+    					</div>
+    					<div class='dataTypeTitle'>COVERAGE</div>
+    				</div>
+    			</div>
+    		</div>
+    		
+    	</div>
+        <!--<script src="cordova.js"></script>-->
+        <script>
+    		$(document).ready(function() {
+        		$('.menu-link').bigSlide();
+        		//$('body').bigSlide();
+        		
+        		function showGauge(gValue){
+					var opts = {
+						lines: 12,
+						angle: 0.1,
+						lineWidth: 0.35,
+						pointer: {
+							length: 0,
+							strokeWidth: 0,
+							color: 'white'
+						},
+						limitMax: 'false', 
+						percentColors: [[0.0, "#8BC34A" ], [0.50, "#8BC34A"], [1.0, "#8BC34A"]],
+						strokeColor: '#F5F3F3',
+						generateGradient: true
+					};
+					var target = document.getElementById('boostGauge');
+					var gauge = new Gauge(target).setOptions(opts);
+					gauge.maxValue = 9
+					gauge.animationSpeed = 2;
+					gauge.set(gValue);
+				}
+				
+				showGauge(7);
+    		});
+		</script>
+    </body>
+</html>
