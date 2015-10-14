@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<title>Cel-Fi Wave</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, target-densitydpi=medium-dpi, user-scalable=0" />
+        <meta name = "format-detection" content = "telephone=no">
+        <link rel="stylesheet" type="text/css" href="css/home.css"/>
+        <link rel="stylesheet" type="text/css" href="css/common.css"/>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+    </head>
+    <body>
+    	<div id="mainContainer"></div>
+        <script>
+            // Set to 
+            //   true:  for mobile phone app...
+            //   false: for desktop
+            var ImRunningOnPhone = true;
+        </script>
+        <script src="phonegap.js"></script>
+        <script src="lib/jquery-1.11.3.min.js"></script>
+        <script src="lib/bootstrap.min.js"></script>
+		<!-- 
+			Make sure that bluetoothle.js is listed before main.js so that OpenSouthBoundIf() called from main.js can be found in bluetoothle.js.
+		-->  
+        <script src="js/bluetoothle.js"></script>
+        <script src="js/msg_nxty.js"></script>
+        <script src="js/tech.js"></script>
+        <script src="js/registration.js"></script>
+        <script src="js/download.js"></script>
+        <script src="js/settings.js"></script>
+        <script src="js/msg_axeda.js"></script>
+        <script src="js/cloud.js"></script>
+        <script src="js/file.js"></script>
+        <script src="js/push.js"></script>
+        <script src="js/arfcn.js"></script>
+        <script src="js/gui.js"></script>
+        <script src="js/guiData.js"></script>
+        <script src="js/main.js"></script>
+        <script>
+            // Wait for the document to be ready before starting...
+            $(document).ready(function() {
+				app.initialize();
+            });
+        </script>        
+    </body>
+</html>

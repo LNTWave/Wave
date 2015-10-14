@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Cel-Fi Wave</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, target-densitydpi=medium-dpi, user-scalable=0"/>
+        <meta name = "format-detection" content = "telephone=no"/>
+        <link rel="stylesheet" type="text/css" href="css/index.css"/>
+        <script type="text/javascript" language="JavaScript"></script>
+    </head>
+
+    <body>
+        <script>
+            // Set to 
+            //   true:  for mobile phone app...
+            //   false: for desktop
+            var ImRunningOnPhone = false;
+        </script>
+
+        <script src="lib/jquery-1.8.2.min.js"></script>
+
+        <script src="js/pcApp_initpc.js"></script>
+        <script src="js/pcApp_file.js"></script>
+        <script src="js/pcApp_southbound.js"></script>
+        <script src="js/pcApp_cloud.js"></script>
+        <script src="js/msg_nxty.js"></script>
+        <script src="js/tech.js"></script>
+        <script src="js/registration.js"></script>
+        <script src="js/download.js"></script>
+        <script src="js/settings.js"></script>
+        <script src="js/msg_axeda.js"></script>
+        <script src="js/push.js"></script>
+        <script src="js/arfcn.js"></script>
+        <script src="js/gui.js"></script>
+        <script src="js/guiData.js"></script>
+
+        <script src="js/main.js"></script>
+
+        <script>
+            // Wait for the document to be ready before starting...
+            $(document).ready(function() {
+                   initAppToRunOnPc();
+                   app.initialize();
+            });
+        </script>
+    </body>
+</html>

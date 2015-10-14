@@ -1,0 +1,718 @@
+*{
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+input, select, button{
+	outline: 0;
+}
+
+.vh100{
+	height:100vh;
+}
+
+.h100{
+	height: 100%;
+}
+
+.w100{
+	width:100%;
+}
+
+.w50{
+	width:50%;
+}
+
+.cb{
+	clear:both;
+}
+
+@font-face {
+    font-family: Roboto-Medium;
+    src: url("../img/assets/fonts/Roboto-Medium.ttf");
+}
+
+@font-face {
+    font-family: Roboto-Bold;
+    src: url("../img/assets/fonts/Roboto-Bold.ttf");
+}
+
+@font-face {
+    font-family: Roboto-Italic;
+    src: url("../img/assets/fonts/Roboto-Italic.ttf");
+}
+
+@font-face {
+    font-family: Roboto-Light;
+    src: url("../img/assets/fonts/Roboto-Light.ttf");
+}
+
+@font-face {
+    font-family: Roboto-Regular;
+    src: url("../img/assets/fonts/Roboto-Regular.ttf");
+}
+
+@font-face {
+    font-family: Roboto-Thin;
+    src: url("../img/assets/fonts/Roboto-Thin.ttf");
+}
+
+#blackOverlay{
+	width:100%;
+	height:100vh;
+	background:rgba(67,73,84,0.50);
+	opacity:0.6;
+	z-index:1005;
+	position:fixed;
+	top:0;
+}
+
+#mainContainer{
+	width:100%;
+	height:100vh;
+	overflow:hidden;
+}
+
+@media (min-width:300px){
+	.connectionBG{
+		background: url('../img/assets/images/backgroundImages/Connections1.png') bottom left no-repeat fixed;
+	    background-size:100%;
+	    background-color: #4FAEE0;
+	}
+	
+	.commonPopup{
+		display: inline-block;
+	    position: fixed;
+	    top: 0;
+	    bottom: 0;
+	    left: 0;
+	    right: 0;
+	    width: 80%;
+	    min-height: 100px;
+	    max-height:220px;
+	    margin: auto;
+	    border-radius: 5px;
+		padding: 5% 5% 2% 5%;
+	    background-color: #F5F7FA;
+	}
+	
+	.privacyPolicy{
+		max-height:260px !important;
+	}
+	
+	#popupHeader{
+		width:100%;
+		height:30px;
+		font-family: Roboto-Medium;
+		font-size: 20px;
+	}
+	
+	#popupBody{
+		width:100%;
+		min-height: 65px;
+		max-height:140px;
+		margin-top: 5px;
+		line-height: 22px;
+		font-family: Roboto-Regular;
+		font-size: 14px;
+		color: #656D78;
+	}
+	
+	#popupFooter{
+		width:100%;
+		height:80px;
+	}
+	
+	#popupFooter > div{
+		float:left;
+	}
+	
+	.promptPopup{
+		background:#F5F7FA;
+		width:80%;
+		min-height:60px;
+		opacity:0.9;
+		z-index:1006;
+		position:fixed;
+		top:0;
+		border-radius: 10px;
+	}
+	
+	#promptBody{
+		width:100%;
+		min-height: 90px;
+		margin-top: 5px;
+		line-height: 22px;
+		padding:20px;
+		font-family: Roboto-Medium;
+		font-size: 20px;
+		color: #000;
+		text-align: center;
+	}
+	
+	#promptFooter{
+		width:100%;
+		height: 50px;
+		border-top:1px solid rgba(0, 0, 0, 0.3);
+	}
+	
+	#promptFooter div{
+		font-family: Roboto-Medium;
+		font-size: 20px;
+		color: #4FAEE0;
+		text-align: center;
+		float:left;
+	}
+	
+	#promptFooter > div > div{
+		padding-top:10px;
+	}
+	
+	
+	.errorIcon{
+		width:20px;
+		height:20px;
+		margin-top:4px;
+		margin-right: 10px;
+		background: url('../img/assets/icons/WarningRed.svg') no-repeat;
+		background-size: 100%;
+		float:left;
+	}
+	
+	.errTitleContainer{
+		float: left;
+	}
+	
+	.errorHeader{
+		color: #E60038 !important;	
+	}
+	
+	.privacyAcceptanceTextContainer{
+		float:left;
+		width:80%;
+	}
+	
+	.privacyCheckboxContainer{
+		float:right;
+		width:25px;
+		height:25px;
+	}
+	
+	.privacyAcceptanceContainer{
+		margin-top:20px;
+	}
+	
+	#popupHeader{
+		color:#434A54;
+	}
+	
+	#popupBody{
+		color:#656D78;
+	}
+	#searchBoxContainer{
+		width:500px;
+		height:500px;
+	}
+	#phoneNumber{
+		width:75%;
+	}
+	
+	#zipcode{
+		width:45%;
+	}
+	
+	#registrationFormContainer .col-sm-12, #registrationFormContainer .col-sm-6{
+		margin:0px !important;
+		padding:0px !important;
+	}
+	
+	.container{
+		padding-left:22px !important;
+		padding-right:22px !important;
+	}
+	
+	#promptFooter > #buttonDiv1{
+		border-right: 1px solid rgba(0,0,0,0.3);
+	}
+	
+	#skipUpgrade{
+		font-family: Roboto-Regular;
+		font-size: 16px;
+		color: #4FAEE0;
+		text-align: center;
+		margin-top: 30px;
+	}
+}
+
+@media (min-width:700px){
+	.connectionBG{
+		background: url('../img/assets/images/backgroundImages/Connections1.png') bottom left no-repeat fixed, url('../img/assets/images/backgroundImages/Connections2.png') top right no-repeat fixed;
+	    background-size: 50%;
+	    background-color: #4FAEE0;
+	}
+	
+	.commonPopup{
+		width:36%;
+		margin-left: 32%;
+		max-height:225px;
+		z-index:1006;
+		padding: 1.5% 2% 0.5% 2%;
+	}
+	
+	.privacyPolicy{
+		max-height:280px !important;
+	}
+	
+	.promptPopup{
+		width:36%;
+	}
+	
+	#registrationFormContainer input, #registrationFormContainer select{
+		width:90%;
+	}
+	
+	.container{
+		padding-left:50px !important;
+		padding-right:50px !important;
+	}
+	
+	#phoneNumber, .skipButton{
+		width:50% !important;
+	}
+	
+	#zipcode{
+		width:30% !important;
+	}
+	
+	.buttonContainer{
+		padding-right:10%;
+	}
+	
+	#showhide{
+    display:block;
+    }
+    
+	#popupHeader{
+		font-size: 22px;
+	}
+	
+	#popupBody{
+		font-size: 16px;
+		min-height: 75px;
+		margin-top: 10px;
+	}
+	
+	#searchBoxContainer{
+		width:500px;
+		height:500px;
+		display: inline-block;
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		margin: auto;
+	}
+	
+	#wrapper {
+        padding-left: 250px;
+    }
+
+    #wrapper.toggled {
+        padding-left: 0;
+    }
+
+    #sidebar-wrapper {
+        width: 250px;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 0;
+    }
+
+    #page-content-wrapper {
+        padding: 20px;
+        position: relative;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0;
+    }
+    
+    #showhide{
+    display:block;
+    }
+    
+     #Headermessage:after 
+    {
+    display:none;
+    }
+    
+    #HeadermessageImage
+    {
+    display:none;
+    }
+    
+    /*.regBtnContainer{
+    	position:fixed;
+    	bottom:0;
+    }*/
+}
+
+#blackOverlay{
+	width:100%;
+	height:100vh;
+	background:rgba(67,73,84,0.50);
+	opacity:0.6;
+	z-index:1005;
+	position:fixed;
+	top:0;
+}
+
+.defaultButton{
+	font-face: Roboto-Regular;
+	color: #FFFFFF;
+	font-size: 16px;
+	background-color: #4FAEE0;
+	padding-left: 40px;
+	padding-right:40px;
+	height: 40px;
+	border-radius: 40px;
+	border:none;
+	margin-top:20px;
+}
+
+.defaultButtonDisabled{
+	color: #ABB0B8;
+	background-color: #CCD1D9;
+	font-face: Roboto-Regular;
+	font-size: 16px;
+	padding-left: 40px;
+	padding-right:40px;
+	height: 40px;
+	border-radius: 40px;
+	border:none;
+	margin-top:20px;
+}
+
+.defaultButton:hover{
+	background: #72BEE6;
+	outline: 0;
+}
+
+.defaultButton:active{
+	background: #72BEE6;
+	box-shadow: inset 0px 2px 1px 0px rgba(0,0,0,0.20);
+}
+
+#privacyCheckbox {
+    display:none;
+}
+
+#privacyCheckbox + label {
+    display:inline-block;
+    width:100%;
+    height:100%;
+    background:url('../img/assets/icons/CheckBoxUnchecked.svg') no-repeat;
+    background-size:100%;
+}
+
+#privacyCheckbox:checked + label {
+    background:url('../img/assets/icons/CheckBoxChecked.svg') no-repeat;
+    background-size:100%;
+}
+
+.searchIconContainer{
+	background: url('../img/assets/icons/DeviceSearch.svg') no-repeat;
+	background-size: 100%;
+	width:50px;
+	height:50px;
+	z-index:1004;
+	display: inline-block;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+}
+
+#appHeader{
+	background: #4FAEE0;
+	margin:0px !important;
+	padding:14px 6px 14px 6px !important;
+	height:60px !important;
+	width:100%;
+	position:fixed;
+	top:0;
+	z-index:1002;
+	border-bottom:0px !important;
+}
+
+#appHeaderDashboard{
+	background: #4FAEE0;
+	margin:0px !important;
+	padding:14px 6px 14px 6px !important;
+	height:auto !important;
+	width:100%;
+	position:fixed;
+	top:0;
+	z-index:1002;
+	border-bottom:0px !important;
+}
+
+#dashboardWelcomemsgHeader{
+	font-face: Roboto-Regular;
+	text-color:#656D78;
+	font-size:18px;
+	line:24px;
+}
+
+#dashboardGood{
+	font-face: Roboto-Regular;
+	text-color:#8BC34A;
+	font-size:18px;
+	line:24px;
+}
+
+#dashboardOK{
+	font-face: Roboto-Regular;
+	text-color:#FBB034;
+	font-size:18px;
+	line:24px;
+}
+
+
+#dashboardProblem{
+	font-face: Roboto-Regular;
+	color:#E60038;
+	font-size:18px;
+	line:24px;
+}
+
+
+
+.dashboardWelcomemsgHeader{
+	font-face: Roboto-Regular;
+	text-color:#656D78;
+	font-size:18px;
+	line:24px;
+}
+
+#dashboardWelcomemsg{
+	font-face: Roboto-Regular;
+	text-color:#656D78;
+	font-size:18px;
+	line:24px;
+}
+
+.BoostText{
+	font-face: Roboto-Light;
+	text-color:#656D78;
+	font-size:36px;
+	line:48px;
+}
+
+.NetworkText{
+	font-face: Roboto-Regular;
+	text-color:#AAB2BD;
+	font-size:11px;
+	text-align:left;
+	
+}
+
+.NetworkText1{
+	font-face: Roboto-Regular;
+	text-color:#AAB2BD;
+	font-size:11px;
+	text-align:center;
+	
+}
+.NetworkText2{
+	font-face: Roboto-Regular;
+	text-color:#AAB2BD;
+	font-size:11px;
+	text-align:right;
+	
+}
+
+#DeviceSerialNoText{
+	font-face: Roboto-Regular;
+	text-color:#656D78;
+	font-size:8px;
+
+	
+}
+
+.FixItNow{
+	font-face: Roboto-Regular;
+	text-color:#4FAEE0;
+	font-size:16px;
+
+}
+
+.boxShadow{
+	box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.20);
+}
+
+#registrationFormContainer{
+	width:100%;
+	top:60px;
+	position:absolute;
+	z-index:1001;
+}
+
+#DashboardFormContainer{
+	width:100%;
+	top:140px;
+	position:absolute;
+	z-index:1001;	
+}
+
+ .panel-group, 
+ .panel-group .panel, 
+ .panel-group .panel-heading,
+ .panel-group .panel-heading a,  
+ .panel-group .panel-title,  
+ .panel-group .panel-title a,  
+ .panel-group .panel-body,
+ .panel-group .panel-group .panel-heading + .panel-collapse > .panel-body  {
+    border-radius:2px;
+    border:0;
+}
+.panel-group .panel-heading + .panel-collapse > .panel-body {
+  border-top: 0;
+}
+
+
+ .panel-group .panel-heading {
+    padding: 0;
+}
+ .panel-group .panel-heading a {
+    display: block;
+    background: #668bb1;
+    color:#fff;
+    padding:15px;
+     text-decoration:none;
+   position: relative;
+}
+ .panel-group .panel-heading a.collapsed {
+	background: #c4ced5; 
+	color:inherit;
+}
+
+ .panel-group .panel-heading a:after {
+    content: '-';
+    position: absolute;
+    right: 20px;
+}
+ .panel-group .panel-heading a.collapsed:after {
+    content: '+';
+}
+ .panel-group .panel-collapse {
+    margin-top:5px!important;
+}
+ .panel-group .panel-body  {
+	background: #f7f7f7;
+	padding:15px;
+}
+ .panel-group .panel {
+  background-color: transparent;
+}
+
+.panel-group .panel-body p:last-child,
+.panel-group .panel-body  ul:last-child,
+.panel-group .panel-body  ol:last-child {
+  margin-bottom: 0;
+}
+
+
+
+#searchMessageBox{
+	height:30px;
+	position:fixed;
+	top:70px;
+	font-face: Roboto-Regular;
+	color: #FFFFFF;
+	font-size: 18px;
+}
+
+.pageTitleContainer{
+	font-family: Roboto-Medium;
+	font-size: 20px;
+	color: #434A54;
+	padding:20px 0px 5px 0px;
+}
+
+.registerFaq{
+	color: #4FAEE0;
+	font-family: Roboto-Medium;
+	font-size:14px;
+	padding-bottom: 20px;
+}
+
+#registrationFormContainer label{
+	color:#656D78;
+	font-family: Roboto-Regular;
+	font-size: 14px;
+	line-height: 22px;
+}
+
+#registrationFormContainer input, #registrationFormContainer select{
+	color:#434A54;
+	font-family: Roboto-Regular;
+	font-size: 14px;
+	background: #FFFFFF;
+	border:1px solid #AAB2BD;
+	border-radius:4px;
+	height:40px;
+}
+
+.form-control:focus{
+	webkit-box-shadow: none !important;
+	box-shadow: none !important;
+}
+
+.form-control{
+	padding:3px 5px;
+}
+
+.buttonContainer{
+	padding-bottom: 10px;
+}
+
+.skipButton{
+	color:#4FAEE0 !important;
+	background: #FFFFFF !important;
+	border:none !important;
+	padding-right:20px !important;
+	padding-left:20px !important;
+}
+
+.skipButton:active{
+	border: 1px solid transparent !important;
+	outline: none !important;
+}
+
+.headerIcon img{
+	padding-top:4px;
+}
+
+.aaa
+{
+ background-color:red;
+}
+
+.errorContainer{
+	display:none;
+	color:#EA305D;
+}
+
+.regErrorBorder{
+	border:1px solid #EA305D !important;
+}
