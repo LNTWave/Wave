@@ -206,13 +206,13 @@ function DisplayLoop()
 // ProcessMainView............................................................................................
 function ProcessMainView()
 {
-	//alert(lastGuiCurrentMode);
     if( lastGuiCurrentMode != guiCurrentMode )
     {
         PrintLog(1, "GUI: ProcessMainView()");
         if(mainContainerDisplayFlag == 1){
     		if(mainScreenSelectedTab==""){
     			$('body').html(mainContainerWithMenu);
+    			
     			mainContainer = document.getElementById("mainContainer");
     	    	if(window.localStorage.getItem("deviceType")=="phone"){
     		    	mainContainer.style.height = deviceHeight+"px";
@@ -229,6 +229,7 @@ function ProcessMainView()
     		}
     	}else{
     		$('body').html(mainContainerWithoutMenu);
+    		
     		mainContainer = document.getElementById("mainContainer");
         	if(window.localStorage.getItem("deviceType")=="phone"){
     	    	mainContainer.style.height = deviceHeight+"px";
@@ -237,6 +238,9 @@ function ProcessMainView()
         	var mainViewContent = null;
         	mainContainer.classList.add("connectionBG");
     	}
+    	$('.faqIcnWrapper').bind("click",function() {			
+			util.showHelpMenu();
+    	});
         lastGuiCurrentMode = guiCurrentMode;   
     }
 
@@ -342,7 +346,7 @@ function ProcessRegistrationView()
             "</div>" +
                    
 
-            szMyStatusLine;*/        
+            szMyStatusLine;*/
         document.getElementById("mainContainer").className = "";
         var myHtml = "<div id='appHeaderDashboard' class='page-header'><div id='headerContainer'><div class='col-xs-2 col-sm-1' align='left'></div><div class='col-xs-8 col-sm-10' align='center'><img src='img/assets/logos/WaveLogoSMWhite.svg'/></div><div class='col-xs-2 col-sm-1 headerIcon' align='center'><img src='img/assets/icons/HelpOutline.svg'/></div></div></div><div id='registrationFormContainer' class='container'><div class='pageTitleContainer'>Please register your device</div><div class='registerFaq'>Why do I need to register?</div><form role='form' name='inputUser'><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>First name</label><input type='text' class='form-control' name='fName' id='fName'></div><div class='errorContainer' id='errFn'>Please enter your First name</div></div><div class='col-sm-6'><div class='form-group'><label for='text'>Last name</label><input type='text' class='form-control' name='lName' id='lName'></div><div class='errorContainer' id='errLn'>Please enter your Last name</div></div></div><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>Address line 1</label><input type='text' class='form-control' name='addr1' id='addr1'></div><div class='errorContainer' id='errAddr'>Please enter Address Line 1</div></div><div class='col-sm-6'><div class='form-group'><label for='text'>Address line 2</label><input type='text' class='form-control' name='addr2' id='addr2'></div></div></div><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>City </label><input type='text' class='form-control' name='city' id='city'></div><div class='errorContainer' id='errCity'>Please enter your City</div></div><div class='col-sm-6'><div class='form-group'><label for='text'>State/Province/Region</label><input type='text' class='form-control' name='state' id='state'></div><div class='errorContainer' id='errState'>Please enter your State/Province/Region</div></div></div><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>ZIP/Postal Code</label><input type='text' class='form-control' name='zip' id='zip'></div><div class='errorContainer' id='errZip'>Please enter your ZIP/Postal Code</div></div><div class='col-sm-6'><div class='form-group'><label for='text'>Country</label><select class='form-control' name='country' id='country'><option value='USA'>United States</option><option value='CAN'>Canada</option></select></div><div class='errorContainer' id='errCtry'>Please select your Country</div></div></div><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>Phone Number</label><input type='text' class='form-control' name='phone' id='phone'></div><div class='errorContainer' id='errPN'>Please enter your Phone Number</div></div><div class='col-sm-6'></div></div><div class='col-sm-12 regBtnContainer'><div class='col-sm-6'></div><div class='col-sm-6'><div class='form-group buttonContainer' align='right'><input type='button' value='Skip' class='defaultButton skipButton' ><button type='button' class='defaultButton' id='regButton' onclick='javascript:return ValidateUserData();'>Register</button></div></div></div></form></div>";
         $('#mainContainer').html(myHtml);  
@@ -413,7 +417,6 @@ function ProcessRegistrationView()
 function SaveRegFormData()
 {
     szRegFirstName  = document.inputUser.fName.value;
-    window.localStorage.setItem('_FNME', szRegFirstName);
     szRegLastName   = document.inputUser.lName.value;
     szRegAddr1      = document.inputUser.addr1.value;
     szRegAddr2      = document.inputUser.addr2.value;
@@ -1798,7 +1801,8 @@ var waitPopUpObj =
             PrintLog(1, "Stop: ShowWaitPopUpMsg: " );
             if(ImRunningOnPhone)
             {
-                window.plugins.spinnerDialog.hide();
+                //window.plugins.spinnerDialog.hide();
+            	util.hideCommonSpinnerDialog();
             }
             else
             {
@@ -1857,7 +1861,6 @@ var alertPopUpObj =
     		        		RequestModeChange(PROG_MODE_REGISTRATION);
     		        	}else{
     		        		util.hideCommonPopup();
-    		        		util.hideCommontSpinnerDialog();
     		        	}
     		        }, false);
             } 
@@ -1931,9 +1934,7 @@ var util = {
     },
     
     createCommonSpinnerDialog: function(sText){
-    	if(typeof $('#spinnerDialog') !== 'undefined') { // Removing the prompt boxes if already exixts
-    		$('#spinnerDialog').remove();
-    	}
+    	util.hideCommonSpinnerDialog();
     	util.createBlackOverlay();
     	var popupContainer = util.createAppendElem("div", "spinnerDialog", "spinnerDialog", mainContainer);
     	var popElem = document.getElementById("spinnerDialog");
@@ -1967,6 +1968,10 @@ var util = {
     },
     
     showSearchAnimation: function(){
+    	console.log(typeof searchTimeOut);
+    	if(typeof searchTimeOut != "undefined"){
+    		clearTimeout(searchTimeOut);
+    	}
     	util.removeElement("searchBoxContainer");
     	util.removeElement("searchIconContainer");
     	util.removeElement("searchMessageBox");
@@ -1983,8 +1988,8 @@ var util = {
     	searchMessageBox.align = "center";
     	searchMessageBox.innerHTML = util.searchMessage;
     	var searchIconContainer = util.createAppendElem("div", "searchIconContainer", "searchIconContainer", mainContainer);
-//    	searchTimeOut = setTimeout(function(){ util.showNoDeviceFoundErrorPopup(); }, 120*1000);
-    	searchTimeOut = setTimeout(function(){ util.showNoDeviceFoundErrorPopup(); }, 5*1000);
+    	searchTimeOut = setTimeout(function(){ util.showNoDeviceFoundErrorPopup(); }, 120*1000);
+    	//searchTimeOut = setTimeout(function(){ util.showNoDeviceFoundErrorPopup(); }, 30*1000);
     },
     
     initiateSearchAnimation: function(){
@@ -2050,7 +2055,7 @@ var util = {
     		util.showSearchAnimation();
     	}, false);
     	
-    	var trblShtBtn = util.createAppendElem("button", "trblShtBtn", "trblShtBtn defaultButton fr", nodeviceFooter);
+    	var trblShtBtn = util.createAppendElem("button", "trblShtBtn", "trblShtBtn defaultButton fl", nodeviceFooter);
     	trblShtBtn.innerHTML = "Troubleshooting";
     	
     	isSouthBoundIfCnx = false;
@@ -2105,7 +2110,7 @@ var util = {
     	util.removeElement("blackOverlay");
     },
     
-    hideCommontSpinnerDialog: function(){
+    hideCommonSpinnerDialog: function(){
     	util.removeElement("spinnerDialog");
     	util.removeElement("blackOverlay");
     },
@@ -2215,9 +2220,8 @@ var util = {
 		
 		/*UI element updates for Dashboard view*/
 		if(menuElem == "dashboard"){
-			var displayName = window.localStorage.getItem('_FNME');
-			if( displayName != ""  && typeof displayName !== 'null'){
-				$('#userDpName').html(displayName + ",");
+			if(szRegFirstName!=""){
+				$('#userDpName').html(szRegFirstName+",");
 			}
 			
 			if(guiBoost >= 0 && guiBoost <= 3){
@@ -2264,6 +2268,646 @@ var util = {
 				$('#coverageNamecontainer').html('<span>3G/4G</span>');
 			}
 		}
+	},
+	
+	showHelpMenu: function () {
+    	var productType = window.localStorage.getItem('_PRDTYP');	    	
+    	if (typeof productType === 'undefined' || productType == null) {	    		    		
+    		this.selectProductView();
+    	} else {
+	    	switch(productType) {
+		    	case 'DUO' : {		    		
+		    		break;
+		    	}
+		    	case 'GO' : {
+		    		break;
+		    	}
+		    	case 'PRIME' : {
+		    		break;
+		    	}
+		    	case 'PRO' : {
+		    		break;
+		    	}
+	    	}
+    	}
+    	$('.headerContainer, #bodyContainer').hide();
+		$('.modalWrapper').show();
+	},
+	
+	selectProductView: function () {
+		this.createModalWrapper();
+		$('#modalTitle').html('Help Center');
+		var productSelectionMenu = "<div class='modalHelpWrapper'>"
+								+ "<p class='pageTitleContainer modalContentTitle modalContentPadding'>Select your product</p>"						
+								+ "<div class='modalContentPadding' onClick='util.createHelpMenu(\"1\", \"duo\");'>"	
+								+ "<div class='helpDeviceIcns' id='deviceDuoIcn'></div>"
+								+ "<div class='modalBodyPanelHeaderTitle'>DUO</div>"
+								+ "<div class='modalChevronRightIcns'></div>"	
+								+ "</div>"																		
+								+ "<div class='modalContentPadding' onClick='util.createHelpMenu(\"2\", \"go\");'>"	
+								+ "<div class='helpDeviceIcns' id='deviceGoIcn'></div>"				
+								+ "<div class='modalBodyPanelHeaderTitle'>GO</div>"
+								+ "<div class='modalChevronRightIcns'></div>"	
+								+ "</div>"	  
+								+ "<div class='modalContentPadding' onClick='util.createHelpMenu(\"2\", \"prime\");'>"
+								+ "<div class='helpDeviceIcns' id='devicePrimeIcn'></div>"
+								+ "<div class='modalBodyPanelHeaderTitle'>PRIME</div>"
+								+ "<div class='modalChevronRightIcns'></div>"	
+								+ "</div>"
+								+ "<div class='modalContentPadding' onClick='util.createHelpMenu(\"1\", \"pro\");'>"							 							
+								+ "<div class='helpDeviceIcns' id='deviceProIcn'></div>"
+								+ "<div class='modalBodyPanelHeaderTitle'>PRO</div>"
+								+ "<div class='modalChevronRightIcns'></div>"	
+								+ "</div></div>";
+		$(productSelectionMenu).appendTo('.modalBodyWrapper')			
+	},
+	
+	createModalWrapper: function () {			
+		var modalWrapper = "<div class='modalWrapper'>"
+							+ "<div class='modalHeaderWrapper' class='col-xs-12 col-sm-12'>"
+							+ "<div id='modalTitle'></div>"
+							+ "<div class='modalCloseBtn' onClick= 'util.removeModal();'></div>"
+							+ "<div class='modalLeftBtn'></div>"				
+							+ "</div>"						 
+							+ "<div class='modalBodyWrapper'></div>"
+							+ "</div>";
+		if(typeof $('.modalWrapper') !== 'undefined') {
+    		$('.modalWrapper').remove();
+    	}
+		$(modalWrapper).appendTo('body');
+	},
+	
+	removeModal: function () {
+		$('.modalWrapper').remove();
+		$('.headerContainer, #bodyContainer').show();
+	},
+	
+	createHelpMenu: function (menuType, menuSelected){			
+		
+		var title = 'Cel-Fi ' + menuSelected.toUpperCase();
+		// List of menu items
+		var menuListName = ['Installation Guide', 'Troubleshooting', 'Error Codes', 'Frequently Asked Questions', 'Registration', 'Contact Us'];
+		var menuListId = ['menuInstall', 'menuTroubleShoot', 'menuErrorCodes', 'menuFaq', 'menuRegistration', 'menuContactUs'];
+		
+		/**
+		 * check condition for registration menu here
+		 * 
+		 */
+		/*if(isRegistered) {
+			menuListName.splice(menuListName.indexOf('Registration'), 1 );
+			menuListId.splice(menuListId.indexOf('menuRegistration'), 1 );				
+		}*/
+		
+		// to show menu w.r.t device selected
+		if(menuType === '2') {
+			menuListName.splice(menuListName.indexOf('Troubleshooting'), 2 );
+			menuListId.splice(menuListId.indexOf('menuTroubleShoot'), 2 );
+		}
+			
+		//adding menu contents here
+		var menuOptions = "<p class='pageTitleContainer modalContentTitle modalContentPadding'>" + title + "</p>";
+							
+		for(var i = 0; i < menuListName.length; i++) {
+			var menu = i === 0 ? "<div class='modalContentPadding' id='"+ menuListId[i] +"'>"  :  "<div class='modalContentPadding' id='"+ menuListId[i] +"'>";
+			menu += "<div class='modalBodyPanelHeaderTitle '>"
+					+ menuListName[i]
+					+ "</div>"
+					+ "<div class='modalChevronRightIcns'></div>"							  
+					+ "</div>";				
+			menuOptions += menu;
+		}
+											 						 								
+		$('.modalHelpWrapper').html(menuOptions);
+		
+		// Bind events for individual menu item
+		for(var i = 0; i < menuListId.length; i++) {											
+			if(menuListId[i] === 'menuInstall') {
+				$('#' + menuListId[i]).bind("click", function() {						
+					if(menuSelected === 'duo')
+						util.duoInstallationGuide();
+					else if(menuSelected === 'pro')
+						util.proInstallationGuide();
+					else if(menuSelected === 'prime')
+						util.primeInstallationGuide();
+					else if(menuSelected === 'go')
+						util.goInstallationGuide();
+			    });						
+			} else if (menuListId[i] === 'menuTroubleShoot') {
+				$('#' + menuListId[i]).bind("click", function() {						
+					if(menuSelected === 'duo')
+						util.duoTroubleShoot()
+					else if(menuSelected === 'pro')
+						util.proTroubleShoot();						
+			    });	
+			} else if (menuListId[i] === 'menuErrorCodes') {
+				$('#' + menuListId[i]).bind("click", function() {						
+					if(menuSelected === 'duo')
+						util.duoErrorCodes()
+					else if(menuSelected === 'pro')
+						util.proErrorCodes();												
+			    });	
+			} else if (menuListId[i] === 'menuFaq') {
+				$('#' + menuListId[i]).bind("click", function() {						
+					util.faqDetails();
+			    });	
+			} else if (menuListId[i] === 'menuRegistration') {
+				$('#' + menuListId[i]).bind("click", function() {						
+					util.registrationInfo();
+			    });	
+			} else if (menuListId[i] === 'menuContactUs') {
+				$('#' + menuListId[i]).bind("click", function() {						
+					util.contactInfo();
+			    });	
+			}						
+		}			
+	},				
+	
+	duoInstallationGuide: function () {
+		this.createModalWrapper();
+		$('#modalTitle').html('Installation Guide');
+		var duoInstallGuide = "<div class='installGuideWrapper'>"						
+								+ "<p class='pageTitleContainer modalContentTitle modalContentPadding'>Installation Guide for Cel-Fi DUO</p>"
+								+ "<div class='modalContentPadding'>"                      
+								+ "<div class='helpContent installGuideContent'>STEP 1</div>"
+								+ "<div class='helpHeadLine'>Find the location with the best coverage:</div>"
+								+ "<div class='helpContent'>The first step in setting up your Cel-Fi DUO Signal Booster system is to find the location in your home or office with the best cellular signal. Use your phone to identify the area with the most bars of signal. Typically, the best service will be near a window in the highest floor of your home or office. Make sure a 3G, 4G or 4G LTE icon is displayed on your handset.</div>"
+								+ "<div class='helpSubTitle installGuideContent'>STEP 2</div>"
+								+ "<div class='helpHeadLine'>Plug in the Network Unit:</div>"
+								+ "<div class='helpContent'>Plug the Network Unit into an easily accessible outlet near the area with the strongest 3G, 4G or 4G LTE signal. (Note: the power supplies in your kit are identical.) Make sure that at least one bar is displayed on the signal strength indicator on the front of the Network Unit. If you do not see at least one bar, try a different location.</div>"								
+								+ "<div class='helpSubTitle installGuideContent'>STEP 3</div>"
+								+ "<div class='helpHeadLine'>Optimize the Network Unit Placement:</div>"
+								+ "<div class='helpContent'>The bars on the front of the device indicate the strength of the cellular signal in the area. Moving the Network Unit to a different location in your home may increase the signal, and can improve the quality of your service.</div>"
+								+ "<div class='helpSubTitle installGuideContent'>STEP 4</div>"
+								+ "<div class='helpHeadLine'>Place the Coverage Unit:</div>"
+								+ "<div class='helpContent'>Move to a location in your home where you need to improve coverage. Plug the Coverage Unit into an easily accessible outlet. After several minutes, the numeric display will stop cycling.</br></br>If your device is set up properly, the green icons will appear on the display as seen above. It is possible to place the Coverage Unit too close or too far from the Network Unit. If this happens, a red icon will illuminate indicating that you need to move the Coverage Unit either closer to, or further away from the Network Unit.</div>"
+								+ "<div class='helpSubTitle installGuideContent'>STEP 5</div>"
+								+ "<div class='helpHeadLine'>Optimize The Coverage Unit Placement:</div>"
+								+ "<div class='helpContent'>Place the Coverage Unit as far away as possible from the Network Unit. The number on the front of the Coverage Unit display indicates the quality of the placement. For the best service experience, move the Coverage Unit around your home until an 8 or 9 displays.</div>"
+								+ "</div></div>";
+		$(duoInstallGuide).appendTo('.modalBodyWrapper');
+		$('.headerContainer, #bodyContainer').hide();
+		$('.modalWrapper').show();
+	},
+	
+	duoTroubleShoot: function () {
+		this.createModalWrapper();
+		$('#modalTitle').html('TroubleShooting');
+		var duoTroubleShoot = "<div class='installGuideWrapper'>"						
+								+ "<p class='pageTitleContainer modalContentTitle modalContentPadding'>Network Unit Troubleshooting</p>"
+								+ "<div class='modalContentPadding'>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Power – My Network Unit (aka Window Unit) won’t turn on!</div>"
+								+ "<div class='helpContent'></br>When your system does not power up, one of the following things could be happening. You could have a power adaptor failure, a hardware failure, or the system could need a simple restart.</br></br>Try this… Both the Network Unit and Coverage Unit have identical power supplies. Try switching the power supplies to see if one of the following issues could be occurring:</br></br>If you switch the power supplies and the problem moves from one unit to the other unit then you are experiencing a power supply issue. Please reach out to your point of sale for a replacement power supply.</br></br>If, after switching power supplies, you still have no power on your Network Unit try another outlet, or lamp/appliance in the same outlet. If you continue to have problems with the Network Unit please reach out to your point of sale for a system replacement.</br></br>If, after switching power supplies both system are functioning properly then your Cel-Fi DUO system simply needed a restart. This is not something that should continue, but if it occurs frequently please reach out to your point of sale for support.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Bars – My Network Unit is not finding the cellular signal!</div>"
+								+ "<div class='helpContent'></br>If your power light is still blinking while you have no bars, your Network Unit is still trying to find the incoming cellular network signal. This can sometimes take more than a few minutes.</br></br>Taking longer than 60 minutes? Try this…</br></br>Walk around your home/office with your cellular device. Try to find a signal inside your home/office with at least one consistent bar of 3G/4G/LTE. More bars is always better! Once you have found a signal place your Network Unit in that location.</br></br>If you have bars of service on your phone in the location of your Network Unit, and after 60 minutes you are still unable to receive bars of service on your Network Unit try a restart. To restart your Network Unit simply unplug for a moment and then it plug back in. If the restart does not solve the issue please reach out to your point of sale for support.</br></br>No bars and a red power indicator? Please refer to the section below about “Red power indicator”.</div>"												
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No LTE – My phone still doesn’t have LTE!</div>"
+								+ "<div class='helpContent'></br>There are a few reasons why your phone would experience an issue with the LTE service. </br></br>You may not have LTE in your area, your Cel-Fi system may have lost the LTE signal due to intermittent network outages, your phone may not support LTE, or your phone may not be compatible with the frequency being boosted by the Cel-Fi DUO.</br></br></br>A flashing LTE light means that your Cel-Fi DUO system is actively searching for the LTE signal. The Cel-Fi DUO will scan at startup and scan again every 24 hours.</br></br>If your LTE light is not lit and not flashing, your Cel-Fi DUO has lost, or never found an LTE signal and has momentarily stopped searching. The Cel-Fi DUO will scan at startup and scan again every 24 hours.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Red Power Indicator – My Network Unit has a red power light!</div>"
+								+ "<div class='helpContent'></br>With a flashing red power indicator you may also see an error code displayed on the Coverage Unit (flashing an E then correlating error number).</br></br>E1 – Cellular Signal too weak to boost. Try this… Walk around your home/office with your cellular device. Try to find a signal indoors with at least one consistent bar of 3G/4G/LTE. More bars is always better! Once you have found a usable signal place your Network Unit in this location.</br></br>E3 – Coverage Unit is overheating. Insure that your Coverage Unit vents are uncovered and free of debris, and that the location of the unit allows free flow of air. Once the Coverage Unit has cooled to a normal functioning temperature it will restart and operate as normal.</br></br>E4 – Network Unit is overheating. Insure that your Network Unit vents are uncovered and free of debris, and that the location of the unit allows free flow of air. Once the Coverage Unit has cooled to a normal functioning temperature it will restart and operate as normal.</br></br>With a solid red power indicator you may also see and error code displayed on the Coverage Unit (flashing an E then correlating error number).</br></br>E8 – Input signal too strong. An E8 error code is letting you know that your Network Unit is too close to a cellular tower, not necessarily for your operator. This has reduced the output power (coverage bubble) to limit network interference. Try this…Move your Network Unit to another location. You might need to move your system to the other side of your home/office. Note: When you have an E8 your system will still offer you indoor cellular coverage.</br></br>E6 – Network Unit hardware error that may be remedied by a reset. Your Coverage Unit may not display a flashing error code. You will likely only see the solid red power indicator on your Network Unit. Try this…reset your Network Unit. Simply unplug your Network Unit for a few seconds and plug it back in.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Flashing Green Power Indicator – My Network Unit’s power light is flashing green!</div>"
+								+ "<div class='helpContent'></br>A flashing green power indicator on your Network Unit means that your system is still performing startup procedures. This could indicate that the Network Unit is trying to find a connection to either the cellular network or your Coverage Unit.</br></br>No bars with a flashing power indicator means the system is trying to locate the cellular network. This normally takes less 60 minutes. Make sure that your phone (cellular device) has at least one bar of 3G/4G/LTE signal where the Network Unit is located.</br></br>If you have bars but the power indicator is flashing this means that your Network Unit has located the cellular network and is now trying to locate your coverage unit. For more information about Coverage Unit issues <a href=\"#\" onclick=\"window.open('https://support.cel-fi.com/hc/en-us/articles/202987766-Troubleshoot-the-Cel-Fi-Network-Unit', '_system');\">click here</a></div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Flashing Bars – My Network Unit bars are flashing. </div>"
+								+ "<div class='helpContent'></br>With flashing bars on your Network Unit you may also see and error code displayed on the Coverage Unit (flashing an E then correlating error number).</br></br>E7 – The system has been disabled by the mobile network operator. Contact your operator for more information.</div>"
+								+ "</div></br>"
+								+ "<p class='pageTitleContainer modalContentTitle modalContentPadding'>Coverage Unit Troubleshooting</p>" 
+								+ "<div class='modalContentPadding'>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Power – My Coverage Unit won’t turn on!</div>"
+								+ "<div class='helpContent'></br>When your system does not power up, or has a red power indicator, one of the following things could be happening. You might have a power adaptor failure, a hardware failure, or the system may need a simple restart.</br></br>Try this… Both the Coverage Unit and Network Unit have identical power supplies. Try switching the power supplies to see if one of the following issues could be occurring:</br></br>If you switch the power supplies and the problem moves from one unit to the other unit then you are experiencing a power supply issue. Please reach out to your point of sale for a replacement power supply.</br></br>If, after switching power supplies, you still have no power on your Coverage Unit try another outlet, or another lamp/appliance in the same outlet. If you continue to have problems with the unit please reach out to your point of sale for a system replacement.</br></br>If, after switching power supplies both system are functioning properly then your Cel-Fi DUO system simply needed a restart. This is not something that should continue, but if it occurs frequently please reach out to your point of sale for support.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Numeric display keep cycling/rotating</div>"
+								+ "<div class='helpContent'></br>When your Coverage Unit displays a rotating “0” zero your system is still preforming startup procedures. This process usually takes less than 20 minutes. If it takes longer than 45 minutes, please restart both units.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Low Number on my Coverage Unit (0-6)</div>"
+								+ "<div class='helpContent'></br>When you have a display of 0, 1, 2, 3, 4, 5, or 6 your Cel-Fi DUO system has established a connection but is not working to the fullest ability. Try this… move your units further apart. If you have a particular spot in your home that you want coverage more than others try installing your Cel-Fi system in reverse. Put your Coverage Unit where you need coverage the most then place your Network Unit at the furthest location where you can get at least 1 bar of service.</br></br>If you cannot get your systems further apart, and you have the coverage you need, a higher number is not always possible or necessary.</br></br>When you have a solid “0” zero display you may also see a flashing green power indicator. This display indicates that your Network Unit and Coverage Unit are “Too Close” together. Try moving the units further apart, starting with the Coverage Unit.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Small Coverage Bubble – I only have signal within a few feet of the Coverage Unit!</div>"
+								+ "<div class='helpContent'></br>Changes to your Cel-Fi placement can be made to improve your 3G/4G/LTE coverage.</br></br>The more bars shown on the Network Unit the better. Try moving the Network Unit to an area that has better 3G/4G/LTE coverage. If the home/office has more than 1 floor upstairs is usually better than downstairs. Putting the Network Unit near a window or higher on a shelf often helps as well.</br></br>The numeric value on the display of the Coverage Unit is an indication of the area covered. A higher number means a larger area is covered. To increase the coverage area move the Coverage Unit farther away from the Network Unit. The less obstacles in their direct line of sight the further apart you can get them. The higher the Coverage Unit number, the better the coverage.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No LTE – My phone still doesn’t have LTE</div>"
+								+ "<div class='helpContent'></br>There are a few reasons why your phone would experience an issue with the LTE service. You may not have LTE in your area, your Cel-Fi system may have lost the LTE signal due to intermittent network outages, your phone may not support LTE, or your phone may not be compatible with the frequency being boosted by the Cel-Fi DUO. You will need to check the display on your Network Unit for more information <a href=\"#\" onclick=\"window.open('https://support.cel-fi.com/hc/en-us/articles/202987756-Troubleshoot-the-Cel-Fi-Window-Network-Unit', '_system');\">click here</a></div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Frequent or Intermitten “Too Far” message</div>"
+								+ "<div class='helpContent'></br>Intermittent rotating/too far issues. While the number 9 is the largest distance between your Coverage Unit and your Network Unit you can have the systems slightly too far apart. This may cause you to experience intermittent interference which can cause the connection to break. Frequent or intermittent issues can be related to heavy WiFi saturation in your home/office, or obstacles that move between the two units line of sight. Make sure that each unit is as far as possible from any access points or other WiFi enabled devices. An example of a wireless device could be, but is not limited to, a wireless home phone, laptop computer, or wireless router.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Flashing E message.</div>"
+								+ "<div class='helpContent'></br>E1 Cellular Signal too weak to boost. Try this… Walk around your home/office with your cellular device. Try to find a signal indoors with at least one consistent bar of 3G/4G/LTE. More bars is always better! Once you have found a usable signal place your Network Unit in this location.</br></br>E2 Coverage Unit hardware error that may be remedied by a reset. Your Coverage Unit may not display a flashing error code. You will likely only see the solid red power indicator on your Coverage Unit.Try this….Reset your Coverage Unit. Simply unplug your Coverage Unit for a few seconds and plug back in.</br></br>E3 Your Coverage Unit is overheating. Try this… ensure that your Coverage Unit vents are clear of any blockage, and that the location of the unit allows free flow of air. Once your Coverage Unit has cooled down it will operate as normal.</br></br>E4 Your Network Unit is overheating. Try this… ensure that your Network Unit vents are clear of any blockage, and that the location of the unit allows free flow of air. If you have your Network Unit in an attic space you may need to relocate the device to ensure that the system does not continue to overheat. Once your Network Unit has cooled down it will operate as normal.</br></br>E7 The system has been disabled by the mobile network carrier. Contact your point of sale.</br></br>E8 Input signal too strong. An E8 error code is letting you know that your Network Unit is too close to a cellular tower, not necessarily for your operator. This has reduced the output power (coverage bubble) to limit network interference. Try this…Move your Network Unit to another location. You might need to move your system to the other side of your home. Note: When you have an E8 your system will still offer you indoor cellular coverage.</br></br>Too close, you may also see a solid zero on your Coverage Unit. Your Coverage Unit is “Too Close” to your Network Unit. Try this…moving the units further apart, starting with the Coverage Unit.</br></br>Too far, you may also see a rotating/cycling zero with red arrows on your Coverage Unit. Your Coverage Unit is “Too Far” from your Network Unit. Try moving the units slightly (5-10 feet) closer together, starting with the Coverage Unit.</br></br>Intermittent “Too Far” message? Frequent or intermittent issues can be related to heavy WiFi saturation in your home/office. Make sure that each unit is as far as possible from any access points or other WiFi enabled devices.</div>"
+								+ "</div></div>";
+		$(duoTroubleShoot).appendTo('.modalBodyWrapper');
+		$('.headerContainer, #bodyContainer').hide();
+		$('.modalWrapper').show();
+	},
+	
+	duoErrorCodes: function () {
+		$('#modalTitle').html('Error codes');
+	},
+	
+	proInstallationGuide: function () {
+		this.createModalWrapper();
+		$('#modalTitle').html('Installation Guide');
+		var duoInstallGuide = "<div class='installGuideWrapper'>"						
+								+ "<p class='pageTitleContainer modalContentTitle modalContentPadding'>Installation Guide for Cel-Fi PRO</p>"
+								+ "<div class='modalContentPadding'>"                      
+								+ "<div class='helpContent installGuideContent'>STEP 1</div>"
+								+ "<div class='helpHeadLine'>Find the best cellular signal</div>"
+								+ "<div class='helpContent'>For Cel-Fi to work correctly, use your phone to find the best 3G, 4G or LTE signal. </br>Typically, you will get the best signal upstairs near a window.</div>"
+								+ "<div class='helpSubTitle installGuideContent'>STEP 2</div>"
+								+ "<div class='helpHeadLine'>Place the Network Unit</div>"
+								+ "<div class='helpContent'>Place the Network Unit (NU) in the location where you get the best cellular signal.</div>"								
+								+ "<div class='helpSubTitle installGuideContent'>STEP 3</div>"
+								+ "<div class='helpHeadLine'>Place the Coverage Unit</div>"
+								+ "<div class='helpContent'>Place the Coverage Unit (CU) in the location where you need improved coverage.</div>"
+								+ "<div class='helpSubTitle installGuideContent'>STEP 4</div>"
+								+ "<div class='helpHeadLine'>Optimize the Coverage</div>"
+								+ "<div class='helpContent'>For best results, try moving the CU around to a few different spots. Typically, the farther the units are apart, the better coverage you will have. Although, it is possible to move the units too far apart.</div>"									
+								+ "</div></div>";
+		$(duoInstallGuide).appendTo('.modalBodyWrapper');
+		$('.headerContainer, #bodyContainer').hide();
+		$('.modalWrapper').show();
+	},
+	
+	proTroubleShoot: function () {
+		this.createModalWrapper();
+		$('#modalTitle').html('TroubleShooting');
+		var proTroubleShoot = "<div class='installGuideWrapper'>"						
+								+ "<p class='pageTitleContainer modalContentTitle modalContentPadding'>Coverage Unit Troubleshooting</p>"
+								+ "<div class='modalContentPadding'>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Power – My Coverage Unit won’t turn on!</div>"
+								+ "<div class='helpContent'></br>When your system does not power up, or has a red power indicator, one of the following things could be happening. You might have a power adaptor failure, a hardware failure, or the system may need a simple restart.</br></br>Try this… Both the Coverage Unit and Network Unit have identical power supplies. Try switching the power supplies to see if one of the following issues could be occurring:</br></br>If you switch the power supplies and the problem moves from one unit to the other unit then you are experiencing a power supply issue. Please reach out to your point of sale for a replacement power supply.</br></br>If, after switching power supplies, you still have no power on your Coverage Unit try another outlet, or another lamp/appliance in the same outlet (changed). If you continue to have problems with the unit please reach out to your point of sale for a system replacement.</br></br>If, after switching power supplies both system are functioning properlythen your Cel-Fi PRO system simply needed a restart. This is not something that should continue, but if it occurs frequently please reach out to your point of sale for support.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Bars – My Coverage Unit is not finding the Network Unit!</div>"
+								+ "<div class='helpContent'></br>When you Coverage Unit does not have bars but your Network Unit icon does, the system is still performing startup procedures. </br></br>If it takes longer than 45 minutes, please restart both units and make sure they are within sight of each other.</br></br>Try placing the units roughly 30 feet from each other as a test to confirm that the units will pair, if not make sure you have matching serial numbers.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Low amount of bars on your Coverage Unit – I can’t get more than 1/2 bars over the CU icon!</div>"
+								+ "<div class='helpContent'></br>When you have a 1, or 2 bars on the Coverage Unit, your Cel-Fi PRO system has established a connection but might not be (changed) working to the fullest ability. Try this… move your units further apart. If you have a particular spot in your home that you want coverage more than others try installing your Cel-Fi system in reverse. Put your Coverage Unit where you need coverage the most then place your Network Unit at the furthest location where you can get at least 1 bar of service.</br></br>If you cannot get your systems further apart, and you have the coverage you need, a higher number is not always possible or necessary.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Small Coverage Bubble – I only have signal within a few feet of the Coverage Unit!</div>"
+								+ "<div class='helpContent'></br>Changes to your Cel-Fi placement can be made to improve your 3G/4G/LTE coverage.</br></br>The more bars shown on the Network Unit the better. Try moving the Network Unit to an area that has better 3G/4G/LTE coverage. If the home/office has more than 1 floor. Upstairs is usually better than downstairs. Putting the Network Unit near a window or higher on a self often helps as well.</br></br>The bar display of the Coverage Unit is an indication of the area covered. More bars on the Coverage Unit means a larger area is covered. To increase the coverage area move the Coverage Unit farther away from the Network Unit. The less obstacles in their direct line of sight the further apart you can get them. The more bars on your Coverage Unit, the better the coverage area will be.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No LTE – My phone still doesn’t have LTE</div>"
+								+ "<div class='helpContent'></br>There are a few reasons why your phone would experience an issue with the LTE service. </br></br>You may not have LTE in your area, your Cel-Fi system may have lost the LTE signal due to intermittent network outages, or your phone may not support LTE. </br></br>Check to see that your phone shows an LTE signal in the location of your Network Unit.</div>"									
+								+ "</div></br>"
+								+ "<p class='pageTitleContainer modalContentTitle modalContentPadding'>Network Unit Troubleshooting</p>" 
+								+ "<div class='modalContentPadding'>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Power – My Network Unit won’t turn on!</div>"
+								+ "<div class='helpContent'></br>When your system does not power up, one of the following things could be happening. You could have a power adaptor failure, a hardware failure, or the system could need a simple restart.</br></br>Try this… Both the Network Unit and Coverage Unit have identical power supplies. Try switching the power supplies to see if one of the following issues could be occurring:</br></br>If you switch the power supplies and the problem moves from one unit to the other unit then you are experiencing a power supply issue. Please reach out to your point of sale for a replacement power supply.</br></br>If, after switching power supplies, you still have no power on your Network Unit try another outlet, or lamp/appliance in the same outlet. If you continue to have problems with the Network Unit please reach out to your point of sale for a system replacement.</br></br>If, after switching power supplies both system are functioning properly then your Cel-Fi PRO system simply needed a restart. This is not something that should continue, but if it occurs frequently please reach out to your point of sale for support.</br></br>If you have power on your Network Unit with a white or otherwise abnormal colored display, please contact your point of sale for specific warranty support.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Bars – My Network Unit is not finding the cellular signal!</div>"
+								+ "<div class='helpContent'></br>If you have no bars, your Network Unit is still trying to find the incoming cellular network signal. Your Network Unit may display the “Searching for the Network…” message. This can sometimes take more than a few minutes.</br></br>Taking longer than 60 minutes? Try this…</br></br>Walk around your home/office with your cellular device. Try to find a signal inside your home/office with at least one consistent bar of 3G/4G/LTE. More bars is always better! Once you have found a signal place your Network Unit in that location.</br></br>If you have bars of service on your phone in the location of your Network Unit, and after 60 minutes you are still unable to receive bars of service on your Network Unit try a simple restart. To restart your Network Unit simply unplug for a moment and then plug back in. If the restart does not solve the issue please reach out to your point of sale for support.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Network Unit (NU) continues to search for the Coverage Unit (CU)</div>"
+								+ "<div class='helpContent'></br>Your Cel-Fi PRO has found the network and is displaying bars over the (NU) Network Unit icon, but continues to try and find a connection to the Coverage Unit (CU).</br></br>If this screen is displayed for more than 30 minutes, after your Network Unit shows bars, you could have one of the following issues with your Cel-Fi PRO system.</br></br>Try this… Insure that your Coverage Unit (CU) is plugged in and has power. If your Coverage Unit does not have power <a href=\"#\" onclick=\"window.open('https://support.cel-fi.com/hc/en-us/articles/202987766-Troubleshoot-the-Cel-Fi-Network-Unit', '_system');\">click here</a> for a link to the PRO Coverage Unit (CU) troubleshooting section.</br></br>Make sure that your Units are not too far apart. Try placing the systems 10-15 feet apart to insure they can connect. The more interference (i.e. walls, doors, refrigerators, filing cabinets) between the two units the closer they will need to be. Once you have established a connection you can optimize the displayed number by moving either unit.</br></br>Intermittent too far issues. While five CU bars is the largest distance between your Coverage Unit and your Network Unit you can have the systems slightly too far apart. This may cause you to experience intermittent interference which can cause the connection to break. Frequent or intermittent issues can be related to heavy WiFi saturation in your home/office, or obstacles that move between the two units line of sight. Make sure that each unit is as far as possible from any access points or other WiFi enabled devices. An example of a wireless device could be, but is not limited to, a wireless home phone, laptop computer, or wireless router.</div>"
+								+ "</div></div>";
+			
+		$(proTroubleShoot).appendTo('.modalBodyWrapper');
+		$('.headerContainer, #bodyContainer').hide();
+		$('.modalWrapper').show();
+	},
+	
+	proErrorCodes: function () {
+		$('#modalTitle').html('Error codes');
+	},
+	
+	primeInstallationGuide : function () {
+		// Yet to be given
+		$('#modalTitle').html('Installation Guide');
+	},
+	
+	goInstallationGuide: function () {
+		// Yet to be given
+		$('#modalTitle').html('Installation Guide');
+	},
+	
+	faqDetails: function() {
+		this.createModalWrapper();
+		$('#modalTitle').html('FAQ');
+		var faqDetails = "<div class='modalHelpWrapper faqModalWrapper'>"
+						+ "<p class='pageTitleContainer modalContentTitle modalContentPadding'>Top 20 Frequently Asked Questions</p>"
+						+ "<div class='divLineDivider'></div>"
+						+ "<div class='panel-group' id='accordion'>"
+						+ "<div class='panel panel-default'>"				        
+						+ "<div class='panel-heading FAQPanelHeaderColor'>"
+						+ "<h4 class='panel-title'>"
+						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelOne'>"
+						+ "<div>"
+						+ "<p class='modalFAQPanelContent' >What is Cel-Fi?</p>"
+						+ "</div>"
+						+ "<span class='pull-right faqSpan' >"
+						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
+						+ "</span>"
+						+ "</a></h4></div>"
+						+ "<div id='ModelOne' class='panel-collapse collapse'>"
+						+ "<div class='panel-body'>"
+						+ "<p class='modelFAQBodyContents'>"
+						+ "Cel-Fi is Nextivity's brand of self-configuring, environmentally aware, indoor coverage solutions. Each Cel-Fi system consists of two units. The Network Unit is placed in the area where the strongest native signal can be received from the carrier network (signal levels as low as -120 dBm are acceptable). The Network Unit comprises a transmitter and receiver which communicates with the cell tower. The Coverage Unit is placed in the center of the home, communicates wirelessly with the Network Unit and “lights up” the interior of the house with significantly enhanced signal levels, thus enabling better quality calls and greater data throughput."
+						+ "</p></div></div></div>"
+						+ "<div class='divLineDivider'></div>"
+						+ "<div class='panel panel-default'>"				        
+						+ "<div class='panel-heading' style='color:#4FAEE0;'>"
+						+ "<h4 class='panel-title'>"
+						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelTwo'>"
+						+ "<div>"
+						+ "<p class='modalFAQPanelContent'>What makes Cel-Fi so different from other signal boosters?</p>"
+						+ "</div>"
+						+ "<span class='pull-right faqSpan'>"
+						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
+						+ "</span></a></h4></div>"
+						+ "<div id='ModelTwo' class='panel-collapse collapse'>"
+						+ "<div class='panel-body'>"
+						+ "<div class='panel-body'>"
+						+ "<p class='modelFAQBodyContents'>"
+						+ "Cel-Fi is a smart signal booster. That means it relies on intelligent, self-organizing algorithms to ensure you benefit from the largest area of coverage without compromising or interfering with your mobile operator's networks or impeding other subscribers' signals. Cel-Fi does not require any new equipment, any configuring, or any changes to existing network infrastructure or mobile devices. It is also a plug and play device, which means that there is no need for professional installation, no drilling, and no cables. In addition, Cel-Fi has been recognized for its superior design and effectiveness and is the only consumer booster authorized for use by the communications commissions in Australia and the United Kingdom, and the only Smart Booster designed to meet the new FCC Safe Harbor 2 specifications that allow very high gain (very high signal gain is necessary to make low level signals useful in a large coverage area)."
+						+ "</p></div></div></div></div>"							
+						+ "<div class='divLineDivider'></div>"
+						+ "<div class='panel panel-default'>"				        
+						+ "<div class='panel-heading' id='operatorTitles'>"
+						+ "<h4 class='panel-title'>"
+						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelThree'>"
+						+ "<div>"
+						+ "<p class='modalFAQPanelContent'>Does the Cel-Fi require an internet or GPS connection?</p>"
+						+ "</div>"
+						+ "<span class='pull-right faqSpan'>"
+						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
+						+ "</span></a></h4></div>"
+						+ "<div id='ModelThree' class='panel-collapse collapse'>"							
+						+ "<div class='panel-body'>"
+						+ "<p class='modelFAQBodyContents'>"
+						+ "No. The Cel-Fi system only needs to have at least 1 bar of native cellular signal, in at least one spot of your home to be able to cover your whole home or office space."
+						+ "</p></div></div></div>"	
+						+ "<div class='divLineDivider'></div>"
+						+ "<div class='panel panel-default'>"				        
+						+ "<div class='panel-heading' id='operatorTitles'>"
+						+ "<h4 class='panel-title'>"
+						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelFour'>"
+						+ "<div>"
+						+ "<p class='modalFAQPanelContent'>Will the Cel-Fi support voice and data or data only?</p>"
+						+ "</div>"
+						+ "<span class='pull-right faqSpan'>"
+						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
+						+ "</span></a></h4></div>"
+						+ "<div id='ModelFour' class='panel-collapse collapse'>"
+						+ "<div class='panel-body'>"
+						+ "<p class='modelFAQBodyContents'>"
+						+ "Yes, Cel-Fi smart signal boosters can support both voice and data simultaneously. Note that Cel-Fi RS1 and RS2 models do not support LTE."
+						+ "</p></div></div></div>"	
+						+ "<div class='divLineDivider'></div>"
+						+ "<div class='panel panel-default'>"				        
+						+ "<div class='panel-heading' id='operatorTitles'>"
+						+ "<h4 class='panel-title'>"
+						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelFive'>"
+						+ "<div>"
+						+ "<p class='modalFAQPanelContent'>How far apart can the Network (Window) Unit and the Coverage Unit be placed?</p>"
+						+ "</div>"
+						+ "<span class='pull-right faqSpan'>"
+						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
+						+ "</span></a></h4></div>"
+						+ "<div id='ModelFive' class='panel-collapse collapse'>"
+						+ "<div class='panel-body'>"
+						+ "<p class='modelFAQBodyContents'>"
+						+ "Every instillation is different. The differences depend on the 'path loss' between the two units. Every obstacle in the line of sight means that the Coverage Unit and the Network Unit will have to be closer together. The cleaner the line of sight the further apart they can be placed. The more walls, doors, or refrigerators (obstacles), in the direct line of sight, the closer they units will have to be. The average distance for a typical construction home is 60 feet, however the placement can be as little as 20 feet or much as 120 feet apart."
+						+ "</p></div></div></div>"	
+						+ "<div class='divLineDivider'></div>"	
+						+ "<div class='panel panel-default'>"				        
+						+ "<div class='panel-heading'>"
+						+ "<h4 class='panel-title'>"
+						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelSix'>"
+						+ "<div>"
+						+ "<p class='modalFAQPanelContent'>What coverage can I expect from a Cel-Fi system?</p>"
+						+ "</div>"
+						+ "<span class='pull-right faqSpan'>"
+						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
+						+ "</span></a></h4></div>"
+						+ "<div id='ModelSix' class='panel-collapse collapse'>"
+						+ "<div class='panel-body'>"
+						+ "<p class='modelFAQBodyContents'>"
+						+ "The radius (half the width) of the coverage bubble is approximately the distance between the Coverage Unit and Network (window) Unit. Here are some examples:"
+						+ "</br></br>Radius = 20 meters (66 ft.) for wood framed walls"
+						+ "</br></br>Radius is less for concrete interior walls"
+						+ "</br></br>Radius can easily exceed 65 meters (200 ft.) for open commercial spaces"
+						+ "</p></div></div></div>"	
+						+ "<div class='divLineDivider'></div>"
+						+ "<div class='panel panel-default'>"				        
+						+ "<div class='panel-heading'>"
+						+ "<h4 class='panel-title'>"
+						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelSeven'>"
+						+ "<div>"
+						+ "<p class='modalFAQPanelContent'>Is it legal to use signal boosters?</p>"
+						+ "</div>"
+						+ "<span class='pull-right faqSpan'>"
+						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
+						+ "</span></a></h4></div>"
+						+ "<div id='ModelSeven' class='panel-collapse collapse'>"
+						+ "<div class='panel-body'>"
+						+ "<p class='modelFAQBodyContents'>"
+						+ "Cel-Fi meets the newer regulatory requirements that allow a booster to be used (boosters that do not meet these requirements, which is the vast majority of them, are no longer legal).  For the FCC you can learn more by reading the new FCC Report and Order for signal boosters. According to these new regulations, consumers must receive permission from their carrier before using a booster. Consumer boosters sold after March 1, 2014, and some before that date will be marked with a label signifying it meets the FCC's new regulations."
+						+ "</p></div></div></div>"	
+						+ "<div class='divLineDivider'></div>"	
+						+ "<div class='panel panel-default'>"				        
+						+ "<div class='panel-heading'>"
+						+ "<h4 class='panel-title'>"
+						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelEight'>"
+						+ "<div>"
+						+ "<p class='modalFAQPanelContent'>Is it necessary to register my Cel-Fi?</p>"
+						+ "</div>"
+						+ "<span class='pull-right faqSpan'>"
+						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
+						+ "</span></a></h4></div>"
+						+ "<div id='ModelEight' class='panel-collapse collapse'>"
+						+ "<div class='panel-body'>"
+						+ "<p class='modelFAQBodyContents'>"
+						+ "If booster registration is required in your country, your system may arrive pre-registered or you may be asked to (it's very simple).  See your product insert for details.</br></br>"
+						+ "The FCC is now requiring all boosters in the U.S. to be approved for use by the Operator, and that all consumers register their boosters.  To learn more please visit the FCC site: http://wireless.fcc.gov/signal-boosters/index.html"  
+						+ "</p></div></div></div>"	
+						+ "<div class='divLineDivider'></div>"
+						+ "<div class='panel panel-default'>"				        
+						+ "<div class='panel-heading' >"
+						+ "<h4 class='panel-title'>"
+						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelNine'>"
+						+ "<div>"
+						+ "<p class='modalFAQPanelContent'>How do I register my Cel-Fi system?</p>"
+						+ "</div>"
+						+ "<span class='pull-right faqSpan'>"
+						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
+						+ "</span></a></h4></div>"
+						+ "<div id='ModelNine' class='panel-collapse collapse'>"
+						+ "<div class='panel-body'>"
+						+ "<p class='modelFAQBodyContents'>"
+						+ "The process is very simple and just takes a minute by following the link below to your Operator's Registration site.  If your system was provided by your Operator it may be preregistered (see product box insert)."
+						+ "</br></br>In the USA:</br></br>If your operator is T-Mobile, MetroPCS, TruPhone, or another T-Mobile network operator please register your booster at: www.T-Mobile.com/BoosterRegistration</br></br>If your operator is AT&T, Aio, or another AT&T network operator please register your booster at: www.attsignalbooster.com" 
+						+ "</p></div></div></div>" 
+						+ "<div class='divLineDivider'></div>"	
+						+ "<div class='panel panel-default'>"				        
+						+ "<div class='panel-heading'>"
+						+ "<h4 class='panel-title'>"
+						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelTen'>"
+						+ "<div>"
+						+ "<p class='modalFAQPanelContent'>Why do I have to register my Cel-Fi?</p>"
+						+ "</div>"
+						+ "<span class='pull-right faqSpan'>"
+						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
+						+ "</span>"
+						+ "</a></h4></div>"
+						+ "<div id='ModelTen' class='panel-collapse collapse'>"
+						+ "<div class='panel-body'>"
+						+ "<p class='modelFAQBodyContents'>"
+						+ "Why is this being done?  Because cellular systems are protected assets of the Operators that own them.  Many boosters in the market cause problems for those networks (which means all of us using the networks too).  New FCC/Operator approved boosters are better and don't cause problems, and Cel-Fi is the only booster in a special class of boosters that allows 100 dB of signal gain (30 dB or 1000x the gain of all other boosters)."  
+						+ "</p></div></div></div>"	
+						+ "<div class='divLineDivider'></div>"	
+						+ "<div class='panel panel-default'>"				        
+						+ "<div class='panel-heading'>"
+						+ "<h4 class='panel-title'>"
+						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelEleven'>"
+						+ "<div>"
+						+ "<p class='modalFAQPanelContent'>Will Cel-Fi boost the signal for Verizon or Sprint?</p>"
+						+ "</div>"
+						+ "<span class='pull-right faqSpan'>"
+						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
+						+ "</span></a></h4></div>"
+						+ "<div id='ModelEleven' class='panel-collapse collapse'>"
+						+ "<div class='panel-body'>"
+						+ "<p class='modelFAQBodyContents'>"
+						+ "At this time Verizon and Sprint will not work with any of the Cel-Fi products. We are always adding new technology to the Cel-Fi device line-up. Feel free to sign up for exclusive news and blog emails at the bottom of the page."
+						+ "</p></div></div></div>"	
+						+ "<div class='divLineDivider'></div>"	
+						+ "<div class='panel panel-default'>"				        
+						+ "<div class='panel-heading'>"
+						+ "<h4 class='panel-title'>"
+						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelTweleve'>"
+						+ "<div>"
+						+ "<p class='modalFAQPanelContent'>Can Cel-Fi boost the signal of multiple cellular networks at once?</p>"
+						+ "</div>"
+						+ "<span class='pull-right faqSpan'>"
+						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
+						+ "</span></a></h4></div>"
+						+ "<div id='ModelTweleve' class='panel-collapse collapse'>"
+						+ "<div class='panel-body'>"
+						+ "<p class='modelFAQBodyContents'>"
+						+ "Cel-Fi signal boosters are Operator specific, and will only boost one Operator's channels at a time. Being Operator specific is one of the main reasons that we are network safe and can provide 100 dB of signal gain, and why we are the only signal booster approved by a growing number of Operators."
+						+ "</p></div></div></div>"	
+						+ "<div class='divLineDivider'></div>"	
+						+ "<div class='panel panel-default'>"				        
+						+ "<div class='panel-heading'>"
+						+ "<h4 class='panel-title'>"
+						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelFourteen'>"
+						+ "<div>"
+						+ "<p class='modalFAQPanelContent'>Why is 100 dB of gain so important?</p>"
+						+ "</div>"
+						+ "<span class='pull-right faqSpan'>"
+						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
+						+ "</span></a></h4></div>"
+						+ "<div id='ModelFourteen' class='panel-collapse collapse'>"
+						+ "<div class='panel-body'>"
+						+ "<p class='modelFAQBodyContents'>"
+						+ "System gain is critical to a booster's performance because it tells us how much a signal may be improved and how beneficial the boosted signal can be.  Example: If you have a low level signal such as -90 dBm per carrier, adding 100 dB of System Gain gives +10 dBm per carrier which can cover a large area.  In contrast adding only 70 dB of gain would only give -20 dBm of signal per carrier which would only cover a very small space.  Therefore a booster with a gain of 70 dB would need a very strong donor signal to be of much use, regardless of the stated transmit power that likely is going unused.</br></br>In other words, the higher the gain of the booster, the better it will work, even when far away from a base station."
+						+ "</p></div></div></div>"	
+						+ "<div class='divLineDivider'></div>"	
+						+ "<div class='panel panel-default'>"				        
+						+ "<div class='panel-heading'>"
+						+ "<h4 class='panel-title'>"
+						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelFifteen'>"
+						+ "<div>"
+						+ "<p class='modalFAQPanelContent'>Is Cel-Fi carrier/operator specific?</p>"
+						+ "</div>"
+						+ "<span class='pull-right faqSpan'>"
+						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
+						+ "</span></a></h4></div>"
+						+ "<div id='ModelFifteen' class='panel-collapse collapse'>"
+						+ "<div class='panel-body'>"
+						+ "<p class='modelFAQBodyContents'>"
+						+ "Yes, and for a good reason!  Cel-Fi is controlled by and operates as an extension of an operator's network.  This is what allows Cel-Fi (by regulatory authority) to boost signals about 1000x more than other solutions, and therefore cover very large areas even if the original network signal is weak.  And it works very well.</br></br>Broad-spectrum repeaters can cause interference and damage to networks, so operators have adopted a strict policy against the use of these legacy signal boosters on their own networks. However, Cel-Fi (the only smart signal booster of its kind), is authorized for use by each carrier and allowed to transmit on their licensed spectrum without ruining things for anyone else."
+						+ "</p></div></div></div>"	
+						+ "<div class='divLineDivider'></div>"	
+						+ "<div class='panel panel-default'>"				        
+						+ "<div class='panel-heading' >"
+						+ "<h4 class='panel-title'>"
+						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelSixteen'>"
+						+ "<div>"
+						+ "<p class='modalFAQPanelContent'>Why doesn't Cel-Fi work with different operators?</p>"
+						+ "</div>"
+						+ "<span class='pull-right faqSpan'>"
+						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
+						+ "</span></a></h4></div>"
+						+ "<div id='ModelSixteen' class='panel-collapse collapse'>"
+						+ "<div class='panel-body'>"
+						+ "<p class='modelFAQBodyContents'>"
+						+ "Not all cellular operators use the same technologies, and we do not boost the every technology available around the world. The Cel-Fi systems will support 3G(UMTS/WCMDA), 4G(HSPA & HAPS+), and LTE technology of operators that have approved the use of Cel-Fi on their network. You can reach out to your operator for more information on what specific technology they use."
+						+ "</p></div></div></div>"	
+						+ "<div class='divLineDivider'></div>"	
+						+ "<div class='panel panel-default'>"				        
+						+ "<div class='panel-heading'>"
+						+ "<h4 class='panel-title'>"
+						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelSeventeen'>"
+						+ "<div>"
+						+ "<p class='modalFAQPanelContent'>What technologies does Cel-Fi support?</p>"
+						+ "</div>"
+						+ "<span class='pull-right faqSpan'>"
+						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
+						+ "</span></a></h4></div>"
+						+ "<div id='ModelSeventeen' class='panel-collapse collapse'>"
+						+ "<div class='panel-body'>"
+						+ "<p class='modelFAQBodyContents'>Cel-Fi system will support 3G(UMTS/WCDMA), 4G (HSPA/HSPA+) and LTE.</br></br>Each Cel-Fi system is different. Check your box for a Quick Start Guide, or visits the support section of our website for more specific information about your specific product."
+						+ "</p></div></div></div>"	
+						+ "<div class='divLineDivider'></div>"
+						+ "<div class='panel panel-default'>"				        
+						+ "<div class='panel-heading' >"
+						+ "<h4 class='panel-title'>"
+						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelEighteen'>"
+						+ "<div>"
+						+ "<p class='modalFAQPanelContent'>I've installed Cel-Fi but I do not see more bars on my phone.</p>"
+						+ "</div>"
+						+ "<span class='pull-right faqSpan'>"
+						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
+						+ "</span></a></h4></div>"
+						+ "<div id='ModelEighteen' class='panel-collapse collapse'>"
+						+ "<div class='panel-body'>"
+						+ "<p class='modelFAQBodyContents'>There could be several reasons for this: First you can try rebooting your phone near the Coverage Unit so it takes a fresh look at the available channels. Also verify that your phone is compatible with the channels that your Cel-Fi model is boosting (maybe your handset is “unlocked” and actually does not fully support all your current Operator's channels). iPhones can also show fewer 'bars' of signal if the network is heavily loaded (click here to learn more).</br></br>Note that Cel-Fi RS1 and RS2 models do not support LTE. If your phone is LTE capable and therefore is not showing boosted service, if needed it is designed to switch over to non-LTE services when it needs to, such as in a call. This is true with or without Cel-Fi and what matters is that now you have reliable service where you need it!</br></br>If you would like the benefits of LTE service as well, you can always upgrade your Cel-Fi to a newer version that also supports LTE."
+						+ "</p></div></div></div>"	
+						+ "<div class='divLineDivider'></div>"
+						+ "<div class='panel panel-default'>"				        
+						+ "<div class='panel-heading' >"
+						+ "<h4 class='panel-title'>"
+						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelNineteen'>"
+						+ "<div>"
+						+ "<p class='modalFAQPanelContent'>Once installed, will the Cel-Fi require maintenance, or adjustments if changes occur to the native cellular network?</p>"
+						+ "</div>"
+						+ "<span class='pull-right faqSpan'>"
+						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
+						+ "</span></a></h4></div>"
+						+ "<div id='ModelNineteen' class='panel-collapse collapse'>"
+						+ "<div class='panel-body'>"
+						+ "<p class='modelFAQBodyContents'>No. Cel-fi does not require any maintenance. The Cel-Fi systems will self-adjust and reconfigure automatically to changing cellular networks situations."
+						+ "</p></div></div></div>"	
+						+ "<div class='divLineDivider'></div>"
+						+ "<div class='panel panel-default'>"				        
+						+ "<div class='panel-heading'>"
+						+ "<h4 class='panel-title'>"
+						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelTwenty'>"
+						+ "<div>"
+						+ "<p class='modalFAQPanelContent'>What is IntelliBoost?</p>"
+						+ "</div>"
+						+ "<span class='pull-right faqSpan'>"
+						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
+						+ "</span></a></h4></div>"
+						+ "<div id='ModelTwenty' class='panel-collapse collapse'>"
+						+ "<div class='panel-body'>"
+						+ "<p class='modelFAQBodyContents'>The Nextivity IntelliBoost Baseband Processor is the first core processor designed specifically to optimize the indoor transmission and reception of 3G and 4G/LTE wireless signals. With advanced filtering, equalization and echo cancellation techniques, Nextivity has developed an embedded architecture which delivers unprecedented in-building data rates and pervasive 3G and 4G/LTE connectivity. The IntelliBoost processor ensures that Cel-Fi products never negatively impact the macro network while providing maximum coverage."											
+						+ "</p></div></div></div>"	
+						+ "<div class='divLineDivider'></div>"
+						+ "<div class='panel panel-default'>"				        
+						+ "<div class='panel-heading' >"
+						+ "<h4 class='panel-title'>"
+						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelTwentyOne'>"
+						+ "<div>"
+						+ "<p class='modalFAQPanelContent'>What frequencies link the Network (Window) Unit and Coverage Unit?</p>"
+						+ "</div>"
+						+ "<span class='pull-right faqSpan'>"
+						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
+						+ "</span></a></h4></div>"
+						+ "<div id='ModelTwentyOne' class='panel-collapse collapse'>"
+						+ "<div class='panel-body'>"
+						+ "<p class='modelFAQBodyContents'>Cel-Fi automatically selects clear, unused channels from the UNII bands (5.15-5.35 GHz, 5.47-5.725 GHz and 5725-5825 GHz) for communication between the Network (Window) Unit and the Coverage Unit. While in some cases these are the same frequencies as Wi-Fi, the Cel-Fi system uses a proprietary protocol for communication and is designed to work in harmony with existing wireless devices such as Wi-Fi routers, cordless telephones or baby monitors."
+						+ "</p></div></div></div>"	
+						+ "<div class ='divLineDivider' id='BottomDivMargin'>"							
+						+ "</div></div></div>";
+		
+		$(faqDetails).appendTo('.modalBodyWrapper');
+		$('.headerContainer, #bodyContainer').hide();
+		$('.modalWrapper').show();
+	},
+	
+	registrationInfo: function () {
+		$('#modalTitle').html('Registration');
+	},
+	
+	contactInfo: function () {
+		// Yet to be given
+		$('#modalTitle').html('Contact Us');
 	}
 };
 

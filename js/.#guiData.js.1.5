@@ -13,7 +13,6 @@
 
 // The following variables are directly related to UI display.
 var guiProductType          = null;             // String based on the 3 digits in the SKU  590Nxxx.
-var guiMobilityFlag         = false;            // Set to true if "P" field of SKU, index 16, is 6 for Auto.
 var guiSerialNumber         = null;             // String based on the serial number.
 var guiBoost                = 0;                // Number from CalculateUniiBars().
 var guiNuBars               = 0;                // Number from CalculateNuBars(). 
@@ -78,7 +77,6 @@ var guiIconSbIfHtml         = null;
 var guiGotTechModeValues    = false;
 var guiBoosterModeText      = ["Auto", "3G", "4G-4GX", "Band A", "Band B", "Band C"];
 
-
 // The following arrays support the Tech Mode data received from the Cel-Fi unit and are organized as follows:
 //
 //        Index        guiNrLabels       guiNrUnits  guiNrSizeof     guiNr0Values   guiNr1Values   guiNr2Values   guiNr3Values
@@ -105,11 +103,11 @@ var guiBoosterModeText      = ["Auto", "3G", "4G-4GX", "Band A", "Band B", "Band
 //         14          UNII labels
 
 // Create undefind arrays of specified length
-const NR_DATA_TABLE_LENGTH       = 70;
-const NM_DATA_TABLE_LENGTH       = 15;
+var NR_DATA_TABLE_LENGTH       = 70;
+var NM_DATA_TABLE_LENGTH       = 15;
 
-const CR_DATA_TABLE_LENGTH       = 15;
-const CM_DATA_TABLE_LENGTH       = 15;
+var CR_DATA_TABLE_LENGTH       = 15;
+var CM_DATA_TABLE_LENGTH       = 15;
 
 
 var guiNrLabels          = new Array(NR_DATA_TABLE_LENGTH);
@@ -248,7 +246,7 @@ function GetTechValue( tag, channel )
     var i;
     var iVal = 0;
     
-    if( channel < NUM_CHANNELS )
+    if( channel < 4 )
     {
         for( i = 0; i < NR_DATA_TABLE_LENGTH; i++ )
         {
@@ -460,7 +458,6 @@ function DumpDataTables()
    
     PrintLog(1, "------------------------------------------------------------------------------------------------------------" );
     PrintLog(1, "guiProductType         = " + guiProductType );                    // String based on the 3 digits in the SKU  590Nxxx.
-    PrintLog(1, "guiMobilityFlag        = " + guiMobilityFlag );                   // Flag based on the "P" field of the SKU.
     PrintLog(1, "guiSerialNumber        = " + guiSerialNumber );                   // String based on the serial number.
     PrintLog(1, "guiBoost               = " + guiBoost );                          // CalculateUniiBars().
     PrintLog(1, "guiNuBars              = " + guiNuBars );                         // CalculateNuBars().
@@ -504,7 +501,6 @@ function MakeI8( iVal )
 {
     var iVal8  = new Int8Array(2);
     iVal8[0]   = iVal;
-    iVal8[1]   = 0;
     
     return( iVal8[0] ); 
 }
@@ -514,7 +510,6 @@ function MakeI16( iVal )
 {
     var iVal16  = new Int16Array(2);
     iVal16[0]   = iVal;
-    iVal16[1]   = 0;
     
     return( iVal16[0] ); 
 }
@@ -524,7 +519,6 @@ function MakeI32( iVal )
 {
     var iVal32  = new Int32Array(2);
     iVal32[0]   = iVal;
-    iVal32[1]   = 0;
     
     return( iVal32[0] ); 
 }

@@ -3,7 +3,7 @@
 //  File: bluetoothle.js
 //
 //  Description:  This file contains all functionality to connect and maintain a connection
-//                to a Nextivity bluetoothle device.  Use with plugin 1.0.6.
+//                to a Nextivity bluetoothle device.
 //
 //
 //                External functionality that must be maintained to support the SouthBound IF concept:
@@ -99,7 +99,7 @@
 
 
 // Use the following global variables to determine South Bound IF status.
-var isSouthBoundIfStarted   = false;    // Check if isSouthBoundIfEnabled after isShouthBoundIfStarted is true...
+var isSouthBoundIfStarted   = false;    // Check is isSouthBoundIfEnabled after isShouthBoundIfStarted is true...
 var isSouthBoundIfEnabled   = false;
 var isSouthBoundIfCnx       = false;
 var szSouthBoundIfEnableMsg = "Bluetooth Required: Please Enable...";
@@ -109,7 +109,9 @@ var szSouthBoundIfInfoMsg   = "Indicates if connected to Cel-Fi device via Bluet
 
 
 var addressKey      = "address";
-var myLastBtAddress = null;
+var btAddr                      = null;   // Version 2.0.0 requires address for many functions.
+var bTryReconnect               = false;  // Version 2.0.0 requires reconnect.
+var myLastBtAddress             = null;
 
 // const   TX_MAX_BYTES_PER_CONN           = 20;       
 const   TX_MAX_BYTES_PER_BUFFER         = 20;       // Android has 4 Tx buffers, IOS has 6 Tx buffers.
@@ -133,10 +135,6 @@ var scanTimer          = null;
 var connectTimer       = null;
 var reconnectTimer     = null;
 var subscribeTimer     = null;
-var bMaxRssiScanning   = false;
-var maxRssi            = -200;
-var maxRssiAddr        = null;
-
 
 var myStatusWrittenObj = {"status":"written"};
 
@@ -160,7 +158,7 @@ function OpenSouthBoundIf()
     PrintLog(10, "BT: Starting bluetooth");
     
         
-    var paramsObj = { "request": false,  "statusReceiver": true };
+    var paramsObj = { "request": true,  "statusReceiver": true };
     bluetoothle.initialize(initializeSuccess, initializeError, paramsObj);
 }
 
@@ -169,14 +167,14 @@ function initializeSuccess(obj)
 {
   if (obj.status == "enabled")
   {
-      // If we initialize successfully, start a loop to maintain a connection...
+    // If we initialize successfully, start a loop to maintain a connection...
       PrintLog(10, "BT: Initialization successful, starting periodic bluetooth maintenance loop...");
       isSouthBoundIfEnabled = true;
       BluetoothLoop();
   }
   else
   {
-      PrintLog(99, "BT: Unexpected initialize status: " + obj.status);
+    PrintLog(99, "BT: Unexpected initialize status: " + obj.status);
   }
   
   isSouthBoundIfStarted = true;
@@ -187,11 +185,6 @@ function initializeError(obj)
   PrintLog(99, "BT: Initialize error: " + obj.error + " - " + obj.message);
   isSouthBoundIfEnabled = false;
   isSouthBoundIfStarted = true;
-  ShowConfirmPopUpMsg(
-          "This app requires Bluetooth to be enabled.<br>Please activate Bluetooth from your system settings.",    // message
-          HandlePrivacyConfirmation,      // callback to invoke with index of button pressed
-          'Bluetooth Required',               // title
-          ['Ok'] );  
 }
 
 
@@ -200,7 +193,8 @@ function initializeError(obj)
 // Check every 5 seconds if not connected and subscribed and every 15 seconds if already connected...
 function BluetoothLoop()
 {
-    bluetoothle.isConnected( isConnectedCallback );
+    var paramsObj = {"address":btAddr};
+    bluetoothle.isConnected( isConnectedCallback, paramsObj );
 
 }
 
@@ -239,19 +233,8 @@ function StartBluetoothScan()
 {
     PrintLog(10, "BT: Starting scan for Cel-Fi devices.");
     var paramsObj = {"serviceAssignedNumbers":[bridgeServiceUuid]};
-    
-    bMaxRssiScanning = true;
-    connectTimer     = null;
-    setTimeout(scanMaxRssiTimeout, 1000 );
     bluetoothle.startScan(startScanSuccess, startScanError, paramsObj);
 }
-
-function scanMaxRssiTimeout()
-{
-    bMaxRssiScanning = false;
-    PrintLog(10, "BT: Set bMaxRssiScanning to false.  bMaxRssiScanning="  + bMaxRssiScanning );
-}
-
 
 function startScanSuccess(obj)
 {
@@ -353,38 +336,7 @@ function startScanSuccess(obj)
                 bDeviceFound = true;
             } 
         }   
- 
-         
-        // See if we need to continue scanning to look for max RSSI, only if we have not connected before...
-        if( bDeviceFound && (myLastBtAddress == null) )
-        {
-            if( bMaxRssiScanning )
-            {
-                PrintLog(10, "BT: Max RSSI scanning, addr: " + obj.address + " RSSI: " + obj.rssi + " max RSSI so far:" + maxRssi );
-                
-                if( obj.rssi > maxRssi )
-                {
-                    maxRssi      = obj.rssi;
-                    maxRssiAddr  = obj.address
-                    PrintLog(10, "BT: This Cel-Fi address: " + maxRssiAddr + " has max RSSI so far: " + maxRssi );
-                    
-                    if( window.device.platform == iOSPlatform )
-                    {
-                        uIcd         = u8ScanResults[1];
-                        swVerBtScan  = U8ToHexText(u8ScanResults[2]) + "." + U8ToHexText(u8ScanResults[3]);            
-                    }
-                    else
-                    {
-                        uIcd        = u8ScanResults[24];
-                        swVerBtScan = U8ToHexText(u8ScanResults[25]) + "." + U8ToHexText(u8ScanResults[26]);
-                    }
-                }
-                
-                // If we are still scanning for the max then do not proceed below...
-                bDeviceFound = false;
-            }
-        }
-
+        
 
         if( bDeviceFound )
         {
@@ -399,21 +351,33 @@ function startScanSuccess(obj)
                 else
                 {
                     PrintLog(1, "BT: This Cel-Fi address: " + obj.address + " matches the last connected Cel-Fi address: " + myLastBtAddress + ".  Reconnecting..." );
-                    
                 }
             }
         }
          
  
-        if( bDeviceFound && (connectTimer == null) )
+        if( bDeviceFound )
         {
+         
+            if( window.device.platform == iOSPlatform )
+            {
+                uIcd         = u8ScanResults[1];
+                swVerBtScan  = U8ToHexText(u8ScanResults[2]) + "." + U8ToHexText(u8ScanResults[3]);            
+            }
+            else
+            {
+                uIcd        = u8ScanResults[24];
+                swVerBtScan = U8ToHexText(u8ScanResults[25]) + "." + U8ToHexText(u8ScanResults[26]);
+            }
+        
+        
             bluetoothle.stopScan(stopScanSuccess, stopScanError);
             clearScanTimeout();
     
             // Store the address on the phone...not used
 //            window.localStorage.setItem(addressKey, obj.address);
         
-            ConnectBluetoothDevice(maxRssiAddr);
+            ConnectBluetoothDevice(obj.address);
         }
         
     }  // if we have found "advertisement"
@@ -440,13 +404,6 @@ function scanTimeout()
 {
   PrintLog(10, "BT: Scanning time out, stopping");
   bluetoothle.stopScan(stopScanSuccess, stopScanError);
-  
-  if( (maxRssiAddr != null) && (connectTimer == null) )
-  {
-    ConnectBluetoothDevice(maxRssiAddr);
-  }
-            
-              
 }
 
 function clearScanTimeout()
@@ -505,11 +462,23 @@ function UpdateBluetoothIcon(cnx)
 // If a timeout occurs, the connection attempt should be canceled using disconnect().
 function ConnectBluetoothDevice(address)
 {
-  PrintLog(1, "BT: Connecting to: " + address + " Max RSSI= " + maxRssi );     // 5 second timeout
+    var paramsObj = {"address":address};
   
-  var paramsObj = {"address":address};
-  bluetoothle.connect(connectSuccess, connectError, paramsObj);
-  connectTimer = setTimeout(connectTimeout, 5000);
+  
+    if( bTryReconnect == true )
+    {
+        PrintLog(10, "BT: Begin reconnection to: " + address + " with 5 second timeout");
+        bluetoothle.reconnect(connectSuccess, connectError, paramsObj);
+    }
+    else
+    {
+        PrintLog(10, "BT: Begin connection to: " + address + " with 5 second timeout");
+        bluetoothle.connect(connectSuccess, connectError, paramsObj);
+    }
+
+    btAddr        = address;
+    bTryReconnect = false; 
+    connectTimer  = setTimeout(connectTimeout, 5000);
 }
 
 function connectSuccess(obj)
@@ -540,9 +509,7 @@ function connectSuccess(obj)
     
     if( obj.status == "disconnected" )
     {
-//        CloseBluetoothDevice();
-        maxRssiAddr = null;
-        DisconnectBluetoothDevice();        // Disconnect and close
+        CloseBluetoothDevice();
     }
     clearConnectTimeout();
   }
@@ -550,9 +517,9 @@ function connectSuccess(obj)
 
 function connectError(obj)
 {
-  PrintLog(99, "BT: Connect error: " + obj.error + " - " + obj.message);
-  clearConnectTimeout();
-  CloseBluetoothDevice();
+  PrintLog(10, "BT: Connect error (Possible disconnect): " + obj.error + " - " + obj.message);    // Started getting this message with plugin v2.0.0 when disconnecting.
+//  clearConnectTimeout();
+//  CloseBluetoothDevice();
 }
 
 function connectTimeout()
@@ -575,7 +542,10 @@ function clearConnectTimeout()
 // DisconnectBluetoothDevice...................................................................................
 function DisconnectBluetoothDevice()
 {
-  bluetoothle.disconnect(disconnectSuccess, disconnectError);
+    PrintLog(10, "BT: DisconnectBluetoothDevice (disconnect and close)");
+
+  var paramsObj = {"address":btAddr};
+  bluetoothle.disconnect(disconnectSuccess, disconnectError, paramsObj);
 }
 
 function disconnectSuccess(obj)
@@ -587,7 +557,8 @@ function disconnectSuccess(obj)
         // Update the bluetooth icon...
         UpdateBluetoothIcon( false );
 
-        CloseBluetoothDevice();
+        var paramsObj = {"address":btAddr};
+        bluetoothle.close(closeSuccess, closeError, paramsObj);
     }
     else if (obj.status == "disconnecting")
     {
@@ -608,7 +579,24 @@ function disconnectError(obj)
 // CloseBluetoothDevice...................................................................................
 function CloseBluetoothDevice()
 {
-  bluetoothle.close(closeSuccess, closeError);
+    PrintLog(10, "BT CloseBluetoothDevice");
+
+    // First check to see if disconnected before closing...
+    var paramsObj = {"address":btAddr};
+    bluetoothle.isConnected(isConnectedSuccess, paramsObj);
+}
+
+function isConnectedSuccess(obj)
+{
+    if (obj.isConnected)
+    {
+        DisconnectBluetoothDevice();    // Disconnect and close
+    }
+    else
+    {
+        var paramsObj = {"address":btAddr};
+        bluetoothle.close(closeSuccess, closeError, paramsObj);
+    }
 }
 
 function closeSuccess(obj)
@@ -619,14 +607,30 @@ function closeSuccess(obj)
         UpdateBluetoothIcon( false );
     }
     else
-    {
-        PrintLog(99, "BT: Unexpected close status: " + obj.status);
-    }
+      {
+      PrintLog(99, "BT: Unexpected close status: " + obj.status);
+      }
 }
 
 function closeError(obj)
 {
-    PrintLog(99, "BT: Close error: " + obj.error + " - " + obj.message);
+  PrintLog(99, "BT: Close error: " + obj.error + " - " + obj.message);
+  
+  if( obj.error == "isNotDisconnected" )    // Added for plugin v2.0.0
+  {
+/*   
+    clearTimeout(BluetoothLoop);
+    
+    // Restart Bluetooth...
+    StartBluetooth();
+    
+   
+    DisconnectBluetoothDevice();
+    
+    // Try reconnecting next time...
+    bTryReconnect = true;
+*/    
+  }
 }
 
 
@@ -638,13 +642,14 @@ function DiscoverBluetoothDevice()
     if( window.device.platform == iOSPlatform )
     {
         PrintLog(10, "BT:  IOS platform.  Begin search for bridge service");
-        var paramsObj = {"serviceUuids":[bridgeServiceUuid]};
+        var paramsObj = {"address":btAddr, "serviceUuids":[bridgeServiceUuid]};
         bluetoothle.services(servicesIosSuccess, servicesIosError, paramsObj);
     }
     else if( window.device.platform == androidPlatform )
     {
+        var paramsObj = {"address":btAddr};
         PrintLog(10, "BT:  Android platform.  Beginning discovery");
-        bluetoothle.discover(discoverSuccess, discoverError);
+        bluetoothle.discover(discoverSuccess, discoverError, paramsObj);
     }
 }
 
@@ -653,7 +658,8 @@ function DiscoverBluetoothDevice()
 // IOS only ...................................................................................................
 function servicesIosSuccess(obj)
 {
-    if( obj.status == "discoveredServices" )
+//    if( obj.status == "discoveredServices" )          // v1.0.6
+    if( obj.status == "services" )                      // v2.0.0
     {
         PrintLog(10, "BT: IOS Service discovered: " + JSON.stringify(obj));
         var serviceUuids = obj.serviceUuids;
@@ -664,7 +670,7 @@ function servicesIosSuccess(obj)
             if( serviceUuid == bridgeServiceUuid )
             {
               PrintLog(10, "BT:  IOS platform.  Finding bridge characteristics...");
-              var paramsObj = {"serviceUuid":bridgeServiceUuid, "characteristicUuids":[bridgeTxCharacteristicUuid, bridgeRxCharacteristicUuid]};
+              var paramsObj = {"address":btAddr, "serviceUuid":bridgeServiceUuid, "characteristicUuids":[bridgeTxCharacteristicUuid, bridgeRxCharacteristicUuid]};
               bluetoothle.characteristics(characteristicsIosSuccess, characteristicsIosError, paramsObj);
               return;
             }
@@ -691,7 +697,8 @@ function servicesIosError(obj)
 function characteristicsIosSuccess(obj)
 {
   
-    if( obj.status == "discoveredCharacteristics" )
+//    if( obj.status == "discoveredCharacteristics" )       // v1.0.6
+    if( obj.status == "characteristics" )                   // v2.0.0
     {
         PrintLog(10, "BT: IOS Characteristics discovered: " + JSON.stringify(obj));
         var characteristics = obj.characteristics;
@@ -701,7 +708,7 @@ function characteristicsIosSuccess(obj)
 
             if( characteristicUuid == bridgeRxCharacteristicUuid )
             {
-                var paramsObj = {"serviceUuid":bridgeServiceUuid, "characteristicUuid":bridgeRxCharacteristicUuid};
+                var paramsObj = {"address":btAddr, "serviceUuid":bridgeServiceUuid, "characteristicUuid":bridgeRxCharacteristicUuid};
                 bluetoothle.descriptors(descriptorsIosRxSuccess, descriptorsIosRxError, paramsObj);
                 return;
             }
@@ -726,10 +733,11 @@ function characteristicsIosError(obj)
 
 function descriptorsIosRxSuccess(obj)
 {
-    if (obj.status == "discoveredDescriptors")
+//    if (obj.status == "discoveredDescriptors")    // v1.0.6
+    if (obj.status == "descriptors")                // v2.0.0
     {
         PrintLog(10, "BT: Rx Discovery completed.  Name: " + obj.name + " add: " + obj.address + "stringify: " + JSON.stringify(obj));
-        var paramsObj = {"serviceUuid":bridgeServiceUuid, "characteristicUuid":bridgeTxCharacteristicUuid};
+        var paramsObj = {"address":btAddr, "serviceUuid":bridgeServiceUuid, "characteristicUuid":bridgeTxCharacteristicUuid};
         bluetoothle.descriptors(descriptorsIosTxSuccess, descriptorsIosTxError, paramsObj);        
     }
     else
@@ -750,7 +758,7 @@ function descriptorsIosRxError(obj)
 
 function descriptorsIosTxSuccess(obj)
 {
-    if (obj.status == "discoveredDescriptors")
+    if (obj.status == "descriptors")
     {
         PrintLog(10, "BT: Tx Discovery completed, now subscribe.  Name: " + obj.name + " add: " + obj.address + "stringify: " + JSON.stringify(obj));
 
@@ -810,7 +818,7 @@ function discoverError(obj)
 function SubscribeBluetoothDevice()
 {
     // Version 1.0.2 of the plugin
-    var paramsObj = {"serviceUuid":bridgeServiceUuid, "characteristicUuid":bridgeTxCharacteristicUuid, "isNotification":true};
+    var paramsObj = {"address":btAddr, "serviceUuid":bridgeServiceUuid, "characteristicUuid":bridgeTxCharacteristicUuid, "isNotification":true};
     
     bluetoothle.subscribe(subscribeSuccess, subscribeError, paramsObj);
 }
@@ -831,24 +839,24 @@ function subscribeSuccess(obj)
     {
         PrintLog(10, "BT: Subscription started");
         isBluetoothSubscribed = true;
-        UpdateBluetoothIcon( true );        // Wait until here before saying isSouthBoundIfCnx
+        UpdateBluetoothIcon( true );        // Wait until here before saying isSouthBoundIfCnx        
     }
     else
-    {
+      {
         PrintLog(99, "BT: Unexpected subscribe status: " + obj.status);
         DisconnectBluetoothDevice();
-    }
+  }
 }
 
 function subscribeError(msg)
 {
-    PrintLog(99, "BT: Subscribe error: " + msg.error + " - " + msg.message);
+      PrintLog(99, "BT: Subscribe error: " + msg.error + " - " + msg.message);
 }
 
 function unsubscribeDevice()
 {
   PrintLog(10, "BT: Unsubscribing bridge service");
-  var paramsObj = {"serviceAssignedNumber":bridgeServiceUuid, "characteristicAssignedNumber":bridgeTxCharacteristicUuid};
+  var paramsObj = {"address":btAddr, "serviceAssignedNumber":bridgeServiceUuid, "characteristicAssignedNumber":bridgeTxCharacteristicUuid};
   bluetoothle.unsubscribe(unsubscribeSuccess, unsubscribeError, paramsObj);
 }
 
@@ -958,7 +966,7 @@ function WriteBluetoothDeviceEx()
                 // If bluetooth version is 01.00 then use Response, otherwise we can use the faster no response.
                 // Problem is that in version 01.00 of the bluetooth code I did not set the WRITE-NO-RESPONSE bit.
                 // Version 01.00: Use WRITE with response, slower
-                paramsObj[j] = {"value":u64, "serviceUuid":bridgeServiceUuid, "characteristicUuid":bridgeRxCharacteristicUuid};
+                paramsObj[j] = {"address":btAddr, "value":u64, "serviceUuid":bridgeServiceUuid, "characteristicUuid":bridgeRxCharacteristicUuid};
                 
                 // Don't use the timer to come back, use the Succes function.
                 clearTimeout(myRtnTimer);
@@ -967,7 +975,7 @@ function WriteBluetoothDeviceEx()
             {
                 // Normal operation for android.
                 // Normal operation for IOS when BT version > 1.00.
-                paramsObj[j] = {"value":u64, "serviceUuid":bridgeServiceUuid, "characteristicUuid":bridgeRxCharacteristicUuid, "type":"noResponse"};
+                paramsObj[j] = {"address":btAddr, "value":u64, "serviceUuid":bridgeServiceUuid, "characteristicUuid":bridgeRxCharacteristicUuid, "type":"noResponse"};
             }
 
             // Each call to the write takes 5 to 10 mS on my Android phone.    
@@ -1097,32 +1105,9 @@ function SetMaxTxPhoneBuffers(numBuffers)
 
 
 
-/*
-
-// GetBluetoothRssi........................................................................
-function GetBluetoothRssi()
-{
-    var paramsObj = {"address":myLastBtAddress};
-    
-    bluetoothle.rssi(rssiSuccess, rssiError, paramsObj);
-}
 
 
-function rssiSuccess(obj)
-{   
-    if (obj.status == "rssi")
-    {
-//        PrintLog(10, "BT: RSSI data received" + obj.rssi );
-        UpdateRssiLine( obj.rssi );  
-    }
-}
 
-function rssiError(msg)
-{
-    PrintLog(99, "BT: GetRssi error: " + msg.error + " - " + msg.message);
-}
-
-*/
 
 
 

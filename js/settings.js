@@ -246,17 +246,10 @@ function SetBooster(mode)
         {
             SetNxtySuperMsgWaveData( NXTY_WAVEID_BAND_MASK_3G_TYPE, 0, NXTY_WAVEID_BAND_MASK_4G_TYPE, GO_ALL_BANDS );
         }
-        else if( mode == GO_MODE_BAND_A )                 
+        else if( (mode == GO_MODE_BAND_A) || (mode == GO_MODE_BAND_B) || (mode == GO_MODE_BAND_C) )                 
         {
-            SetNxtySuperMsgWaveData( NXTY_WAVEID_BAND_MASK_3G_TYPE, guiBoosterBands[0], NXTY_WAVEID_BAND_MASK_4G_TYPE, guiBoosterBands[0] );
-        }
-        else if( mode == GO_MODE_BAND_B )                 
-        {
-            SetNxtySuperMsgWaveData( NXTY_WAVEID_BAND_MASK_3G_TYPE, guiBoosterBands[1], NXTY_WAVEID_BAND_MASK_4G_TYPE, guiBoosterBands[1] );
-        }
-        else if( mode == GO_MODE_BAND_C )                 
-        {
-            SetNxtySuperMsgWaveData( NXTY_WAVEID_BAND_MASK_3G_TYPE, guiBoosterBands[2], NXTY_WAVEID_BAND_MASK_4G_TYPE, guiBoosterBands[2] );
+            var uTemp = 0x01 << (guiBoosterBands[mode - GO_MODE_BAND_A]-1);
+            SetNxtySuperMsgWaveData( NXTY_WAVEID_BAND_MASK_3G_TYPE, uTemp, NXTY_WAVEID_BAND_MASK_4G_TYPE, uTemp );
         }
         
         bNxtyUserSetInProgress = false;

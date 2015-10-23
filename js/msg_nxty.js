@@ -834,7 +834,7 @@ var nxty = {
 
             case NXTY_SUPER_MSG_RSP:
             {
-               
+
                
                 if( nxtyCurrentReq == NXTY_SUPER_MSG_INFO_TYPE )
                 {
@@ -1472,7 +1472,7 @@ var nxty = {
                             else
                             {
                                 // Look for bands.........
-                                for( i = 0; i < guiBosterBands.length; i++ )
+                                for( i = 0; i < guiBoosterBands.length; i++ )
                                 {
                                   uTemp = 0x01 << (guiBoosterBands[i]-1);
                                   if( (nxtyBandMask3G == uTemp) || (nxtyBandMask4G == uTemp) )

@@ -30,6 +30,7 @@ const   MAX_LABEL_PAGE         = 8;
 
 
 
+
 // --------------------------------------------------------------------------------------------
 // 
 function StartGatheringTechData() 
@@ -727,11 +728,9 @@ function ProcessTechData()
         }   // End of block switch
         
         // Fill in some gui data.................................................
-        guiBoost  = GetTechValue( "CU Bars", 4 );       // CalculateUniiBars().      
-        guiNuBars = GetTechValue( "NU Bars", 4 );       // CalculateNuBars().
-        
+
         // Simulate CalculateNuBars() in Ares code but on a per band basis.
-        for( i = 0; i < 4; i++ )
+        for( i = 0; i < guiRadios.length; i++ )
         {
             guiBands[i]             = GetTechValue( "Band",  i );
             guiRadios[i]            = String.fromCharCode(65 + GetTechValue( "Radio", i ));
@@ -763,6 +762,97 @@ function ProcessTechData()
             
             guiNetworkBars[i]       = iBars;
         }
+ 
+        // Boost:  -1: Too Close;   0,1,2: Fix it;   3,4,5,6: ok;   7,8,9: good;   10 Too Far
+        guiBoost  = GetTechValue( "CU Bars", 4 );       // CalculateUniiBars(). DB use as is, PRO: adjust,  GO: recalculate
+        
+        if( guiProductType == "PRO" )
+        {
+            switch( guiBoost )
+            {
+                case 1:     guiBoost = 2;   break;
+                case 2:     guiBoost = 4;   break;
+                case 3:     guiBoost = 6;   break;
+                case 4:     guiBoost = 8;   break;
+                case 5:     guiBoost = 9;   break;
+                case 6:     guiBoost = 10;  break;
+                default:    guiBoost = 0;   break;
+            }
+        }
+        else if( (guiProductType == "GO") || (guiProductType == "PRIME") ) 
+        {
+            var minSysGain;
+            var sysGain;
+            
+            minSysGain = 1000;
+            for( i = 0; i < NUM_CHANNELS; i++ )
+            {
+                // If relaying...
+                if( guiCellState[i] )
+                {
+                    sysGain = GetTechValue( "DL System Gain", i ) - GetTechValue( "DL Echo Gain", i );
+                    
+                    if( sysGain < minSysGain )
+                    {
+                        minSysGain = sysGain;
+                    }
+                }
+            }
+
+            if( guiProductType == "GO" )
+            {
+                if( guiMobilityFlag == false )
+                {
+                    if(      minSysGain <  63 )    guiBoost = BOOST_TOO_CLOSE;
+                    else if( minSysGain <= 66 )    guiBoost = 1;
+                    else if( minSysGain <= 69 )    guiBoost = 2;
+                    else if( minSysGain <= 72 )    guiBoost = 3;
+                    else if( minSysGain <= 75 )    guiBoost = 4;
+                    else if( minSysGain <= 78 )    guiBoost = 5;
+                    else if( minSysGain <= 81 )    guiBoost = 6;
+                    else if( minSysGain <= 84 )    guiBoost = 7;
+                    else if( minSysGain <= 87 )    guiBoost = 8;
+                    else if( minSysGain <= 90 )    guiBoost = 9;
+                    else if( minSysGain >  90 )    guiBoost = BOOST_TOO_FAR;
+                }
+                else
+                {
+                    if(      minSysGain <  38 )    guiBoost = BOOST_TOO_CLOSE;
+                    else if( minSysGain <= 41 )    guiBoost = 1;
+                    else if( minSysGain <= 44 )    guiBoost = 2;
+                    else if( minSysGain <= 47 )    guiBoost = 3;
+                    else if( minSysGain <= 50 )    guiBoost = 4;
+                    else if( minSysGain <= 53 )    guiBoost = 5;
+                    else if( minSysGain <= 56 )    guiBoost = 6;
+                    else if( minSysGain <= 59 )    guiBoost = 7;
+                    else if( minSysGain <= 62 )    guiBoost = 8;
+                    else if( minSysGain <= 65 )    guiBoost = 9;
+                    else if( minSysGain >  65 )    guiBoost = BOOST_TOO_FAR;
+                }
+               
+            }
+            else if( guiProductType == "PRIME" )
+            {
+                if(      minSysGain <  43 )    guiBoost = BOOST_TOO_CLOSE;
+                else if( minSysGain <= 46 )    guiBoost = 1;
+                else if( minSysGain <= 49 )    guiBoost = 2;
+                else if( minSysGain <= 52 )    guiBoost = 3;
+                else if( minSysGain <= 55 )    guiBoost = 4;
+                else if( minSysGain <= 58 )    guiBoost = 5;
+                else if( minSysGain <= 61 )    guiBoost = 6;
+                else if( minSysGain <= 64 )    guiBoost = 7;
+                else if( minSysGain <= 67 )    guiBoost = 8;
+                else if( minSysGain <= 70 )    guiBoost = 9;
+                else if( minSysGain >  70 )    guiBoost = BOOST_TOO_FAR;
+            }
+        
+        }
+        
+        
+             
+        guiNuBars = GetTechValue( "NU Bars", 4 );       // CalculateNuBars().
+ 
+ 
         
         
     }       // End of binary data
