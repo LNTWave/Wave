@@ -717,21 +717,21 @@ function DldLoop()
     // Make sure bluetooth stays alive...
     if( window.device.platform != pcBrowserPlatform )
     {
-    if( isSouthBoundIfCnx )
-    {
-        if( BluetoothTimeoutTimer != null )
+        if( isSouthBoundIfCnx )
         {
-            clearTimeout(BluetoothTimeoutTimer);
-            BluetoothTimeoutTimer = null;
+            if( BluetoothTimeoutTimer != null )
+            {
+                clearTimeout(BluetoothTimeoutTimer);
+                BluetoothTimeoutTimer = null;
+            }
         }
-    }
-    else
-    {
-        if( BluetoothTimeoutTimer == null )
+        else
         {
-            BluetoothTimeoutTimer = setTimeout(DldBluetoothTimeout, 5000);
+            if( BluetoothTimeoutTimer == null )
+            {
+                BluetoothTimeoutTimer = setTimeout(DldBluetoothTimeout, 5000);
+            }
         }
-    }
     }
     
         
@@ -937,9 +937,13 @@ if( DldTimeoutCount >= 2 )
                 // Path:   "file:///storage/emulated/0/Download/PicFromCloud.bin"
                 var myPhoneFilePath;
                 if( window.device.platform != pcBrowserPlatform )
+                {
                     myPhoneFilePath = g_fileSystemDir.toURL() + myDownloadFileName;
+                }
                 else
+                {
                     myPhoneFilePath = g_fileSystemDir + myDownloadFileName;
+                }
             
                 DldState                    = DLD_STATE_WAIT_ON_CLOUD;
 //                DldTimeoutCount             = 0;
@@ -1015,11 +1019,11 @@ if( DldTimeoutCount >= 2 )
                     // Make an array of UINT8 type.  evt.target.result holds the contents of the file.
                     if( window.device.platform != pcBrowserPlatform )
                     {
-                    u8FileBuff    = new Uint8Array(g_fileReadEvent.target.result);
-                
-                    actualFileLen = u8FileBuff.length;
-                    resumeFileLen = u8FileBuff.length;
-                    PrintLog(1, "Length of array, i.e. file is: " + actualFileLen ); 
+                        u8FileBuff    = new Uint8Array(g_fileReadEvent.target.result);
+                    
+                        actualFileLen = u8FileBuff.length;
+                        resumeFileLen = u8FileBuff.length;
+                        PrintLog(1, "Length of array, i.e. file is: " + actualFileLen ); 
                     }
                 
                     // Start the actual download process to Cel-Fi
@@ -1103,7 +1107,7 @@ if( DldTimeoutCount >= 2 )
                         if(  (DldOrderArray[currentDldIndex] == DLD_NU) || 
                             ((DldOrderArray[currentDldIndex] == DLD_NU_PIC) && (bNuPicReset))   )
                         {
-                            if( IsUartRemote() == false )     
+                            if( (IsUartRemote() == false) && (bCnxToOneBoxNu == false) )     
                             {
                                 // Keep trying until we are connected remotely...
                                 SetUartRemote();
@@ -1126,7 +1130,7 @@ if( DldTimeoutCount >= 2 )
                             ((DldOrderArray[currentDldIndex] == DLD_CU_PIC) && (bCuPicReset))   ||
                             ((DldOrderArray[currentDldIndex] == DLD_CU_BT)  && (bBtReset))      )
                         {
-                            if( IsUartRemote() == false )     
+                            if( (IsUartRemote() == false) && (bCnxToOneBoxNu == false) )     
                             {
                                 // Keep trying until we are connected remotely...
                                 SetUartRemote();
@@ -1161,17 +1165,17 @@ if( DldTimeoutCount >= 2 )
                     }
                     else
                     {
-                    u8Buff[0] = startType;   
-                    u8Buff[1] = (resumeAddr >> 24);        // Note that javascript converts var to INT32 for shift operations.
-                    u8Buff[2] = (resumeAddr >> 16);
-                    u8Buff[3] = (resumeAddr >> 8);
-                    u8Buff[4] = resumeAddr;
-                    u8Buff[5] = (resumeFileLen >> 24);     // Note that javascript converts var to INT32 for shift operations.
-                    u8Buff[6] = (resumeFileLen >> 16);
-                    u8Buff[7] = (resumeFileLen >> 8);
-                    u8Buff[8] = (resumeFileLen >> 0);
-                    nxty.SendNxtyMsg(NXTY_DOWNLOAD_START_REQ, u8Buff, 9);
-                    DldState        = DLD_STATE_START_RSP;
+                        u8Buff[0] = startType;   
+                        u8Buff[1] = (resumeAddr >> 24);        // Note that javascript converts var to INT32 for shift operations.
+                        u8Buff[2] = (resumeAddr >> 16);
+                        u8Buff[3] = (resumeAddr >> 8);
+                        u8Buff[4] = resumeAddr;
+                        u8Buff[5] = (resumeFileLen >> 24);     // Note that javascript converts var to INT32 for shift operations.
+                        u8Buff[6] = (resumeFileLen >> 16);
+                        u8Buff[7] = (resumeFileLen >> 8);
+                        u8Buff[8] = (resumeFileLen >> 0);
+                        nxty.SendNxtyMsg(NXTY_DOWNLOAD_START_REQ, u8Buff, 9);
+                        DldState        = DLD_STATE_START_RSP;
                     }
                     
                     DldTimeoutCount = 0;
@@ -1179,6 +1183,13 @@ if( DldTimeoutCount >= 2 )
                     SubStateV2Start = 0;
                 }
             }
+
+            if( DldTimeoutCount >= DLD_TIMEOUT_COUNT_MAX )
+            {
+                // after so many times exit stage left...
+                DownloadError( "Timeout", "Unable to redirect UART to remote unit.", false );
+            }
+
                         
             // Slow down just in case we get here by re-negotiating...
             StartDownloadLoop(1000);            
@@ -1240,6 +1251,10 @@ if( DldTimeoutCount >= 2 )
                     {
                         startType = NXTY_SW_NONE_TYPE;
                     }
+                    
+                    // Go local and get UNII link status while waiting...
+                    SetUartLocal();
+                    setTimeout(GetNxtySuperMsgLinkStatus, 1000);
                 }
                 
                 DldState = DLD_STATE_START_REQ;
@@ -1249,10 +1264,6 @@ if( DldTimeoutCount >= 2 )
                 
                 // Give the UART redirect some time to timeout, 5 sec, before retrying...            
                 StartDownloadLoop(6000);  
-                
-                // Check to see if UNII is up...
-                // Need to check UART redirect...
-// jdo:                  GetNxtySuperMsgLinkStatus();
                 
                 
                 if( DldNakCount++ >= DLD_NAK_COUNT_MAX )
@@ -1469,7 +1480,7 @@ if( DldTimeoutCount >= 2 )
                     if( (DldOrderArray[currentDldIndex] == DLD_NU) || (DldOrderArray[currentDldIndex] == DLD_CU) )
                     {
                         // Send 0xBEDA221E to 0xF0000040 and read from 0xF8100000.
-                        ResetAresSuperMsg();
+                        SetNxtySuperMsgResetAresAfterDownload();
                     }
                     else if( (DldOrderArray[currentDldIndex] == DLD_NU_PIC) && (bNuPicReset) )
                     {
@@ -1729,7 +1740,7 @@ if( DldTimeoutCount >= 2 )
                             if( iNxtySuperMsgRspStatus == NXTY_SUPER_MSG_STATUS_SUCCESS )
                             {
                                 // 2nd:  Issue a download END REQ message
-                                ResetAresSuperMsg(); 
+                                SetNxtySuperMsgResetAresAfterDownload(); 
                                 SubState_5_1_9  = 2;
                                 DldTimeoutCount = 0;
                                 ShowWaitPopUpMsg( "Please wait", "Reseting system..." );
@@ -1759,7 +1770,7 @@ if( DldTimeoutCount >= 2 )
                             // 3rd:  See if the CU version is 5.1.9 or prev and reset it as well.
                             if( bCuSecondResetRequired )
                             { 
-                                ResetAresSuperMsg(); 
+                                SetNxtySuperMsgResetAresAfterDownload(); 
                             }
 
                             DldState        = DLD_STATE_5_1_9_RESET;
@@ -1770,7 +1781,7 @@ if( DldTimeoutCount >= 2 )
                             // Most likely a timeout so blast ahead...
                             if( bCuSecondResetRequired )
                             { 
-                                ResetAresSuperMsg(); 
+                                SetNxtySuperMsgResetAresAfterDownload(); 
                             }
 
                             DldState        = DLD_STATE_5_1_9_RESET;
@@ -1784,7 +1795,7 @@ if( DldTimeoutCount >= 2 )
                     PrintLog( 1, "CU 5.1.9 Check" );
                 
                     // Not the NU so it must have been just the CU...Reset...
-                    ResetAresSuperMsg(); 
+                    SetNxtySuperMsgResetAresAfterDownload(); 
                     DldState        = DLD_STATE_5_1_9_RESET;
                     DldTimeoutCount = 0;
                 }
@@ -1807,7 +1818,7 @@ if( DldTimeoutCount >= 2 )
                     // See if we need to reset the CU as well but have not...
                     if( bCuSecondResetRequired && (DldState != DLD_STATE_5_1_9_RESET) )
                     { 
-                        ResetAresSuperMsg(); 
+                        SetNxtySuperMsgResetAresAfterDownload(); 
                         DldTimeoutCount = 0;
                     }
                     DldState        = DLD_STATE_5_1_9_RESET;

@@ -13,8 +13,10 @@
 
 // The following variables are directly related to UI display.
 var guiProductType          = null;             // String based on the 3 digits in the SKU  590Nxxx.
+var guiMobilityFlag         = false;            // Set to true if "P" field of SKU, index 16, is 6 for Auto.
 var guiSerialNumber         = null;             // String based on the serial number.
-var guiBoost                = 0;                // Number: Use the max distance metric just as in CalculateUniiBars().
+var guiBoost                = 0;                // Number from CalculateUniiBars().
+var guiNuBars               = 0;                // Number from CalculateNuBars(). 
 var guiOperator             = null;             // String based on 2 digit code from SKU.
 
 var guiOperatorFlag         = false;            // Flag:  true:  display operator selection 
@@ -32,14 +34,14 @@ var guiSoftwareButtonFlag   = false;            // Flag:  true to enable the upd
 var guiSoftwareButtonText   = "";   
 var guiSoftwareDirtyFlag    = false;            // Flag:  Set to true by program code when status has changed.  Gui code can set to false.
 var guiAntennaFlag          = false;            // Flag:  true:  display antenna selection 
-var guiAntennaDirtyFlag     = false;            // Flag:  Set to true by program code when status has changed.  Gui code can set to false.
+var guiSettingsDirtyFlag    = false;            // Flag:  Set to true by program code when status has changed.  Gui code can set to false.
 var guiAntennaManualFlag    = false;            // Flag:  true:  Manual control of ant selection.
 var guiAntennaIntFlags      = [false,false,false,false]; 
 var guiAntennaBands         = [0,0,0,0];        // Number:  bands
 var guiAntennaFreqArrayMHz  = [0,0,0,0];        // Number:  Freq band in MHz.
 var guiBoosterFlag          = false;            // Flag:  true:  display booster selection
-var guiBoosterTechnology    = -1;               // 0=auto, 1=3G/4G, 2=LTE
-var guiBoosterBand          = 0;          
+var guiBoosterCurrentMode   = 0;                // 0=auto, 1=3G/4G, 2=LTE
+var guiBoosterBands         = [0,0,0];          
 
 var guiBands                = [0,0,0,0];        // Number:  > 0 band is active.
 var guiNetworkBars          = [0,0,0,0];        // Numbers: Array of 4 numbers from 0 to 5. Calculated from RSRP(LTE) or RSCP(WCDMA).
@@ -74,6 +76,7 @@ var guiIconSbIfDisabled     = false;
 var guiIconSbIfHtml         = null;
 
 var guiGotTechModeValues    = false;
+var guiBoosterModeText      = ["Auto", "3G", "4G-4GX", "Band A", "Band B", "Band C"];
 
 
 // The following arrays support the Tech Mode data received from the Cel-Fi unit and are organized as follows:
@@ -102,11 +105,11 @@ var guiGotTechModeValues    = false;
 //         14          UNII labels
 
 // Create undefind arrays of specified length
-var NR_DATA_TABLE_LENGTH       = 70;
-var NM_DATA_TABLE_LENGTH       = 15;
+const NR_DATA_TABLE_LENGTH       = 70;
+const NM_DATA_TABLE_LENGTH       = 15;
 
-var CR_DATA_TABLE_LENGTH       = 15;
-var CM_DATA_TABLE_LENGTH       = 15;
+const CR_DATA_TABLE_LENGTH       = 15;
+const CM_DATA_TABLE_LENGTH       = 15;
 
 
 var guiNrLabels          = new Array(NR_DATA_TABLE_LENGTH);
@@ -245,7 +248,7 @@ function GetTechValue( tag, channel )
     var i;
     var iVal = 0;
     
-    if( channel < 4 )
+    if( channel < NUM_CHANNELS )
     {
         for( i = 0; i < NR_DATA_TABLE_LENGTH; i++ )
         {
@@ -457,8 +460,10 @@ function DumpDataTables()
    
     PrintLog(1, "------------------------------------------------------------------------------------------------------------" );
     PrintLog(1, "guiProductType         = " + guiProductType );                    // String based on the 3 digits in the SKU  590Nxxx.
+    PrintLog(1, "guiMobilityFlag        = " + guiMobilityFlag );                   // Flag based on the "P" field of the SKU.
     PrintLog(1, "guiSerialNumber        = " + guiSerialNumber );                   // String based on the serial number.
-    PrintLog(1, "guiBoost               = " + guiBoost );                          // Number: Use the max distance metric just as in CalculateUniiBars().
+    PrintLog(1, "guiBoost               = " + guiBoost );                          // CalculateUniiBars().
+    PrintLog(1, "guiNuBars              = " + guiNuBars );                         // CalculateNuBars().
     PrintLog(1, "guiOperator            = " + guiOperator );                       // String based on 2 digit code from SKU.
     PrintLog(1, "guiOperatorFlag        = " + guiOperatorFlag );                   // Flag:  true:  display operator selection 
     PrintLog(1, "guiOperatorList        = " + JSON.stringify(guiOperatorList) );   // An array of operators to select.
@@ -469,14 +474,14 @@ function DumpDataTables()
     
     PrintLog(1, "guiSoftwareDirtyFlag   = " + guiSoftwareDirtyFlag );              // Flag:  Set to true by program code when status has changed.  Gui code can set to false.
     PrintLog(1, "guiAntennaFlag         = " + guiAntennaFlag );                    // Flag:  true:  display antenna selection 
-    PrintLog(1, "guiAntennaDirtyFlag    = " + guiAntennaDirtyFlag );               // Flag:  Set to true by program code when status has changed.  Gui code can set to false.
+    PrintLog(1, "guiSettingsDirtyFlag   = " + guiSettingsDirtyFlag );              // Flag:  Set to true by program code when status has changed.  Gui code can set to false.
     PrintLog(1, "guiAntennaManualFlag   = " + guiAntennaManualFlag );              // Flag:  true: manual control
     PrintLog(1, "guiAntennaIntFlags     = " + JSON.stringify(guiAntennaIntFlags) ); 
     PrintLog(1, "guiAntennaBands        = " + JSON.stringify(guiAntennaBands) );   // Number:  > 0 band is active.
     PrintLog(1, "guiAntennaFreqArrayMHz = " + JSON.stringify(guiAntennaFreqArrayMHz) );  
     PrintLog(1, "guiBoosterFlag         = " + guiBoosterFlag );                    // Flag:  true:  display booster selection
-    PrintLog(1, "guiBoosterTechnology   = " + guiBoosterTechnology );              // 0=auto, 1=3G/4G, 2=LTE
-    PrintLog(1, "guiBoosterBand         = " + guiBoosterBand );          
+    PrintLog(1, "guiBoosterCurrentMode  = " + guiBoosterModeText[guiBoosterCurrentMode] );              // 0=auto, 1=3G/4G, 2=LTE
+    PrintLog(1, "guiBoosterBands        = " + JSON.stringify(guiBoosterBands) );          
 
     PrintLog(1, "guiBands               = " + JSON.stringify(guiBands) );          // Number:  > 0 band is active.
     PrintLog(1, "guiNetworkBars         = " + JSON.stringify(guiNetworkBars) );    // Numbers: Array of 4 numbers from 0 to 5. Calculated from RSRP(LTE) or RSCP(WCDMA).
@@ -499,6 +504,7 @@ function MakeI8( iVal )
 {
     var iVal8  = new Int8Array(2);
     iVal8[0]   = iVal;
+    iVal8[1]   = 0;
     
     return( iVal8[0] ); 
 }
@@ -508,6 +514,7 @@ function MakeI16( iVal )
 {
     var iVal16  = new Int16Array(2);
     iVal16[0]   = iVal;
+    iVal16[1]   = 0;
     
     return( iVal16[0] ); 
 }
@@ -517,6 +524,7 @@ function MakeI32( iVal )
 {
     var iVal32  = new Int32Array(2);
     iVal32[0]   = iVal;
+    iVal32[1]   = 0;
     
     return( iVal32[0] ); 
 }
@@ -541,15 +549,43 @@ function SetSoftwareUpdate()
 }
 
 
-
-
 //.................................................................................................................
-function SetBoosterTechnology(tech)
+function ResetNu()
 {
+    PrintLog(1, "ResetNU called");
+    
+    if( bCnxToCu )
+    {
+        // If some message is pending then schedule a come back...
+        if( isNxtyMsgPending() == true )
+        {
+            setTimeout( ResetNu, 130 );
+        }
+        else
+        {
+            SetNxtySuperMsgResetRemoteUnit();
+            
+            // The reset will cause a NAK since the unit is resetting so clear to Tx block and switch the UART to local.
+            setTimeout(SetUartLocal, 4000);
+            ShowAlertPopUpMsg("Remote Reset...", "NU should now be reset!");
+        }
+    }
+    else
+    {
+        // If some message is pending then schedule the message for later...
+        if( isNxtyMsgPending() == true )
+        {
+            setTimeout( ResetNu, 130 );
+        }
+        else
+        {
+            SetNxtySuperMsgResetLocalUnit();
+            ShowAlertPopUpMsg("Local Reset...", "NU should now be reset!");
+        }
+    }
+    
 }
 
 
-//.................................................................................................................
-function SetBoosterBand(band)
-{
-}
+
+

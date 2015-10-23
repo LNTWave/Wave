@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Cel-Fi Wave</title>        
+        <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">-->
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+         
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/common.css">                                    
+                            
+    </head>
+    <body>
+    	<div id="menu" class="panelMenu" role="navigation">
+    		<div class='panelLogoWrapper'>
+    			<div class='panelLogo'></div>
+    		</div>
+    		<div class='panelMenuList'>
+    			<ul>
+        		<li>
+        			<a id='' href='javascript:void(0)'>
+            			<div class='menuIcns' id='finderIcn'></div>
+						<span>Signal Finder</span>
+						<div class="cb"></div>
+					</a>
+        		</li>
+        		<li>
+        			<a id='' href='javascript:void(0)'>
+            			<div class='menuIcns' id='aboutIcn'></div>
+						<span>About</span>
+						<div class="cb"></div>
+					</a>
+        		</li>
+        		<li>
+        			<a id='' href='javascript:void(0)'>
+            			<div class='menuIcns' id='feedBackIcn'></div>
+						<span>Send Feedback</span>
+						<div class="cb"></div>
+					</a>
+        		</li>
+        		<li>
+        			<a id='' href='javascript:void(0)'>
+            			<div class='menuIcns' id='policyIcn'></div>
+						<span>Privacy Policy</span>
+						<div class="cb"></div>
+					</a>
+        		</li>
+        		<li>
+        			<a id='' href='javascript:void(0)'>
+            			<div class='menuIcns' id='loginIcn'></div>
+						<span>Login</span>
+						<div class="cb"></div>
+					</a>
+        		</li>
+        		<li>
+        			<a id='' href='javascript:void(0)'>
+            			<div class='menuIcns' id='registerIcn'></div>
+						<span>Register Booster</span>
+						<div class="cb"></div>
+					</a>
+        		</li>
+    		</ul>
+    		</div>
+    		<div class='socialLinkWrapper'>
+    			<div class='socialLinkTitle'>Follow us:</div>
+    			<div class='socialLinkIcnWrapper'>
+    				<div class='socialIcns' id='facebookIcn'></div>
+    				<div class='socialIcns' id='twitterIcn'></div>
+    				<div class='socialIcns' id='linkedinIcn'></div>
+    				<div class='socialIcns' id='googleIcn'></div>    				
+    			</div>
+    		</div>    		
+		</div>
+    	<div id="mainContainer" class="splashscreen push">
+    		<div class='headerContainer' id='headerContainer'>
+    			<div class='titlebarWrapper'>
+    				<div class='sliderMenuWrapper col-xs-2 col-sm-2'>
+    					<a href="#menu" class="menu-link"><div class='sliderMenuIcn'></div></a>
+    					
+    				</div>
+    				<div class='logoWrapper col-xs-8 col-sm-8'>
+    					<div class='logoImg'></div>
+    				</div>
+    				<div class='faqIcnWrapper col-xs-2 col-sm-2'>
+    					<div class='faqIcn'></div>
+    				</div>
+    			</div>
+    			<div class='menuWrapper'>
+    				<div class='col-xs-4 col-sm-2' id='dashboardMenu' onclick="window.location='dashboard.html'">
+    					<div>DASHBOARD</div>    					
+    				</div>
+    				<div class='col-xs-4 col-sm-2' id='settingsMenu' onclick="window.location='settings.html'">
+    					<div>SETTINGS</div>    					
+    				</div>
+    				<div class='col-xs-4 col-sm-2 selectedTab' id='advancedMenu'>
+    					<div>ADVANCED</div>    					
+    				</div>
+    			</div>
+    		</div>
+    		<div class="cb"></div>
+    		<div id='bodyContainer'>
+    			<div class='advancedIcnContainer col-xs-12 col-sm-12' >										
+					<div id='sendIcnWrapper'>
+						<div id='sendIcn'></div>
+					   <div class='advancedIcnLbl' data-toggle="modal" data-target="#fsModal">Send</div>
+
+					</div>
+					<div id='refreshIcnWrapper'>
+						<div id='refreshIcn'></div>
+						<div class='advancedIcnLbl'>Refresh</div>
+					</div>
+    			</div>
+    			<div class="cb"></div>
+    			  				
+							    				       
+		            <div class="panel-group" id="advancedDataContainer">
+		                <div class="divider">OVERVIEW</div>
+		                <div class="panel panel-default col-sm-6">
+		                    <div class="panel-heading dropDown">
+		                        <h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#advancedContentwrapper" href="#collapseOne">
+										<div>Network Strength</div>
+										<span class="pull-right">								 
+											<span class="toggle-icon glyphicon glyphicon-chevron-up"></span>
+										</span>
+									</a>
+								</h4>
+		                    </div>
+		                    <div id="collapseOne" class="panel-collapse collapse in">
+		                        <div class="panel-body">
+		                            <div id='networkDataContainer'>
+		                                <div id='networkData1' class='col-xs-3 col-sm-3 networkData'>
+		                                	<div class='networkTitle'>A</div>
+		                                	<div class='networkStrength'>
+					    						<div class='signalContainerSM'>
+						    						<div class='networkSignalIndiSM activeStatus networkBar1'></div>
+						    						<div class='networkSignalIndiSM activeStatus networkBar2'></div>
+						    						<div class='networkSignalIndiSM activeStatus networkBar3'></div>
+						    						<div class='networkSignalIndiSM deactiveStatus networkBar4'></div>
+						    						<div class='networkSignalIndiSM deactiveStatus networkBar5'></div>
+					    						</div>
+					    					</div>
+		                                	<div class='networkStatus'>
+		                                		<div class='networkStatusLbl'>LTE</div>
+		                                		<div class='networkFreq'>739 MHz</div>
+		                                	</div>
+		                                </div>	
+		                                <div id='networkData2' class='col-xs-3 col-sm-3 networkData'>
+		                                	<div class='networkTitle'>B</div>
+		                                	<div class='networkStrength'>
+					    						<div class='signalContainerSM'>
+						    						<div class='networkSignalIndiSM activeStatus networkBar1'></div>
+						    						<div class='networkSignalIndiSM activeStatus networkBar2'></div>
+						    						<div class='networkSignalIndiSM activeStatus networkBar3'></div>
+						    						<div class='networkSignalIndiSM deactiveStatus networkBar4'></div>
+						    						<div class='networkSignalIndiSM deactiveStatus networkBar5'></div>
+					    						</div>
+					    					</div>
+		                                	<div class='networkStatus'>
+		                                		<div class='networkStatusLbl'>LTE</div>
+		                                		<div class='networkFreq'>739 MHz</div>
+		                                	</div>
+		                                </div>	
+		                                <div id='networkData3' class='col-xs-3 col-sm-3 networkData'>
+		                                	<div class='networkTitle'>C</div>
+		                                	<div class='networkStrength'>
+					    						<div class='signalContainerSM'>
+						    						<div class='networkSignalIndiSM activeStatus networkBar1'></div>
+						    						<div class='networkSignalIndiSM activeStatus networkBar2'></div>
+						    						<div class='networkSignalIndiSM activeStatus networkBar3'></div>
+						    						<div class='networkSignalIndiSM activeStatus networkBar4'></div>
+						    						<div class='networkSignalIndiSM deactiveStatus networkBar5'></div>
+					    						</div>
+					    					</div>
+		                                	<div class='networkStatus'>
+		                                		<div class='networkStatusLbl'>LTE</div>
+		                                		<div class='networkFreq'>739 MHz</div>
+		                                	</div>
+		                                </div>	
+		                                <div id='networkData4' class='col-xs-3 col-sm-3 networkData'>
+		                                	<div class='networkTitle'>D</div>
+		                                	<div class='networkStrength'>
+					    						<div class='signalContainerSM'>
+						    						<div class='networkSignalIndiSM activeStatus networkBar1'></div>
+						    						<div class='networkSignalIndiSM activeStatus networkBar2'></div>
+						    						<div class='networkSignalIndiSM deactiveStatus networkBar3'></div>
+						    						<div class='networkSignalIndiSM deactiveStatus networkBar4'></div>
+						    						<div class='networkSignalIndiSM deactiveStatus networkBar5'></div>
+					    						</div>
+					    					</div>
+		                                	<!-- <div class='networkStrength'>
+		                                		<ul class='signal-strength'>
+													<li class="weak"><div></div></li>
+													<li class="strong"><div></div></li>
+													<li class="pretty-strong"><div></div></li>
+												</ul>
+		                                	</div> -->
+		                                	<div class='networkStatus'>
+		                                		<div class='networkStatusLbl'>LTE</div>
+		                                		<div class='networkFreq'>739 MHz</div>
+		                                	</div>
+		                                </div>				                                				                                				                              
+		                            </div>				                            
+		                        </div>				                      
+		                    </div>
+		                </div>				                
+						<div class="cb"></div>
+		                <div class="divider">SUPER CHANNELS</div>
+		                <div class='firstGroup col-sm-6'>
+			                <div class="panel panel-default">
+			                    <div class="panel-heading drop-green dropDown">
+			                        <h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#advancedContentwrapper" href="#collapseTwo">
+										<div>Radio A Band 17: LTE (Boosting)</div>
+											<span class="pull-right">
+												<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+											</span>
+										</a>
+									</h4>
+			                    </div>
+			                    
+			                    <div id="collapseTwo" class="panel-collapse collapse">
+			                        <div class="panel-body">
+			                        	<div class='dropDownList'>
+			                        		<div class='dropDownInnerTitle '>
+			                        			<div class='col-xs-8 col-sm-8'>Description</div>
+			                        			<div class='col-xs-4 col-sm-4'>Value</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Bandwidth</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Download centre freq.</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Uplink centre freq.</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>PRI Cell_ID</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Donor RSSI</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Donor RSCP</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Donor RSRQ</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Donor SINR</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Ext. antenna in use</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        	</div>				                            
+			                        </div>				                        
+			                    </div>				                    
+			                </div>				                
+			                <div class="panel panel-default">
+			                    <div class="panel-heading drop-green dropDown">
+			                        <h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#advancedContentwrapper" href="#collapseThree">
+											<div>Radio B Band 4: LTE (Idle)</div>
+											<span class="pull-right">
+												<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+											</span>
+										</a>
+									</h4>
+			                    </div>				                    
+			                    <div id="collapseThree" class="panel-collapse collapse">
+			                        <div class="panel-body">
+			                            <div class='dropDownList'>
+			                        		<div class='dropDownInnerTitle '>
+			                        			<div class='col-xs-8 col-sm-8'>Description</div>
+			                        			<div class='col-xs-4 col-sm-4'>Value</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Bandwidth</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Download centre freq.</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Uplink centre freq.</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>PRI Cell_ID</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Donor RSSI</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Donor RSCP</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Donor RSRQ</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Donor SINR</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Ext. antenna in use</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        	</div>
+			                        </div>				                        
+			                    </div>				                    
+			                </div>
+		                </div>
+		                <div class='secondGroup col-sm-6'>				                
+			                <div class="panel panel-default">
+			                    <div class="panel-heading drop-red dropDown">
+			                        <h4 class="panel-title">
+			                        	<a data-toggle="collapse" data-parent="#advancedContentwrapper" href="#collapseFour">
+			                        		<div>Radio C: Unused</div>
+			                        		<span class="pull-right">
+			                        			<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+			                        		</span>
+			                        	</a>
+			                        </h4>
+			                    </div>				                    
+			                    <div id="#collapseFour" class="panel-collapse collapse">
+			                        <div class="panel-body">
+			                            <div class='dropDownList'>
+			                        		<div class='dropDownInnerTitle '>
+			                        			<div class='col-xs-8 col-sm-8'>Description</div>
+			                        			<div class='col-xs-4 col-sm-4'>Value</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Bandwidth</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Download centre freq.</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Uplink centre freq.</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>PRI Cell_ID</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Donor RSSI</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Donor RSCP</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Donor RSRQ</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Donor SINR</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Ext. antenna in use</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        	</div>
+			                        </div>				                        
+			                    </div>				                    
+			                </div>				                
+			                <div class="panel panel-default">
+			                    <div class="panel-heading drop-red dropDown">
+			                        <h4 class="panel-title">
+			                        	<a data-toggle="collapse" data-parent="#advancedContentwrapper" href="#collapseFive">
+			                        		<div>Radio D: Unused</div>
+			                        		<span class="pull-right">
+			                        			<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+			                        		</span>
+			                        	</a>
+			                        </h4>
+			                    </div>				                    
+			                    <div id="#collapseFive" class="panel-collapse collapse">
+			                        <div class="panel-body">
+			                            <div class='dropDownList'>
+			                        		<div class='dropDownInnerTitle '>
+			                        			<div class='col-xs-8 col-sm-8'>Description</div>
+			                        			<div class='col-xs-4 col-sm-4'>Value</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Bandwidth</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Download centre freq.</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Uplink centre freq.</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>PRI Cell_ID</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Donor RSSI</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Donor RSCP</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue'>
+			                        			<div class='col-xs-8 col-sm-8'>Donor RSRQ</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Donor SINR</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        		<div class='dropDownListValue '>
+			                        			<div class='col-xs-8 col-sm-8'>Ext. antenna in use</div>
+			                        			<div class='col-xs-4 col-sm-4'>0</div>
+			                        		</div>
+			                        	</div>
+			                        </div>				                        
+			                    </div>				                    
+			                </div>				                
+						</div>
+						<div class="cb"></div>
+		                <div class="divider">SYSTEM OVERVIEW</div>
+		                <div class="panel panel-default col-sm-6">
+		                    <div class="panel-heading drop-violet dropDown">
+		                        <h4 class="panel-title">
+		                        	<a data-toggle="collapse" data-parent="#advancedContentwrapper" href="#collapseSix">
+		                        		<div>Device State</div>
+		                        		<span class="pull-right">
+		                        			<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+		                        		</span>
+		                        	</a>
+		                        </h4>
+		                    </div>
+		                    
+		                    <div id="collapseSix" class="panel-collapse collapse">
+		                        <div class="panel-body">
+		                            <div class='dropDownList'>
+		                        		<div class='dropDownInnerTitle '>
+		                        			<div class='col-xs-8 col-sm-8'>Description</div>
+		                        			<div class='col-xs-4 col-sm-4'>Value</div>
+		                        		</div>
+		                        		<div class='dropDownListValue'>
+		                        			<div class='col-xs-8 col-sm-8'>Bandwidth</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue'>
+		                        			<div class='col-xs-8 col-sm-8'>Download centre freq.</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue'>
+		                        			<div class='col-xs-8 col-sm-8'>Uplink centre freq.</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue'>
+		                        			<div class='col-xs-8 col-sm-8'>PRI Cell_ID</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue'>
+		                        			<div class='col-xs-8 col-sm-8'>Donor RSSI</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue'>
+		                        			<div class='col-xs-8 col-sm-8'>Donor RSCP</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue'>
+		                        			<div class='col-xs-8 col-sm-8'>Donor RSRQ</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue '>
+		                        			<div class='col-xs-8 col-sm-8'>Donor SINR</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue '>
+		                        			<div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue '>
+		                        			<div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue '>
+		                        			<div class='col-xs-8 col-sm-8'>Ext. antenna in use</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        	</div>
+		                        </div>				                        
+		                    </div>				                    
+		                </div>				                
+						<div class="cb"></div>
+		                <div class="divider">TECH DATA</div>
+		                <div class="panel panel-default col-sm-6">
+		                    <div class="panel-heading drop-yellow dropDown">
+		                        <h4 class="panel-title">
+		                        	<a data-toggle="collapse" data-parent="#advancedContentwrapper" href="#collapseSeven">
+		                        		<div>Stuff you won't understand</div>
+		                        		<span class="pull-right">
+		                        			<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+		                        		</span>
+		                        	</a>			
+		                        </h4>
+		                    </div>				                    
+		                    <div id="collapseSeven" class="panel-collapse collapse">				                        			                       
+		                    </div>				                    
+		                </div>				                
+		                <div class="cb"></div>
+		                <div class="divider">DEVICE VERSION</div>
+		                <div class="panel panel-default col-sm-6">
+		                    <div class="panel-heading drop-lite-green dropDown">
+		                        <h4 class="panel-title">
+		                        	<a data-toggle="collapse" data-parent="#advancedContentwrapper" href="#collapseTeehree">
+		                        		<div>Software Versions</div>
+		                        		<span class="pull-right">
+		                        			<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+		                        		</span>
+		                        	</a>
+		                        </h4>
+		                    </div>				                    
+		                    <div id="collapseTeehree" class="panel-collapse collapse">
+		                        <div class="panel-body">
+		                            <div class='dropDownList'>
+		                        		<div class='dropDownInnerTitle '>
+		                        			<div class='col-xs-8 col-sm-8'>Description</div>
+		                        			<div class='col-xs-4 col-sm-4'>Value</div>
+		                        		</div>
+		                        		<div class='dropDownListValue'>
+		                        			<div class='col-xs-8 col-sm-8'>Bandwidth</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue'>
+		                        			<div class='col-xs-8 col-sm-8'>Download centre freq.</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue'>
+		                        			<div class='col-xs-8 col-sm-8'>Uplink centre freq.</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue'>
+		                        			<div class='col-xs-8 col-sm-8'>PRI Cell_ID</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue'>
+		                        			<div class='col-xs-8 col-sm-8'>Donor RSSI</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue'>
+		                        			<div class='col-xs-8 col-sm-8'>Donor RSCP</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue'>
+		                        			<div class='col-xs-8 col-sm-8'>Donor RSRQ</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue '>
+		                        			<div class='col-xs-8 col-sm-8'>Donor SINR</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue '>
+		                        			<div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue '>
+		                        			<div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        		<div class='dropDownListValue '>
+		                        			<div class='col-xs-8 col-sm-8'>Ext. antenna in use</div>
+		                        			<div class='col-xs-4 col-sm-4'>0</div>
+		                        		</div>
+		                        	</div>
+		                        </div>				                        
+		                    </div>				                    
+		                </div>				                			            			       
+				    </div>
+				</div>    			    			    
+    		</div>
+ 		
+		<div class='modalWrapper'>
+			<div class='modalHeaderWrapper' class='col-xs-12 col-sm-12'>
+				<div id='modalTitle'>FAQ</div>
+				<div class='modalCloseBtn'></div>
+                <div class='modalLeftBtn'></div>				
+			</div>			
+			  <!-- model body -->
+			<div class='modalBodyWrapper'>				        
+				<div class="modalHelpBodyPadding">
+						
+						<p class="pageTitleContainer modalContentTitle modalBodyHeaderTitlePadding">Top 20 Frequently Asked Questions</p>
+						<div class="divLineDivider">							
+							</div>
+						 <div class="panel-group" id="accordion">
+							<div class="panel panel-default">				        
+				        		<div class="panel-heading FAQPanelHeaderColor">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#ModelOne">
+											<div>
+												<p class="modalFAQPanelContent" >What is Cel-Fi?</p>
+											</div>
+											<span class="pull-right FAQspan" >
+												<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+											</span>
+										</a>
+									</h4>
+								</div>
+								<div id="ModelOne" class="panel-collapse collapse">
+									<div class="panel-body">
+										<p class="modelFAQBodyContents">
+											Cel-Fi is Nextivity's brand of self-configuring, environmentally aware, indoor coverage solutions. Each Cel-Fi system consists of two units. The Network Unit is placed in the area where the strongest native signal can be received from the carrier network (signal levels as low as -120 dBm are acceptable). The Network Unit comprises a transmitter and receiver which communicates with the cell tower. The Coverage Unit is placed in the center of the home, communicates wirelessly with the Network Unit and â€œlights upâ€� the interior of the house with significantly enhanced signal levels, thus enabling better quality calls and greater data throughput.
+										</p>
+									</div>
+								</div>												                   				               																							                   
+							 </div>
+							
+							<div class="divLineDivider">							
+							</div>
+			        	    <div class="panel panel-default">				        
+				        		<div class="panel-heading" style='color:#4FAEE0;'>
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#ModelTwo">
+											<div>
+											<p class="modalFAQPanelContent">What makes Cel-Fi so different from other signal boosters?</p>
+											</div>
+											<span class="pull-right FAQspan">
+												<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+											</span>
+										</a>
+									</h4>
+								</div>
+								<div id="ModelTwo" class="panel-collapse collapse">
+									<div class="panel-body">
+										<div class="panel-body">
+										<p class="modelFAQBodyContents">
+											Cel-Fi is a smart signal booster. That means it relies on intelligent, self-organizing algorithms to ensure you benefit from the largest area of coverage without compromising or interfering with your mobile operator's networks or impeding other subscribers' signals. Cel-Fi does not require any new equipment, any configuring, or any changes to existing network infrastructure or mobile devices. It is also a plug and play device, which means that there is no need for professional installation, no drilling, and no cables. In addition, Cel-Fi has been recognized for its superior design and effectiveness and is the only consumer booster authorized for use by the communications commissions in Australia and the United Kingdom, and the only Smart Booster designed to meet the new FCC Safe Harbor 2 specifications that allow very high gain (very high signal gain is necessary to make low level signals useful in a large coverage area).
+										
+										</p>
+									   </div>											                   				               																							                   
+									</div>
+								</div>
+				        	</div>							
+							<div class="divLineDivider">							
+							</div>
+							<div class="panel panel-default">				        
+				        		<div class="panel-heading" id='operatorTitles'>
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#ModelThree">
+											<div>
+											<p class="modalFAQPanelContent">Does the Cel-Fi require an internet or GPS connection?</p>
+											</div>
+											<span class="pull-right FAQspan">
+												<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+											</span>
+										</a>
+									</h4>
+								</div>
+								<div id="ModelThree" class="panel-collapse collapse">							
+										<div class="panel-body">
+											<p class="modelFAQBodyContents">
+												No. The Cel-Fi system only needs to have at least 1 bar of native cellular signal, in at least one spot of your home to be able to cover your whole home or office space.
+											
+											</p>																		                   				               																							                   
+									   </div>
+								</div>
+				        	</div>	
+							<div class="divLineDivider">							
+							</div>
+						 	<div class="panel panel-default">				        
+				        		<div class="panel-heading" id='operatorTitles'>
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#ModelFour">
+											<div>
+											<p class="modalFAQPanelContent">Will the Cel-Fi support voice and data or data only?</p>
+											</div>
+											<span class="pull-right FAQspan">
+												<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+											</span>
+										</a>
+									</h4>
+								</div>
+								<div id="ModelFour" class="panel-collapse collapse">
+									<div class="panel-body">
+											<p class="modelFAQBodyContents">
+												Yes, Cel-Fi smart signal boosters can support both voice and data simultaneously. Note that Cel-Fi RS1 and RS2 models do not support LTE.
+											
+											</p>																		                   				               																							                   
+									   </div>
+								</div>
+				        	</div>	
+							<div class="divLineDivider">							
+							</div>
+							<div class="panel panel-default">				        
+				        		<div class="panel-heading" id='operatorTitles'>
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#ModelFive">
+											<div>
+											<p class="modalFAQPanelContent">How far apart can the Network (Window) Unit and the Coverage Unit be placed?</p>
+											</div>
+											<span class="pull-right FAQspan">
+												<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+											</span>
+										</a>
+									</h4>
+								</div>
+								<div id="ModelFive" class="panel-collapse collapse">
+									<div class="panel-body">
+											<p class="modelFAQBodyContents">
+												Every instillation is different. The differences depend on the "path loss" between the two units. Every obstacle in the line of sight means that the Coverage Unit and the Network Unit will have to be closer together. The cleaner the line of sight the further apart they can be placed. The more walls, doors, or refrigerators (obstacles), in the direct line of sight, the closer they units will have to be. The average distance for a typical construction home is 60 feet, however the placement can be as little as 20 feet or much as 120 feet apart.
+											
+											</p>																		                   				               																							                   
+									   </div>
+								</div>
+				        	</div>	
+							<div class="divLineDivider">							
+							</div>	
+						
+							<div class="panel panel-default">				        
+				        		<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#ModelSix">
+											<div>
+											<p class="modalFAQPanelContent">What coverage can I expect from a Cel-Fi system?</p>
+											</div>
+											<span class="pull-right FAQspan">
+												<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+											</span>
+										</a>
+									</h4>
+								</div>
+								<div id="ModelSix" class="panel-collapse collapse">
+									  <div class="panel-body">
+											<p class="modelFAQBodyContents">
+												The radius (half the width) of the coverage bubble is approximately the distance between the Coverage Unit and Network (window) Unit. Here are some examples:
+											    </br></br>Radius = 20 meters (66 ft.) for wood framed walls
+												</br></br>Radius is less for concrete interior walls
+												</br></br>Radius can easily exceed 65 meters (200 ft.) for open commercial spaces
+											</p>																		                   				               																							                   
+									   </div>
+								</div>
+				        	</div>	
+							<div class="divLineDivider">							
+							</div>
+							
+							<div class="panel panel-default">				        
+				        		<div class="panel-heading" >
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#ModelSeven">
+											<div>
+											<p class="modalFAQPanelContent">Is it legal to use signal boosters?</p>
+											</div>
+											<span class="pull-right FAQspan">
+												<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+											</span>
+										</a>
+									</h4>
+								</div>
+								<div id="ModelSeven" class="panel-collapse collapse">
+									  <div class="panel-body">
+											<p class="modelFAQBodyContents">
+												Cel-Fi meets the newer regulatory requirements that allow a booster to be used (boosters that do not meet these requirements, which is the vast majority of them, are no longer legal).  For the FCC you can learn more by reading the new FCC Report and Order for signal boosters. According to these new regulations, consumers must receive permission from their carrier before using a booster. Consumer boosters sold after March 1, 2014, and some before that date will be marked with a label signifying it meets the FCC's new regulations.
+											
+											</p>																		                   				               																							                   
+									   </div>
+								</div>
+				        	</div>	
+							<div class="divLineDivider">							
+							</div>	
+							
+							<div class="panel panel-default">				        
+				        		<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#ModelEight">
+											<div>
+											<p class="modalFAQPanelContent">Is it necessary to register my Cel-Fi?</p>
+											</div>
+											<span class="pull-right FAQspan">
+												<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+											</span>
+										</a>
+									</h4>
+								</div>
+								<div id="ModelEight" class="panel-collapse collapse">
+									  <div class="panel-body">
+											<p class="modelFAQBodyContents">
+												If booster registration is required in your country, your system may arrive pre-registered or you may be asked to (it's very simple).  See your product insert for details. 
+											</br></br>
+											The FCC is now requiring all boosters in the U.S. to be approved for use by the Operator, and that all consumers register their boosters.  To learn more please visit the FCC site: http://wireless.fcc.gov/signal-boosters/index.html  
+											</p>																		                   				               																							                   
+									   </div>
+								</div>
+				        	</div>	
+							<div class="divLineDivider">							
+							</div>
+							<div class="panel panel-default">				        
+				        		<div class="panel-heading" >
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#ModelNine">
+											<div>
+											<p class="modalFAQPanelContent">How do I register my Cel-Fi system?</p>
+											</div>
+											<span class="pull-right FAQspan">
+												<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+											</span>
+										</a>
+									</h4>
+								</div>
+								<div id="ModelNine" class="panel-collapse collapse">
+									  <div class="panel-body">
+											<p class="modelFAQBodyContents">
+												The process is very simple and just takes a minute by following the link below to your Operator's Registration site.  If your system was provided by your Operator it may be preregistered (see product box insert).
+											</br></br>In the USA:
+											</br></br>If your operator is T-Mobile, MetroPCS, TruPhone, or another T-Mobile network operator please register your booster at: www.T-Mobile.com/BoosterRegistration 
+											</br></br>If your operator is AT&T, Aio, or another AT&T network operator please register your booster at: www.attsignalbooster.com 
+											</p>																		                   				               																							                   
+									   </div>
+								</div>
+				        	</div>	
+							<div class="divLineDivider">							
+							</div>	
+								<div class="panel panel-default">				        
+				        		<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#ModelTen">
+											<div>
+											<p class="modalFAQPanelContent">Why do I have to register my Cel-Fi?</p>
+											</div>
+											<span class="pull-right FAQspan">
+												<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+											</span>
+										</a>
+									</h4>
+								</div>
+								<div id="ModelTen" class="panel-collapse collapse">
+									  <div class="panel-body">
+											<p class="modelFAQBodyContents">
+												Why is this being done?  Because cellular systems are protected assets of the Operators that own them.  Many boosters in the market cause problems for those networks (which means all of us using the networks too).  New FCC/Operator approved boosters are better and don't cause problems, and Cel-Fi is the only booster in a special class of boosters that allows 100 dB of signal gain (30 dB or 1000x the gain of all other boosters).  
+											
+											</p>																		                   				               																							                   
+									   </div>
+								</div>
+				        	</div>	
+							<div class="divLineDivider">							
+							</div>	
+								<div class="panel panel-default">				        
+				        		<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#ModelEleven">
+											<div>
+											<p class="modalFAQPanelContent">Will Cel-Fi boost the signal for Verizon or Sprint?</p>
+											</div>
+											<span class="pull-right FAQspan">
+												<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+											</span>
+										</a>
+									</h4>
+								</div>
+								<div id="ModelEleven" class="panel-collapse collapse">
+									   <div class="panel-body">
+											<p class="modelFAQBodyContents">
+												At this time Verizon and Sprint will not work with any of the Cel-Fi products. We are always adding new technology to the Cel-Fi device line-up. Feel free to sign up for exclusive news and blog emails at the bottom of the page.
+											
+											</p>																		                   				               																							                   
+									   </div>
+								</div>
+				        	</div>	
+							<div class="divLineDivider">							
+							</div>	
+								<div class="panel panel-default">				        
+				        		<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#ModelTweleve">
+											<div>
+											<p class="modalFAQPanelContent">Can Cel-Fi boost the signal of multiple cellular networks at once?</p>
+											</div>
+											<span class="pull-right FAQspan">
+												<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+											</span>
+										</a>
+									</h4>
+								</div>
+								<div id="ModelTweleve" class="panel-collapse collapse">
+									   <div class="panel-body">
+											<p class="modelFAQBodyContents">
+												Cel-Fi signal boosters are Operator specific, and will only boost one Operator's channels at a time. Being Operator specific is one of the main reasons that we are network safe and can provide 100 dB of signal gain, and why we are the only signal booster approved by a growing number of Operators.
+											
+											</p>																		                   				               																							                   
+									   </div>
+								</div>
+				        	</div>	
+							<div class="divLineDivider">							
+							</div>	
+								<div class="panel panel-default">				        
+				        		<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#ModelFourteen">
+											<div>
+											<p class="modalFAQPanelContent">Why is 100 dB of gain so important?</p>
+											</div>
+											<span class="pull-right FAQspan">
+												<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+											</span>
+										</a>
+									</h4>
+								</div>
+								<div id="ModelFourteen" class="panel-collapse collapse">
+									  <div class="panel-body">
+											<p class="modelFAQBodyContents">
+												System gain is critical to a booster's performance because it tells us how much a signal may be improved and how beneficial the boosted signal can be.  Example: If you have a low level signal such as -90 dBm per carrier, adding 100 dB of System Gain gives +10 dBm per carrier which can cover a large area.  In contrast adding only 70 dB of gain would only give -20 dBm of signal per carrier which would only cover a very small space.  Therefore a booster with a gain of 70 dB would need a very strong donor signal to be of much use, regardless of the stated transmit power that likely is going unused.
+											</br></br>In other words, the higher the gain of the booster, the better it will work, even when far away from a base station.
+											</p>																		                   				               																							                   
+									   </div>
+								</div>
+				        	</div>	
+							<div class="divLineDivider">							
+							</div>	
+								<div class="panel panel-default">				        
+				        		<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#ModelFifteen">
+											<div>
+											<p class="modalFAQPanelContent">Is Cel-Fi carrier/operator specific?</p>
+											</div>
+											<span class="pull-right FAQspan">
+												<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+											</span>
+										</a>
+									</h4>
+								</div>
+								<div id="ModelFifteen" class="panel-collapse collapse">
+									  <div class="panel-body">
+											<p class="modelFAQBodyContents">
+												Yes, and for a good reason!  Cel-Fi is controlled by and operates as an extension of an operator's network.  This is what allows Cel-Fi (by regulatory authority) to boost signals about 1000x more than other solutions, and therefore cover very large areas even if the original network signal is weak.  And it works very well. 
+											</br></br>
+											Broad-spectrum repeaters can cause interference and damage to networks, so operators have adopted a strict policy against the use of these legacy signal boosters on their own networks. However, Cel-Fi (the only smart signal booster of its kind), is authorized for use by each carrier and allowed to transmit on their licensed spectrum without ruining things for anyone else.
+											</p>																		                   				               																							                   
+									   </div>
+								</div>
+				        	</div>	
+							<div class="divLineDivider">							
+							</div>	
+								<div class="panel panel-default">				        
+				        		<div class="panel-heading" >
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#ModelSixteen">
+											<div>
+											<p class="modalFAQPanelContent">Why doesn't Cel-Fi work with different operators?</p>
+											</div>
+											<span class="pull-right FAQspan">
+												<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+											</span>
+										</a>
+									</h4>
+								</div>
+								<div id="ModelSixteen" class="panel-collapse collapse">
+									 <div class="panel-body">
+									  <p class="modelFAQBodyContents">
+									  Not all cellular operators use the same technologies, and we do not boost the every technology available around the world. The Cel-Fi systems will support 3G(UMTS/WCMDA), 4G(HSPA & HAPS+), and LTE technology of operators that have approved the use of Cel-Fi on their network. You can reach out to your operator for more information on what specific technology they use.
+									  </p>
+									 </div>
+								</div>
+				        	</div>	
+							<div class="divLineDivider">							
+							</div>	
+							<div class="panel panel-default">				        
+				        		<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#ModelSeventeen">
+											<div>
+											<p class="modalFAQPanelContent">What technologies does Cel-Fi support?</p>
+											</div>
+											<span class="pull-right FAQspan">
+												<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+											</span>
+										</a>
+									</h4>
+								</div>
+								<div id="ModelSeventeen" class="panel-collapse collapse">
+									  <div class="panel-body">
+											<p class="modelFAQBodyContents">
+												Cel-Fi system will support 3G(UMTS/WCDMA), 4G (HSPA/HSPA+) and LTE.
+											</br></br>
+											Each Cel-Fi system is different. Check your box for a Quick Start Guide, or visits the support section of our website for more specific information about your specific product.
+											</p>																		                   				               																							                   
+									   </div>
+								</div>
+				        	</div>	
+							<div class="divLineDivider">							
+							</div>
+								<div class="panel panel-default">				        
+				        		<div class="panel-heading" >
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#ModelEighteen">
+											<div>
+											<p class="modalFAQPanelContent">I've installed Cel-Fi but I do not see more bars on my phone.</p>
+											</div>
+											<span class="pull-right FAQspan">
+												<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+											</span>
+										</a>
+									</h4>
+								</div>
+								<div id="ModelEighteen" class="panel-collapse collapse">
+									  <div class="panel-body">
+											<p class="modelFAQBodyContents">
+												There could be several reasons for this: First you can try rebooting your phone near the Coverage Unit so it takes a fresh look at the available channels. Also verify that your phone is compatible with the channels that your Cel-Fi model is boosting (maybe your handset is â€œunlockedâ€� and actually does not fully support all your current Operator's channels). iPhones can also show fewer "bars" of signal if the network is heavily loaded (click here to learn more).
+											</br></br>
+											Note that Cel-Fi RS1 and RS2 models do not support LTE. If your phone is LTE capable and therefore is not showing boosted service, if needed it is designed to switch over to non-LTE services when it needs to, such as in a call. This is true with or without Cel-Fi and what matters is that now you have reliable service where you need it!
+											</br></br>
+											If you would like the benefits of LTE service as well, you can always upgrade your Cel-Fi to a newer version that also supports LTE.
+											
+											</p>																		                   				               																							                   
+									   </div>
+								</div>
+				        	</div>	
+							<div class="divLineDivider">							
+							</div>
+								<div class="panel panel-default">				        
+				        		<div class="panel-heading" >
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#ModelNineteen">
+											<div>
+											<p class="modalFAQPanelContent">Once installed, will the Cel-Fi require maintenance, or adjustments if changes occur to the native cellular network?</p>
+											</div>
+											<span class="pull-right FAQspan">
+												<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+											</span>
+										</a>
+									</h4>
+								</div>
+								<div id="ModelNineteen" class="panel-collapse collapse">
+									  <div class="panel-body">
+											<p class="modelFAQBodyContents">
+												No. Cel-fi does not require any maintenance. The Cel-Fi systems will self-adjust and reconfigure automatically to changing cellular networks situations.
+											
+											</p>																		                   				               																							                   
+									   </div>
+								</div>
+				        	</div>	
+							<div class="divLineDivider">							
+							</div>
+								<div class="panel panel-default">				        
+				        		<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#ModelTwenty">
+											<div>
+											<p class="modalFAQPanelContent">What is IntelliBoost?</p>
+											</div>
+											<span class="pull-right FAQspan">
+												<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+											</span>
+										</a>
+									</h4>
+								</div>
+								<div id="ModelTwenty" class="panel-collapse collapse">
+									  <div class="panel-body">
+											<p class="modelFAQBodyContents">
+												The Nextivity IntelliBoost Baseband Processor is the first core processor designed specifically to optimize the indoor transmission and reception of 3G and 4G/LTE wireless signals. With advanced filtering, equalization and echo cancellation techniques, Nextivity has developed an embedded architecture which delivers unprecedented in-building data rates and pervasive 3G and 4G/LTE connectivity. The IntelliBoost processor ensures that Cel-Fi products never negatively impact the macro network while providing maximum coverage.											
+											</p>																		                   				               																							                   
+									   </div>
+								</div>
+				        	</div>	
+							<div class="divLineDivider">							
+							</div>
+							<div class="panel panel-default">				        
+				        		<div class="panel-heading" >
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#ModelTwentyOne">
+											<div>
+											<p class="modalFAQPanelContent">What frequencies link the Network (Window) Unit and Coverage Unit?</p>
+											</div>
+											<span class="pull-right FAQspan">
+												<span class="toggle-icon glyphicon glyphicon-chevron-down"></span>
+											</span>
+										</a>
+									</h4>
+								</div>
+								<div id="ModelTwentyOne" class="panel-collapse collapse">
+									  <div class="panel-body">
+											<p class="modelFAQBodyContents">
+												Cel-Fi automatically selects clear, unused channels from the UNII bands (5.15-5.35 GHz, 5.47-5.725 GHz and 5725-5825 GHz) for communication between the Network (Window) Unit and the Coverage Unit. While in some cases these are the same frequencies as Wi-Fi, the Cel-Fi system uses a proprietary protocol for communication and is designed to work in harmony with existing wireless devices such as Wi-Fi routers, cordless telephones or baby monitors.
+											</p>																		                   				               																							                   
+									   </div>
+								</div>
+				        	</div>	
+							<div class ="divLineDivider" id="BottomDivMargin">							
+							</div>
+							
+						</div>  
+						
+						
+	
+
+				</div>						 
+		
+			</div>  <!--model body -->
+
+        <!-- <script type="text/javascript" src="cordova.js"></script>-->
+        <script type="text/javascript" src="lib/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="lib/bootstrap.min.js"></script>
+        <script type="text/javascript" src="lib/bigSlide.min.js"></script>
+        <script type="text/javascript" src="js/gui.js"></script>
+        <script>
+    		$(document).ready(function() {
+        		$('.menu-link').bigSlide();
+        		
+        		$('a[data-toggle="collapse"]').click(function () {
+					$('span.toggle-icon').not($(this).find('span.toggle-icon')).removeClass('glyphicon-chevron-up');
+					$('span.toggle-icon').not($(this).find('span.toggle-icon')).addClass('glyphicon-chevron-down');
+					$(this).find('span.toggle-icon').toggleClass('glyphicon-chevron-up glyphicon-chevron-down');
+				});
+				document.addEventListener("backbutton", function(){
+					navigator.app.exitApp();
+				}, false);
+				
+				$('.faqIcnWrapper').click(function() {                 
+		            util.showHelpMenu();
+		      	});
+    		});
+		</script>				    
+	    <script>
+	    	$(".menu-toggle").click(function(e) {
+		        e.preventDefault();
+	        	$("#wrapper").toggleClass("toggled");
+	    	});
+	    </script>
+    </body>
+</html>

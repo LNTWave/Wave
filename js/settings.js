@@ -68,12 +68,37 @@ function CheckUniiStatusStg()
  
     if( guiCurrentMode == PROG_MODE_SETTINGS )
     {
-        // Check to see if UNII is up...
-        PrintLog(1, "Ant: Check UNII status..." );
-        GetNxtySuperMsgLinkStatus();
-    
-        // Return here in 1 second....
-        checkUniiStatusStgTimer = setTimeout(CheckUniiStatusStg, 5000);
+        if( bCnxToOneBoxNu )
+        {
+            if( isNxtyMsgPending() == false )
+            {
+                // Since we are on a 1-Box, no need to check UNII but check mode in case user
+                // changed the mode with the physical button on the HW.
+                GetNxtySuperMsgBoosterParams();
+            }
+            
+            checkUniiStatusStgTimer = setTimeout(CheckUniiStatusStg, 2000);
+        }
+        else
+        {
+            if( isNxtyMsgPending() == false )
+            {
+                // Check to see if UNII is up...
+                PrintLog(1, "Settings: Check UNII status..." );
+                if( (msgRxLastCmd == NXTY_NAK_RSP) && (nxtyLastNakType == NXTY_NAK_TYPE_TIMEOUT) )
+                {
+                    // UART may be stuck in remote so switch to local to get the status.
+                    SetUartLocal();
+                }
+                else
+                {
+                    GetNxtySuperMsgLinkStatus();
+                }
+            }
+        
+            // Return here in 5 seconds....
+            checkUniiStatusStgTimer = setTimeout(CheckUniiStatusStg, 5000);
+        }
     }
 }
 
@@ -185,9 +210,52 @@ function updateAntStatus()
         uTemp >>= 8;
     }
     
-    guiAntennaDirtyFlag = true;
+    guiSettingsDirtyFlag = true;
 }
 
+//.................................................................................................................
+// mode: 
+//  0: Auto
+//  1: 3G
+//  2: 4G-4GX
+//  3: Band A (1st lowest bit in Secured Setup)
+//  4: Band B (2nd lowest bit in Secured Setup)
+//  5: Band C (3rd lowest bit in Secured Setup)
+
+function SetBooster(mode)
+{
+    bNxtyUserSetInProgress = true;
+    PrintLog(1, "SetBooster(" + guiBoosterModeText[mode] + ")  called");
+    
+    if( isNxtyMsgPending() == true )
+    {
+        // Come back and try again to see if not busy...
+        setTimeout( function(){ SetBooster(mode); }, 130 );
+    }
+    else
+    {
+        if( mode == GO_MODE_AUTO )                 
+        {
+            SetNxtySuperMsgWaveData( NXTY_WAVEID_BAND_MASK_3G_TYPE, GO_ALL_BANDS, NXTY_WAVEID_BAND_MASK_4G_TYPE, GO_ALL_BANDS );
+        }
+        else if( mode == GO_MODE_3G )                 
+        {
+            SetNxtySuperMsgWaveData( NXTY_WAVEID_BAND_MASK_3G_TYPE, GO_ALL_BANDS, NXTY_WAVEID_BAND_MASK_4G_TYPE, 0 );
+        }
+        else if( mode == GO_MODE_4G )                 
+        {
+            SetNxtySuperMsgWaveData( NXTY_WAVEID_BAND_MASK_3G_TYPE, 0, NXTY_WAVEID_BAND_MASK_4G_TYPE, GO_ALL_BANDS );
+        }
+        else if( (mode == GO_MODE_BAND_A) || (mode == GO_MODE_BAND_B) || (mode == GO_MODE_BAND_C) )                 
+        {
+            var uTemp = 0x01 << (guiBoosterBands[mode - GO_MODE_BAND_A]-1);
+            SetNxtySuperMsgWaveData( NXTY_WAVEID_BAND_MASK_3G_TYPE, uTemp, NXTY_WAVEID_BAND_MASK_4G_TYPE, uTemp );
+        }
+        
+        bNxtyUserSetInProgress = false;
+    }
+
+}
 
 var Stg = {
 
@@ -195,7 +263,7 @@ var Stg = {
     handleBackKey: function()
     {
         PrintLog(1, "");
-        PrintLog(1, "Antenna: Back key pressed-------------------------------------------------------");
+        PrintLog(1, "Settings: Back key pressed-------------------------------------------------------");
         clearInterval(StgLoopIntervalHandle);
         clearTimeout(checkUniiStatusStgTimer);
         
@@ -213,7 +281,15 @@ var Stg = {
         // Start the ball rolling...
         StgState              = STG_STATE_READ_GLOBAL_FLAGS_ON_ENTRY;          
         StgTimeoutCount       = 0;
-        StgLoopIntervalHandle = setInterval(StgLoop, 100);
+        
+        if( bCnxToOneBoxNu )
+        {
+            checkUniiStatusStgTimer = setTimeout(CheckUniiStatusStg, 2000);
+        }
+        else
+        {
+            StgLoopIntervalHandle = setInterval(StgLoop, 100);
+        }
     },
 };
 
@@ -222,7 +298,7 @@ var Stg = {
 function StgLoop() 
 {
 
-    PrintLog(1, "Antenna loop...StgState=" + StgState + " StgTimeoutCount= " + StgTimeoutCount );
+    PrintLog(1, "Settings loop...StgState=" + StgState + " StgTimeoutCount= " + StgTimeoutCount );
     StgTimeoutCount++; 
         
     if( StgTimeoutCount > STG_LOOP_COUNT_MAX )
@@ -258,7 +334,7 @@ function StgLoop()
                 // No Ext Antenna available.   "NWK_FLAG_ENABLE_EXT_ANT" not enabled in Ares code.
                 // Disable all buttons and inform user.
                 PrintLog(1, "AntStatus is 0xFFFFFFFF indicating Ext Ant not allowed.   Disable all selections.");
-                disableAntButtons();
+//                disableAntButtons();
                 
                 ShowAlertPopUpMsg("No External Antenna.", "No External Antenna is available for selection.  Return to main menu.");
             }

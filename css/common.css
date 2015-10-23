@@ -80,6 +80,15 @@ input, select, button{
 	top:0;
 }
 
+#logoContainer{
+	width:100%;
+	height:100%;
+	background-image: url('../img/assets/logos/WaveLogoWhite.svg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center; 
+}
+
 #mainContainer{
 	width:100%;
 	height:100vh;
@@ -1133,7 +1142,7 @@ a,a:ACTIVE,a:AFTER {
 
 #modalTitle {
 	text-align: center;
-	line-height: 60px !important;
+	line-height: 40px !important;
 	font-family: Roboto-Medium !important;
 	font-size: 20px;
 	color: #FFFFFF;		
@@ -1149,9 +1158,42 @@ a,a:ACTIVE,a:AFTER {
 	top: 19px;
 }
 
+.modalChevronRightIcns {
+	width: 22px !important;
+	height: 22px !important;
+	background: url("../img/assets/icons/ChevronRight.svg") no-repeat;
+	background-size: 100% 100%;		
+	float: right;
+	margin-top: 15px;
+}
+
+.settingsDropIcns {
+	width: 25px;
+	height: 25px;
+	float: left;
+	margin-top: -3px;		
+}
+
+.helpDeviceProIcns {
+	width: 60px;
+	height: 50px;
+	float: left;
+}
+
+.modalLeftBtn {
+	width: 22px !important;
+	height: 22px !important;
+	background: url('../img/assets/icons/ChevronBack.svg') no-repeat;
+	background-size: 100% 100%;
+	position: absolute;
+	left: 10px !important;
+	top: 19px;
+}
+
 .modalBodyWrapper {
 	background: #F5F7FA !important;	
-	margin-top: 70px;overflow-y: auto;			
+	margin-top: 60px;
+	overflow-y: auto;	
 }
 
 #modalContentWrapper {
@@ -1161,7 +1203,7 @@ a,a:ACTIVE,a:AFTER {
 }
 
 .modalContentTitle {
-	margin-bottom: 10px !important;
+	margin-bottom: 0px !important;
 }
 
 .feedbackSendWrappper, .singnalFinderWrappper {
@@ -1173,6 +1215,13 @@ a,a:ACTIVE,a:AFTER {
 	font-family: Roboto-Regular !important;
 	font-size: 14px;
 	color: #8F959C;
+	text-align: left !important;
+}
+
+.TermsPolicy .label {
+	font-family: Roboto-Regular !important;
+	font-size: 14px !important;
+	color: #656D78 !important;
 	text-align: left !important;	
 }
 
@@ -1196,6 +1245,458 @@ a,a:ACTIVE,a:AFTER {
 =============================================== END OF MODAL PAGE VIEW ===============================================
 */
 
+
+/*
+=============================================== HELP PAGE VIEW ===============================================
+*/
+
+.helpDeviceIcns {
+	width: 60px;
+	height: 50px;
+	float: left;
+	margin-right: 10px !important;	
+}
+
+#deviceGoIcn{
+	background: url('../img/assets/images/deviceImages/Go.png') no-repeat transparent 0px 0px;
+	background-size: 100%;	
+}
+
+#devicePrimeIcn{
+	background: url('../img/assets/images/deviceImages/Prime.png') no-repeat transparent 0px 0px;
+	background-size: 100%;
+}
+
+#deviceDuoIcn {
+	background: url('../img/assets/images/deviceImages/Duo.png') no-repeat transparent -15px 7px;
+	background-size: 167%;
+}
+
+#deviceProIcn {
+	background: url('../img/assets/images/deviceImages/Pro.png') no-repeat transparent -15px 7px;
+	background-size: 167%;
+}
+
+.pageTitleContainer{
+	font-family: Roboto-Medium;
+	font-size: 20px;
+	color: #434A54;
+	padding: 10px 0px 15px 0px !important;
+	/*line-height: 50px;*/
+}
+
+.modelBodyHeaderTitle{
+	font-family: Roboto-Medium;
+	font-size: 20px;
+	color: #434A54;
+	padding: 10px 0px 10px 0px !important;	
+}
+
+.modelBodySubHeaderTitle{
+	font-family: Roboto-Regular !important;	
+	font-size: 16px !important;	
+	color: #434A54 !important;	
+	padding: 15px 0px 10px 0px !important;	
+}
+
+.modelBodyContent{
+	font-family: Roboto-Regular !important;	
+	font-size: 14px !important;	
+	color: #656D78 !important;	
+}	
+
+.modalBodyPadding{
+	padding: 0px 22px 10px 22px !important;	
+}
+
+.modalHelpWrapper, .installGuideWrapper {
+	padding: 0px 10px 10px 10px !important;	
+}
+
+.modalHelpWrapper > div{
+	height:55px !important;	
+	border-bottom: 2px solid #E6E9ED !important;
+}
+
+.modalHelpWrapper > p{
+	border-bottom: 2px solid #E6E9ED !important;
+}
+
+.modalContentPadding{
+	padding-left: 12px !important;
+	padding-right: 12px !important;
+}
+
+.faqModalWrapper > div{
+	border: none !important;
+	height:auto !important;
+}
+
+.modalBodyPanelHeaderTitle{
+	font-family: Roboto-Regular !important;
+	color: #4FAEE0;
+	font-size: 18px;
+    line-height:55px;
+    float: left;	
+}
+
+.installGuideWrapper {
+	border-bottom: 2px solid #E6E9ED !important;
+}
+
+.helpContent {
+	font-family: Roboto-Regular !important;
+	font-size: 14px !important;
+	color: #656D78;
+}
+
+.helpHeadLine {
+	font-family: Roboto-Medium !important;
+	font-size: 16px !important;
+	color: #434A54;
+}
+
+.installGuideContent {
+	margin-top: 30px !important;
+}
+
+.installGuideContent:FIRST-CHILD{
+	margin-top:10px !important;
+}
+
+.troubleShootSubTitle {
+	color: #434A54;
+}
+
+.helpContent > a {
+	font-family: Roboto-Regular !important;
+	font-size: 16px !important;
+	color: #4faee0;
+}
+
+.modalFAQPanelContent{
+	font-family: Roboto-Regular !important;
+	color: #4FAEE0 !important;
+	font-size: 18px !important;
+	padding-right:12px !important;
+}
+
+.faqSpan {
+    color:#4FAEE0 !important;
+    margin-top: -25px !important;
+    margin-right: -20px !important
+}
+
+.modelFAQBodyContents{
+	font-family: Roboto-Regular !important;	
+	font-size: 14px !important;	
+	color: #656D78 !important;	
+	padding-left:12px !important;
+    padding-right: 12px !important;
+	padding-top:10px !important;
+	padding-top:10px !important;
+}
+
+.divLineDivider{
+   border-bottom:2px solid #E6E9ED !important;
+}
+
+.helpSubTitle{
+	color: #B6BCC7;
+}
+
+.faqPanelArrow span{
+	padding:7px 7px 0px 0px !important;
+}
+
+.faqPanelHeader, .faqPanelArrow{
+	padding: 0px !important;
+}
+
+#faqPage .panel-body{
+	padding: 0px 10px 15px 10px !important;
+	font-family: Roboto-Regular;
+	font-size: 14px;
+	color: #656D78;
+}
+
+#faqPage .panel{
+	border: none !important;
+	margin:0px !important;
+	border-bottom: 2px solid #E6E9ED !important;
+	min-height:55px;
+	overflow:scroll;
+	background: #F5F7FA !important;
+	border-radius: 0px !important;
+	-webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+#faqPage .panel::-webkit-scrollbar{
+	display:none;
+}
+
+#faqPage .panel:LAST-CHILD{
+	border-bottom:none !important;
+}
+
+#faqPage span{
+	width:15px;
+	height:15px;
+	padding-right: 22px !important;
+}
+
+#faqPage .panel-heading span{
+	margin-top: 0px !important;
+	vertical-align: middle;
+}
+
+#faqPage .panel-title div{
+	padding:8px !important;
+}
+
+#faqPage .panel-title span{
+	padding: 0px !important;
+}
+
+#faqPage .panel-title .faQuestion{
+	border: green !important;
+	color: #4FAEE0 !important;
+}
+
+/*
+=============================================== END OF HELP PAGE VIEW ===============================================
+*/
+
+/*-----------------------------------Error codes help pages starts here----------------------*/
+
+.registerImages_1{
+	width: 338px;
+	height: 103px;
+	background: url('../img/assets/helpImages/Register_1.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.registerImages_2{
+	width: 338px;
+	height: 103px;
+	background: url('../img/assets/helpImages/Register_2.png') no-repeat;
+	background-size: 100% 100%;
+	margin-top: 10px !important;
+    margin-bottom: 20px !important;
+	border:1px solid #E6E9ED !important;
+}
+.registerImages_3{
+	width: 338px;
+	height: 103px;
+	background: url('../img/assets/helpImages/Register_3.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 20px !important;
+	border:1px solid #E6E9ED !important;
+}					
+
+.errorCodeEC_DUO_1{
+	width: 270px;
+	height: 100px;
+	background: url('../img/assets/helpImages/EC_DUO_1.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_DUO_2{
+	width: 270px;
+	height: 100px;
+	background: url('../img/assets/helpImages/EC_DUO_2.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_DUO_3{
+	width: 270px;
+	height: 100px;
+	background: url('../img/assets/helpImages/EC_DUO_3.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_DUO_4{
+	width: 270px;
+	height: 100px;
+	background: url('../img/assets/helpImages/EC_DUO_4.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_DUO_5{
+	width: 270px;
+	height: 100px;
+	background: url('../img/assets/helpImages/EC_DUO_5.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_DUO_6{
+	width: 270px;
+	height: 100px;
+	background: url('../img/assets/helpImages/EC_DUO_6.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_DUO_7{
+	width: 270px;
+	height: 100px;
+	background: url('../img/assets/helpImages/EC_DUO_7.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_DUO_8{
+	width: 270px;
+	height: 100px;
+	background: url('../img/assets/helpImages/EC_DUO_8.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_DUO_9{
+	width: 270px;
+	height: 100px;
+	background: url('../img/assets/helpImages/EC_DUO_9.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_DUO_10{
+	width: 270px;
+	height: 100px;
+	background: url('../img/assets/helpImages/EC_DUO_10.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_DUO_11{
+	width: 270px;
+	height: 100px;
+	background: url('../img/assets/helpImages/EC_DUO_11.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+
+.errorCodeEC_PRO_1{
+	width: 270px;
+	height: 172px;
+	background: url('../img/assets/helpImages/EC_PRO_1.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_PRO_2{
+	width: 270px;
+	height: 172px;
+	background: url('../img/assets/helpImages/EC_PRO_2.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_PRO_3{
+	width: 270px;
+	height: 172px;
+	background: url('../img/assets/helpImages/EC_PRO_3.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_PRO_4{
+	width: 270px;
+	height: 172px;
+	background: url('../img/assets/helpImages/EC_PRO_4.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_PRO_6{
+	width: 270px;
+	height: 172px;
+	background: url('../img/assets/helpImages/EC_PRO_6.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:2px solid #E6E9ED !important;
+}
+.errorCodeEC_PRO_7{
+	width: 270px;
+	height: 172px;
+	background: url('../img/assets/helpImages/EC_PRO_7.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_PRO_8{
+	width: 270px;
+	height: 172px;
+	background: url('../img/assets/helpImages/EC_PRO_8.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_PRO_9{
+	width: 270px;
+	height: 172px;
+	background: url('../img/assets/helpImages/EC_PRO_9.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_PRO_10{
+	width: 270px;
+	height: 172px;
+	background: url('../img/assets/helpImages/EC_PRO_10.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:2px solid #E6E9ED !important;
+}
+
+.errorCodeModal, .registrationInfoModal{
+	padding:5px 22px 0px 22px !important;
+}
+
+.errorCodeModal h1{
+	font-family: Roboto-Regular;
+	font-size: 16px;
+	color: #656D78;
+	margin-bottom: 10px !important;
+}
+
+ .registrationInfoModal h1{
+	font-family: Roboto-Regular;
+	font-size: 20px;
+	color: #434A54;
+	margin-bottom: 10px !important;
+}
+
+.HeaderTitle_OR{
+	font-family: Roboto-Regular !important;	
+	font-size: 14px !important;	
+	color: #656D78 !important;	
+    text-align: center !important;	
+    width: 338px;
+}
+
+.registrationInfoModal{
+	margin-bottom: 50px;
+}
+
+.registrationInfoModal .defaultButton{
+	background-color: transparent !important;
+	border: 1px solid #4FAEE0 !important;
+	color: #4FAEE0;
+	padding-left: 25px !important;
+	padding-right: 25px !important;
+}
+
+/*-----------------------------------------Error codes help page ends here------------------------------*/
 
 /*
 =============================================== SIGNAL FINDER PAGE VIEW ===============================================
@@ -1302,7 +1803,7 @@ a,a:ACTIVE,a:AFTER {
 	
 	#popupBody{
 		width:100%;
-		min-height: 65px;
+		min-height: 85px;
 		max-height:140px;
 		margin-top: 5px;
 		line-height: 22px;
@@ -1343,12 +1844,12 @@ a,a:ACTIVE,a:AFTER {
 		min-height: 90px;
 		margin-top: 5px;
 		line-height: 22px;
-		padding:20px !important;
+		padding: 10px !important;
 		font-family: Roboto-Medium;
 		font-size: 20px;
 		color: #000;
 		text-align: center;
-		overflow:hidden;
+		overflow: hidden;
 	}
 	
 	#promptFooter{
@@ -1507,6 +2008,11 @@ a,a:ACTIVE,a:AFTER {
 		padding-right: 30px !important;
 	}
 	
+	.nodeviceFooter > .defaultButton:first-child{
+		padding-left: 20px !important;
+		padding-right: 20px !important;
+	} 
+	
 	.spinnerDialog{
 		display: inline-block;
 	    position: fixed;
@@ -1534,14 +2040,6 @@ a,a:ACTIVE,a:AFTER {
 		background: url('../img/assets/images/backgroundImages/Connections1.png') bottom left no-repeat fixed, url('../img/assets/images/backgroundImages/Connections2.png') top right no-repeat fixed;
 	    background-size: 50%;
 	    background-color: #4FAEE0;
-	}
-	
-	.commonPopup{
-		width:36%;
-		margin-left: 32%;
-		max-height:225px;
-		z-index:1006;
-		padding: 1.5% 2% 0.5% 2% !important;
 	}
 	
 	.promptPopup{
@@ -1664,6 +2162,14 @@ a,a:ACTIVE,a:AFTER {
 	.privacyPolicy{
 		max-height:280px !important;
 	}
+	
+	.commonPopup{
+		width:50%;
+		margin-left: 25%;
+		max-height:225px;
+		z-index:1006;
+		padding: 1.5% 2% 0.5% 2% !important;
+	}
 }
 
 @media (min-width:700px) and (orientation:landscape) {
@@ -1695,6 +2201,14 @@ a,a:ACTIVE,a:AFTER {
 	
 	.privacyPolicy{
 		max-height:230px !important;
+	}
+	
+	.commonPopup{
+		width:36%;
+		margin-left: 32%;
+		max-height:225px;
+		z-index:1006;
+		padding: 1.5% 2% 0.5% 2% !important;
 	}
 }
 

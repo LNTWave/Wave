@@ -14,7 +14,7 @@
         <script src="lib/bootstrap.min.js"></script>
         <script src="lib/gauge.js"></script>
         <script type="text/javascript" src="lib/bigSlide.min.js"></script>     
-        
+        <script src="js/gui.js"></script>
     </head>
     <body>
     	<div id="menu" class="panelMenu" role="navigation">
@@ -175,6 +175,10 @@
 				}
 				
 				showGauge(7);
+				
+				$('.faqIcnWrapper').click(function() {			
+    			util.showHelpMenu();
+	    	});
     		});
 		</script>
     </body>

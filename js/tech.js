@@ -30,6 +30,7 @@ const   MAX_LABEL_PAGE         = 8;
 
 
 
+
 // --------------------------------------------------------------------------------------------
 // 
 function StartGatheringTechData() 
@@ -94,7 +95,7 @@ var tech = {
                     
                     // Simulate a call to ReadAddrReq().
                     bReadAddrRsp = true;
-                    nxtyReadAddrRsp |= CU_CLOUD_INFO_GET_PAGE_BIT;
+                    nxtyReadAddrRsp = CLOUD_INFO_GET_ENGR_PAGE_CMD;
                 }
                 else
                 {
@@ -105,11 +106,12 @@ var tech = {
             else
             {
                 // See if the PIC has responded with the current status...
-                if( bNxtySuperMsgRsp && bReadAddrRsp )
+//                if( bNxtySuperMsgRsp && bReadAddrRsp )
+                if( bReadAddrRsp )
                 {
-                    if( (nxtyReadAddrRsp & CU_CLOUD_INFO_GET_PAGE_BIT) == 0 )
+                    if( (nxtyReadAddrRsp & CLOUD_INFO_CMD_RSP_BIT) != 0 )
                     {
-                        var uBytes = (nxtyReadAddrRsp & 0xFF);
+                        var uBytes = (nxtyReadAddrRsp & CLOUD_INFO_DATA_MASK);
                         
                         // Limit the number of bytes to the max of 252.
                         if( uBytes > 252 )
@@ -129,16 +131,26 @@ var tech = {
                             DumpDataTables();
                         }
                       
-                        // Every 25 pages grab a link status.
-                        if( !(iTechPageCount % 25) )
+                        // Every 25 pages grab a link status if not on a 1-Box.
+                        if( bCnxToOneBoxNu == false )
                         {
-                            bGetLinkStatus = true;
-                        }
-                        else
-                        {
-                            bGetLinkStatus = false;
+                            if( !(iTechPageCount % 25) )
+                            {
+                                bGetLinkStatus = true;
+                            }
+                            else
+                            {
+                                bGetLinkStatus = false;
+                            }
                         }
                         return;
+                    }
+                    else if( bGetLinkStatus )
+                    {
+                        // Handle response from GetLinkStatus()
+                         bGetLinkStatus = false;
+                         iTechPageCount++;
+                         return;
                     }
                     else
                     {
@@ -194,14 +206,11 @@ var tech = {
                 // Stop and restart the timer because we don't know if we got here 
                 // because of this timer or at the end of Rx Processing.
                 clearInterval(TechLoopTxIntervalHandle);
-                TechLoopTxIntervalHandle = setInterval(tech.GetFreshPageLoop, 2000 );
+                TechLoopTxIntervalHandle = setInterval(tech.GetFreshPageLoop, 1000 );
                
-                
-                // Clear bits 0 to 11 of cloud info.
-                nxtyCuCloudInfo &= ~CU_CLOUD_INFO_TECH_MASK;
     
-                // OR in the request to get a page...
-                nxtyCuCloudInfo |= CU_CLOUD_INFO_GET_PAGE_BIT;
+                // Default to get a binary page of data...
+                nxtyCuCloudInfo = CLOUD_INFO_GET_ENGR_PAGE_CMD;
     
     
     
@@ -290,7 +299,7 @@ var tech = {
                 
                 if( bNeedPageLabel )
                 {
-                    nxtyCuCloudInfo |= CU_CLOUD_INFO_LABEL_BIT;
+                    nxtyCuCloudInfo = CLOUD_INFO_GET_ENGR_LABEL_CMD;
                     
                     // OR in the page in the lower 8 bits...
                     nxtyCuCloudInfo |= iGetLabelPageNum;
@@ -719,7 +728,9 @@ function ProcessTechData()
         }   // End of block switch
         
         // Fill in some gui data.................................................
-        for( i = 0; i < 4; i++ )
+
+        // Simulate CalculateNuBars() in Ares code but on a per band basis.
+        for( i = 0; i < guiRadios.length; i++ )
         {
             guiBands[i]             = GetTechValue( "Band",  i );
             guiRadios[i]            = String.fromCharCode(65 + GetTechValue( "Radio", i ));
@@ -751,6 +762,97 @@ function ProcessTechData()
             
             guiNetworkBars[i]       = iBars;
         }
+ 
+        // Boost:  -1: Too Close;   0,1,2: Fix it;   3,4,5,6: ok;   7,8,9: good;   10 Too Far
+        guiBoost  = GetTechValue( "CU Bars", 4 );       // CalculateUniiBars(). DB use as is, PRO: adjust,  GO: recalculate
+        
+        if( guiProductType == "PRO" )
+        {
+            switch( guiBoost )
+            {
+                case 1:     guiBoost = 2;   break;
+                case 2:     guiBoost = 4;   break;
+                case 3:     guiBoost = 6;   break;
+                case 4:     guiBoost = 8;   break;
+                case 5:     guiBoost = 9;   break;
+                case 6:     guiBoost = 10;  break;
+                default:    guiBoost = 0;   break;
+            }
+        }
+        else if( (guiProductType == "GO") || (guiProductType == "PRIME") ) 
+        {
+            var minSysGain;
+            var sysGain;
+            
+            minSysGain = 1000;
+            for( i = 0; i < NUM_CHANNELS; i++ )
+            {
+                // If relaying...
+                if( guiCellState[i] )
+                {
+                    sysGain = GetTechValue( "DL System Gain", i ) - GetTechValue( "DL Echo Gain", i );
+                    
+                    if( sysGain < minSysGain )
+                    {
+                        minSysGain = sysGain;
+                    }
+                }
+            }
+
+            if( guiProductType == "GO" )
+            {
+                if( guiMobilityFlag == false )
+                {
+                    if(      minSysGain <  63 )    guiBoost = BOOST_TOO_CLOSE;
+                    else if( minSysGain <= 66 )    guiBoost = 1;
+                    else if( minSysGain <= 69 )    guiBoost = 2;
+                    else if( minSysGain <= 72 )    guiBoost = 3;
+                    else if( minSysGain <= 75 )    guiBoost = 4;
+                    else if( minSysGain <= 78 )    guiBoost = 5;
+                    else if( minSysGain <= 81 )    guiBoost = 6;
+                    else if( minSysGain <= 84 )    guiBoost = 7;
+                    else if( minSysGain <= 87 )    guiBoost = 8;
+                    else if( minSysGain <= 90 )    guiBoost = 9;
+                    else if( minSysGain >  90 )    guiBoost = BOOST_TOO_FAR;
+                }
+                else
+                {
+                    if(      minSysGain <  38 )    guiBoost = BOOST_TOO_CLOSE;
+                    else if( minSysGain <= 41 )    guiBoost = 1;
+                    else if( minSysGain <= 44 )    guiBoost = 2;
+                    else if( minSysGain <= 47 )    guiBoost = 3;
+                    else if( minSysGain <= 50 )    guiBoost = 4;
+                    else if( minSysGain <= 53 )    guiBoost = 5;
+                    else if( minSysGain <= 56 )    guiBoost = 6;
+                    else if( minSysGain <= 59 )    guiBoost = 7;
+                    else if( minSysGain <= 62 )    guiBoost = 8;
+                    else if( minSysGain <= 65 )    guiBoost = 9;
+                    else if( minSysGain >  65 )    guiBoost = BOOST_TOO_FAR;
+                }
+               
+            }
+            else if( guiProductType == "PRIME" )
+            {
+                if(      minSysGain <  43 )    guiBoost = BOOST_TOO_CLOSE;
+                else if( minSysGain <= 46 )    guiBoost = 1;
+                else if( minSysGain <= 49 )    guiBoost = 2;
+                else if( minSysGain <= 52 )    guiBoost = 3;
+                else if( minSysGain <= 55 )    guiBoost = 4;
+                else if( minSysGain <= 58 )    guiBoost = 5;
+                else if( minSysGain <= 61 )    guiBoost = 6;
+                else if( minSysGain <= 64 )    guiBoost = 7;
+                else if( minSysGain <= 67 )    guiBoost = 8;
+                else if( minSysGain <= 70 )    guiBoost = 9;
+                else if( minSysGain >  70 )    guiBoost = BOOST_TOO_FAR;
+            }
+        
+        }
+        
+        
+             
+        guiNuBars = GetTechValue( "NU Bars", 4 );       // CalculateNuBars().
+ 
+ 
         
         
     }       // End of binary data
@@ -768,8 +870,11 @@ function ProcessTechData()
     // Normal processing to acknowledge receipt of response...
     bLookForRsp = false;
 
-    // Fire off a new page request, do not wait for 1 sec timer.
-    setTimeout( function(){ tech.GetFreshPageLoop(); }, 10 );
+    // Fire off a new page request if we are getting the initial data or on tech mode page, otherwise only once per second.
+    if( (guiGotTechModeValues == false) || (guiCurrentMode == PROG_MODE_TECH) )
+    {
+        setTimeout( function(){ tech.GetFreshPageLoop(); }, 10 );
+    }
     
 }
 

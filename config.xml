@@ -3,7 +3,7 @@
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "NxtyWave"
         versionCode = "15"          
-        version     = "96.00.03">
+        version     = "01.00.04">
  
     <name>Wave</name>
  
@@ -40,8 +40,8 @@ This caused the iPhone to brick...
 
 
     <!-- Customize your app and platform with the preference element. -->
-    <preference name="phonegap-version"           value="3.6.3" />          <!-- all: current version of PhoneGap -->
-    <!--<preference name="orientation"                value="portrait" />-->       <!-- all: default means both landscape and portrait are enabled -->
+    <preference name="phonegap-version"           value="3.7.0" />          <!-- all: current version of PhoneGap -->
+    <preference name="orientation"                value="portrait" />       <!-- all: default means both landscape and portrait are enabled -->
     <preference name="target-device"              value="universal" />      <!-- all: possible values handset, tablet, or universal -->
     <preference name="fullscreen"                 value="true" />           <!-- all: hides the status bar at the top of the screen -->
     <preference name="webviewbounce"              value="false" />          <!-- ios: control whether the screen 'bounces' when scrolled beyond the top -->
@@ -106,12 +106,21 @@ This caused the iPhone to brick...
 
 
     <!-- Third party plugins -->
-    <gap:plugin name="com.boyvanderlaak.cordova.plugin.orientationchanger" />
-    <gap:plugin name="com.randdusing.bluetoothle" version="1.0.6" />
-    <!-- Email Plugin -->
-    <!-- <gap:plugin name="de.martinreinhardt.cordova.plugins.email" version="0.8.2" />-->
+  
+    
+    <gap:plugin name="com.randdusing.bluetoothle" version="1.0.6" />                    // Use up to Phonegap Build 3.6.3
+
+   
+<!-- 
+    <gap:plugin name="com.randdusing.bluetoothle" source="plugins.cordova.io" />        // This works with Phonegap Build version 3.7.0 
+-->
+
 <!--
-    <gap:plugin name="com.randdusing.bluetoothle" source="plugins.cordova.io" /> 
+    <gap:plugin name="com.randdusing.bluetoothle" source="npm" version="2.1.2" />       // This one has CRC issues
+-->
+
+<!--
+    <gap:plugin name="com.randdusing.bluetoothle" source="npm" />       // This one is the latest and work with Phonegap Build version 3.7.0
 -->
 
 
@@ -165,10 +174,11 @@ This caused the iPhone to brick...
     <icon src="res/icon/windows-phone/icon-173.png" gap:platform="winphone"   gap:role="background" />
 -->
 
-    <!-- Define app splash screen for each platform. (jdo: Use the single default splash screen.)
-    <gap:splash src="splash.png" />-->
-    <!-- Had to add the following for acceptance to Apple iTunesConnect upload 
-    <gap:splash src="res/screen/ios/splash-568h@2x.png" gap:platform="ios"     width="640" height="1136" />-->  
+    <!-- Define app splash screen for each platform. (jdo: Use the single default splash screen.)-->
+    <gap:splash src="splash.png" />
+    
+    <!-- Had to add the following for acceptance to Apple iTunesConnect upload -->  
+    <gap:splash src="res/screen/ios/splash-568h@2x.png" gap:platform="ios"     width="640" height="1136" />
     
     
 <!--    

@@ -137,7 +137,6 @@ function HandleLocationBack(buttonIndex)
 
 function ProcessRegistration( firstName, lastName, addr1, addr2, city, state, zip, country, phone )
 {
-	//alert(firstName);
     // Send the mandatory user information to the cloud...
     SendCloudData( "'firstName':'"    + firstName + 
                    "', 'lastName':'"  + lastName  +
@@ -224,7 +223,7 @@ var reg = {
 
                 // Get the Reg Data from the CU...
                 GetNxtySuperMsgParamSelect( NXTY_SEL_PARAM_REG_SUPPORT_DATA, NXTY_SEL_PARAM_REG_SUPPORT_DATA );       
-                 break; 
+                break; 
             }
 
 
@@ -351,12 +350,13 @@ var reg = {
                     {
                         UpdateStatusLine("Requesting Cell Info from Cel-Fi device.");
                         ShowWaitPopUpMsg("Registering...", "Requesting Cell Info...");
+                        
                         regSubState = 1;
                     }
                 }
                 else if( regSubState == 1 )              // Redirect UART to Remote unit
                 {
-                    if( IsUartRemote() == false )     
+                    if( (IsUartRemote() == false) && (bCnxToOneBoxNu == false) )     
                     {
                         SetUartRemote();
                     }
@@ -368,17 +368,15 @@ var reg = {
                 else if( regSubState == 2 )              // Tell NU to gather Cell Info
                 {
                     // Send to Ares...
-                    nxtyNuCloudInfo &= ~NU_CLOUD_INFO_CMD_MASK
-                    nxtyNuCloudInfo |= NU_CLOUD_INFO_CELL_REQ_BIT;
-                    nxtyReadAddrRsp |= NU_CLOUD_INFO_CELL_REQ_BIT;                  // Prime the read response
-                    WriteAddrReq( NXTY_PCCTRL_CLOUD_INFO, nxtyNuCloudInfo );
+                    nxtyReadAddrRsp = CLOUD_INFO_CELL_REQ_CMD;                  // Prime the read response
+                    WriteAddrReq( NXTY_PCCTRL_CLOUD_INFO, CLOUD_INFO_CELL_REQ_CMD );
                     regSubState  = 3;
                 }
                 else if( regSubState == 3 )              // Wait until cell data has been gathered...
                 {
                     if( bWriteAddrRsp )
                     {
-                        if( (nxtyReadAddrRsp & NU_CLOUD_INFO_CELL_REQ_BIT) == 0 )
+                        if( (nxtyReadAddrRsp & CLOUD_INFO_CMD_RSP_BIT) != 0 )
                         {
                             // Data is ready in the NU, go get it...
                             ReadDataReq( nxtyNuCloudBuffAddr, 252, READ_DATA_REQ_CELL_INFO_TYPE );
@@ -501,7 +499,7 @@ var reg = {
                 {
                     if( regSubState == 0 )                   // Redirect UART to Remote unit, should already be redirected.
                     {
-                        if( IsUartRemote() == false )     
+                        if( (IsUartRemote() == false) && (bCnxToOneBoxNu == false) )     
                         {
                             SetUartRemote();
                         }
@@ -613,10 +611,8 @@ var reg = {
                         if( window.msgRxLastCmd != NXTY_WAITING_FOR_RSP )
                         {
                             // Send to Ares...
-                            nxtyNuCloudInfo &= ~NU_CLOUD_INFO_CMD_MASK
-                            nxtyNuCloudInfo |= NU_CLOUD_INFO_REG_REQ_BIT;
-                            nxtyReadAddrRsp |= NU_CLOUD_INFO_REG_REQ_BIT;                  // Prime the read response
-                            WriteAddrReq( NXTY_PCCTRL_CLOUD_INFO, nxtyNuCloudInfo );
+                            nxtyReadAddrRsp = CLOUD_INFO_REG_REQ_CMD;                  // Prime the read response
+                            WriteAddrReq( NXTY_PCCTRL_CLOUD_INFO, CLOUD_INFO_REG_REQ_CMD );
                             
                             // Move on to next state...
                             regSubState     = 6;
@@ -626,33 +622,32 @@ var reg = {
                     {
                         if( bWriteAddrRsp )
                         {
-                            if( (nxtyReadAddrRsp & NU_CLOUD_INFO_REG_REQ_BIT) == 0 )
+                            // Move on to next state...
+                            InitGetRegLockStatus();
+                            regSubState     = 7;
+                        }
+                    }
+                    else if( regSubState == 7 )              // Get updated RegLock bits...
+                    {
+                        if( GetRegLockStatus() == true )
+                        {
+                            if( nxtyRxRegLockStatus & 0x02 )
                             {
-                                // Reg request has been processed in the NU, determine if registered or not...
-                                nxtyRxRegLockStatus = (nxtyReadAddrRsp & 0x000F0000) >> 16;
-                                if( nxtyRxRegLockStatus & 0x02 )
-                                {
-                                   // Registered...
-                                   UpdateRegIcon(1);
-                                   UpdateRegButton(1);     // Do not display the reg button.
-                                }
-                                else
-                                {
-                                   // Not registered...
-                                   UpdateRegIcon(0);
-                                   UpdateRegButton(0);     
-                                }
-                                
-                                // move on
-                                regState        = REG_STATE_REGISTRATION_RSP;
-                                regTimeoutCount = 0;
-                                regSubState     = 0;
+                               // Registered...
+                               UpdateRegIcon(1);
+                               UpdateRegButton(1);     // Do not display the reg button.
                             }
                             else
                             {
-                                // Check again to see if page is ready...
-                                ReadAddrReq( NXTY_PCCTRL_CLOUD_INFO );
+                               // Not registered...
+                               UpdateRegIcon(0);
+                               UpdateRegButton(0);     
                             }
+                            
+                            // move on
+                            regState        = REG_STATE_REGISTRATION_RSP;
+                            regTimeoutCount = 0;
+                            regSubState     = 0;
                         }
                             
                     }
@@ -704,17 +699,10 @@ var reg = {
                     
                     
                     ShowConfirmPopUpMsg(
-                        //'Registration successful.  Provide location information?',    // message
-                    	'"Wave" Would Like to Use Your Current Location',
+                        'Registration successful.  Provide location information?',    // message
                         HandleConfirmLocation,              // callback to invoke with index of button pressed
                         'Location',                         // title
                         ['Yes', 'No'] );                    // buttonLabels
-                    
-                    /*ShowConfirmPopUpMsg(
-                            'Registration successful. Taking to the dashboard',    // message
-                            redirectToDashboard,              // callback to invoke with index of button pressed
-                            'Location',                         // title
-                            ['OK'] );                    // buttonLabels*/
                     
                 }
                 else
