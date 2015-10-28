@@ -353,7 +353,7 @@ input, select, button{
 	line-height: 22px;
 }
 
-input[type=text], input[type=number] {
+input[type=text], input[type=number], select {
 	padding: 0 20px 0 20px !important;
 }
 
