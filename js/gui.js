@@ -50,14 +50,16 @@ var szUserValidation            = "Mandatory Input: Please enter";
 var bProgBarDisplayed           = false;
 var settingsPanelContentMobile	= "<div id='settingsDataWrapper' class='col-sm-12'> <div class='group1 col-sm-12'> <div class='operatorContainer col-sm-6'> <div class='panel panel-default'> <div class='panel-group' id='settingsDataContainer'> <div class='panel-heading dropDown' id='operatorTitle'><h4 class='panel-title'><a data-toggle='collapse' data-parent='#settingsDataWrapper' href='#collapseOne'><div><div class='settingsDropIcns' id='operatorIcn'></div>Operator</div><span class='pull-right'><span class='toggle-icon glyphicon glyphicon-chevron-up'></span></span></a></h4></div><div id='collapseOne' class='panel-collapse collapse in'><div class='panel-body'><div><div class='operatorList col-xs-8'><button type='button' class='form-control'><span data-bind='label' id='operatorVal'>Verizon</span></span>&nbsp;<span class='caret'></span></button><div class='operatorListWrapper'><ul><li>AT&T</li><li>T-Mobile</li><li class='selectedListVal'>Verizon</li><li>I don't see my Operator</li></ul></div></div></div></div></div></div></div></div><div class='deviceContainer col-sm-6'> <div class='panel panel-default'> <div class='panel-heading dropDown' id='deviceTitle'><h4 class='panel-title'><a data-toggle='collapse' data-parent='#settingsDataWrapper' href='#collapseTwo'><div><div class='settingsDropIcns' id='deviceIcn'></div>Device</div><span class='pull-right'><span class='toggle-icon glyphicon glyphicon-chevron-down'></span></span></a></h4></div><div id='collapseTwo' class='panel-collapse collapse'><div class='panel-body'><div id='deviceDetailsWrapper'><div id='devicesFoundLbl'>Devices Found</div><div class='deviceList'><button type='button' class='form-control'><span data-bind='label' id='deviceVal'>Device 2</span></span>&nbsp;<span class='caret'></span></button><div class='deviceListWrapper'><ul><li>Device 1</li><li class='selectedListVal'>Device 2</li><li>Device 3</li><li>Device 4</li></ul></div></div><div class='cb'></div><div class='hr'></div><div id='devicesFoundLbl'>Give your Device a name</div><input type='text' id='deviceInput' class='col-xs-12'><div class='form-group' align='right'><button type='button' class='defaultButton' id='deviceUpdate' onclick=''>Update</button></div></div></div></div></div></div></div><div class='group2 col-sm-6'> <div class='versionContainer col-sm-12'> <div class='panel panel-default'> <div class='panel-heading dropDown' id='softwareTitle'><h4 class='panel-title'><a data-toggle='collapse' data-parent='#settingsDataWrapper' href='#collapseThree'><div><div class='settingsDropIcns' id='versionIcn'></div>Software Version</div><span class='pull-right'><span class='toggle-icon glyphicon glyphicon-chevron-down'></span></span></a></h4></div><div id='collapseThree' class='panel-collapse collapse'><div class='panel-body'><div id='versionWrapper'><div class='versionLbl'>Please update your software</div><div class='form-group' align='right'><button type='button' class='primaryButton' id='versionUpdate' onclick=''>Update</button></div><div class='versionLbl'>You're up-to-date</div><div class='doneTick'></div></div></div></div></div></div></div><div class='group3 col-sm-12'> <div class='antennaContainer col-sm-6'> <div class='panel panel-default'> <div class='panel-heading dropDown'><h4 class='panel-title'><a data-toggle='collapse' data-parent='#settingsDataWrapper' href='#collapseFour'><div><div class='settingsDropIcns' id='antennaIcn'></div>Antenna Settings</div><span class='pull-right'><span class='toggle-icon glyphicon glyphicon-chevron-down'></span></span></a></h4></div><div id='collapseFour' class='panel-collapse collapse'><div class='panel-body'><div class='hr'></div><div class='antennaDetailsWrapper'><div class='antennaLbl'>Antenna Control:</div><div class='toggleSwitch'> <label class='leftToggle on' for='antennaAuto'> Auto </label> <input type='radio' name='antennaCtrl' value='auto' id='antennaAuto'/> <label class='rightToggle off' for='antennaManual'> Manual </label> <input type='radio' checked name='antennaCtrl' value='manual' id='antennaManual'/> </div></div><div class='hr'></div><div class='antennaDetailsWrapper'> <div class='antennaLbl'>Band 17 (700):</div><div class='toggleSwitch'> <label class='leftToggle on' for='band_1_internal'> Internal </label> <input type='radio' name='band1' value='internal' id='band_1_internal'/> <label class='rightToggle off' for='band_1_external'> External </label> <input type='radio' checked name='band1' value='external' id='band_1_external'/> </div></div><div class='hr'></div><div class='antennaDetailsWrapper'> <div class='antennaLbl'>Band 4 (1700):</div><div class='toggleSwitch'> <label class='leftToggle on' for='band_2_internal'> Internal </label> <input type='radio' name='band2' value='internal' id='band_2_internal'/> <label class='rightToggle off' for='band_2_external'> External </label> <input type='radio' checked name='band2' value='external' id='band_2_external'/> </div></div><div class='hr'></div><div class='antennaDetailsWrapper'> <div class='antennaLbl disabledToggle'>Band 5 (850):</div><div class='toggleSwitch'> <label class='leftToggle disabledOn' for='band_3_internal'> Internal </label> <input type='radio' disabled name='band3' value='internal' id='band_3_internal'/> <label class='rightToggle disabledOff' for='band_3_external'> External </label> <input type='radio' disabled name='band3' value='external' id='band_3_external'/> </div></div><div class='hr'></div><div class='antennaDetailsWrapper'> <div class='antennaLbl'>Band 2 (1900):</div><div class='toggleSwitch'> <label class='leftToggle on' for='band_4_internal'> Internal </label> <input type='radio' name='band4' value='internal' id='band_4_internal'/> <label class='rightToggle off' for='band_4_external'> External </label> <input type='radio' checked name='band4' value='external' id='band_4_external'/> </div></div></div></div></div></div><div class='boosterContainer col-sm-6'> <div class='panel panel-default'> <div class='panel-heading dropDown'><h4 class='panel-title'><a data-toggle='collapse' data-parent='#settingsDataWrapper' href='#collapseFive'><div><div class='settingsDropIcns' id='boosterIcn'></div>Booster Settings</div><span class='pull-right'><span class='toggle-icon glyphicon glyphicon-chevron-down'></span></span></a></h4></div><div id='collapseFive' class='panel-collapse collapse'><div class='panel-body'><div id='boosterWrapper'><div class='boosterLbl'>Select by Technology:</div><div class='cb'></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnSelected col-xs-6' for='auto'></label><div for='auto' class='boosterSelectedTxt'>Auto</div><input type='radio' name='technologyType' value='auto' id='auto'/></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='3g_4g'></label><div for='3g_4g' class='boosterUnSelectedTxt'>3G/4G</div><input type='radio' name='technologyType' value='3g_4g' id='3g_4g'/></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='lte'></label><div for='lte' class='boosterUnSelectedTxt'>LTE</div><input type='radio' name='technologyType' value='lte' id='lte'/></div><div class='boosterLbl'>Select by Band (Advanced):</div><div class='cb'></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='band3'></label><div for='band3' class='boosterUnSelectedTxt'>Band 3</div><input type='radio' name='technologyType' value='band3' id='band3'/></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='band5'></label><div for='band5' class='boosterUnSelectedTxt'>Band 5</div><input type='radio' name='technologyType' value='band5' id='band5'/></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='band28'></label><div for='band28' class='boosterUnSelectedTxt'>Band 28</div><input type='radio' name='technologyType' value='band28' id='band28'/></div></div></div></div></div></div></div></div>";
 var settingsPanelContentTablet	= "<div id='settingsDataWrapper' class='col-sm-12'> <div class='operatorDataWrapper col-sm-6 settingsTabViewWrapper'><div class='col-sm-12'><div><div class='settingsDropIcns' id='operatorIcn'></div>Operator</div><div><div class='operatorList col-xs-8'><button type='button' class='form-control'><span data-bind='label' id='operatorVal'>Verizon</span>&nbsp;<span class='caret'></span></button><div class='operatorListWrapper'><ul><li>AT&T</li><li>T-Mobile</li><li class='selectedListVal'>Verizon</li><li>I don't see my Operator</li></ul></div></div></div></div></div><div class='deviceDataWrapper col-sm-6 settingsTabViewWrapper'><div class='col-sm-12'><div><div class='settingsDropIcns' id='deviceIcn'></div>Device</div><div id='deviceDetailsWrapper'><div id='devicesFoundLbl'>Devices Found</div><div class='deviceList col-sm-8'><button type='button' class='form-control'><span data-bind='label' id='deviceVal'>Device 2</span></span>&nbsp;<span class='caret'></span></button><div class='deviceListWrapper'><ul><li>Device 1</li><li class='selectedListVal'>Device 2</li><li>Device 3</li><li>Device 4</li></ul></div></div><div class='cb'></div><div class='hr'></div><div id='devicesFoundLbl'>Give your Device a name</div><input type='text' id='deviceInput' class='col-sm-8'><div class='form-group' align='right'><button type='button' class='defaultButton' id='deviceUpdate' onclick=''>Update</button></div></div></div></div><div class='versionDataWrapper col-sm-6 settingsTabViewWrapper'><div class='col-sm-12'><div><div class='settingsDropIcns' id='versionIcn'></div>Software Version</div><div id='versionWrapper'><div class='versionLbl'>Please update your software</div><div class='form-group' align='right'><button type='button' class='primaryButton' id='versionUpdate' onclick=''>Update</button></div><div class='versionLbl'>You're up-to-date</div><div class='doneTick'></div></div></div></div><div class='antennaDataWrapper col-sm-6 settingsTabViewWrapper'><div class='col-sm-12'><div><div class='settingsDropIcns' id='antennaIcn'></div>Antenna Settings</div><div class='antennaDetailsWrapper'><div class='antennaLbl'>Antenna Control:</div><div class='antennaRadioWrapper col-sm-4'><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnSelected col-xs-6' for='antennaAuto'></label><div for='auto' class='boosterSelectedTxt'>Auto</div><input type='radio' name='antennaCtrl' value='auto' id='antennaAuto'/></div><div class='cb'></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='3g_4g'></label><div for='3g_4g' class='boosterUnSelectedTxt'>3G/4G</div><input type='radio' name='antennaCtrl' value='manual' id='antennaManual'/></div></div></div><div class='hr'></div><div class='antennaDetailsWrapper'> <div class='antennaLbl'>Band 17 (700):</div><div class='antennaRadioWrapper col-sm-4'><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnSelected col-xs-6' for='band_1_internal'></label><div for='band_1_internal' class='boosterSelectedTxt'>Internal</div><input type='radio' name='antennaCtrl' value='internal' id='band_1_internal'/></div><div class='cb'></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='band_1_external'></label><div for='band_1_external' class='boosterUnSelectedTxt'>3G/4G</div><input type='radio' name='antennaCtrl' value='external' id='band_1_external'/></div></div></div><div class='hr'></div><div class='antennaDetailsWrapper'> <div class='antennaLbl'>Band 4 (1700):</div><div class='antennaRadioWrapper col-sm-4'><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnSelected col-xs-6' for='band_2_internal'></label><div for='band_1_internal' class='boosterSelectedTxt'>Internal</div><input type='radio' name='antennaCtrl' value='internal' id='band_2_internal'/></div><div class='cb'></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='band_2_external'></label><div for='band_1_external' class='boosterUnSelectedTxt'>3G/4G</div><input type='radio' name='antennaCtrl' value='external' id='band_2_external'/></div></div></div><div class='hr'></div><div class='antennaDetailsWrapper'> <div class='antennaLbl disabledToggle'>Band 5 (850):</div><div class='antennaRadioWrapper col-sm-4'><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnSelected col-xs-6' for='band_3_internal'></label><div for='band_1_internal' class='boosterSelectedTxt'>Internal</div><input type='radio' name='antennaCtrl' value='internal' id='band_1_internal'/></div><div class='cb'></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='band_3_external'></label><div for='band_1_external' class='boosterUnSelectedTxt'>3G/4G</div><input type='radio' name='antennaCtrl' value='external' id='band_3_external'/></div></div></div><div class='hr'></div><div class='antennaDetailsWrapper'> <div class='antennaLbl'>Band 2 (1900):</div><div class='antennaRadioWrapper col-sm-4'><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnSelected col-xs-6' for='band_4_internal'></label><div for='band_1_internal' class='boosterSelectedTxt'>Internal</div><input type='radio' name='antennaCtrl' value='internal' id='band_1_internal'/></div><div class='cb'></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='band_4_external'></label><div for='band_1_external' class='boosterUnSelectedTxt'>3G/4G</div><input type='radio' name='antennaCtrl' value='external' id='band_1_external'/></div></div></div></div></div><div class='boosterSettingsWrapper col-sm-6 settingsTabViewWrapper'><div class='col-sm-12'><div><div class='settingsDropIcns' id='boosterIcn'></div>Booster Settings</div><div id='boosterWrapper'><div class='boosterLbl'>Select by Technology:</div><div class='cb'></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnSelected col-xs-6' for='auto'></label><div for='auto' class='boosterSelectedTxt'>Auto</div><input type='radio' name='technologyType' value='auto' id='auto'/></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='3g_4g'></label><div for='3g_4g' class='boosterUnSelectedTxt'>3G/4G</div><input type='radio' name='technologyType' value='3g_4g' id='3g_4g'/></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='lte'></label><div for='lte' class='boosterUnSelectedTxt'>LTE</div><input type='radio' name='technologyType' value='lte' id='lte'/></div><div class='boosterLbl'>Select by Band (Advanced):</div><div class='cb'></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='band3'></label><div for='band3' class='boosterUnSelectedTxt'>Band 3</div><input type='radio' name='technologyType' value='band3' id='band3'/></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='band5'></label><div for='band5' class='boosterUnSelectedTxt'>Band 5</div><input type='radio' name='technologyType' value='band5' id='band5'/></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='band28'></label><div for='band28' class='boosterUnSelectedTxt'>Band 28</div><input type='radio' name='technologyType' value='band28' id='band28'/></div></div></div></div></div>";
-var dashboardPanelContent		= "<div class='dashboardPanel1'> <div class='col-xs-12 col-sm-3 userGreets'> Welcome back <span id='userDpName'></span> <br><span id='userDeviceStatusLine'>Things look </span> <span id='deviceStatus' class='good'></span> </div><div class='col-xs-12 col-sm-7 deviceDUO' id='deviceTypeBG'></div><div class='col-xs-12 col-sm-2 deviceSerialNumber'></div></div><div class='dashboardPanel2 w100'> <div class='col-xs-6 col-sm-3 dashboardContent'> <div id='gaugeContainer' class='graphicalRep'> <canvas id='boostGauge'></canvas> <div id='boosterLevel'>7</div></div><div class='dataTypeTitle'>BOOST</div></div><div class='col-xs-6 col-sm-3 dashboardContent'> <div id='signalStrengthContainer' class='graphicalRep'> <div class='signalContainer'> <div id='networkSignal1' class='networkSignalIndi activeStatus'></div><div id='networkSignal2' class='networkSignalIndi activeStatus'></div><div id='networkSignal3' class='networkSignalIndi activeStatus'></div><div id='networkSignal4' class='networkSignalIndi deactiveStatus'></div><div id='networkSignal5' class='networkSignalIndi deactiveStatus'></div></div></div><div class='dataTypeTitle'>NETWORK STREGNTH</div></div><div class='col-xs-6 col-sm-3 dashboardContent'> <div id='operatorContainer' class='graphicalRep'> <span>T-Mobile</span> </div><div class='dataTypeTitle'>OPERATOR</div></div><div class='col-xs-6 col-sm-3 dashboardContent'> <div id='coverageNamecontainer' class='graphicalRep'> <span>LTE</span> </div><div class='dataTypeTitle'>COVERAGE</div></div></div>";
-var advancedPanelContent		= "<div class='advancedIcnContainer col-xs-12 col-sm-12' ><div id='sendIcnWrapper'><div id='sendIcn'></div><div class='advancedIcnLbl'>Send</div></div><div id='refreshIcnWrapper'><div id='refreshIcn'></div><div class='advancedIcnLbl'>Refresh</div></div></div><div class='cb'></div><div id='advancedContentwrapper'> <div class='panel-group' id='advancedDataContainer'> <div class='divider'>OVERVIEW</div><div class='panel panel-default col-sm-6'> <div class='panel-heading dropDown'> <h4 class='panel-title'><a data-toggle='collapse' data-parent='#advancedContentwrapper' href='#collapseOne'><div>Network Strength</div><span class='pull-right'> <span class='toggle-icon glyphicon glyphicon-chevron-up'></span></span></a></h4> </div><div id='collapseOne' class='panel-collapse collapse in'> <div class='panel-body'> <div id='networkDataContainer'> <div id='networkData1' class='col-xs-3 col-sm-3 networkData'> <div class='networkTitle'>A</div><div class='networkStrength'> <div class='signalContainerSM'> <div class='networkSignalIndiSM activeStatus networkBar1'></div><div class='networkSignalIndiSM activeStatus networkBar2'></div><div class='networkSignalIndiSM activeStatus networkBar3'></div><div class='networkSignalIndiSM deactiveStatus networkBar4'></div><div class='networkSignalIndiSM deactiveStatus networkBar5'></div></div></div><div class='networkStatus'> <div class='networkStatusLbl'>LTE</div><div class='networkFreq'>739 MHz</div></div></div><div id='networkData2' class='col-xs-3 col-sm-3 networkData'> <div class='networkTitle'>B</div><div class='networkStrength'> <div class='signalContainerSM'> <div class='networkSignalIndiSM activeStatus networkBar1'></div><div class='networkSignalIndiSM activeStatus networkBar2'></div><div class='networkSignalIndiSM activeStatus networkBar3'></div><div class='networkSignalIndiSM deactiveStatus networkBar4'></div><div class='networkSignalIndiSM deactiveStatus networkBar5'></div></div></div><div class='networkStatus'> <div class='networkStatusLbl'>LTE</div><div class='networkFreq'>739 MHz</div></div></div><div id='networkData3' class='col-xs-3 col-sm-3 networkData'> <div class='networkTitle'>C</div><div class='networkStrength'> <div class='signalContainerSM'> <div class='networkSignalIndiSM activeStatus networkBar1'></div><div class='networkSignalIndiSM activeStatus networkBar2'></div><div class='networkSignalIndiSM activeStatus networkBar3'></div><div class='networkSignalIndiSM activeStatus networkBar4'></div><div class='networkSignalIndiSM deactiveStatus networkBar5'></div></div></div><div class='networkStatus'> <div class='networkStatusLbl'>LTE</div><div class='networkFreq'>739 MHz</div></div></div><div id='networkData4' class='col-xs-3 col-sm-3 networkData'> <div class='networkTitle'>D</div><div class='networkStrength'> <div class='signalContainerSM'> <div class='networkSignalIndiSM activeStatus networkBar1'></div><div class='networkSignalIndiSM activeStatus networkBar2'></div><div class='networkSignalIndiSM deactiveStatus networkBar3'></div><div class='networkSignalIndiSM deactiveStatus networkBar4'></div><div class='networkSignalIndiSM deactiveStatus networkBar5'></div></div></div><div class='networkStatus'> <div class='networkStatusLbl'>LTE</div><div class='networkFreq'>739 MHz</div></div></div></div></div></div></div><div class='cb'></div><div class='divider'>SUPER CHANNELS</div><div class='firstGroup col-sm-6'> <div class='panel panel-default'> <div class='panel-heading drop-green dropDown'> <h4 class='panel-title'><a data-toggle='collapse' data-parent='#advancedContentwrapper' href='#collapseTwo'><div>Radio A Band 17: LTE (Boosting)</div><span class='pull-right'><span class='toggle-icon glyphicon glyphicon-chevron-down'></span></span></a></h4> </div><div id='collapseTwo' class='panel-collapse collapse'> <div class='panel-body'> <div class='dropDownList'> <div class='dropDownInnerTitle '> <div class='col-xs-8 col-sm-8'>Description</div><div class='col-xs-4 col-sm-4'>Value</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Bandwidth</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Download centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Uplink centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>PRI Cell_ID</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSSI</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSCP</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSRQ</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Donor SINR</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Ext. antenna in use</div><div class='col-xs-4 col-sm-4'>0</div></div></div></div></div></div><div class='panel panel-default'> <div class='panel-heading drop-green dropDown'> <h4 class='panel-title'><a data-toggle='collapse' data-parent='#advancedContentwrapper' href='#collapseThree'><div>Radio B Band 4: LTE (Idle)</div><span class='pull-right'><span class='toggle-icon glyphicon glyphicon-chevron-down'></span></span></a></h4> </div><div id='collapseThree' class='panel-collapse collapse'> <div class='panel-body'> <div class='dropDownList'> <div class='dropDownInnerTitle '> <div class='col-xs-8 col-sm-8'>Description</div><div class='col-xs-4 col-sm-4'>Value</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Bandwidth</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Download centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Uplink centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>PRI Cell_ID</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSSI</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSCP</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSRQ</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Donor SINR</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Ext. antenna in use</div><div class='col-xs-4 col-sm-4'>0</div></div></div></div></div></div></div><div class='secondGroup col-sm-6'> <div class='panel panel-default'> <div class='panel-heading drop-red dropDown'> <h4 class='panel-title'> <a data-toggle='collapse' data-parent='#advancedContentwrapper' href='#collapseFour'> <div>Radio C: Unused</div><span class='pull-right'> <span class='toggle-icon glyphicon glyphicon-chevron-down'></span> </span> </a> </h4> </div><div id='#collapseFour' class='panel-collapse collapse'> <div class='panel-body'> <div class='dropDownList'> <div class='dropDownInnerTitle '> <div class='col-xs-8 col-sm-8'>Description</div><div class='col-xs-4 col-sm-4'>Value</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Bandwidth</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Download centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Uplink centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>PRI Cell_ID</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSSI</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSCP</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSRQ</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Donor SINR</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Ext. antenna in use</div><div class='col-xs-4 col-sm-4'>0</div></div></div></div></div></div><div class='panel panel-default'> <div class='panel-heading drop-red dropDown'> <h4 class='panel-title'> <a data-toggle='collapse' data-parent='#advancedContentwrapper' href='#collapseFive'> <div>Radio D: Unused</div><span class='pull-right'> <span class='toggle-icon glyphicon glyphicon-chevron-down'></span> </span> </a> </h4> </div><div id='#collapseFive' class='panel-collapse collapse'> <div class='panel-body'> <div class='dropDownList'> <div class='dropDownInnerTitle '> <div class='col-xs-8 col-sm-8'>Description</div><div class='col-xs-4 col-sm-4'>Value</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Bandwidth</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Download centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Uplink centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>PRI Cell_ID</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSSI</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSCP</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSRQ</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Donor SINR</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Ext. antenna in use</div><div class='col-xs-4 col-sm-4'>0</div></div></div></div></div></div></div><div class='cb'></div><div class='divider'>SYSTEM OVERVIEW</div><div class='panel panel-default col-sm-6'> <div class='panel-heading drop-violet dropDown'> <h4 class='panel-title'> <a data-toggle='collapse' data-parent='#advancedContentwrapper' href='#collapseSix'> <div>Device State</div><span class='pull-right'> <span class='toggle-icon glyphicon glyphicon-chevron-down'></span> </span> </a> </h4> </div><div id='collapseSix' class='panel-collapse collapse'> <div class='panel-body'> <div class='dropDownList'> <div class='dropDownInnerTitle '> <div class='col-xs-8 col-sm-8'>Description</div><div class='col-xs-4 col-sm-4'>Value</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Bandwidth</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Download centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Uplink centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>PRI Cell_ID</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSSI</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSCP</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSRQ</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Donor SINR</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Ext. antenna in use</div><div class='col-xs-4 col-sm-4'>0</div></div></div></div></div></div><div class='cb'></div><div class='divider'>TECH DATA</div><div class='panel panel-default col-sm-6'> <div class='panel-heading drop-yellow dropDown'> <h4 class='panel-title'> <a data-toggle='collapse' data-parent='#advancedContentwrapper' href='#collapseSeven'> <div>Stuff you won't understand</div><span class='pull-right'> <span class='toggle-icon glyphicon glyphicon-chevron-down'></span> </span> </a> </h4> </div><div id='collapseSeven' class='panel-collapse collapse'> </div></div><div class='cb'></div><div class='divider'>DEVICE VERSION</div><div class='panel panel-default col-sm-6'> <div class='panel-heading drop-lite-green dropDown'> <h4 class='panel-title'> <a data-toggle='collapse' data-parent='#advancedContentwrapper' href='#collapseTeehree'> <div>Software Versions</div><span class='pull-right'> <span class='toggle-icon glyphicon glyphicon-chevron-down'></span> </span> </a> </h4> </div><div id='collapseTeehree' class='panel-collapse collapse'> <div class='panel-body'> <div class='dropDownList'> <div class='dropDownInnerTitle '> <div class='col-xs-8 col-sm-8'>Description</div><div class='col-xs-4 col-sm-4'>Value</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Bandwidth</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Download centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Uplink centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>PRI Cell_ID</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSSI</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSCP</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSRQ</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Donor SINR</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Ext. antenna in use</div><div class='col-xs-4 col-sm-4'>0</div></div></div></div></div></div></div></div>";
+var dashboardPanelContent		= "<div class='dashboardPanel1'> <div class='col-xs-12 col-sm-3 userGreets'> Welcome<span id='userDpName'></span> <br><span id='userDeviceStatusLine'>Things look </span> <span id='deviceStatus' class='good'></span> </div><div class='col-xs-12 col-sm-7 deviceDUO' id='deviceTypeBG'></div><div class='col-xs-12 col-sm-2 deviceSerialNumber'></div></div><div class='dashboardPanel2 w100'> <div class='col-xs-6 col-sm-3 dashboardContent'> <div id='gaugeContainer' class='graphicalRep'> <canvas id='boostGauge'></canvas> <div id='boosterLevel'>7</div></div><div class='dataTypeTitle'>BOOST</div></div><div class='col-xs-6 col-sm-3 dashboardContent'> <div id='signalStrengthContainer' class='graphicalRep'> <div class='signalContainer'> <div id='networkSignal1' class='networkSignalIndi activeStatus'></div><div id='networkSignal2' class='networkSignalIndi activeStatus'></div><div id='networkSignal3' class='networkSignalIndi activeStatus'></div><div id='networkSignal4' class='networkSignalIndi deactiveStatus'></div><div id='networkSignal5' class='networkSignalIndi deactiveStatus'></div></div></div><div class='dataTypeTitle'>NETWORK STREGNTH</div></div><div class='col-xs-6 col-sm-3 dashboardContent'> <div id='operatorContainer' class='graphicalRep'> <span>T-Mobile</span> </div><div class='dataTypeTitle'>OPERATOR</div></div><div class='col-xs-6 col-sm-3 dashboardContent'> <div id='coverageNamecontainer' class='graphicalRep'> <span>LTE</span> </div><div class='dataTypeTitle'>COVERAGE</div></div></div>";
+//var advancedPanelContent		= "<div class='advancedIcnContainer col-xs-12 col-sm-12' ><div id='sendIcnWrapper'><div id='sendIcn'></div><div class='advancedIcnLbl'>Send</div></div><div id='refreshIcnWrapper'><div id='refreshIcn'></div><div class='advancedIcnLbl'>Refresh</div></div></div><div class='cb'></div><div id='advancedContentwrapper'> <div class='panel-group' id='advancedDataContainer'> <div class='divider'>OVERVIEW</div><div class='panel panel-default col-sm-6'> <div class='panel-heading dropDown'> <h4 class='panel-title'><a data-toggle='collapse' data-parent='#advancedContentwrapper' href='#collapseOne'><div>Network Strength</div><span class='pull-right'> <span class='toggle-icon glyphicon glyphicon-chevron-up'></span></span></a></h4> </div><div id='collapseOne' class='panel-collapse collapse in'> <div class='panel-body'> <div id='networkDataContainer'> <div id='networkData1' class='col-xs-3 col-sm-3 networkData'> <div class='networkTitle'>A</div><div class='networkStrength'> <div class='signalContainerSM'> <div class='networkSignalIndiSM activeStatus networkBar1'></div><div class='networkSignalIndiSM activeStatus networkBar2'></div><div class='networkSignalIndiSM activeStatus networkBar3'></div><div class='networkSignalIndiSM deactiveStatus networkBar4'></div><div class='networkSignalIndiSM deactiveStatus networkBar5'></div></div></div><div class='networkStatus'> <div class='networkStatusLbl'>LTE</div><div class='networkFreq'>739 MHz</div></div></div><div id='networkData2' class='col-xs-3 col-sm-3 networkData'> <div class='networkTitle'>B</div><div class='networkStrength'> <div class='signalContainerSM'> <div class='networkSignalIndiSM activeStatus networkBar1'></div><div class='networkSignalIndiSM activeStatus networkBar2'></div><div class='networkSignalIndiSM activeStatus networkBar3'></div><div class='networkSignalIndiSM deactiveStatus networkBar4'></div><div class='networkSignalIndiSM deactiveStatus networkBar5'></div></div></div><div class='networkStatus'> <div class='networkStatusLbl'>LTE</div><div class='networkFreq'>739 MHz</div></div></div><div id='networkData3' class='col-xs-3 col-sm-3 networkData'> <div class='networkTitle'>C</div><div class='networkStrength'> <div class='signalContainerSM'> <div class='networkSignalIndiSM activeStatus networkBar1'></div><div class='networkSignalIndiSM activeStatus networkBar2'></div><div class='networkSignalIndiSM activeStatus networkBar3'></div><div class='networkSignalIndiSM activeStatus networkBar4'></div><div class='networkSignalIndiSM deactiveStatus networkBar5'></div></div></div><div class='networkStatus'> <div class='networkStatusLbl'>LTE</div><div class='networkFreq'>739 MHz</div></div></div><div id='networkData4' class='col-xs-3 col-sm-3 networkData'> <div class='networkTitle'>D</div><div class='networkStrength'> <div class='signalContainerSM'> <div class='networkSignalIndiSM activeStatus networkBar1'></div><div class='networkSignalIndiSM activeStatus networkBar2'></div><div class='networkSignalIndiSM deactiveStatus networkBar3'></div><div class='networkSignalIndiSM deactiveStatus networkBar4'></div><div class='networkSignalIndiSM deactiveStatus networkBar5'></div></div></div><div class='networkStatus'> <div class='networkStatusLbl'>LTE</div><div class='networkFreq'>739 MHz</div></div></div></div></div></div></div><div class='cb'></div><div class='divider'>SUPER CHANNELS</div><div class='firstGroup col-sm-6'> <div class='panel panel-default'> <div class='panel-heading drop-green dropDown'> <h4 class='panel-title'><a data-toggle='collapse' data-parent='#advancedContentwrapper' href='#collapseTwo'><div>Radio A Band 17: LTE (Boosting)</div><span class='pull-right'><span class='toggle-icon glyphicon glyphicon-chevron-down'></span></span></a></h4> </div><div id='collapseTwo' class='panel-collapse collapse'> <div class='panel-body'> <div class='dropDownList'> <div class='dropDownInnerTitle '> <div class='col-xs-8 col-sm-8'>Description</div><div class='col-xs-4 col-sm-4'>Value</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Bandwidth</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Download centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Uplink centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>PRI Cell_ID</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSSI</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSCP</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSRQ</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Donor SINR</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Ext. antenna in use</div><div class='col-xs-4 col-sm-4'>0</div></div></div></div></div></div><div class='panel panel-default'> <div class='panel-heading drop-green dropDown'> <h4 class='panel-title'><a data-toggle='collapse' data-parent='#advancedContentwrapper' href='#collapseThree'><div>Radio B Band 4: LTE (Idle)</div><span class='pull-right'><span class='toggle-icon glyphicon glyphicon-chevron-down'></span></span></a></h4> </div><div id='collapseThree' class='panel-collapse collapse'> <div class='panel-body'> <div class='dropDownList'> <div class='dropDownInnerTitle '> <div class='col-xs-8 col-sm-8'>Description</div><div class='col-xs-4 col-sm-4'>Value</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Bandwidth</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Download centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Uplink centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>PRI Cell_ID</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSSI</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSCP</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSRQ</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Donor SINR</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Ext. antenna in use</div><div class='col-xs-4 col-sm-4'>0</div></div></div></div></div></div></div><div class='secondGroup col-sm-6'> <div class='panel panel-default'> <div class='panel-heading drop-red dropDown'> <h4 class='panel-title'> <a data-toggle='collapse' data-parent='#advancedContentwrapper' href='#collapseFour'> <div>Radio C: Unused</div><span class='pull-right'> <span class='toggle-icon glyphicon glyphicon-chevron-down'></span> </span> </a> </h4> </div><div id='#collapseFour' class='panel-collapse collapse'> <div class='panel-body'> <div class='dropDownList'> <div class='dropDownInnerTitle '> <div class='col-xs-8 col-sm-8'>Description</div><div class='col-xs-4 col-sm-4'>Value</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Bandwidth</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Download centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Uplink centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>PRI Cell_ID</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSSI</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSCP</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSRQ</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Donor SINR</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Ext. antenna in use</div><div class='col-xs-4 col-sm-4'>0</div></div></div></div></div></div><div class='panel panel-default'> <div class='panel-heading drop-red dropDown'> <h4 class='panel-title'> <a data-toggle='collapse' data-parent='#advancedContentwrapper' href='#collapseFive'> <div>Radio D: Unused</div><span class='pull-right'> <span class='toggle-icon glyphicon glyphicon-chevron-down'></span> </span> </a> </h4> </div><div id='#collapseFive' class='panel-collapse collapse'> <div class='panel-body'> <div class='dropDownList'> <div class='dropDownInnerTitle '> <div class='col-xs-8 col-sm-8'>Description</div><div class='col-xs-4 col-sm-4'>Value</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Bandwidth</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Download centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Uplink centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>PRI Cell_ID</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSSI</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSCP</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSRQ</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Donor SINR</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Ext. antenna in use</div><div class='col-xs-4 col-sm-4'>0</div></div></div></div></div></div></div><div class='cb'></div><div class='divider'>SYSTEM OVERVIEW</div><div class='panel panel-default col-sm-6'> <div class='panel-heading drop-violet dropDown'> <h4 class='panel-title'> <a data-toggle='collapse' data-parent='#advancedContentwrapper' href='#collapseSix'> <div>Device State</div><span class='pull-right'> <span class='toggle-icon glyphicon glyphicon-chevron-down'></span> </span> </a> </h4> </div><div id='collapseSix' class='panel-collapse collapse'> <div class='panel-body'> <div class='dropDownList'> <div class='dropDownInnerTitle '> <div class='col-xs-8 col-sm-8'>Description</div><div class='col-xs-4 col-sm-4'>Value</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Bandwidth</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Download centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Uplink centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>PRI Cell_ID</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSSI</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSCP</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSRQ</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Donor SINR</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Ext. antenna in use</div><div class='col-xs-4 col-sm-4'>0</div></div></div></div></div></div><div class='cb'></div><div class='divider'>TECH DATA</div><div class='panel panel-default col-sm-6'> <div class='panel-heading drop-yellow dropDown'> <h4 class='panel-title'> <a data-toggle='collapse' data-parent='#advancedContentwrapper' href='#collapseSeven'> <div>Stuff you won't understand</div><span class='pull-right'> <span class='toggle-icon glyphicon glyphicon-chevron-down'></span> </span> </a> </h4> </div><div id='collapseSeven' class='panel-collapse collapse'> </div></div><div class='cb'></div><div class='divider'>DEVICE VERSION</div><div class='panel panel-default col-sm-6'> <div class='panel-heading drop-lite-green dropDown'> <h4 class='panel-title'> <a data-toggle='collapse' data-parent='#advancedContentwrapper' href='#collapseTeehree'> <div>Software Versions</div><span class='pull-right'> <span class='toggle-icon glyphicon glyphicon-chevron-down'></span> </span> </a> </h4> </div><div id='collapseTeehree' class='panel-collapse collapse'> <div class='panel-body'> <div class='dropDownList'> <div class='dropDownInnerTitle '> <div class='col-xs-8 col-sm-8'>Description</div><div class='col-xs-4 col-sm-4'>Value</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Bandwidth</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Download centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Uplink centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>PRI Cell_ID</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSSI</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSCP</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSRQ</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Donor SINR</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Ext. antenna in use</div><div class='col-xs-4 col-sm-4'>0</div></div></div></div></div></div></div></div>";
 var topHorizontalMenu			= "<div class='headerContainer' id='headerContainer'> <div class='titlebarWrapper'> <div class='sliderMenuWrapper col-xs-2 col-sm-2'> <a href='#menu' class='menu-link'> <div class='sliderMenuIcn'></div></a> </div><div class='logoWrapper col-xs-8 col-sm-8'> <div class='logoImg'></div></div><div class='faqIcnWrapper col-xs-2 col-sm-2'> <div class='faqIcn'></div></div></div><div class='menuWrapper'> <div class='col-xs-4 col-sm-2 selectedTab' id='dashboardMenu'> <div>DASHBOARD</div></div><div class='col-xs-4 col-sm-2' id='settingsMenu'> <div>SETTINGS</div></div><div class='col-xs-4 col-sm-2' id='advancedMenu'> <div>ADVANCED</div></div></div></div><div class='cb'></div><div id='bodyContainer'></div>";
-var mainContainerWithMenu		= "<div id='menu' class='panelMenu' role='navigation'> <div class='panelLogoWrapper'> <div class='panelLogo'></div></div><div class='panelMenuList'> <ul> <li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='finderIcn'></div><span>Signal Finder</span><div class='cb'></div></a> </li><li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='aboutIcn'></div><span>About</span><div class='cb'></div></a> </li><li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='feedBackIcn'></div><span>Send Feedback</span><div class='cb'></div></a> </li><li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='policyIcn'></div><span>Privacy Policy</span><div class='cb'></div></a> </li><li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='registerIcn'></div><span>Register Booster</span><div class='cb'></div></a> </li></ul> </div><div class='socialLinkWrapper'> <div class='socialLinkTitle'>Follow us:</div><div class='socialLinkIcnWrapper'> <div class='socialIcns' id='facebookIcn'></div><div class='socialIcns' id='twitterIcn'></div><div class='socialIcns' id='linkedinIcn'></div><div class='socialIcns' id='googleIcn'></div></div></div></div><div id='mainContainer' class='push'></div>";
+var mainContainerWithMenu		= "<div id='menu' class='panelMenu' role='navigation'> <div class='panelLogoWrapper'> <div class='panelLogo'></div></div><div class='panelMenuList'> <ul> <li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='finderIcn'></div><span>Signal Finder</span><div class='cb'></div></a> </li><li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='aboutIcn'></div><span onclick='util.showAboutUs()'>About</span><div class='cb'></div></a> </li><li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='feedBackIcn'></div><span onclick='util.showSendFeedback()'>Send Feedback</span><div class='cb'></div></a> </li><li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='policyIcn'></div><span onclick='util.showPrivacyPolicy()'>Privacy Policy</span><div class='cb'></div></a> </li><li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='registerIcn'></div><span>Register Booster</span><div class='cb'></div></a> </li></ul> </div><div class='socialLinkWrapper'> <div class='socialLinkTitle'>Follow us:</div><div class='socialLinkIcnWrapper'> <div class='socialIcns' id='facebookIcn' onclick='window.open(\'https://www.facebook.com/5bars\', \'_system\')'></div><div class='socialIcns' id='twitterIcn' onclick='window.open(\'http://twitter.com/#!/5bars\', \'_system\')'></div><div class='socialIcns' id='linkedinIcn' onclick='window.open(\'http://www.linkedin.com/company/nextivity-inc.\', \'_system\')'></div><div class='socialIcns' id='googleIcn'></div></div></div></div><div id='mainContainer' class='push'></div>";
 var mainContainerWithoutMenu	= "<div id='mainContainer'></div>";
 var mainContainerDisplayFlag	= 0;
 var mainLoopCounter				= 0;
 var mainScreenSelectedTab		= "";
+var helpMenuDeviceType			= "";
+var helpMenuSelectedDevice		= "";
 
 // Global functions called from code...........................................................................
 
@@ -220,7 +222,9 @@ function ProcessMainView()
     		    }
     	    	$('#mainContainer').html(topHorizontalMenu);
     	    	$('#bodyContainer').html(dashboardPanelContent);
-    	    	$('.menu-link').bigSlide();
+    	    	this.$menu = $('#menu');
+			    this.$push = $('.push');
+			    bigSlideAPI = ($('.menu-link').bigSlide()).bigSlideAPI;
     	    	util.topMenuEvents();
     	    	mainScreenSelectedTab = "dashboard";
     	    	util.loadBodyContainer(mainScreenSelectedTab);
@@ -238,7 +242,7 @@ function ProcessMainView()
         	var mainViewContent = null;
         	mainContainer.classList.add("connectionBG");
     	}
-    	$('.faqIcnWrapper').bind("click",function() {			
+        $('.faqIcnWrapper').bind("click",function() {			
 			util.showHelpMenu();
     	});
         lastGuiCurrentMode = guiCurrentMode;   
@@ -348,7 +352,7 @@ function ProcessRegistrationView()
 
             szMyStatusLine;*/
         document.getElementById("mainContainer").className = "";
-        var myHtml = "<div id='appHeaderDashboard' class='page-header'><div id='headerContainer'><div class='col-xs-2 col-sm-1' align='left'></div><div class='col-xs-8 col-sm-10' align='center'><img src='img/assets/logos/WaveLogoSMWhite.svg'/></div><div class='col-xs-2 col-sm-1 headerIcon' align='center'><img src='img/assets/icons/HelpOutline.svg'/></div></div></div><div id='registrationFormContainer' class='container'><div class='pageTitleContainer'>Please register your device</div><div class='registerFaq'>Why do I need to register?</div><form role='form' name='inputUser'><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>First name</label><input type='text' class='form-control' name='fName' id='fName'></div><div class='errorContainer' id='errFn'>Please enter your First name</div></div><div class='col-sm-6'><div class='form-group'><label for='text'>Last name</label><input type='text' class='form-control' name='lName' id='lName'></div><div class='errorContainer' id='errLn'>Please enter your Last name</div></div></div><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>Address line 1</label><input type='text' class='form-control' name='addr1' id='addr1'></div><div class='errorContainer' id='errAddr'>Please enter Address Line 1</div></div><div class='col-sm-6'><div class='form-group'><label for='text'>Address line 2</label><input type='text' class='form-control' name='addr2' id='addr2'></div></div></div><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>City </label><input type='text' class='form-control' name='city' id='city'></div><div class='errorContainer' id='errCity'>Please enter your City</div></div><div class='col-sm-6'><div class='form-group'><label for='text'>State/Province/Region</label><input type='text' class='form-control' name='state' id='state'></div><div class='errorContainer' id='errState'>Please enter your State/Province/Region</div></div></div><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>ZIP/Postal Code</label><input type='text' class='form-control' name='zip' id='zip'></div><div class='errorContainer' id='errZip'>Please enter your ZIP/Postal Code</div></div><div class='col-sm-6'><div class='form-group'><label for='text'>Country</label><select class='form-control' name='country' id='country'><option value='USA'>United States</option><option value='CAN'>Canada</option></select></div><div class='errorContainer' id='errCtry'>Please select your Country</div></div></div><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>Phone Number</label><input type='text' class='form-control' name='phone' id='phone'></div><div class='errorContainer' id='errPN'>Please enter your Phone Number</div></div><div class='col-sm-6'></div></div><div class='col-sm-12 regBtnContainer'><div class='col-sm-6'></div><div class='col-sm-6'><div class='form-group buttonContainer' align='right'><input type='button' value='Skip' class='defaultButton skipButton' ><button type='button' class='defaultButton' id='regButton' onclick='javascript:return ValidateUserData();'>Register</button></div></div></div></form></div>";
+        var myHtml = "<div id='appHeaderDashboard' class='page-header'><div id='headerContainer'><div class='col-xs-2 col-sm-1' align='left'></div><div class='col-xs-8 col-sm-10' align='center'><img src='img/assets/logos/WaveLogoSMWhite.svg'/></div><div class='col-xs-2 col-sm-1 headerIcon' align='center'><img src='img/assets/icons/HelpOutline.svg'/></div></div></div><div id='registrationFormContainer' class='container'><div class='pageTitleContainer'>Please register your device</div><div class='registerFaq'>Why do I need to register?</div><form role='form' name='inputUser'><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>First name</label><input type='text' class='form-control' name='fName' id='fName'></div><div class='errorContainer' id='errFn'>Please enter your First name</div></div><div class='col-sm-6'><div class='form-group'><label for='text'>Last name</label><input type='text' class='form-control' name='lName' id='lName'></div><div class='errorContainer' id='errLn'>Please enter your Last name</div></div></div><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>Address line 1</label><input type='text' class='form-control' name='addr1' id='addr1'></div><div class='errorContainer' id='errAddr'>Please enter Address Line 1</div></div><div class='col-sm-6'><div class='form-group'><label for='text'>Address line 2</label><input type='text' class='form-control' name='addr2' id='addr2'></div></div></div><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>City </label><input type='text' class='form-control' name='city' id='city'></div><div class='errorContainer' id='errCity'>Please enter your City</div></div><div class='col-sm-6'><div class='form-group'><label for='text'>State/Province/Region</label><input type='text' class='form-control' name='state' id='state'></div><div class='errorContainer' id='errState'>Please enter your State/Province/Region</div></div></div><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>ZIP/Postal Code</label><input type='number' class='form-control' name='zip' id='zip'></div><div class='errorContainer' id='errZip'>Please enter your ZIP/Postal Code</div></div><div class='col-sm-6'><div class='form-group'><label for='text'>Country</label><select class='form-control' name='country' id='country'><option value='USA'>United States</option><option value='CAN'>Canada</option></select></div><div class='errorContainer' id='errCtry'>Please select your Country</div></div></div><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>Phone Number</label><input type='number' class='form-control' name='phone' id='phone'></div><div class='errorContainer' id='errPN'>Please enter your Phone Number</div></div><div class='col-sm-6'></div></div><div class='col-sm-12 regBtnContainer'><div class='col-sm-6'></div><div class='col-sm-6'><div class='form-group buttonContainer' align='right'><input type='button' value='Skip' class='defaultButton skipButton' ><button type='button' class='defaultButton' id='regButton' onclick='javascript:return ValidateUserData();'>Register</button></div></div></div></form></div>";
         $('#mainContainer').html(myHtml);  
         
         // Fill in any defaults...
@@ -361,7 +365,7 @@ function ProcessRegistrationView()
         document.inputUser.zip.value     = szRegZip;
         document.inputUser.country.value = szRegCountry;
         document.inputUser.phone.value   = szRegPhone;        
-                
+        
         /*UpdateStatusLine("Select 'Register' button to continue");
         
         document.getElementById("sb_icon_id").addEventListener('touchstart', HandleButtonUp );      // up, adds transparency
@@ -476,7 +480,7 @@ function ValidateUserData()
     {  
         // Save the good data...
         SaveRegFormData();
-    
+        window.localStorage.setItem("firstName", szRegFirstName);
         ProcessRegistration(
                 szRegFirstName,
                 szRegLastName,
@@ -1910,6 +1914,143 @@ var statusObj =
     }
 };
 
+var faqQuesAns = [
+  	{
+  		"question"	: "What is Cel-Fi?",
+  		"answer"	: "Cel-Fi is Nextivity's brand of self-configuring, environmentally aware, indoor coverage solutions. Each Cel-Fi system consists of two units. The Network Unit is placed in the area where the strongest native signal can be received from the carrier network (signal levels as low as -120 dBm are acceptable). The Network Unit comprises a transmitter and receiver which communicates with the cell tower. The Coverage Unit is placed in the center of the home, communicates wirelessly with the Network Unit and ìlights upî the interior of the house with significantly enhanced signal levels, thus enabling better quality calls and greater data throughput."
+  	},
+  	
+  	{
+  		"question"	: "What makes Cel-Fi so different from other signal boosters?",
+  		"answer"	: "Cel-Fi is a smart signal booster. That means it relies on intelligent, self-organizing algorithms to ensure you benefit from the largest area of coverage without compromising or interfering with your mobile operator's networks or impeding other subscribers' signals. Cel-Fi does not require any new equipment, any configuring, or any changes to existing network infrastructure or mobile devices. It is also a plug and play device, which means that there is no need for professional installation, no drilling, and no cables. In addition, Cel-Fi has been recognized for its superior design and effectiveness and is the only consumer booster authorized for use by the communications commissions in Australia and the United Kingdom, and the only Smart Booster designed to meet the new FCC Safe Harbor 2 specifications that allow very high gain (very high signal gain is necessary to make low level signals useful in a large coverage area)."
+  	},
+  	
+  	{
+  		"question"	: "Does the Cel-Fi require an internet or GPS connection?",
+  		"answer"	: "No. The Cel-Fi system only needs to have at least 1 bar of native cellular signal, in at least one spot of your home to be able to cover your whole home or office space."
+  	},
+  	
+  	{
+  		"question"	: "Will the Cel-Fi support voice and data or data only?",
+  		"answer"	: "Yes, Cel-Fi smart signal boosters can support both voice and data simultaneously. Note that Cel-Fi RS1 and RS2 models do not support LTE."
+  	},
+  	
+  	{
+  		"question"	: "How far apart can the Network (Window) Unit and the Coverage Unit be placed?",
+  		"answer"	: "Every instillation is different. The differences depend on the 'path loss' between the two units. Every obstacle in the line of sight means that the Coverage Unit and the Network Unit will have to be closer together. The cleaner the line of sight the further apart they can be placed. The more walls, doors, or refrigerators (obstacles), in the direct line of sight, the closer they units will have to be. The average distance for a typical construction home is 60 feet, however the placement can be as little as 20 feet or much as 120 feet apart."
+  	},
+  	
+  	{
+  		"question"	: "What coverage can I expect from a Cel-Fi system?",
+  		"answer"	: "The radius (half the width) of the coverage bubble is approximately the distance between the Coverage Unit and Network (window) Unit. Here are some examples:</br></br>Radius = 20 meters (66 ft.) for wood framed walls</br></br>Radius is less for concrete interior walls</br></br>Radius can easily exceed 65 meters (200 ft.) for open commercial spaces."
+  	},
+  	
+  	{
+  		"question"	: "Is it legal to use signal boosters?",
+  		"answer"	: "Cel-Fi meets the newer regulatory requirements that allow a booster to be used (boosters that do not meet these requirements, which is the vast majority of them, are no longer legal).  For the FCC you can learn more by reading the new FCC Report and Order for signal boosters. According to these new regulations, consumers must receive permission from their carrier before using a booster. Consumer boosters sold after March 1, 2014, and some before that date will be marked with a label signifying it meets the FCC's new regulations."
+  	},
+  	
+  	{
+  		"question"	: "Is it necessary to register my Cel-Fi?",
+  		"answer"	: "If booster registration is required in your country, your system may arrive pre-registered or you may be asked to (it's very simple).  See your product insert for details.</br></br>The FCC is now requiring all boosters in the U.S. to be approved for use by the Operator, and that all consumers register their boosters.  To learn more please visit the FCC site: http://wireless.fcc.gov/signal-boosters/index.html"
+  	},
+  	
+  	{
+  		"question"	: "How do I register my Cel-Fi system?",
+  		"answer"	: "The process is very simple and just takes a minute by following the link below to your Operator's Registration site.  If your system was provided by your Operator it may be preregistered (see product box insert).</br></br>In the USA:</br></br>If your operator is T-Mobile, MetroPCS, TruPhone, or another T-Mobile network operator please register your booster at: www.T-Mobile.com/BoosterRegistration</br></br>If your operator is AT&T, Aio, or another AT&T network operator please register your booster at: www.attsignalbooster.com"
+  	},
+  	
+  	{
+  		"question"	: "Why do I have to register my Cel-Fi?",
+  		"answer"	: "Why is this being done?  Because cellular systems are protected assets of the Operators that own them.  Many boosters in the market cause problems for those networks (which means all of us using the networks too).  New FCC/Operator approved boosters are better and don't cause problems, and Cel-Fi is the only booster in a special class of boosters that allows 100 dB of signal gain (30 dB or 1000x the gain of all other boosters)."
+  	},
+  	
+  	{
+  		"question"	: "Will Cel-Fi boost the signal for Verizon or Sprint?",
+  		"answer"	: "At this time Verizon and Sprint will not work with any of the Cel-Fi products. We are always adding new technology to the Cel-Fi device line-up. Feel free to sign up for exclusive news and blog emails at the bottom of the page."
+  	},
+  	
+  	{
+  		"question"	: "Can Cel-Fi boost the signal of multiple cellular networks at once?",
+  		"answer"	: "Cel-Fi signal boosters are Operator specific, and will only boost one Operator's channels at a time. Being Operator specific is one of the main reasons that we are network safe and can provide 100 dB of signal gain, and why we are the only signal booster approved by a growing number of Operators."
+  	},
+  	
+  	{
+  		"question"	: "Why is 100 dB of gain so important?",
+  		"answer"	: "System gain is critical to a booster's performance because it tells us how much a signal may be improved and how beneficial the boosted signal can be.  Example: If you have a low level signal such as -90 dBm per carrier, adding 100 dB of System Gain gives +10 dBm per carrier which can cover a large area.  In contrast adding only 70 dB of gain would only give -20 dBm of signal per carrier which would only cover a very small space.  Therefore a booster with a gain of 70 dB would need a very strong donor signal to be of much use, regardless of the stated transmit power that likely is going unused.</br></br>In other words, the higher the gain of the booster, the better it will work, even when far away from a base station."
+  	},
+  	
+  	{
+  		"question"	: "Is Cel-Fi carrier/operator specific?",
+  		"answer"	: "Yes, and for a good reason!  Cel-Fi is controlled by and operates as an extension of an operator's network.  This is what allows Cel-Fi (by regulatory authority) to boost signals about 1000x more than other solutions, and therefore cover very large areas even if the original network signal is weak.  And it works very well.</br></br>Broad-spectrum repeaters can cause interference and damage to networks, so operators have adopted a strict policy against the use of these legacy signal boosters on their own networks. However, Cel-Fi (the only smart signal booster of its kind), is authorized for use by each carrier and allowed to transmit on their licensed spectrum without ruining things for anyone else."
+  	},
+  	
+  	{
+  		"question"	: "Why doesn't Cel-Fi work with different operators?",
+  		"answer"	: "Not all cellular operators use the same technologies, and we do not boost the every technology available around the world. The Cel-Fi systems will support 3G(UMTS/WCMDA), 4G(HSPA & HAPS+), and LTE technology of operators that have approved the use of Cel-Fi on their network. You can reach out to your operator for more information on what specific technology they use."
+  	},
+  	
+  	{
+  		"question"	: "What technologies does Cel-Fi support?",
+  		"answer"	: "Cel-Fi system will support 3G(UMTS/WCDMA), 4G (HSPA/HSPA+) and LTE.</br></br>Each Cel-Fi system is different. Check your box for a Quick Start Guide, or visits the support section of our website for more specific information about your specific product."
+  	},
+  	
+  	{
+  		"question"	: "I've installed Cel-Fi but I do not see more bars on my phone?",
+  		"answer"	: "There could be several reasons for this: First you can try rebooting your phone near the Coverage Unit so it takes a fresh look at the available channels. Also verify that your phone is compatible with the channels that your Cel-Fi model is boosting (maybe your handset is 'unlocked' and actually does not fully support all your current Operator's channels). iPhones can also show fewer 'bars' of signal if the network is heavily loaded (click here to learn more).</br></br>Note that Cel-Fi RS1 and RS2 models do not support LTE. If your phone is LTE capable and therefore is not showing boosted service, if needed it is designed to switch over to non-LTE services when it needs to, such as in a call. This is true with or without Cel-Fi and what matters is that now you have reliable service where you need it!</br></br>If you would like the benefits of LTE service as well, you can always upgrade your Cel-Fi to a newer version that also supports LTE."
+  	},
+  	
+  	{
+  		"question"	: "Once installed, will the Cel-Fi require maintenance, or adjustments if changes occur to the native cellular network?",
+  		"answer"	: "No. Cel-fi does not require any maintenance. The Cel-Fi systems will self-adjust and reconfigure automatically to changing cellular networks situations."
+  	},
+  	
+  	{
+  		"question"	: "What is IntelliBoost?",
+  		"answer"	: "The Nextivity IntelliBoost Baseband Processor is the first core processor designed specifically to optimize the indoor transmission and reception of 3G and 4G/LTE wireless signals. With advanced filtering, equalization and echo cancellation techniques, Nextivity has developed an embedded architecture which delivers unprecedented in-building data rates and pervasive 3G and 4G/LTE connectivity. The IntelliBoost processor ensures that Cel-Fi products never negatively impact the macro network while providing maximum coverage."
+  	},
+  	
+  	{
+  		"question"	: "What frequencies link the Network (Window) Unit and Coverage Unit?",
+  		"answer"	: "Cel-Fi automatically selects clear, unused channels from the UNII bands (5.15-5.35 GHz, 5.47-5.725 GHz and 5725-5825 GHz) for communication between the Network (Window) Unit and the Coverage Unit. While in some cases these are the same frequencies as Wi-Fi, the Cel-Fi system uses a proprietary protocol for communication and is designed to work in harmony with existing wireless devices such as Wi-Fi routers, cordless telephones or baby monitors."
+  	}
+];
+
+var termsPrivacyContent = [
+	{
+		'privacyTitle':'Terms/Policy',
+		'privacyContent': 'It Nextivity, Inc., we adhere to industry-standard procedures to ensure your privacy. This privacy policy applies to data collection and usage on all Nextivity websites and related services (including, without limitation, any Nextivity mobile application) (collectively, the "Services"). Nextivity\'s websites are general audience websites.</br></br>Personal information of all users of the Services is collected, used and disclosed by us as described in this policy statement.  This policy statement does not cover the treatment, collection, use or disclosure of personal information by companies that we don\'t own or control, or people that we don\'t manage.'
+	},
+	{
+		'privacyTitle':'Gathering/tracking personal information',
+		'privacyContent': 'We do not collect personal information about you unless you voluntarily provide it to us. For example, some of the purposes for which we collect such information are: to register your Nextivity product; provide feedback in our online surveys; request product information; and/or request contact from a Nextivity representative. Nextivity collects and uses your personal information in connection with the Services, to deliver the products and services you have requested, and as explained in more detail below.  In certain cases, we may share some of your personal information with third parties, but only as described below.						</br></br>Please note that Nextivity may contact you about matters pertaining to your ownership of Nextivity products, or your interactive use of the company\'s website(s); for example, access to download new product software releases.  If you do not want to receive communications from us, please indicate your preference by sending an email to: support@cel-fi.com 						</br></br>The personal information that may be gathered includes your name, telephone number(s), fax number, street address, mailing address and e-mail address. You may also be asked to furnish other information about yourself such as your job category, industry type, company name and job title, and/or the number of people in your company.'
+	},
+	{
+		'privacyTitle':'Sharing personal information',
+		'privacyContent': 'Telecommunications operators such as AT&T or T-Mobile (an "Operator") may be required under applicable law (for example, 47 CFR 20.21(h) in the United States) to register users of a Nextivity Product.  If, through the Services, you choose to register your Nextivity Product with an Operator, then we may disclose your personal information to such Operator or its affiliates in connection with such registration.  We have no control over the policies and practices of Operators as to privacy, their use or disclosure of your personal information, or anything else.  So if you choose to register your Nextivity Product with an Operator, please review all of that Operator\'s relevant policies on privacy.  For your information, and without limiting what an Operator may do with your personal information, please recognize that Operators may be required to disclose your personal information in accordance with applicable law.  By submitting personal information to us in connection with the registration of a Nextivity Product, you agree to hold Nextivity harmless against any disclosure, use, or security of such personal information by an Operator or its agents. </br></br>We may anonymize your personal information so that you are not individually identified, and provide that information to our partners or other third parties. We may also use your personal information on an aggregated basis to improve our products, services, and offerings thereof. However, we never disclose aggregate information to a partner or third party in a manner that would identify you personally, as an individual.</br></br>Personal information collected on any or all Nextivity websites may be stored and processed in the United States or any other country in which Nextivity or its affiliates, subsidiaries or agents maintain facilities. By using this site, or our Services, you consent to any such transfer of information outside of your country.'
+	},
+	{
+		'privacyTitle':'Agents',
+		'privacyContent': 'We employ other companies and people to perform tasks on our behalf and need to share your information with them to provide products or services to you.  Unless we tell you differently, our agents do not have any right to use the personal information we share with them beyond what is necessary to assist us.'
+	},
+	{
+		'privacyTitle':'Business Transfers',
+		'privacyContent': 'We may choose to buy or sell assets, and may share and/or transfer customer information in connection with the evaluation of and entry into such transactions. Also, if we (or our assets) are acquired, or if we go out of business, enter bankruptcy, or go through some other change of control, personal information could be one of the assets transferred to or acquired by a third party.'
+	},
+	{
+		'privacyTitle':'Protection of Company and Others',
+		'privacyContent': 'We reserve the right to access, read, preserve, and disclose any information that we reasonably believe is necessary to comply with law or court order; enforce our agreements; or protect the rights, property, or safety of Company, our employees, our users, or others'
+	},
+	{
+		'privacyTitle':'Managing personal information',
+		'privacyContent': 'You may contact Nextivity via e-mail at info@nextivityinc.com and we will attempt to assist you to remove, review, or revise any or all personal information that you have previously provided to us.'
+	},
+	{
+		'privacyTitle':'Additional information regarding privacy policy',
+		'privacyContent': 'If at any time you believe that Nextivity has not adhered to this privacy policy, or if you have questions regarding the policy or our methods of collecting and/or use of your personal information, please contact us. You may contact Nextivity via e-mail at info@nextivityinc.com, using the word "privacy" in the subject line.</br></br>This policy does not apply to Operators or other online or offline partner or affiliated sites, products or services that may be electronically linked to our company website(s). Nextivity is not responsible for enforcing the privacy policies of such websites. Further, Nextivity is not responsible for the content included on such websites, including but not limited to special offers, text, copy, photos, images and advertising claims, names or</br></br>Under California Civil Code Sections 1798.83-1798.84, California residents are entitled to ask us for a notice identifying the categories of personal information which we share with our affiliates and/or third parties for marketing purposes, and providing contact information for such affiliates and/or third parties.  If you are a California resident and would like a copy of this notice, please submit a written request to: info@nextivityinc.com.</br></br>Your browser may offer you a "Do Not Track" option, which allows you to signal to operators of websites and web applications and services (including behavioral advertising services) that you do not wish such operators to track certain of your online activities over time and across different websites.  Our Services do not support Do Not Track requests at this time, which means that we collect information about your online activity both while you are using the Services and after you leave our Services.'
+	}
+];
+
 var util = {
 	syncData: 'Syncing data...',
 	searchMessage: 'Searching for Cel-Fi devices...',
@@ -1988,8 +2129,8 @@ var util = {
     	searchMessageBox.align = "center";
     	searchMessageBox.innerHTML = util.searchMessage;
     	var searchIconContainer = util.createAppendElem("div", "searchIconContainer", "searchIconContainer", mainContainer);
-    	searchTimeOut = setTimeout(function(){ util.showNoDeviceFoundErrorPopup(); }, 120*1000);
-    	//searchTimeOut = setTimeout(function(){ util.showNoDeviceFoundErrorPopup(); }, 30*1000);
+    	//searchTimeOut = setTimeout(function(){ util.showNoDeviceFoundErrorPopup(); }, 120*1000);
+    	searchTimeOut = setTimeout(function(){ util.showNoDeviceFoundErrorPopup(); }, 30*1000);
     },
     
     initiateSearchAnimation: function(){
@@ -2204,7 +2345,7 @@ var util = {
 	
 	loadBodyContainer: function(menuElem){
 		mainScreenSelectedTab = menuElem;
-		if(menuElem == "dashboard"){$('#bodyContainer').html(dashboardPanelContent);}
+		if(menuElem == "dashboard"){$('#bodyContainer').html(dashboardPanelContent);util.updateContainerElements(menuElem);}
 		else if(menuElem == "settings"){
 			if(deviceType == "phone"){
 				$('#bodyContainer').html(settingsPanelContentMobile);
@@ -2212,16 +2353,221 @@ var util = {
 				$('#bodyContainer').html(settingsPanelContentTablet);
 			}
 		}
-		else if(menuElem == "advanced"){$('#bodyContainer').html(advancedPanelContent);}
-		util.updateContainerElements(menuElem);
+		else if(menuElem == "advanced"){
+			
+			var advancedButtonWrapper = "<div class='advancedIcnContainer col-xs-12 col-sm-12' >"										
+										+ "<div id='sendIcnWrapper'>"
+										+ "<div id='sendIcn'></div>"
+										+ "<div class='advancedIcnLbl' onclick='util.showAdvancedFeedBack()'>Send</div>"
+										+ "</div>"
+										+ "<div id='refreshIcnWrapper'>"
+										+ "<div id='refreshIcn'></div>"
+										+ "<div class='advancedIcnLbl'>Refresh</div>"
+										+ "</div></div>";										
+			
+			
+			
+			var advancedHeader = "<div id='advancedContentwrapper'>"
+									+ "<div class='panel-group' id='advancedDataContainer'>";
+			var overViewContent = '';
+			overViewContent = overViewContent + "<div class='divider'>OVERVIEW</div><div class='panel panel-default col-sm-6'>";
+			overViewContent = overViewContent + "<div class='panel-heading dropDown'>"
+												+ "<h4 class='panel-title'>"
+												+ "<a data-toggle='collapse' data-parent='#advancedDataContainer' href='#networkBarsCollapse'>"
+												+ "<div>Network Strength</div>"
+												+ "<span class='pull-right'>"								 
+												+ "<span class='toggle-icon glyphicon glyphicon-chevron-up'></span>"
+												+ "</span></a></h4></div>"
+												+ "<div id='networkBarsCollapse' class='panel-collapse collapse in'>"
+												+ "<div class='panel-body' id='networkDataContainer'>";
+			
+			for(var i = 0; i < guiBands.length; i++) {
+				overViewContent = overViewContent + "<div class='col-xs-3 col-sm-3 networkData'>"
+													+ "<div class='networkTitle'>" + guiRadios[i] + "</div><div class='networkStrength'>"
+													+ "<div class='signalContainerSM'>";
+				if(guiBands[i] !== 0) {
+					for(var j = 1; j < 6; j++) {
+						if(j <= guiNetworkBars[i])
+							overViewContent = overViewContent + "<div class='networkSignalIndiSM activeStatus networkBar" + j + "'></div>";
+						else
+							overViewContent = overViewContent + "<div class='networkSignalIndiSM deactiveStatus networkBar" + j + "'></div>";
+					}					
+				}
+				overViewContent = overViewContent + "</div></div>";
+				
+				var techType = '',
+					freq = '';
+				if(guiBands[i] !== 0) {
+					techType = guiTechnologyTypes[i] === 1 ? 'LTE' : 'WCDMA';
+					freq = guiFreqArrayMHz[i] + " MHz";
+				}
+				overViewContent = overViewContent + "<div class='networkStatus'>"
+													+ "<div class='networkStatusLbl'>"+ techType +"</div>"
+													+ "<div class='networkFreq'>" + freq + "</div>"
+													+ "</div>";				
+				overViewContent = overViewContent + "</div>";
+				
+			}
+						
+			overViewContent = overViewContent + "</div></div></div>";
+			
+			
+			var clearFloat = "<div class='cb'></div>";
+											
+			var cellStates = ['Idle', 'RssiScan', 'CsrchStart', 'WaitAfc', 'CellSearch', 'ReleaseMeas', 'ReleaseXCh', 'FreqSelect', 'SetupPlace', 'Place', 'Ranging', 'SetupRelay', 'Relay'];
+			var superChannelsContent = '';
+			superChannelsContent = superChannelsContent + "<div class='divider'>SUPER CHANNELS</div>";
+			for(var i = 0; i < guiBands.length; i++) {
+				var techType = guiTechnologyTypes[i] === 1 ? 'LTE' : 'WCDMA';
+				superChannelsContent = superChannelsContent + "<div class='panel panel-default'>"
+				
+				var radioStatusColour = '';
+				var radioHeader = '';
+				if(guiBands[i] !== 0) {
+					radioStatusColour = 'drop-green';
+					radioHeader = "<div>Radio " + guiRadios[i] + " Band " + guiBands[i] + " : " + techType +" ("+cellStates[guiCellState[i]]+")</div>";
+				} else {
+					radioStatusColour = 'drop-red';
+					radioHeader = "<div>Radio " + guiRadios[i] + " : Unused</div>";
+				}
+				
+				superChannelsContent = superChannelsContent + "<div class='panel-heading " + radioStatusColour + " dropDown'>"
+															+ "<h4 class='panel-title'>"
+															+ "<a data-toggle='collapse' data-parent='#advancedDataContainer' href='#channel"+ i +"'>"
+															+ radioHeader
+															+ "<span class='pull-right'>"
+															+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
+															+ "</span></a></h4></div>";
+				
+				superChannelsContent = superChannelsContent + "<div id='channel" + i + "' class='panel-collapse collapse'>" 
+															+ "<div class='panel-body dropDownList'>";														
+				if(guiBands[i] !== 0) {					
+					superChannelsContent = superChannelsContent + "<div class='dropDownInnerTitle '>"
+																+ "<div class='col-xs-8 col-sm-8'>Description</div>"
+																+ "<div class='col-xs-4 col-sm-4'>Value</div>"
+																+ "</div>";
+					var keyParams = ['Bandwidth', 'DL Center Freq', 'UL Center Freq', 'PRI', 'DL RSSI', 'Max DL RSCP', 'RSRQ', 'SINR', 'CU Tx Pwr', 'NU Tx Pwr', 'Ext Ant In Use'];
+					var titleArray = ['Bandwidth', 'Download centre freq.', 'Uplink centre freq.', 'PRI Cell_ID', 'Donor RSSI', 'Donor RSCP', 'Donor RSRQ', 'Donor SINR', 'Downlink [CU] TX power', 'Uplink [NU] TX power', 'Ext. antenna in use'];
+					var unitsArray = ['MHz', 'MHz', 'MHz', '', 'dBm', 'dBm', 'dBm', 'dB', 'dBm', '', ''];
+					for(var j = 0; j < keyParams.length; j++) {
+						var techValue = '';
+						
+						if(j !== 3 && j !== 8 && j !== 9)
+							techValue = GetTechValue(keyParams[j], i);
+						else if(j === 8 || j === 9)
+							techValue = GetTechValue(keyParams[j], 4);
+						else if(j === 3)
+							techValue = 0;						
+						superChannelsContent = superChannelsContent + "<div class='dropDownListValue'>"
+																	+ "<div class='col-xs-8 col-sm-8'>" + titleArray[j] + "</div>"
+																	+ "<div class='col-xs-4 col-sm-4'>" + techValue + " "+unitsArray[j] + "</div>"
+																	+ "</div>";
+					}				
+				}
+				superChannelsContent = superChannelsContent + "</div></div>";
+				superChannelsContent = superChannelsContent + "</div>";
+			}
+			
+			
+			var deviceStateContent = '';
+			if(guiProductType === 'DUO' || guiProductType === 'PRO') {
+				deviceStateContent = deviceStateContent + "<div class='divider'>SYSTEM OVERVIEW</div>";
+				deviceStateContent = deviceStateContent + "<div class='panel panel-default col-sm-6'>"
+														+ "<div class='panel-heading drop-purple dropDown'>"
+														+ "<h4 class='panel-title'>"
+														+ "<a data-toggle='collapse' data-parent='#advancedDataContainer' href='#deviceStateCollapse'>"
+														+ "<div>Device State</div>"
+														+ "<span class='pull-right'>"
+														+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
+														+ "</span></a></h4></div>"
+														+ "<div id='deviceStateCollapse' class='panel-collapse collapse'>"
+														+ "<div class='panel-body dropDownList'>"
+														+ "<div class='dropDownInnerTitle '>"
+														+ "<div class='col-xs-8 col-sm-8'>Description</div>"
+														+ "<div class='col-xs-4 col-sm-4'>Value</div></div>";	
+				var deviceStates = ['WuUnniState', '5GHz DL Freq', '5GHz UL Freq', 'Distance Metric', 'Remote Shutdown State', 'NU Temp', 'CU Temp'],
+					deviceStateUnits = ['MHz', 'MHz', 'MHz', '', '', '&deg;C', '&deg;C'],
+					deviceStateKeys = ['NU UNII State', 'NU 5G DL', 'NU 5G UL', 'NU Dist Metric', 'Remote Shutdown',  'NU Temp', 'CU Temp'];
+				
+				for(var i = 0; i < deviceStateKeys.length; i++) {
+					var techValue = GetTechValue(deviceStateKeys[i], 4);					
+					deviceStateContent = deviceStateContent + "<div class='dropDownListValue'>"
+															+ "<div class='col-xs-8 col-sm-8'>" + deviceStates[i] + "</div>"
+															+ "<div class='col-xs-4 col-sm-4'>" + techValue + " " + deviceStateUnits[i] +"</div></div>";
+				}
+				
+				deviceStateContent = deviceStateContent + "</div></div>";
+				deviceStateContent = deviceStateContent + "</div>";
+				
+			}
+			
+			
+			var techDataContent = "<div class='divider'>TECH DATA</div>"
+									+ "<div class='panel panel-default col-sm-6'>"
+									+ "<div class='panel-heading drop-orange dropDown'>"
+									+ "<h4 class='panel-title'>"
+									+ "<a data-toggle='collapse' data-parent='#advancedDataContainer' href='#unknownCollapse'>"
+									+ "<div>Stuff you won't understand</div>"
+									+ "<span class='pull-right'>"
+									+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
+									+ "</span></a></h4></div>"				                    
+									+ "<div id='unknownCollapse' class='panel-collapse collapse'>"	
+									+ "<div class='panel-body dropDownList'></div>"			                        			                       
+									+ "</div></div>";			
+			
+			
+			var softwareVersionContent = '';
+			softwareVersionContent = softwareVersionContent + "<div class='divider'>DEVICE VERSION</div><div class='panel panel-default col-sm-6'>";
+			
+			softwareVersionContent = softwareVersionContent + "<div class='panel-heading drop-teal dropDown'>"
+															+ "<h4 class='panel-title'>"
+															+ "<a data-toggle='collapse' data-parent='#advancedDataContainer' href='#versionCollapse'>"
+															+ "<div>Software Versions</div>"
+															+ "<span class='pull-right'>"
+															+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
+															+ "</span></a></h4></div>"
+															+"<div id='versionCollapse' class='panel-collapse collapse'>"
+															+ "<div class='panel-body dropDownList'>" 
+															+ "<div class='dropDownInnerTitle'>"
+															+ "<div class='col-xs-6 col-sm-6'>Name</div>"
+															+ "<div class='col-xs-3 col-sm-3'>Cel-Fi</div>"
+															+ "<div class='col-xs-3 col-sm-3'>Cloud</div></div>";
+			for(var i = 0 ; i < guiSwNames.length; i++) {
+				var celFiVersion = guiSwCelFiVers[i] === '' ? "000.000" : guiSwCelFiVers[i];				
+				softwareVersionContent = softwareVersionContent + "<div class='dropDownListValue'>"
+																+ "<div class='col-xs-6 col-sm-6'>" + guiSwNames[i] + "</div>"
+																+ "<div class='col-xs-3 col-sm-3'>" + celFiVersion + "</div>"
+																+ "<div class='col-xs-3 col-sm-3'>" + guiSwStatus[i] + "</div></div>"
+			}
+			
+			
+			
+			softwareVersionContent = softwareVersionContent + "</div></div>";
+			softwareVersionContent = softwareVersionContent + "</div>";
+			
+			var footer = "</div></div>";
+			
+			var advancedPanelContent = advancedButtonWrapper + clearFloat 
+										+ advancedHeader 
+										+ overViewContent + clearFloat 
+										+ superChannelsContent + clearFloat 
+										+ deviceStateContent + clearFloat
+										+ techDataContent + clearFloat
+										+ softwareVersionContent
+										+ footer;			
+			$('#bodyContainer').html(advancedPanelContent);
+		}
+		
 	},
 	
 	updateContainerElements: function(menuElem){
 		
 		/*UI element updates for Dashboard view*/
 		if(menuElem == "dashboard"){
-			if(szRegFirstName!=""){
-				$('#userDpName').html(szRegFirstName+",");
+			if(typeof window.localStorage.getItem("firstName")!=null && window.localStorage.getItem("firstName")!=""){
+				$('#userDpName').html(" " + window.localStorage.getItem("firstName")+",");
+			}else{ 
+				$('#userDpName').html(",");
 			}
 			
 			if(guiBoost >= 0 && guiBoost <= 3){
@@ -2296,6 +2642,8 @@ var util = {
 	
 	selectProductView: function () {
 		this.createModalWrapper();
+		//helpMenuDeviceType = "";
+		//helpMenuSelectedDevice = "";
 		$('#modalTitle').html('Help Center');
 		var productSelectionMenu = "<div class='modalHelpWrapper'>"
 								+ "<p class='pageTitleContainer modalContentTitle modalContentPadding'>Select your product</p>"						
@@ -2319,16 +2667,26 @@ var util = {
 								+ "<div class='modalBodyPanelHeaderTitle'>PRO</div>"
 								+ "<div class='modalChevronRightIcns'></div>"	
 								+ "</div></div>";
-		$(productSelectionMenu).appendTo('.modalBodyWrapper')			
+		$(productSelectionMenu).appendTo('.modalBodyWrapper');
+		if(helpMenuDeviceType != "" && helpMenuSelectedDevice != ""){
+			util.createHelpMenu(helpMenuDeviceType, helpMenuSelectedDevice);
+			$('.modalWrapper').show();
+		}
 	},
 	
 	createModalWrapper: function () {			
 		var modalWrapper = "<div class='modalWrapper'>"
 							+ "<div class='modalHeaderWrapper' class='col-xs-12 col-sm-12'>"
 							+ "<div id='modalTitle'></div>"
-							+ "<div class='modalCloseBtn' onClick= 'util.removeModal();'></div>"
-							+ "<div class='modalLeftBtn'></div>"				
-							+ "</div>"						 
+							+ "<div class='modalCloseBtn' onClick= 'util.removeModal();'></div>";
+		
+		if(helpMenuDeviceType == "" && helpMenuSelectedDevice == ""){
+			modalWrapper = modalWrapper + "<div class='modalLeftBtn' onClick= 'util.removeModal();'></div>";
+		}else{
+			modalWrapper = modalWrapper + "<div class='modalLeftBtn'"
+							+ "onclick=\"util.selectProductView()\"></div>";
+		}
+		modalWrapper = modalWrapper + "</div>"						 
 							+ "<div class='modalBodyWrapper'></div>"
 							+ "</div>";
 		if(typeof $('.modalWrapper') !== 'undefined') {
@@ -2338,13 +2696,28 @@ var util = {
 	},
 	
 	removeModal: function () {
+		helpMenuDeviceType = "";
+		helpMenuSelectedDevice = "";
 		$('.modalWrapper').remove();
 		$('.headerContainer, #bodyContainer').show();
 	},
 	
-	createHelpMenu: function (menuType, menuSelected){			
-		
+	showHelpDeviceSelection: function(){
+		helpMenuDeviceType = "";
+		helpMenuSelectedDevice = "";
+		util.selectProductView();
+		$('.modalWrapper').show();
+	},
+	
+	createHelpMenu: function (menuType, menuSelected){	
+		helpMenuDeviceType = menuType;
+		helpMenuSelectedDevice = menuSelected;
 		var title = 'Cel-Fi ' + menuSelected.toUpperCase();
+		
+		$('.modalLeftBtn').removeAttr("onclick");
+		$('.modalLeftBtn').click(function(){
+            util.showHelpDeviceSelection();
+        });
 		// List of menu items
 		var menuListName = ['Installation Guide', 'Troubleshooting', 'Error Codes', 'Frequently Asked Questions', 'Registration', 'Contact Us'];
 		var menuListId = ['menuInstall', 'menuTroubleShoot', 'menuErrorCodes', 'menuFaq', 'menuRegistration', 'menuContactUs'];
@@ -2428,7 +2801,7 @@ var util = {
 		var duoInstallGuide = "<div class='installGuideWrapper'>"						
 								+ "<p class='pageTitleContainer modalContentTitle modalContentPadding'>Installation Guide for Cel-Fi DUO</p>"
 								+ "<div class='modalContentPadding'>"                      
-								+ "<div class='helpContent installGuideContent'>STEP 1</div>"
+								+ "<div class='helpSubTitle installGuideContent'>STEP 1</div>"
 								+ "<div class='helpHeadLine'>Find the location with the best coverage:</div>"
 								+ "<div class='helpContent'>The first step in setting up your Cel-Fi DUO Signal Booster system is to find the location in your home or office with the best cellular signal. Use your phone to identify the area with the most bars of signal. Typically, the best service will be near a window in the highest floor of your home or office. Make sure a 3G, 4G or 4G LTE icon is displayed on your handset.</div>"
 								+ "<div class='helpSubTitle installGuideContent'>STEP 2</div>"
@@ -2455,35 +2828,35 @@ var util = {
 		var duoTroubleShoot = "<div class='installGuideWrapper'>"						
 								+ "<p class='pageTitleContainer modalContentTitle modalContentPadding'>Network Unit Troubleshooting</p>"
 								+ "<div class='modalContentPadding'>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Power ‚Äì My Network Unit (aka Window Unit) won‚Äôt turn on!</div>"
-								+ "<div class='helpContent'></br>When your system does not power up, one of the following things could be happening. You could have a power adaptor failure, a hardware failure, or the system could need a simple restart.</br></br>Try this‚Ä¶ Both the Network Unit and Coverage Unit have identical power supplies. Try switching the power supplies to see if one of the following issues could be occurring:</br></br>If you switch the power supplies and the problem moves from one unit to the other unit then you are experiencing a power supply issue. Please reach out to your point of sale for a replacement power supply.</br></br>If, after switching power supplies, you still have no power on your Network Unit try another outlet, or lamp/appliance in the same outlet. If you continue to have problems with the Network Unit please reach out to your point of sale for a system replacement.</br></br>If, after switching power supplies both system are functioning properly then your Cel-Fi DUO system simply needed a restart. This is not something that should continue, but if it occurs frequently please reach out to your point of sale for support.</div>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Bars ‚Äì My Network Unit is not finding the cellular signal!</div>"
-								+ "<div class='helpContent'></br>If your power light is still blinking while you have no bars, your Network Unit is still trying to find the incoming cellular network signal. This can sometimes take more than a few minutes.</br></br>Taking longer than 60 minutes? Try this‚Ä¶</br></br>Walk around your home/office with your cellular device. Try to find a signal inside your home/office with at least one consistent bar of 3G/4G/LTE. More bars is always better! Once you have found a signal place your Network Unit in that location.</br></br>If you have bars of service on your phone in the location of your Network Unit, and after 60 minutes you are still unable to receive bars of service on your Network Unit try a restart. To restart your Network Unit simply unplug for a moment and then it plug back in. If the restart does not solve the issue please reach out to your point of sale for support.</br></br>No bars and a red power indicator? Please refer to the section below about ‚ÄúRed power indicator‚Äù.</div>"												
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No LTE ‚Äì My phone still doesn‚Äôt have LTE!</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Power ñ My Network Unit (aka Window Unit) wonít turn on!</div>"
+								+ "<div class='helpContent'></br>When your system does not power up, one of the following things could be happening. You could have a power adaptor failure, a hardware failure, or the system could need a simple restart.</br></br>Try thisÖ Both the Network Unit and Coverage Unit have identical power supplies. Try switching the power supplies to see if one of the following issues could be occurring:</br></br>If you switch the power supplies and the problem moves from one unit to the other unit then you are experiencing a power supply issue. Please reach out to your point of sale for a replacement power supply.</br></br>If, after switching power supplies, you still have no power on your Network Unit try another outlet, or lamp/appliance in the same outlet. If you continue to have problems with the Network Unit please reach out to your point of sale for a system replacement.</br></br>If, after switching power supplies both system are functioning properly then your Cel-Fi DUO system simply needed a restart. This is not something that should continue, but if it occurs frequently please reach out to your point of sale for support.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Bars ñ My Network Unit is not finding the cellular signal!</div>"
+								+ "<div class='helpContent'></br>If your power light is still blinking while you have no bars, your Network Unit is still trying to find the incoming cellular network signal. This can sometimes take more than a few minutes.</br></br>Taking longer than 60 minutes? Try thisÖ</br></br>Walk around your home/office with your cellular device. Try to find a signal inside your home/office with at least one consistent bar of 3G/4G/LTE. More bars is always better! Once you have found a signal place your Network Unit in that location.</br></br>If you have bars of service on your phone in the location of your Network Unit, and after 60 minutes you are still unable to receive bars of service on your Network Unit try a restart. To restart your Network Unit simply unplug for a moment and then it plug back in. If the restart does not solve the issue please reach out to your point of sale for support.</br></br>No bars and a red power indicator? Please refer to the section below about ìRed power indicatorî.</div>"												
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No LTE ñ My phone still doesnít have LTE!</div>"
 								+ "<div class='helpContent'></br>There are a few reasons why your phone would experience an issue with the LTE service. </br></br>You may not have LTE in your area, your Cel-Fi system may have lost the LTE signal due to intermittent network outages, your phone may not support LTE, or your phone may not be compatible with the frequency being boosted by the Cel-Fi DUO.</br></br></br>A flashing LTE light means that your Cel-Fi DUO system is actively searching for the LTE signal. The Cel-Fi DUO will scan at startup and scan again every 24 hours.</br></br>If your LTE light is not lit and not flashing, your Cel-Fi DUO has lost, or never found an LTE signal and has momentarily stopped searching. The Cel-Fi DUO will scan at startup and scan again every 24 hours.</div>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Red Power Indicator ‚Äì My Network Unit has a red power light!</div>"
-								+ "<div class='helpContent'></br>With a flashing red power indicator you may also see an error code displayed on the Coverage Unit (flashing an E then correlating error number).</br></br>E1 ‚Äì Cellular Signal too weak to boost. Try this‚Ä¶ Walk around your home/office with your cellular device. Try to find a signal indoors with at least one consistent bar of 3G/4G/LTE. More bars is always better! Once you have found a usable signal place your Network Unit in this location.</br></br>E3 ‚Äì Coverage Unit is overheating. Insure that your Coverage Unit vents are uncovered and free of debris, and that the location of the unit allows free flow of air. Once the Coverage Unit has cooled to a normal functioning temperature it will restart and operate as normal.</br></br>E4 ‚Äì Network Unit is overheating. Insure that your Network Unit vents are uncovered and free of debris, and that the location of the unit allows free flow of air. Once the Coverage Unit has cooled to a normal functioning temperature it will restart and operate as normal.</br></br>With a solid red power indicator you may also see and error code displayed on the Coverage Unit (flashing an E then correlating error number).</br></br>E8 ‚Äì Input signal too strong. An E8 error code is letting you know that your Network Unit is too close to a cellular tower, not necessarily for your operator. This has reduced the output power (coverage bubble) to limit network interference. Try this‚Ä¶Move your Network Unit to another location. You might need to move your system to the other side of your home/office. Note: When you have an E8 your system will still offer you indoor cellular coverage.</br></br>E6 ‚Äì Network Unit hardware error that may be remedied by a reset. Your Coverage Unit may not display a flashing error code. You will likely only see the solid red power indicator on your Network Unit. Try this‚Ä¶reset your Network Unit. Simply unplug your Network Unit for a few seconds and plug it back in.</div>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Flashing Green Power Indicator ‚Äì My Network Unit‚Äôs power light is flashing green!</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Red Power Indicator ñ My Network Unit has a red power light!</div>"
+								+ "<div class='helpContent'></br>With a flashing red power indicator you may also see an error code displayed on the Coverage Unit (flashing an E then correlating error number).</br></br>E1 ñ Cellular Signal too weak to boost. Try thisÖ Walk around your home/office with your cellular device. Try to find a signal indoors with at least one consistent bar of 3G/4G/LTE. More bars is always better! Once you have found a usable signal place your Network Unit in this location.</br></br>E3 ñ Coverage Unit is overheating. Insure that your Coverage Unit vents are uncovered and free of debris, and that the location of the unit allows free flow of air. Once the Coverage Unit has cooled to a normal functioning temperature it will restart and operate as normal.</br></br>E4 ñ Network Unit is overheating. Insure that your Network Unit vents are uncovered and free of debris, and that the location of the unit allows free flow of air. Once the Coverage Unit has cooled to a normal functioning temperature it will restart and operate as normal.</br></br>With a solid red power indicator you may also see and error code displayed on the Coverage Unit (flashing an E then correlating error number).</br></br>E8 ñ Input signal too strong. An E8 error code is letting you know that your Network Unit is too close to a cellular tower, not necessarily for your operator. This has reduced the output power (coverage bubble) to limit network interference. Try thisÖMove your Network Unit to another location. You might need to move your system to the other side of your home/office. Note: When you have an E8 your system will still offer you indoor cellular coverage.</br></br>E6 ñ Network Unit hardware error that may be remedied by a reset. Your Coverage Unit may not display a flashing error code. You will likely only see the solid red power indicator on your Network Unit. Try thisÖreset your Network Unit. Simply unplug your Network Unit for a few seconds and plug it back in.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Flashing Green Power Indicator ñ My Network Unitís power light is flashing green!</div>"
 								+ "<div class='helpContent'></br>A flashing green power indicator on your Network Unit means that your system is still performing startup procedures. This could indicate that the Network Unit is trying to find a connection to either the cellular network or your Coverage Unit.</br></br>No bars with a flashing power indicator means the system is trying to locate the cellular network. This normally takes less 60 minutes. Make sure that your phone (cellular device) has at least one bar of 3G/4G/LTE signal where the Network Unit is located.</br></br>If you have bars but the power indicator is flashing this means that your Network Unit has located the cellular network and is now trying to locate your coverage unit. For more information about Coverage Unit issues <a href=\"#\" onclick=\"window.open('https://support.cel-fi.com/hc/en-us/articles/202987766-Troubleshoot-the-Cel-Fi-Network-Unit', '_system');\">click here</a></div>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Flashing Bars ‚Äì My Network Unit bars are flashing. </div>"
-								+ "<div class='helpContent'></br>With flashing bars on your Network Unit you may also see and error code displayed on the Coverage Unit (flashing an E then correlating error number).</br></br>E7 ‚Äì The system has been disabled by the mobile network operator. Contact your operator for more information.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Flashing Bars ñ My Network Unit bars are flashing. </div>"
+								+ "<div class='helpContent'></br>With flashing bars on your Network Unit you may also see and error code displayed on the Coverage Unit (flashing an E then correlating error number).</br></br>E7 ñ The system has been disabled by the mobile network operator. Contact your operator for more information.</div>"
 								+ "</div></br>"
 								+ "<p class='pageTitleContainer modalContentTitle modalContentPadding'>Coverage Unit Troubleshooting</p>" 
 								+ "<div class='modalContentPadding'>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Power ‚Äì My Coverage Unit won‚Äôt turn on!</div>"
-								+ "<div class='helpContent'></br>When your system does not power up, or has a red power indicator, one of the following things could be happening. You might have a power adaptor failure, a hardware failure, or the system may need a simple restart.</br></br>Try this‚Ä¶ Both the Coverage Unit and Network Unit have identical power supplies. Try switching the power supplies to see if one of the following issues could be occurring:</br></br>If you switch the power supplies and the problem moves from one unit to the other unit then you are experiencing a power supply issue. Please reach out to your point of sale for a replacement power supply.</br></br>If, after switching power supplies, you still have no power on your Coverage Unit try another outlet, or another lamp/appliance in the same outlet. If you continue to have problems with the unit please reach out to your point of sale for a system replacement.</br></br>If, after switching power supplies both system are functioning properly then your Cel-Fi DUO system simply needed a restart. This is not something that should continue, but if it occurs frequently please reach out to your point of sale for support.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Power ñ My Coverage Unit wonít turn on!</div>"
+								+ "<div class='helpContent'></br>When your system does not power up, or has a red power indicator, one of the following things could be happening. You might have a power adaptor failure, a hardware failure, or the system may need a simple restart.</br></br>Try thisÖ Both the Coverage Unit and Network Unit have identical power supplies. Try switching the power supplies to see if one of the following issues could be occurring:</br></br>If you switch the power supplies and the problem moves from one unit to the other unit then you are experiencing a power supply issue. Please reach out to your point of sale for a replacement power supply.</br></br>If, after switching power supplies, you still have no power on your Coverage Unit try another outlet, or another lamp/appliance in the same outlet. If you continue to have problems with the unit please reach out to your point of sale for a system replacement.</br></br>If, after switching power supplies both system are functioning properly then your Cel-Fi DUO system simply needed a restart. This is not something that should continue, but if it occurs frequently please reach out to your point of sale for support.</div>"
 								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Numeric display keep cycling/rotating</div>"
-								+ "<div class='helpContent'></br>When your Coverage Unit displays a rotating ‚Äú0‚Äù zero your system is still preforming startup procedures. This process usually takes less than 20 minutes. If it takes longer than 45 minutes, please restart both units.</div>"
+								+ "<div class='helpContent'></br>When your Coverage Unit displays a rotating ì0î zero your system is still preforming startup procedures. This process usually takes less than 20 minutes. If it takes longer than 45 minutes, please restart both units.</div>"
 								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Low Number on my Coverage Unit (0-6)</div>"
-								+ "<div class='helpContent'></br>When you have a display of 0, 1, 2, 3, 4, 5, or 6 your Cel-Fi DUO system has established a connection but is not working to the fullest ability. Try this‚Ä¶ move your units further apart. If you have a particular spot in your home that you want coverage more than others try installing your Cel-Fi system in reverse. Put your Coverage Unit where you need coverage the most then place your Network Unit at the furthest location where you can get at least 1 bar of service.</br></br>If you cannot get your systems further apart, and you have the coverage you need, a higher number is not always possible or necessary.</br></br>When you have a solid ‚Äú0‚Äù zero display you may also see a flashing green power indicator. This display indicates that your Network Unit and Coverage Unit are ‚ÄúToo Close‚Äù together. Try moving the units further apart, starting with the Coverage Unit.</div>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Small Coverage Bubble ‚Äì I only have signal within a few feet of the Coverage Unit!</div>"
+								+ "<div class='helpContent'></br>When you have a display of 0, 1, 2, 3, 4, 5, or 6 your Cel-Fi DUO system has established a connection but is not working to the fullest ability. Try thisÖ move your units further apart. If you have a particular spot in your home that you want coverage more than others try installing your Cel-Fi system in reverse. Put your Coverage Unit where you need coverage the most then place your Network Unit at the furthest location where you can get at least 1 bar of service.</br></br>If you cannot get your systems further apart, and you have the coverage you need, a higher number is not always possible or necessary.</br></br>When you have a solid ì0î zero display you may also see a flashing green power indicator. This display indicates that your Network Unit and Coverage Unit are ìToo Closeî together. Try moving the units further apart, starting with the Coverage Unit.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Small Coverage Bubble ñ I only have signal within a few feet of the Coverage Unit!</div>"
 								+ "<div class='helpContent'></br>Changes to your Cel-Fi placement can be made to improve your 3G/4G/LTE coverage.</br></br>The more bars shown on the Network Unit the better. Try moving the Network Unit to an area that has better 3G/4G/LTE coverage. If the home/office has more than 1 floor upstairs is usually better than downstairs. Putting the Network Unit near a window or higher on a shelf often helps as well.</br></br>The numeric value on the display of the Coverage Unit is an indication of the area covered. A higher number means a larger area is covered. To increase the coverage area move the Coverage Unit farther away from the Network Unit. The less obstacles in their direct line of sight the further apart you can get them. The higher the Coverage Unit number, the better the coverage.</div>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No LTE ‚Äì My phone still doesn‚Äôt have LTE</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No LTE ñ My phone still doesnít have LTE</div>"
 								+ "<div class='helpContent'></br>There are a few reasons why your phone would experience an issue with the LTE service. You may not have LTE in your area, your Cel-Fi system may have lost the LTE signal due to intermittent network outages, your phone may not support LTE, or your phone may not be compatible with the frequency being boosted by the Cel-Fi DUO. You will need to check the display on your Network Unit for more information <a href=\"#\" onclick=\"window.open('https://support.cel-fi.com/hc/en-us/articles/202987756-Troubleshoot-the-Cel-Fi-Window-Network-Unit', '_system');\">click here</a></div>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Frequent or Intermitten ‚ÄúToo Far‚Äù message</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Frequent or Intermitten ìToo Farî message</div>"
 								+ "<div class='helpContent'></br>Intermittent rotating/too far issues. While the number 9 is the largest distance between your Coverage Unit and your Network Unit you can have the systems slightly too far apart. This may cause you to experience intermittent interference which can cause the connection to break. Frequent or intermittent issues can be related to heavy WiFi saturation in your home/office, or obstacles that move between the two units line of sight. Make sure that each unit is as far as possible from any access points or other WiFi enabled devices. An example of a wireless device could be, but is not limited to, a wireless home phone, laptop computer, or wireless router.</div>"
 								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Flashing E message.</div>"
-								+ "<div class='helpContent'></br>E1 Cellular Signal too weak to boost. Try this‚Ä¶ Walk around your home/office with your cellular device. Try to find a signal indoors with at least one consistent bar of 3G/4G/LTE. More bars is always better! Once you have found a usable signal place your Network Unit in this location.</br></br>E2 Coverage Unit hardware error that may be remedied by a reset. Your Coverage Unit may not display a flashing error code. You will likely only see the solid red power indicator on your Coverage Unit.Try this‚Ä¶.Reset your Coverage Unit. Simply unplug your Coverage Unit for a few seconds and plug back in.</br></br>E3 Your Coverage Unit is overheating. Try this‚Ä¶ ensure that your Coverage Unit vents are clear of any blockage, and that the location of the unit allows free flow of air. Once your Coverage Unit has cooled down it will operate as normal.</br></br>E4 Your Network Unit is overheating. Try this‚Ä¶ ensure that your Network Unit vents are clear of any blockage, and that the location of the unit allows free flow of air. If you have your Network Unit in an attic space you may need to relocate the device to ensure that the system does not continue to overheat. Once your Network Unit has cooled down it will operate as normal.</br></br>E7 The system has been disabled by the mobile network carrier. Contact your point of sale.</br></br>E8 Input signal too strong. An E8 error code is letting you know that your Network Unit is too close to a cellular tower, not necessarily for your operator. This has reduced the output power (coverage bubble) to limit network interference. Try this‚Ä¶Move your Network Unit to another location. You might need to move your system to the other side of your home. Note: When you have an E8 your system will still offer you indoor cellular coverage.</br></br>Too close, you may also see a solid zero on your Coverage Unit. Your Coverage Unit is ‚ÄúToo Close‚Äù to your Network Unit. Try this‚Ä¶moving the units further apart, starting with the Coverage Unit.</br></br>Too far, you may also see a rotating/cycling zero with red arrows on your Coverage Unit. Your Coverage Unit is ‚ÄúToo Far‚Äù from your Network Unit. Try moving the units slightly (5-10 feet) closer together, starting with the Coverage Unit.</br></br>Intermittent ‚ÄúToo Far‚Äù message? Frequent or intermittent issues can be related to heavy WiFi saturation in your home/office. Make sure that each unit is as far as possible from any access points or other WiFi enabled devices.</div>"
+								+ "<div class='helpContent'></br>E1 Cellular Signal too weak to boost. Try thisÖ Walk around your home/office with your cellular device. Try to find a signal indoors with at least one consistent bar of 3G/4G/LTE. More bars is always better! Once you have found a usable signal place your Network Unit in this location.</br></br>E2 Coverage Unit hardware error that may be remedied by a reset. Your Coverage Unit may not display a flashing error code. You will likely only see the solid red power indicator on your Coverage Unit.Try thisÖ.Reset your Coverage Unit. Simply unplug your Coverage Unit for a few seconds and plug back in.</br></br>E3 Your Coverage Unit is overheating. Try thisÖ ensure that your Coverage Unit vents are clear of any blockage, and that the location of the unit allows free flow of air. Once your Coverage Unit has cooled down it will operate as normal.</br></br>E4 Your Network Unit is overheating. Try thisÖ ensure that your Network Unit vents are clear of any blockage, and that the location of the unit allows free flow of air. If you have your Network Unit in an attic space you may need to relocate the device to ensure that the system does not continue to overheat. Once your Network Unit has cooled down it will operate as normal.</br></br>E7 The system has been disabled by the mobile network carrier. Contact your point of sale.</br></br>E8 Input signal too strong. An E8 error code is letting you know that your Network Unit is too close to a cellular tower, not necessarily for your operator. This has reduced the output power (coverage bubble) to limit network interference. Try thisÖMove your Network Unit to another location. You might need to move your system to the other side of your home. Note: When you have an E8 your system will still offer you indoor cellular coverage.</br></br>Too close, you may also see a solid zero on your Coverage Unit. Your Coverage Unit is ìToo Closeî to your Network Unit. Try thisÖmoving the units further apart, starting with the Coverage Unit.</br></br>Too far, you may also see a rotating/cycling zero with red arrows on your Coverage Unit. Your Coverage Unit is ìToo Farî from your Network Unit. Try moving the units slightly (5-10 feet) closer together, starting with the Coverage Unit.</br></br>Intermittent ìToo Farî message? Frequent or intermittent issues can be related to heavy WiFi saturation in your home/office. Make sure that each unit is as far as possible from any access points or other WiFi enabled devices.</div>"
 								+ "</div></div>";
 		$(duoTroubleShoot).appendTo('.modalBodyWrapper');
 		$('.headerContainer, #bodyContainer').hide();
@@ -2491,7 +2864,13 @@ var util = {
 	},
 	
 	duoErrorCodes: function () {
+		this.createModalWrapper();
 		$('#modalTitle').html('Error codes');
+		var errorCodesDuo = '<div class="errorCodeModal"><h1 class="modelErrorCodeSubHeader modalContentTitle">E1: "(Error 1) Not Receiving Signal"</h1><div class="errorCodeEC_DUO_1"></div><div class="errorCodeEC_DUO_2"></div><p class="modelBodyContent">The Cellular Signal is too weak to boost. Try walking around your home/office with your cellular device to find a signal indoors with at least one consistent bar of 3G/4G/LTE. More bars is always better! Once you have found a usable signal place your Network Unit in this location.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E2: "(Error 2) CU Hardware Error"</h1><div class="errorCodeEC_DUO_3"></div><p class="modelBodyContent">Your Coverage Unit is experiencing a hardware error that may be remedied by a reset. Try this... reset your Coverage Unit. Simply unplug your Coverage Unit for a few seconds and plug back in.</br></br>The Network Unit will continue to search for the Coverage Unit, flashing the power indicator.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E3: "(Error 3) CU is overheating"</h1><div class="errorCodeEC_DUO_4"></div><p class="modelBodyContent">Your Coverage Unit is overheating. Please ensure that your Coverage Unit vents are clear of any blockage, and that the location of the unit allows free flow of air.</br></br>Once your Coverage Unit has cooled down it will operate as normal.</br></br>The Network Unit will continue to search for the Coverage Unit, flashing the power indicator.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E4: "(Error 4) NU is overheating"</h1><div class="errorCodeEC_DUO_1"></div><div class="errorCodeEC_DUO_5"></div><p class="modelBodyContent">Your Network Unit is overheating. Please ensure that your Network Unit vents are clear of any blockage, and that the location of the unit allows free flow of air. If you have your Network Unit in an attic space you may need to relocate the device to insure that the system does not continue to overheat. Once your Network Unit has cooled down it will operate as normal.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E6: "(Error 6) NU Hardware Error"</h1><div class="errorCodeEC_DUO_1"></div><p class="modelBodyContent">Your Network Unit is experiencing a hardware error that may be remedied by a reset. Try this... reset your Network Unit. Simply unplug your Network Unit for a few seconds and plug it back in.</br></br>The Coverage Unit will continue to look for the Network Unit, and eventually time out to a Too Far error message.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E7: "(Error 7) Unit disabled by network"</h1><div class="errorCodeEC_DUO_6"></div><div class="errorCodeEC_DUO_7"></div><p class="modelBodyContent">The system has been disabled by the mobile network carrier. Contact your point of sale.</br></br>Bars and LTE indicator will flash on the NU</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E8: "(Error 8) Input signal too strong."</h1><div class="errorCodeEC_DUO_8"></div><div class="errorCodeEC_DUO_9"></div><p class="modelBodyContent">Your Network Unit is too close to a cellular tower, not necessarily for your operator. This has reduced the output power (coverage bubble) to limit network interference. Try this... move your Network Unit to another location. You might need to move your system to the other side of your home. Note: When you have an E8 Error your system will still offer you indoor cellular coverage.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">Too Far</h1><div class="errorCodeEC_DUO_10"></div><p class="modelBodyContent">Your Coverage Unit is "Too Far" from your Network Unit. Try moving the units slightly (5-10 feet) closer together, starting with the Coverage Unit.</br></br>Intermittent "Too Far" message? Frequent or intermittent issues can be related to heavy WiFi saturation in your home/office. Make sure that each unit is as far as possible from any access points or other WiFi enabled devices.</br></br>The Network Unit will continue to search for the Coverage Unit, flashing the power indicator. Make sure that your Network Unit is operating normally, with a green power light and green bars.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">Too Close</h1><div class="errorCodeEC_DUO_11"></div><p class="modelBodyContent">Your Coverage Unit is ìToo Closeî to your Network Unit. Try moving the units further apart, starting with the Coverage Unit.</br></br>The Network Unit will continue to search for the Coverage Unit, flashing the power indicator.</P></div>';
+		$(errorCodesDuo).appendTo('.modalBodyWrapper');
+		$('.modalBodyWrapper').css('overflow-y','visible');
+		$('.headerContainer, #bodyContainer').hide();
+		$('.modalWrapper').show();
 	},
 	
 	proInstallationGuide: function () {
@@ -2500,7 +2879,7 @@ var util = {
 		var duoInstallGuide = "<div class='installGuideWrapper'>"						
 								+ "<p class='pageTitleContainer modalContentTitle modalContentPadding'>Installation Guide for Cel-Fi PRO</p>"
 								+ "<div class='modalContentPadding'>"                      
-								+ "<div class='helpContent installGuideContent'>STEP 1</div>"
+								+ "<div class='helpSubTitle installGuideContent'>STEP 1</div>"
 								+ "<div class='helpHeadLine'>Find the best cellular signal</div>"
 								+ "<div class='helpContent'>For Cel-Fi to work correctly, use your phone to find the best 3G, 4G or LTE signal. </br>Typically, you will get the best signal upstairs near a window.</div>"
 								+ "<div class='helpSubTitle installGuideContent'>STEP 2</div>"
@@ -2524,25 +2903,25 @@ var util = {
 		var proTroubleShoot = "<div class='installGuideWrapper'>"						
 								+ "<p class='pageTitleContainer modalContentTitle modalContentPadding'>Coverage Unit Troubleshooting</p>"
 								+ "<div class='modalContentPadding'>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Power ‚Äì My Coverage Unit won‚Äôt turn on!</div>"
-								+ "<div class='helpContent'></br>When your system does not power up, or has a red power indicator, one of the following things could be happening. You might have a power adaptor failure, a hardware failure, or the system may need a simple restart.</br></br>Try this‚Ä¶ Both the Coverage Unit and Network Unit have identical power supplies. Try switching the power supplies to see if one of the following issues could be occurring:</br></br>If you switch the power supplies and the problem moves from one unit to the other unit then you are experiencing a power supply issue. Please reach out to your point of sale for a replacement power supply.</br></br>If, after switching power supplies, you still have no power on your Coverage Unit try another outlet, or another lamp/appliance in the same outlet (changed). If you continue to have problems with the unit please reach out to your point of sale for a system replacement.</br></br>If, after switching power supplies both system are functioning properlythen your Cel-Fi PRO system simply needed a restart. This is not something that should continue, but if it occurs frequently please reach out to your point of sale for support.</div>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Bars ‚Äì My Coverage Unit is not finding the Network Unit!</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Power ñ My Coverage Unit wonít turn on!</div>"
+								+ "<div class='helpContent'></br>When your system does not power up, or has a red power indicator, one of the following things could be happening. You might have a power adaptor failure, a hardware failure, or the system may need a simple restart.</br></br>Try thisÖ Both the Coverage Unit and Network Unit have identical power supplies. Try switching the power supplies to see if one of the following issues could be occurring:</br></br>If you switch the power supplies and the problem moves from one unit to the other unit then you are experiencing a power supply issue. Please reach out to your point of sale for a replacement power supply.</br></br>If, after switching power supplies, you still have no power on your Coverage Unit try another outlet, or another lamp/appliance in the same outlet (changed). If you continue to have problems with the unit please reach out to your point of sale for a system replacement.</br></br>If, after switching power supplies both system are functioning properlythen your Cel-Fi PRO system simply needed a restart. This is not something that should continue, but if it occurs frequently please reach out to your point of sale for support.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Bars ñ My Coverage Unit is not finding the Network Unit!</div>"
 								+ "<div class='helpContent'></br>When you Coverage Unit does not have bars but your Network Unit icon does, the system is still performing startup procedures. </br></br>If it takes longer than 45 minutes, please restart both units and make sure they are within sight of each other.</br></br>Try placing the units roughly 30 feet from each other as a test to confirm that the units will pair, if not make sure you have matching serial numbers.</div>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Low amount of bars on your Coverage Unit ‚Äì I can‚Äôt get more than 1/2 bars over the CU icon!</div>"
-								+ "<div class='helpContent'></br>When you have a 1, or 2 bars on the Coverage Unit, your Cel-Fi PRO system has established a connection but might not be (changed) working to the fullest ability. Try this‚Ä¶ move your units further apart. If you have a particular spot in your home that you want coverage more than others try installing your Cel-Fi system in reverse. Put your Coverage Unit where you need coverage the most then place your Network Unit at the furthest location where you can get at least 1 bar of service.</br></br>If you cannot get your systems further apart, and you have the coverage you need, a higher number is not always possible or necessary.</div>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Small Coverage Bubble ‚Äì I only have signal within a few feet of the Coverage Unit!</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Low amount of bars on your Coverage Unit ñ I canít get more than 1/2 bars over the CU icon!</div>"
+								+ "<div class='helpContent'></br>When you have a 1, or 2 bars on the Coverage Unit, your Cel-Fi PRO system has established a connection but might not be (changed) working to the fullest ability. Try thisÖ move your units further apart. If you have a particular spot in your home that you want coverage more than others try installing your Cel-Fi system in reverse. Put your Coverage Unit where you need coverage the most then place your Network Unit at the furthest location where you can get at least 1 bar of service.</br></br>If you cannot get your systems further apart, and you have the coverage you need, a higher number is not always possible or necessary.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Small Coverage Bubble ñ I only have signal within a few feet of the Coverage Unit!</div>"
 								+ "<div class='helpContent'></br>Changes to your Cel-Fi placement can be made to improve your 3G/4G/LTE coverage.</br></br>The more bars shown on the Network Unit the better. Try moving the Network Unit to an area that has better 3G/4G/LTE coverage. If the home/office has more than 1 floor. Upstairs is usually better than downstairs. Putting the Network Unit near a window or higher on a self often helps as well.</br></br>The bar display of the Coverage Unit is an indication of the area covered. More bars on the Coverage Unit means a larger area is covered. To increase the coverage area move the Coverage Unit farther away from the Network Unit. The less obstacles in their direct line of sight the further apart you can get them. The more bars on your Coverage Unit, the better the coverage area will be.</div>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No LTE ‚Äì My phone still doesn‚Äôt have LTE</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No LTE ñ My phone still doesnít have LTE</div>"
 								+ "<div class='helpContent'></br>There are a few reasons why your phone would experience an issue with the LTE service. </br></br>You may not have LTE in your area, your Cel-Fi system may have lost the LTE signal due to intermittent network outages, or your phone may not support LTE. </br></br>Check to see that your phone shows an LTE signal in the location of your Network Unit.</div>"									
 								+ "</div></br>"
 								+ "<p class='pageTitleContainer modalContentTitle modalContentPadding'>Network Unit Troubleshooting</p>" 
 								+ "<div class='modalContentPadding'>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Power ‚Äì My Network Unit won‚Äôt turn on!</div>"
-								+ "<div class='helpContent'></br>When your system does not power up, one of the following things could be happening. You could have a power adaptor failure, a hardware failure, or the system could need a simple restart.</br></br>Try this‚Ä¶ Both the Network Unit and Coverage Unit have identical power supplies. Try switching the power supplies to see if one of the following issues could be occurring:</br></br>If you switch the power supplies and the problem moves from one unit to the other unit then you are experiencing a power supply issue. Please reach out to your point of sale for a replacement power supply.</br></br>If, after switching power supplies, you still have no power on your Network Unit try another outlet, or lamp/appliance in the same outlet. If you continue to have problems with the Network Unit please reach out to your point of sale for a system replacement.</br></br>If, after switching power supplies both system are functioning properly then your Cel-Fi PRO system simply needed a restart. This is not something that should continue, but if it occurs frequently please reach out to your point of sale for support.</br></br>If you have power on your Network Unit with a white or otherwise abnormal colored display, please contact your point of sale for specific warranty support.</div>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Bars ‚Äì My Network Unit is not finding the cellular signal!</div>"
-								+ "<div class='helpContent'></br>If you have no bars, your Network Unit is still trying to find the incoming cellular network signal. Your Network Unit may display the ‚ÄúSearching for the Network‚Ä¶‚Äù message. This can sometimes take more than a few minutes.</br></br>Taking longer than 60 minutes? Try this‚Ä¶</br></br>Walk around your home/office with your cellular device. Try to find a signal inside your home/office with at least one consistent bar of 3G/4G/LTE. More bars is always better! Once you have found a signal place your Network Unit in that location.</br></br>If you have bars of service on your phone in the location of your Network Unit, and after 60 minutes you are still unable to receive bars of service on your Network Unit try a simple restart. To restart your Network Unit simply unplug for a moment and then plug back in. If the restart does not solve the issue please reach out to your point of sale for support.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Power ñ My Network Unit wonít turn on!</div>"
+								+ "<div class='helpContent'></br>When your system does not power up, one of the following things could be happening. You could have a power adaptor failure, a hardware failure, or the system could need a simple restart.</br></br>Try thisÖ Both the Network Unit and Coverage Unit have identical power supplies. Try switching the power supplies to see if one of the following issues could be occurring:</br></br>If you switch the power supplies and the problem moves from one unit to the other unit then you are experiencing a power supply issue. Please reach out to your point of sale for a replacement power supply.</br></br>If, after switching power supplies, you still have no power on your Network Unit try another outlet, or lamp/appliance in the same outlet. If you continue to have problems with the Network Unit please reach out to your point of sale for a system replacement.</br></br>If, after switching power supplies both system are functioning properly then your Cel-Fi PRO system simply needed a restart. This is not something that should continue, but if it occurs frequently please reach out to your point of sale for support.</br></br>If you have power on your Network Unit with a white or otherwise abnormal colored display, please contact your point of sale for specific warranty support.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Bars ñ My Network Unit is not finding the cellular signal!</div>"
+								+ "<div class='helpContent'></br>If you have no bars, your Network Unit is still trying to find the incoming cellular network signal. Your Network Unit may display the ìSearching for the NetworkÖî message. This can sometimes take more than a few minutes.</br></br>Taking longer than 60 minutes? Try thisÖ</br></br>Walk around your home/office with your cellular device. Try to find a signal inside your home/office with at least one consistent bar of 3G/4G/LTE. More bars is always better! Once you have found a signal place your Network Unit in that location.</br></br>If you have bars of service on your phone in the location of your Network Unit, and after 60 minutes you are still unable to receive bars of service on your Network Unit try a simple restart. To restart your Network Unit simply unplug for a moment and then plug back in. If the restart does not solve the issue please reach out to your point of sale for support.</div>"
 								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Network Unit (NU) continues to search for the Coverage Unit (CU)</div>"
-								+ "<div class='helpContent'></br>Your Cel-Fi PRO has found the network and is displaying bars over the (NU) Network Unit icon, but continues to try and find a connection to the Coverage Unit (CU).</br></br>If this screen is displayed for more than 30 minutes, after your Network Unit shows bars, you could have one of the following issues with your Cel-Fi PRO system.</br></br>Try this‚Ä¶ Insure that your Coverage Unit (CU) is plugged in and has power. If your Coverage Unit does not have power <a href=\"#\" onclick=\"window.open('https://support.cel-fi.com/hc/en-us/articles/202987766-Troubleshoot-the-Cel-Fi-Network-Unit', '_system');\">click here</a> for a link to the PRO Coverage Unit (CU) troubleshooting section.</br></br>Make sure that your Units are not too far apart. Try placing the systems 10-15 feet apart to insure they can connect. The more interference (i.e. walls, doors, refrigerators, filing cabinets) between the two units the closer they will need to be. Once you have established a connection you can optimize the displayed number by moving either unit.</br></br>Intermittent too far issues. While five CU bars is the largest distance between your Coverage Unit and your Network Unit you can have the systems slightly too far apart. This may cause you to experience intermittent interference which can cause the connection to break. Frequent or intermittent issues can be related to heavy WiFi saturation in your home/office, or obstacles that move between the two units line of sight. Make sure that each unit is as far as possible from any access points or other WiFi enabled devices. An example of a wireless device could be, but is not limited to, a wireless home phone, laptop computer, or wireless router.</div>"
+								+ "<div class='helpContent'></br>Your Cel-Fi PRO has found the network and is displaying bars over the (NU) Network Unit icon, but continues to try and find a connection to the Coverage Unit (CU).</br></br>If this screen is displayed for more than 30 minutes, after your Network Unit shows bars, you could have one of the following issues with your Cel-Fi PRO system.</br></br>Try thisÖ Insure that your Coverage Unit (CU) is plugged in and has power. If your Coverage Unit does not have power <a href=\"#\" onclick=\"window.open('https://support.cel-fi.com/hc/en-us/articles/202987766-Troubleshoot-the-Cel-Fi-Network-Unit', '_system');\">click here</a> for a link to the PRO Coverage Unit (CU) troubleshooting section.</br></br>Make sure that your Units are not too far apart. Try placing the systems 10-15 feet apart to insure they can connect. The more interference (i.e. walls, doors, refrigerators, filing cabinets) between the two units the closer they will need to be. Once you have established a connection you can optimize the displayed number by moving either unit.</br></br>Intermittent too far issues. While five CU bars is the largest distance between your Coverage Unit and your Network Unit you can have the systems slightly too far apart. This may cause you to experience intermittent interference which can cause the connection to break. Frequent or intermittent issues can be related to heavy WiFi saturation in your home/office, or obstacles that move between the two units line of sight. Make sure that each unit is as far as possible from any access points or other WiFi enabled devices. An example of a wireless device could be, but is not limited to, a wireless home phone, laptop computer, or wireless router.</div>"
 								+ "</div></div>";
 			
 		$(proTroubleShoot).appendTo('.modalBodyWrapper');
@@ -2551,7 +2930,12 @@ var util = {
 	},
 	
 	proErrorCodes: function () {
+		this.createModalWrapper();
 		$('#modalTitle').html('Error codes');
+		var errorCodesPro = '<div class="errorCodeModal"><h1 class="modelErrorCodeSubHeader modalContentTitle">E1: "(Error 1) Not Receiving Signal"</h1><div class="errorCodeEC_PRO_1"></div><p class="modelBodyContent">The Cellular Signal is too weak to boost. Try walking around your home/office with your cellular device to find a signal indoors with at least one consistent bar of 3G/4G/LTE. More bars is always better! Once you have found a usable signal place your Network Unit in this location.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E2: "(Error 2) CU Hardware Error"</h1><div class="errorCodeEC_PRO_2"></div>Your Coverage Unit is experiencing a hardware error that may be remedied by a reset. Try this... reset your Coverage Unit. Simply unplug your Coverage Unit for a few seconds and plug back in.</br></br>The Network Unit will continue to search for the Coverage Unit, flashing the power indicator.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E3: "(Error 3) CU is overheating"</h1><div class="errorCodeEC_PRO_3"></div>Your Coverage Unit is overheating. Please ensure that your Coverage Unit vents are clear of any blockage, and that the location of the unit allows free flow of air.</br></br>Once your Coverage Unit has cooled down it will operate as normal.</br></br>The Network Unit will continue to search for the Coverage Unit, flashing the power indicator.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E4: "(Error 4) NU is overheating"</h1><div class="errorCodeEC_PRO_4"></div><p class="modelBodyContent">Your Network Unit is overheating. Please ensure that your Network Unit vents are clear of any blockage, and that the location of the unit allows free flow of air. If you have your Network Unit in an attic space you may need to relocate the device to insure that the system does not continue to overheat. Once your Network Unit has cooled down it will operate as normal.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E6: "(Error 6) NU Hardware Error"</h1><div class="errorCodeEC_PRO_6"></div><p class="modelBodyContent">Your Network Unit is experiencing a hardware error that may be remedied by a reset. Try this... reset your Network Unit. Simply unplug your Network Unit for a few seconds and plug it back in.</br></br>The Coverage Unit will continue to look for the Network Unit, and eventually time out to a Too Far error message.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E7: "(Error 7) Unit disabled by network"</h1><div class="errorCodeEC_PRO_7"></div><p class="modelBodyContent">The system has been disabled by the mobile network carrier. Contact your point of sale.</br></br>Bars and LTE indicator will flash on the NU</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E8: "(Error 8) Input signal too strong."</h1><div class="errorCodeEC_PRO_8"></div><p class="modelBodyContent">Your Network Unit is too close to a cellular tower, not necessarily for your operator. This has reduced the output power (coverage bubble) to limit network interference. Try this... move your Network Unit to another location. You might need to move your system to the other side of your home. Note: When you have an E8 Error your system will still offer you indoor cellular coverage.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">Too Far</h1><div class="errorCodeEC_PRO_9"></div><p class="modelBodyContent">Your Coverage Unit is "Too Far" from your Network Unit. Try moving the units slightly (5-10 feet) closer together, starting with the Coverage Unit.</br></br>Intermittent "Too Far" message? Frequent or intermittent issues can be related to heavy WiFi saturation in your home/office. Make sure that each unit is as far as possible from any access points or other WiFi enabled devices.</br></br>The Network Unit will continue to search for the Coverage Unit, flashing the power indicator. Make sure that your Network Unit is operating normally, with a green power light and green bars. </P><h1 class="modelErrorCodeSubHeader modalContentTitle">Too Close</h1><div class="errorCodeEC_PRO_10"></div><p class="modelBodyContent">Your Coverage Unit is ìToo Closeî to your Network Unit. Try moving the units further apart, starting with the Coverage Unit.</br></br>The Network Unit will continue to search for the Coverage Unit, flashing the power indicator.</P></div>';
+		$(errorCodesPro).appendTo('.modalBodyWrapper');
+		$('.headerContainer, #bodyContainer').hide();
+		$('.modalWrapper').show();
 	},
 	
 	primeInstallationGuide : function () {
@@ -2567,347 +2951,128 @@ var util = {
 	faqDetails: function() {
 		this.createModalWrapper();
 		$('#modalTitle').html('FAQ');
-		var faqDetails = "<div class='modalHelpWrapper faqModalWrapper'>"
-						+ "<p class='pageTitleContainer modalContentTitle modalContentPadding'>Top 20 Frequently Asked Questions</p>"
-						+ "<div class='divLineDivider'></div>"
-						+ "<div class='panel-group' id='accordion'>"
-						+ "<div class='panel panel-default'>"				        
-						+ "<div class='panel-heading FAQPanelHeaderColor'>"
-						+ "<h4 class='panel-title'>"
-						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelOne'>"
-						+ "<div>"
-						+ "<p class='modalFAQPanelContent' >What is Cel-Fi?</p>"
-						+ "</div>"
-						+ "<span class='pull-right faqSpan' >"
-						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
-						+ "</span>"
-						+ "</a></h4></div>"
-						+ "<div id='ModelOne' class='panel-collapse collapse'>"
-						+ "<div class='panel-body'>"
-						+ "<p class='modelFAQBodyContents'>"
-						+ "Cel-Fi is Nextivity's brand of self-configuring, environmentally aware, indoor coverage solutions. Each Cel-Fi system consists of two units. The Network Unit is placed in the area where the strongest native signal can be received from the carrier network (signal levels as low as -120 dBm are acceptable). The Network Unit comprises a transmitter and receiver which communicates with the cell tower. The Coverage Unit is placed in the center of the home, communicates wirelessly with the Network Unit and ‚Äúlights up‚Äù the interior of the house with significantly enhanced signal levels, thus enabling better quality calls and greater data throughput."
-						+ "</p></div></div></div>"
-						+ "<div class='divLineDivider'></div>"
-						+ "<div class='panel panel-default'>"				        
-						+ "<div class='panel-heading' style='color:#4FAEE0;'>"
-						+ "<h4 class='panel-title'>"
-						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelTwo'>"
-						+ "<div>"
-						+ "<p class='modalFAQPanelContent'>What makes Cel-Fi so different from other signal boosters?</p>"
-						+ "</div>"
-						+ "<span class='pull-right faqSpan'>"
-						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
-						+ "</span></a></h4></div>"
-						+ "<div id='ModelTwo' class='panel-collapse collapse'>"
-						+ "<div class='panel-body'>"
-						+ "<div class='panel-body'>"
-						+ "<p class='modelFAQBodyContents'>"
-						+ "Cel-Fi is a smart signal booster. That means it relies on intelligent, self-organizing algorithms to ensure you benefit from the largest area of coverage without compromising or interfering with your mobile operator's networks or impeding other subscribers' signals. Cel-Fi does not require any new equipment, any configuring, or any changes to existing network infrastructure or mobile devices. It is also a plug and play device, which means that there is no need for professional installation, no drilling, and no cables. In addition, Cel-Fi has been recognized for its superior design and effectiveness and is the only consumer booster authorized for use by the communications commissions in Australia and the United Kingdom, and the only Smart Booster designed to meet the new FCC Safe Harbor 2 specifications that allow very high gain (very high signal gain is necessary to make low level signals useful in a large coverage area)."
-						+ "</p></div></div></div></div>"							
-						+ "<div class='divLineDivider'></div>"
-						+ "<div class='panel panel-default'>"				        
-						+ "<div class='panel-heading' id='operatorTitles'>"
-						+ "<h4 class='panel-title'>"
-						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelThree'>"
-						+ "<div>"
-						+ "<p class='modalFAQPanelContent'>Does the Cel-Fi require an internet or GPS connection?</p>"
-						+ "</div>"
-						+ "<span class='pull-right faqSpan'>"
-						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
-						+ "</span></a></h4></div>"
-						+ "<div id='ModelThree' class='panel-collapse collapse'>"							
-						+ "<div class='panel-body'>"
-						+ "<p class='modelFAQBodyContents'>"
-						+ "No. The Cel-Fi system only needs to have at least 1 bar of native cellular signal, in at least one spot of your home to be able to cover your whole home or office space."
-						+ "</p></div></div></div>"	
-						+ "<div class='divLineDivider'></div>"
-						+ "<div class='panel panel-default'>"				        
-						+ "<div class='panel-heading' id='operatorTitles'>"
-						+ "<h4 class='panel-title'>"
-						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelFour'>"
-						+ "<div>"
-						+ "<p class='modalFAQPanelContent'>Will the Cel-Fi support voice and data or data only?</p>"
-						+ "</div>"
-						+ "<span class='pull-right faqSpan'>"
-						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
-						+ "</span></a></h4></div>"
-						+ "<div id='ModelFour' class='panel-collapse collapse'>"
-						+ "<div class='panel-body'>"
-						+ "<p class='modelFAQBodyContents'>"
-						+ "Yes, Cel-Fi smart signal boosters can support both voice and data simultaneously. Note that Cel-Fi RS1 and RS2 models do not support LTE."
-						+ "</p></div></div></div>"	
-						+ "<div class='divLineDivider'></div>"
-						+ "<div class='panel panel-default'>"				        
-						+ "<div class='panel-heading' id='operatorTitles'>"
-						+ "<h4 class='panel-title'>"
-						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelFive'>"
-						+ "<div>"
-						+ "<p class='modalFAQPanelContent'>How far apart can the Network (Window) Unit and the Coverage Unit be placed?</p>"
-						+ "</div>"
-						+ "<span class='pull-right faqSpan'>"
-						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
-						+ "</span></a></h4></div>"
-						+ "<div id='ModelFive' class='panel-collapse collapse'>"
-						+ "<div class='panel-body'>"
-						+ "<p class='modelFAQBodyContents'>"
-						+ "Every instillation is different. The differences depend on the 'path loss' between the two units. Every obstacle in the line of sight means that the Coverage Unit and the Network Unit will have to be closer together. The cleaner the line of sight the further apart they can be placed. The more walls, doors, or refrigerators (obstacles), in the direct line of sight, the closer they units will have to be. The average distance for a typical construction home is 60 feet, however the placement can be as little as 20 feet or much as 120 feet apart."
-						+ "</p></div></div></div>"	
-						+ "<div class='divLineDivider'></div>"	
-						+ "<div class='panel panel-default'>"				        
-						+ "<div class='panel-heading'>"
-						+ "<h4 class='panel-title'>"
-						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelSix'>"
-						+ "<div>"
-						+ "<p class='modalFAQPanelContent'>What coverage can I expect from a Cel-Fi system?</p>"
-						+ "</div>"
-						+ "<span class='pull-right faqSpan'>"
-						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
-						+ "</span></a></h4></div>"
-						+ "<div id='ModelSix' class='panel-collapse collapse'>"
-						+ "<div class='panel-body'>"
-						+ "<p class='modelFAQBodyContents'>"
-						+ "The radius (half the width) of the coverage bubble is approximately the distance between the Coverage Unit and Network (window) Unit. Here are some examples:"
-						+ "</br></br>Radius = 20 meters (66 ft.) for wood framed walls"
-						+ "</br></br>Radius is less for concrete interior walls"
-						+ "</br></br>Radius can easily exceed 65 meters (200 ft.) for open commercial spaces"
-						+ "</p></div></div></div>"	
-						+ "<div class='divLineDivider'></div>"
-						+ "<div class='panel panel-default'>"				        
-						+ "<div class='panel-heading'>"
-						+ "<h4 class='panel-title'>"
-						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelSeven'>"
-						+ "<div>"
-						+ "<p class='modalFAQPanelContent'>Is it legal to use signal boosters?</p>"
-						+ "</div>"
-						+ "<span class='pull-right faqSpan'>"
-						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
-						+ "</span></a></h4></div>"
-						+ "<div id='ModelSeven' class='panel-collapse collapse'>"
-						+ "<div class='panel-body'>"
-						+ "<p class='modelFAQBodyContents'>"
-						+ "Cel-Fi meets the newer regulatory requirements that allow a booster to be used (boosters that do not meet these requirements, which is the vast majority of them, are no longer legal).  For the FCC you can learn more by reading the new FCC Report and Order for signal boosters. According to these new regulations, consumers must receive permission from their carrier before using a booster. Consumer boosters sold after March 1, 2014, and some before that date will be marked with a label signifying it meets the FCC's new regulations."
-						+ "</p></div></div></div>"	
-						+ "<div class='divLineDivider'></div>"	
-						+ "<div class='panel panel-default'>"				        
-						+ "<div class='panel-heading'>"
-						+ "<h4 class='panel-title'>"
-						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelEight'>"
-						+ "<div>"
-						+ "<p class='modalFAQPanelContent'>Is it necessary to register my Cel-Fi?</p>"
-						+ "</div>"
-						+ "<span class='pull-right faqSpan'>"
-						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
-						+ "</span></a></h4></div>"
-						+ "<div id='ModelEight' class='panel-collapse collapse'>"
-						+ "<div class='panel-body'>"
-						+ "<p class='modelFAQBodyContents'>"
-						+ "If booster registration is required in your country, your system may arrive pre-registered or you may be asked to (it's very simple).  See your product insert for details.</br></br>"
-						+ "The FCC is now requiring all boosters in the U.S. to be approved for use by the Operator, and that all consumers register their boosters.  To learn more please visit the FCC site: http://wireless.fcc.gov/signal-boosters/index.html"  
-						+ "</p></div></div></div>"	
-						+ "<div class='divLineDivider'></div>"
-						+ "<div class='panel panel-default'>"				        
-						+ "<div class='panel-heading' >"
-						+ "<h4 class='panel-title'>"
-						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelNine'>"
-						+ "<div>"
-						+ "<p class='modalFAQPanelContent'>How do I register my Cel-Fi system?</p>"
-						+ "</div>"
-						+ "<span class='pull-right faqSpan'>"
-						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
-						+ "</span></a></h4></div>"
-						+ "<div id='ModelNine' class='panel-collapse collapse'>"
-						+ "<div class='panel-body'>"
-						+ "<p class='modelFAQBodyContents'>"
-						+ "The process is very simple and just takes a minute by following the link below to your Operator's Registration site.  If your system was provided by your Operator it may be preregistered (see product box insert)."
-						+ "</br></br>In the USA:</br></br>If your operator is T-Mobile, MetroPCS, TruPhone, or another T-Mobile network operator please register your booster at: www.T-Mobile.com/BoosterRegistration</br></br>If your operator is AT&T, Aio, or another AT&T network operator please register your booster at: www.attsignalbooster.com" 
-						+ "</p></div></div></div>" 
-						+ "<div class='divLineDivider'></div>"	
-						+ "<div class='panel panel-default'>"				        
-						+ "<div class='panel-heading'>"
-						+ "<h4 class='panel-title'>"
-						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelTen'>"
-						+ "<div>"
-						+ "<p class='modalFAQPanelContent'>Why do I have to register my Cel-Fi?</p>"
-						+ "</div>"
-						+ "<span class='pull-right faqSpan'>"
-						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
-						+ "</span>"
-						+ "</a></h4></div>"
-						+ "<div id='ModelTen' class='panel-collapse collapse'>"
-						+ "<div class='panel-body'>"
-						+ "<p class='modelFAQBodyContents'>"
-						+ "Why is this being done?  Because cellular systems are protected assets of the Operators that own them.  Many boosters in the market cause problems for those networks (which means all of us using the networks too).  New FCC/Operator approved boosters are better and don't cause problems, and Cel-Fi is the only booster in a special class of boosters that allows 100 dB of signal gain (30 dB or 1000x the gain of all other boosters)."  
-						+ "</p></div></div></div>"	
-						+ "<div class='divLineDivider'></div>"	
-						+ "<div class='panel panel-default'>"				        
-						+ "<div class='panel-heading'>"
-						+ "<h4 class='panel-title'>"
-						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelEleven'>"
-						+ "<div>"
-						+ "<p class='modalFAQPanelContent'>Will Cel-Fi boost the signal for Verizon or Sprint?</p>"
-						+ "</div>"
-						+ "<span class='pull-right faqSpan'>"
-						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
-						+ "</span></a></h4></div>"
-						+ "<div id='ModelEleven' class='panel-collapse collapse'>"
-						+ "<div class='panel-body'>"
-						+ "<p class='modelFAQBodyContents'>"
-						+ "At this time Verizon and Sprint will not work with any of the Cel-Fi products. We are always adding new technology to the Cel-Fi device line-up. Feel free to sign up for exclusive news and blog emails at the bottom of the page."
-						+ "</p></div></div></div>"	
-						+ "<div class='divLineDivider'></div>"	
-						+ "<div class='panel panel-default'>"				        
-						+ "<div class='panel-heading'>"
-						+ "<h4 class='panel-title'>"
-						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelTweleve'>"
-						+ "<div>"
-						+ "<p class='modalFAQPanelContent'>Can Cel-Fi boost the signal of multiple cellular networks at once?</p>"
-						+ "</div>"
-						+ "<span class='pull-right faqSpan'>"
-						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
-						+ "</span></a></h4></div>"
-						+ "<div id='ModelTweleve' class='panel-collapse collapse'>"
-						+ "<div class='panel-body'>"
-						+ "<p class='modelFAQBodyContents'>"
-						+ "Cel-Fi signal boosters are Operator specific, and will only boost one Operator's channels at a time. Being Operator specific is one of the main reasons that we are network safe and can provide 100 dB of signal gain, and why we are the only signal booster approved by a growing number of Operators."
-						+ "</p></div></div></div>"	
-						+ "<div class='divLineDivider'></div>"	
-						+ "<div class='panel panel-default'>"				        
-						+ "<div class='panel-heading'>"
-						+ "<h4 class='panel-title'>"
-						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelFourteen'>"
-						+ "<div>"
-						+ "<p class='modalFAQPanelContent'>Why is 100 dB of gain so important?</p>"
-						+ "</div>"
-						+ "<span class='pull-right faqSpan'>"
-						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
-						+ "</span></a></h4></div>"
-						+ "<div id='ModelFourteen' class='panel-collapse collapse'>"
-						+ "<div class='panel-body'>"
-						+ "<p class='modelFAQBodyContents'>"
-						+ "System gain is critical to a booster's performance because it tells us how much a signal may be improved and how beneficial the boosted signal can be.  Example: If you have a low level signal such as -90 dBm per carrier, adding 100 dB of System Gain gives +10 dBm per carrier which can cover a large area.  In contrast adding only 70 dB of gain would only give -20 dBm of signal per carrier which would only cover a very small space.  Therefore a booster with a gain of 70 dB would need a very strong donor signal to be of much use, regardless of the stated transmit power that likely is going unused.</br></br>In other words, the higher the gain of the booster, the better it will work, even when far away from a base station."
-						+ "</p></div></div></div>"	
-						+ "<div class='divLineDivider'></div>"	
-						+ "<div class='panel panel-default'>"				        
-						+ "<div class='panel-heading'>"
-						+ "<h4 class='panel-title'>"
-						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelFifteen'>"
-						+ "<div>"
-						+ "<p class='modalFAQPanelContent'>Is Cel-Fi carrier/operator specific?</p>"
-						+ "</div>"
-						+ "<span class='pull-right faqSpan'>"
-						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
-						+ "</span></a></h4></div>"
-						+ "<div id='ModelFifteen' class='panel-collapse collapse'>"
-						+ "<div class='panel-body'>"
-						+ "<p class='modelFAQBodyContents'>"
-						+ "Yes, and for a good reason!  Cel-Fi is controlled by and operates as an extension of an operator's network.  This is what allows Cel-Fi (by regulatory authority) to boost signals about 1000x more than other solutions, and therefore cover very large areas even if the original network signal is weak.  And it works very well.</br></br>Broad-spectrum repeaters can cause interference and damage to networks, so operators have adopted a strict policy against the use of these legacy signal boosters on their own networks. However, Cel-Fi (the only smart signal booster of its kind), is authorized for use by each carrier and allowed to transmit on their licensed spectrum without ruining things for anyone else."
-						+ "</p></div></div></div>"	
-						+ "<div class='divLineDivider'></div>"	
-						+ "<div class='panel panel-default'>"				        
-						+ "<div class='panel-heading' >"
-						+ "<h4 class='panel-title'>"
-						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelSixteen'>"
-						+ "<div>"
-						+ "<p class='modalFAQPanelContent'>Why doesn't Cel-Fi work with different operators?</p>"
-						+ "</div>"
-						+ "<span class='pull-right faqSpan'>"
-						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
-						+ "</span></a></h4></div>"
-						+ "<div id='ModelSixteen' class='panel-collapse collapse'>"
-						+ "<div class='panel-body'>"
-						+ "<p class='modelFAQBodyContents'>"
-						+ "Not all cellular operators use the same technologies, and we do not boost the every technology available around the world. The Cel-Fi systems will support 3G(UMTS/WCMDA), 4G(HSPA & HAPS+), and LTE technology of operators that have approved the use of Cel-Fi on their network. You can reach out to your operator for more information on what specific technology they use."
-						+ "</p></div></div></div>"	
-						+ "<div class='divLineDivider'></div>"	
-						+ "<div class='panel panel-default'>"				        
-						+ "<div class='panel-heading'>"
-						+ "<h4 class='panel-title'>"
-						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelSeventeen'>"
-						+ "<div>"
-						+ "<p class='modalFAQPanelContent'>What technologies does Cel-Fi support?</p>"
-						+ "</div>"
-						+ "<span class='pull-right faqSpan'>"
-						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
-						+ "</span></a></h4></div>"
-						+ "<div id='ModelSeventeen' class='panel-collapse collapse'>"
-						+ "<div class='panel-body'>"
-						+ "<p class='modelFAQBodyContents'>Cel-Fi system will support 3G(UMTS/WCDMA), 4G (HSPA/HSPA+) and LTE.</br></br>Each Cel-Fi system is different. Check your box for a Quick Start Guide, or visits the support section of our website for more specific information about your specific product."
-						+ "</p></div></div></div>"	
-						+ "<div class='divLineDivider'></div>"
-						+ "<div class='panel panel-default'>"				        
-						+ "<div class='panel-heading' >"
-						+ "<h4 class='panel-title'>"
-						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelEighteen'>"
-						+ "<div>"
-						+ "<p class='modalFAQPanelContent'>I've installed Cel-Fi but I do not see more bars on my phone.</p>"
-						+ "</div>"
-						+ "<span class='pull-right faqSpan'>"
-						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
-						+ "</span></a></h4></div>"
-						+ "<div id='ModelEighteen' class='panel-collapse collapse'>"
-						+ "<div class='panel-body'>"
-						+ "<p class='modelFAQBodyContents'>There could be several reasons for this: First you can try rebooting your phone near the Coverage Unit so it takes a fresh look at the available channels. Also verify that your phone is compatible with the channels that your Cel-Fi model is boosting (maybe your handset is ‚Äúunlocked‚Äù and actually does not fully support all your current Operator's channels). iPhones can also show fewer 'bars' of signal if the network is heavily loaded (click here to learn more).</br></br>Note that Cel-Fi RS1 and RS2 models do not support LTE. If your phone is LTE capable and therefore is not showing boosted service, if needed it is designed to switch over to non-LTE services when it needs to, such as in a call. This is true with or without Cel-Fi and what matters is that now you have reliable service where you need it!</br></br>If you would like the benefits of LTE service as well, you can always upgrade your Cel-Fi to a newer version that also supports LTE."
-						+ "</p></div></div></div>"	
-						+ "<div class='divLineDivider'></div>"
-						+ "<div class='panel panel-default'>"				        
-						+ "<div class='panel-heading' >"
-						+ "<h4 class='panel-title'>"
-						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelNineteen'>"
-						+ "<div>"
-						+ "<p class='modalFAQPanelContent'>Once installed, will the Cel-Fi require maintenance, or adjustments if changes occur to the native cellular network?</p>"
-						+ "</div>"
-						+ "<span class='pull-right faqSpan'>"
-						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
-						+ "</span></a></h4></div>"
-						+ "<div id='ModelNineteen' class='panel-collapse collapse'>"
-						+ "<div class='panel-body'>"
-						+ "<p class='modelFAQBodyContents'>No. Cel-fi does not require any maintenance. The Cel-Fi systems will self-adjust and reconfigure automatically to changing cellular networks situations."
-						+ "</p></div></div></div>"	
-						+ "<div class='divLineDivider'></div>"
-						+ "<div class='panel panel-default'>"				        
-						+ "<div class='panel-heading'>"
-						+ "<h4 class='panel-title'>"
-						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelTwenty'>"
-						+ "<div>"
-						+ "<p class='modalFAQPanelContent'>What is IntelliBoost?</p>"
-						+ "</div>"
-						+ "<span class='pull-right faqSpan'>"
-						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
-						+ "</span></a></h4></div>"
-						+ "<div id='ModelTwenty' class='panel-collapse collapse'>"
-						+ "<div class='panel-body'>"
-						+ "<p class='modelFAQBodyContents'>The Nextivity IntelliBoost Baseband Processor is the first core processor designed specifically to optimize the indoor transmission and reception of 3G and 4G/LTE wireless signals. With advanced filtering, equalization and echo cancellation techniques, Nextivity has developed an embedded architecture which delivers unprecedented in-building data rates and pervasive 3G and 4G/LTE connectivity. The IntelliBoost processor ensures that Cel-Fi products never negatively impact the macro network while providing maximum coverage."											
-						+ "</p></div></div></div>"	
-						+ "<div class='divLineDivider'></div>"
-						+ "<div class='panel panel-default'>"				        
-						+ "<div class='panel-heading' >"
-						+ "<h4 class='panel-title'>"
-						+ "<a data-toggle='collapse' data-parent='#accordion' href='#ModelTwentyOne'>"
-						+ "<div>"
-						+ "<p class='modalFAQPanelContent'>What frequencies link the Network (Window) Unit and Coverage Unit?</p>"
-						+ "</div>"
-						+ "<span class='pull-right faqSpan'>"
-						+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
-						+ "</span></a></h4></div>"
-						+ "<div id='ModelTwentyOne' class='panel-collapse collapse'>"
-						+ "<div class='panel-body'>"
-						+ "<p class='modelFAQBodyContents'>Cel-Fi automatically selects clear, unused channels from the UNII bands (5.15-5.35 GHz, 5.47-5.725 GHz and 5725-5825 GHz) for communication between the Network (Window) Unit and the Coverage Unit. While in some cases these are the same frequencies as Wi-Fi, the Cel-Fi system uses a proprietary protocol for communication and is designed to work in harmony with existing wireless devices such as Wi-Fi routers, cordless telephones or baby monitors."
-						+ "</p></div></div></div>"	
-						+ "<div class ='divLineDivider' id='BottomDivMargin'>"							
-						+ "</div></div></div>";
 		
+		var faqDetails = "<div class='modalHelpWrapper faqModalWrapper'><p class='pageTitleContainer modalContentTitle modalContentPadding'>Top 20 Frequently Asked Questions</p><div class='panel-group' id='faqPage'>";
+		
+		for(var x=0;x<faqQuesAns.length; x++){
+			faqDetails = faqDetails + "<div class='panel panel-default' id='panel"+(x+1)+"'>";
+			faqDetails = faqDetails + "<div class='panel-heading'><h4 class='panel-title'><a data-toggle='collapse' data-parent='#faqPage' data-target='#faq"+(x+1)+"' class='collapsed'><div class='col-xs-11 fl faQuestion'>"+faqQuesAns[x].question+"</div><div class='col-xs-1'><span class='toggle-icon fr expand-more'></span></div></a></h4></div><div class='cb'></div>";
+			faqDetails = faqDetails + "<div id='faq"+(x+1)+"' class='panel-collapse collapse'><div class='panel-body'>"+faqQuesAns[x].answer+"</div></div></div>";
+		}
+		
+		faqDetails = faqDetails + "</div></div></div>";
 		$(faqDetails).appendTo('.modalBodyWrapper');
+		$('.modalBodyWrapper').css('overflow-y','visible');
 		$('.headerContainer, #bodyContainer').hide();
 		$('.modalWrapper').show();
+		$('a[data-toggle="collapse"]').click(function () {
+			$('span.toggle-icon').not($(this).find('span.toggle-icon')).removeClass('expand-less');
+			$('span.toggle-icon').not($(this).find('span.toggle-icon')).addClass('expand-more');
+			$(this).find('span.toggle-icon').toggleClass('expand-more expand-less');
+		});
 	},
 	
 	registrationInfo: function () {
+		//$('#modalTitle').html('Registration');
+		this.createModalWrapper();
 		$('#modalTitle').html('Registration');
+		var registrationInfo = '<div class="registrationInfoModal"><h1 class="modelBodyHeaderTitle modalContentTitle">Registration of Signal Boosters</h1><P class="modelBodyContent">In some cases, regulatory bodies and or mobile network operators may require users to register the signal booster to ensure it"s not interfering with cellular coverage.</br></br>Follow the installation instructions to setup the Network Unit and Coverage Unit. Wait for the system to complete the network selection. This can take between 5 to 7 minutes.</br></br>When this process is complete a message will appear on both displays indicating that registration is required. If you received one of the following documents you will need to register your Cel-Fi system.</P><h1 class="modelRegistrationTitle modalTopPadding">Which notice that was included with your Cel-Fi Booster?</h1><h1 class="modelRegistrationTitle modalContentTitle">1. Registration required <h1><div class="registerImages_1"></div><div class="HeaderTitle_OR">OR</div><div class="registerImages_2"></div><p class="modelBodyContent">If registration is required, you will be prompted to enter your contact and location details the first time you open this app.</P><h1 class="modelRegistrationTitle modalContentTitle">2.	Register with Network Operator <h1><div class="registerImages_3"></div><p class="modelBodyContent">Registration Requirements Per FCC regulations, AT&T and T-Mobile Signal Boosters need to be registered with the mobile network operator.</br></br>If you bought your Cel-Fi device from T-Mobile:<div align="center"><button type="button" class="defaultButton" id="regButton" onclick="window.open(\'http://www.t-mobile.com/boosterregistration\', \'_system\');">Register with T-Mobile</button></div></br><p class="modelBodyContent">Else, contact your Reseller</P><h1 class="modelBodyHeaderTitle modalContentTitle">What data is collected? </h1><p class="modelBodyContent">The information collected during registration is specific to locating the address where the booster is used, and user contact information to enable the carrier to contact the user about the booster. This also includes information about the signal booster such as location, make, model, and serial number. This information will be used to locate boosters in the event network issues are believed to be linked to the booster operation. Any information collected through this program will be used as described above and is subject to Cel-Fi"s Privacy Policy.</br></br>For more information and helpful videos about installation and registration of your Cel-Fi Booster, please visit <a onclick="window.open(\'http://www.Cel-Fi.com/register\', \'_system\');" style="color: #4faee0;">www.Cel-Fi.com/register</a></p></div>';
+		$(registrationInfo).appendTo('.modalBodyWrapper');
+		$('.headerContainer, #bodyContainer').hide();
+		$('.modalWrapper').show();
 	},
 	
 	contactInfo: function () {
 		// Yet to be given
 		$('#modalTitle').html('Contact Us');
+	},
+	
+	showAdvancedFeedBack : function() {
+		this.createModalWrapper();
+		$('.modalLeftBtn').hide();
+		$('#modalTitle').html('Send Data');
+		var advancedFeedBack = "<div id='modalContentWrapper'>"
+								+ "<div class='feedbackSendWrappper'>"
+								+ "<div class='pageTitleContainer modalContentTitle'>Send us Feedback</div>"						
+								+ "<div>"
+								+ "<div class='label'>Description (optional)</div>"
+								+ "<div class='cb'></div>"
+								+ "<div class='textArea col-xs-12 col-sm-9'>"
+								+ "<textarea rows='4' id='feedbackDescInput'></textarea>"
+								+ "</div></div>"
+								+ "<div class='cb'></div><div>"
+								+ "<div class='label'>System data</div>"
+								+ "<div class='cb'></div>"
+								+ "<div class='textArea col-xs-12 col-sm-9'>"
+								+ "<textarea rows='7' id='feedbackSystemDataInput'></textarea>"
+								+ "</div></div>"	
+								+ "<div class='cb'></div><div>"
+								+ "<button type='button' class='defaultButton' id='regButton' onclick=''>Send</button>"
+								+ "<div class='cb'></div></div></div></div>";
+		$(advancedFeedBack).appendTo('.modalBodyWrapper');
+		$('.headerContainer, #bodyContainer').hide();
+		$('.modalWrapper').show();
+	},
+	
+	showAboutUs: function(){
+		util.createHamburgerContent();
+		$('.modalLeftBtnContainer').addClass('hamburgerBackBtn');
+		$('.modalLeftBtnContainer').click(function(){util.removeModal();bigSlideAPI.view.toggleOpen();});
+		$('#modalTitle').html('About');
+		var modalWrapper = document.getElementById("modalWrapper");
+		var aboutFooterContainer = util.createAppendElem("div", "aboutFooterContainer", "aboutFooterContainer", modalWrapper);
+		var aboutLogoVersionContainer = util.createAppendElem("div", "aboutLogoVersionContainer", "aboutLogoVersionContainer", modalWrapper);
+		var aboutLogoContainer = util.createAppendElem("div", "aboutLogoContainer", "aboutLogoContainer", aboutLogoVersionContainer);
+		var aboutVersionContainer = util.createAppendElem("div", "aboutVersionContainer", "aboutVersionContainer", aboutLogoVersionContainer);
+		aboutVersionContainer.innerHTML = "Version 3.2.1";
+		aboutFooterContainer.innerHTML = "Copyright &copy; 2015<br>Nextivity Inc. All rights reserved";
+	},
+	
+	showPrivacyPolicy: function(){
+		var privacyPolicyContent = '<h1 class="modelBodyHeaderTitle modalContentTitle">Terms/Policy</h1><P class="modelBodyContent">At Nextivity, Inc., we adhere to industry-standard procedures to ensure your privacy. This privacy policy applies to data collection and usage on all Nextivity websites and related services (including, without limitation, any Nextivity mobile application) (collectively, the "Services"). Nextivity\'s websites are general audience websites.</br></br>Personal information of all users of the Services is collected, used and disclosed by us as described in this policy statement.  This policy statement does not cover the treatment, collection, use or disclosure of personal information by companies that we don\'t own or control, or people that we don\'t manage.</P><h2 class="modelBodySubHeaderTitle">Gathering/tracking personal information</h2><p class="modelBodyContent">We do not collect personal information about you unless you voluntarily provide it to us. For example, some of the purposes for which we collect such information are: to register your Nextivity product; provide feedback in our online surveys; request product information; and/or request contact from a Nextivity representative. Nextivity collects and uses your personal information in connection with the Services, to deliver the products and services you have requested, and as explained in more detail below.  In certain cases, we may share some of your personal information with third parties, but only as described below.</br></br>Please note that Nextivity may contact you about matters pertaining to your ownership of Nextivity products, or your interactive use of the company\'s website(s); for example, access to download new product software releases.  If you do not want to receive communications from us, please indicate your preference by sending an email to: support@cel-fi.com </br></br>The personal information that may be gathered includes your name, telephone number(s), fax number, street address, mailing address and e-mail address. You may also be asked to furnish other information about yourself such as your job category, industry type, company name and job title, and/or the number of people in your company.</p><h1 class="modelBodySubHeaderTitle">Sharing personal information</h1> <p class="modelBodyContent" >Telecommunications operators such as AT&T or T-Mobile (an "Operator") may be required under applicable law (for example, 47 CFR 20.21(h) in the United States) to register users of a Nextivity Product.  If, through the Services, you choose to register your Nextivity Product with an Operator, then we may disclose your personal information to such Operator or its affiliates in connection with such registration.  We have no control over the policies and practices of Operators as to privacy, their use or disclosure of your personal information, or anything else.  So if you choose to register your Nextivity Product with an Operator, please review all of that Operator\'s relevant policies on privacy.  For your information, and without limiting what an Operator may do with your personal information, please recognize that Operators may be required to disclose your personal information in accordance with applicable law.  By submitting personal information to us in connection with the registration of a Nextivity Product, you agree to hold Nextivity harmless against any disclosure, use, or security of such personal information by an Operator or its agents.</br></br>We may anonymize your personal information so that you are not individually identified, and provide that information to our partners or other third parties. We may also use your personal information on an aggregated basis to improve our products, services, and offerings thereof. However, we never disclose aggregate information to a partner or third party in a manner that would identify you personally, as an individual.</br></br>Personal information collected on any or all Nextivity websites may be stored and processed in the United States or any other country in which Nextivity or its affiliates, subsidiaries or agents maintain facilities. By using this site, or our Services, you consent to any such transfer of information outside of your country.</p><h1  class="modelBodySubHeaderTitle">Agents</h1><p class="modelBodyContent">We employ other companies and people to perform tasks on our behalf and need to share your information with them to provide products or services to you.  Unless we tell you differently, our agents do not have any right to use the personal information we share with them beyond what is necessary to assist us. </p><h1  class="modelBodySubHeaderTitle">Business Transfers</h1><p class="modelBodyContent">We may choose to buy or sell assets, and may share and/or transfer customer information in connection with the evaluation of and entry into such transactions. Also, if we (or our assets) are acquired, or if we go out of business, enter bankruptcy, or go through some other change of control, personal information could be one of the assets transferred to or acquired by a third party.<p><h1  class="modelBodySubHeaderTitle">Protection of Company and Others</h1><p class="modelBodyContent">We reserve the right to access, read, preserve, and disclose any information that we reasonably believe is necessary to comply with law or court order; enforce our agreements; or protect the rights, property, or safety of Company, our employees, our users, or others<p><h1 class="modelBodySubHeaderTitle">Managing personal information</h1><p class="modelBodyContent">You may contact Nextivity via e-mail at info@nextivityinc.com and we will attempt to assist you to remove, review, or revise any or all personal information that you have previously provided to us.  <p><h1  class="modelBodySubHeaderTitle">Additional information regarding privacy policy</h1><p class="modelBodyContent">If at any time you believe that Nextivity has not adhered to this privacy policy, or if you have questions regarding the policy or our methods of collecting and/or use of your personal information, please contact us. You may contact Nextivity via e-mail at info@nextivityinc.com, using the word "privacy" in the subject line.</br></br>This policy does not apply to Operators or other online or offline partner or affiliated sites, products or services that may be electronically linked to our company website(s). Nextivity is not responsible for enforcing the privacy policies of such websites. Further, Nextivity is not responsible for the content included on such websites, including but not limited to special offers, text, copy, photos, images and advertising claims, names or</br></br>Under California Civil Code Sections 1798.83-1798.84, California residents are entitled to ask us for a notice identifying the categories of personal information which we share with our affiliates and/or third parties for marketing purposes, and providing contact information for such affiliates and/or third parties.  If you are a California resident and would like a copy of this notice, please submit a written request to: info@nextivityinc.com.</br></br>Your browser may offer you a "Do Not Track" option, which allows you to signal to operators of websites and web applications and services (including behavioral advertising services) that you do not wish such operators to track certain of your online activities over time and across different websites.  Our Services do not support Do Not Track requests at this time, which means that we collect information about your online activity both while you are using the Services and after you leave our Services.<p>';
+		util.createHamburgerContent();
+		$('.modalLeftBtnContainer').addClass('hamburgerBackBtn');
+		$('.modalLeftBtnContainer').click(function(){util.removeModal();bigSlideAPI.view.toggleOpen();});
+		$('#modalTitle').html('Privacy Policy');
+		var modalBodyWrapper = document.getElementById("modalBodyWrapper");
+		var privacyPolicyContainer = util.createAppendElem("div", "privacyPolicyContainer", "privacyPolicyContainer", modalBodyWrapper);
+		for(var y=0; y<termsPrivacyContent.length; y++){
+			if(y==0){
+				var titleElem = util.createAppendElem("h1", "modelBodyHeaderTitle"+y, "modelBodyHeaderTitle modalContentTitle", privacyPolicyContainer);
+			}else{
+				var titleElem = util.createAppendElem("h2", "modelBodyHeaderTitle"+y, "modelBodySubHeaderTitle", privacyPolicyContainer);
+			}
+			titleElem.innerHTML = termsPrivacyContent[y].privacyTitle;
+			var contentElem = util.createAppendElem("p", "pModelBodyContent"+y, "modelBodyContent", privacyPolicyContainer);
+			contentElem.innerHTML = termsPrivacyContent[y].privacyContent;
+		}
+		
+	},
+	
+	showSendFeedback: function(){
+		util.createHamburgerContent();
+		$('.modalLeftBtnContainer').addClass('hamburgerBackBtn');
+		$('.modalLeftBtnContainer').click(function(){util.removeModal();bigSlideAPI.view.toggleOpen();});
+		$('.modalRightBtnContainer').html('Send').click(function(){alert('send email');});
+		$('#modalTitle').html('Feedback');
+		var modalBodyWrapper = document.getElementById("modalBodyWrapper");
+		var feedBackComposer = util.createAppendElem("div", "feedBackComposer", "feedBackComposer", modalBodyWrapper);
+		var emailToContainer = util.createAppendElem("div", "emailToContainer", "emailToContainer", feedBackComposer);
+		var emailCCContainer = util.createAppendElem("div", "emailCCContainer", "emailCCContainer", feedBackComposer);
+		var emailSubContainer = util.createAppendElem("div", "emailSubContainer", "emailSubContainer", feedBackComposer);
+		var emailBodyContainer = util.createAppendElem("div", "emailBodyContainer", "emailBodyContainer", feedBackComposer);
+		emailToContainer.innerHTML = "To: <span class='emailTo'>wavesupport@cel-fi.com</span>";
+		emailCCContainer.innerHTML = "Cc/Bcc, From: customer@gmail.com";
+		emailSubContainer.innerHTML = "Subject: <span class='emailSubject'>Wave App Feedback</span>";
+		emailBodyContainer.innerHTML = "<textarea class='emailComposeBody' rows='15'></textarea>";
+	},
+	
+	createHamburgerContent: function(){
+		bigSlideAPI.view.toggleClose();
+		var modalWrapper = '<div class="modalWrapper" id="modalWrapper"><div class="modalHeaderWrapper"><div id="modalTitle"></div><div class="modalRightBtnContainer"></div><div class="modalLeftBtnContainer"></div></div><div id="modalBodyWrapper" class="modalBodyWrapper"></div></div>';
+		$(modalWrapper).appendTo('body');
+		$('.headerContainer, #bodyContainer').hide();
+		$('.modalWrapper').show();
 	}
 };
 
@@ -3106,12 +3271,8 @@ var splashScreen = {
 		logoContainer.align = "center";
 		logoContainer.className = "w100 vh100";
 		mainContainer.appendChild(logoContainer);
-		/*if(window.localStorage.getItem("deviceType")=="phone"){
-	    	mainContainer.style.height = deviceHeight+"px";
-			mainContainer.style.width = deviceWidth+"px";
-	    }*/
 		setTimeout(function(){ app.initialize(); }, 2000);
-		//setTimeout(function(){ window.location = "registration.html"; }, 2000);
+//		setTimeout(function(){ window.location = "advanced.html"; }, 2000);
 	}
 };
 

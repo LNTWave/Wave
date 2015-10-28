@@ -147,6 +147,36 @@ input, select, button{
 	margin-right: 20px;		
 }
 
+#faqPage .expand-less{
+	background: url('../img/assets/icons/ExpandLessBlue.svg')0;
+	background-size: 125%;
+}
+
+#faqPage .expand-more{
+	background: url('../img/assets/icons/ExpandMoreBlue.svg')0;
+	background-size: 125%;
+}
+
+.panel-title a.accordion-toggle{
+	display: block;
+	background: url("../img/assets/icons/ExpandLessBlue.svg") no-repeat center right;
+}
+
+.panel-title a.accordion-toggle.collapsed{color: inherit;
+	display: block;
+	background: url("../img/assets/icons/ExpandMoreBlue.svg") no-repeat center right;
+}
+
+/*.panel-heading a:after {
+    background: url('../img/assets/icons/ExpandLessBlue.svg') no-repeat !important;
+    float: right;
+}
+ 
+.panel-heading a.collapsed:after {
+    background: url('../img/assets/icons/ExpandMoreBlue.svg') no-repeat !important;
+} */
+
+
 .menuWrapper {
 	width: 100%;
 	height: 40px;
@@ -321,6 +351,10 @@ input, select, button{
 	font-family: Roboto-Regular;
 	font-size: 14px;
 	line-height: 22px;
+}
+
+input[type=text], input[type=number] {
+	padding: 0 20px 0 20px !important;
 }
 
 #registrationFormContainer input, #registrationFormContainer select{
@@ -550,19 +584,19 @@ a,a:ACTIVE,a:AFTER {
 }
 
 .drop-red {
-	border-left: 4px solid #9E0024 !important;
+	border-left: 4px solid #A00027 !important;
 }
 
-.drop-violet {
-	border-left: 4px solid #9A7BD2 !important;
+.drop-purple {
+	border-left: 4px solid #9B7CD2 !important;
 }
 
-.drop-yellow {
-	border-left: 4px solid #FBBE49 !important;
+.drop-orange {
+	border-left: 4px solid #FCBF4C !important;
 }
 
-.drop-lite-green {
-	border-left: 4px solid #68F0AD !important;
+.drop-teal {
+	border-left: 4px solid #69F0AE !important;
 }
 
 .divider {
@@ -1121,12 +1155,14 @@ a,a:ACTIVE,a:AFTER {
 
 .modalWrapper {
 	width: 100%;	
+	height:100vh;
 	position: absolute;
 	top: 0;
 	left: 0;
 	bottom: 0;
 	display: none;		
 	background: #F5F7FA !important;
+	z-index: 1007;
 }
 
 .modalHeaderWrapper {
@@ -1164,7 +1200,7 @@ a,a:ACTIVE,a:AFTER {
 	background: url("../img/assets/icons/ChevronRight.svg") no-repeat;
 	background-size: 100% 100%;		
 	float: right;
-	margin-top: -37px;
+	margin-top: 15px;
 }
 
 .settingsDropIcns {
@@ -1180,7 +1216,7 @@ a,a:ACTIVE,a:AFTER {
 	float: left;
 }
 
-.modalLeftBtn {
+.modalLeftBtn, .hamburgerBackBtn {
 	width: 22px !important;
 	height: 22px !important;
 	background: url('../img/assets/icons/ChevronBack.svg') no-repeat;
@@ -1192,7 +1228,7 @@ a,a:ACTIVE,a:AFTER {
 
 .modalBodyWrapper {
 	background: #F5F7FA !important;	
-	margin-top: 70px;
+	margin-top: 60px;
 	overflow-y: auto;	
 }
 
@@ -1203,7 +1239,7 @@ a,a:ACTIVE,a:AFTER {
 }
 
 .modalContentTitle {
-	margin-bottom: 10px !important;
+	margin-bottom: 0px !important;
 }
 
 .feedbackSendWrappper, .singnalFinderWrappper {
@@ -1215,13 +1251,13 @@ a,a:ACTIVE,a:AFTER {
 	font-family: Roboto-Regular !important;
 	font-size: 14px;
 	color: #8F959C;
-	text-align: left !important;	
+	text-align: left !important;
 }
 
 .TermsPolicy .label {
 	font-family: Roboto-Regular !important;
-	font-size: 14px !important;;
-	color: #656D78 !important;;
+	font-size: 14px !important;
+	color: #656D78 !important;
 	text-align: left !important;	
 }
 
@@ -1258,30 +1294,31 @@ a,a:ACTIVE,a:AFTER {
 }
 
 #deviceGoIcn{
-	background: url('../img/assets/images/deviceImages/Go.png') no-repeat transparent 0px 0px;
+	background: url('../img/assets/helpImages/GO.png') no-repeat;
 	background-size: 100%;	
 }
 
 #devicePrimeIcn{
-	background: url('../img/assets/images/deviceImages/Prime.png') no-repeat transparent 0px 0px;
+	background: url('../img/assets/helpImages/PRIME.png') no-repeat;
 	background-size: 100%;
 }
 
 #deviceDuoIcn {
-	background: url('../img/assets/images/deviceImages/Duo.png') no-repeat transparent -15px 7px;
-	background-size: 167%;
+	background: url('../img/assets/helpImages/DUO.png') no-repeat;
+	background-size: 100%;
 }
 
 #deviceProIcn {
-	background: url('../img/assets/images/deviceImages/Pro.png') no-repeat transparent -15px 7px;
-	background-size: 167%;
+	background: url('../img/assets/helpImages/PRO.png') no-repeat;
+	background-size: 100%;
 }
 
 .pageTitleContainer{
 	font-family: Roboto-Medium;
 	font-size: 20px;
 	color: #434A54;
-	padding: 20px 0px 5px 0px !important;	
+	padding: 10px 0px 15px 0px !important;
+	/*line-height: 50px;*/
 }
 
 .modelBodyHeaderTitle{
@@ -1317,8 +1354,8 @@ a,a:ACTIVE,a:AFTER {
 	border-bottom: 2px solid #E6E9ED !important;
 }
 
-.modalHelpWrapper > firstChild:div{	
-	border-top: 2px solid #E6E9ED!important;
+.modalHelpWrapper > p{
+	border-bottom: 2px solid #E6E9ED !important;
 }
 
 .modalContentPadding{
@@ -1326,11 +1363,17 @@ a,a:ACTIVE,a:AFTER {
 	padding-right: 12px !important;
 }
 
+.faqModalWrapper > div{
+	border: none !important;
+	height:auto !important;
+}
+
 .modalBodyPanelHeaderTitle{
 	font-family: Roboto-Regular !important;
 	color: #4FAEE0;
 	font-size: 18px;
-    line-height:55px;	
+    line-height:55px;
+    float: left;	
 }
 
 .installGuideWrapper {
@@ -1345,7 +1388,7 @@ a,a:ACTIVE,a:AFTER {
 
 .helpHeadLine {
 	font-family: Roboto-Medium !important;
-	font-size: 24px !important;
+	font-size: 16px !important;
 	color: #434A54;
 }
 
@@ -1353,8 +1396,12 @@ a,a:ACTIVE,a:AFTER {
 	margin-top: 30px !important;
 }
 
+.installGuideContent:FIRST-CHILD{
+	margin-top:10px !important;
+}
+
 .troubleShootSubTitle {
-	color: #4faee0;
+	color: #434A54;
 }
 
 .helpContent > a {
@@ -1390,9 +1437,302 @@ a,a:ACTIVE,a:AFTER {
    border-bottom:2px solid #E6E9ED !important;
 }
 
+.helpSubTitle{
+	color: #B6BCC7;
+}
+
+.faqPanelArrow span{
+	padding:7px 7px 0px 0px !important;
+}
+
+.faqPanelHeader, .faqPanelArrow{
+	padding: 0px !important;
+}
+
+#faqPage .panel-body{
+	padding: 0px 10px 15px 10px !important;
+	font-family: Roboto-Regular;
+	font-size: 14px;
+	color: #656D78;
+}
+
+#faqPage .panel{
+	border: none !important;
+	margin:0px !important;
+	border-bottom: 2px solid #E6E9ED !important;
+	min-height:55px;
+	overflow:scroll;
+	background: #F5F7FA !important;
+	border-radius: 0px !important;
+	-webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+#faqPage .panel::-webkit-scrollbar{
+	display:none;
+}
+
+#faqPage .panel:LAST-CHILD{
+	border-bottom:none !important;
+}
+
+#faqPage span{
+	width:22px;
+	height:22px;
+	padding-right: 22px !important;
+}
+
+#faqPage .panel-heading span{
+	margin-top: 0px !important;
+	vertical-align: middle;
+}
+
+#faqPage .panel-title div{
+	padding:8px !important;
+}
+
+#faqPage .panel-title span{
+	padding: 0px !important;
+}
+
+#faqPage .panel-title .faQuestion{
+	border: green !important;
+	color: #4FAEE0 !important;
+}
+
 /*
 =============================================== END OF HELP PAGE VIEW ===============================================
 */
+
+/*-----------------------------------Error codes help pages starts here----------------------*/
+
+.registerImages_1{
+	width: 338px;
+	height: 103px;
+	background: url('../img/assets/helpImages/Register_1.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.registerImages_2{
+	width: 338px;
+	height: 103px;
+	background: url('../img/assets/helpImages/Register_2.png') no-repeat;
+	background-size: 100% 100%;
+	margin-top: 10px !important;
+    margin-bottom: 20px !important;
+	border:1px solid #E6E9ED !important;
+}
+.registerImages_3{
+	width: 338px;
+	height: 247px;
+	background: url('../img/assets/helpImages/Register_3.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 20px !important;
+	border:1px solid #E6E9ED !important;
+}					
+
+.errorCodeEC_DUO_1{
+	width: 270px;
+	height: 100px;
+	background: url('../img/assets/helpImages/EC_DUO_1.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_DUO_2{
+	width: 270px;
+	height: 100px;
+	background: url('../img/assets/helpImages/EC_DUO_2.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_DUO_3{
+	width: 270px;
+	height: 100px;
+	background: url('../img/assets/helpImages/EC_DUO_3.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_DUO_4{
+	width: 270px;
+	height: 100px;
+	background: url('../img/assets/helpImages/EC_DUO_4.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_DUO_5{
+	width: 270px;
+	height: 100px;
+	background: url('../img/assets/helpImages/EC_DUO_5.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_DUO_6{
+	width: 270px;
+	height: 100px;
+	background: url('../img/assets/helpImages/EC_DUO_6.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_DUO_7{
+	width: 270px;
+	height: 100px;
+	background: url('../img/assets/helpImages/EC_DUO_7.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_DUO_8{
+	width: 270px;
+	height: 100px;
+	background: url('../img/assets/helpImages/EC_DUO_8.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_DUO_9{
+	width: 270px;
+	height: 100px;
+	background: url('../img/assets/helpImages/EC_DUO_9.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_DUO_10{
+	width: 270px;
+	height: 100px;
+	background: url('../img/assets/helpImages/EC_DUO_10.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_DUO_11{
+	width: 270px;
+	height: 100px;
+	background: url('../img/assets/helpImages/EC_DUO_11.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+
+.errorCodeEC_PRO_1{
+	width: 270px;
+	height: 172px;
+	background: url('../img/assets/helpImages/EC_PRO_1.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_PRO_2{
+	width: 270px;
+	height: 172px;
+	background: url('../img/assets/helpImages/EC_PRO_2.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_PRO_3{
+	width: 270px;
+	height: 172px;
+	background: url('../img/assets/helpImages/EC_PRO_3.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_PRO_4{
+	width: 270px;
+	height: 172px;
+	background: url('../img/assets/helpImages/EC_PRO_4.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_PRO_6{
+	width: 270px;
+	height: 172px;
+	background: url('../img/assets/helpImages/EC_PRO_6.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:2px solid #E6E9ED !important;
+}
+.errorCodeEC_PRO_7{
+	width: 270px;
+	height: 172px;
+	background: url('../img/assets/helpImages/EC_PRO_7.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_PRO_8{
+	width: 270px;
+	height: 172px;
+	background: url('../img/assets/helpImages/EC_PRO_8.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_PRO_9{
+	width: 270px;
+	height: 172px;
+	background: url('../img/assets/helpImages/EC_PRO_9.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:1px solid #E6E9ED !important;
+}
+.errorCodeEC_PRO_10{
+	width: 270px;
+	height: 172px;
+	background: url('../img/assets/helpImages/EC_PRO_10.png') no-repeat;
+	background-size: 100% 100%;
+    margin-bottom: 10px !important;
+	border:2px solid #E6E9ED !important;
+}
+
+.errorCodeModal, .registrationInfoModal{
+	padding:5px 22px 0px 22px !important;
+}
+
+.errorCodeModal h1{
+	font-family: Roboto-Regular;
+	font-size: 16px;
+	color: #656D78;
+	margin-bottom: 10px !important;
+}
+
+ .registrationInfoModal h1{
+	font-family: Roboto-Regular;
+	font-size: 20px;
+	color: #434A54;
+	margin-bottom: 10px !important;
+}
+
+.HeaderTitle_OR{
+	font-family: Roboto-Regular !important;	
+	font-size: 14px !important;	
+	color: #656D78 !important;	
+    text-align: center !important;	
+    width: 338px;
+}
+
+.registrationInfoModal{
+	margin-bottom: 50px;
+}
+
+.registrationInfoModal .defaultButton{
+	background-color: transparent !important;
+	border: 1px solid #4FAEE0 !important;
+	color: #4FAEE0;
+	padding-left: 25px !important;
+	padding-right: 25px !important;
+}
+
+/*-----------------------------------------Error codes help page ends here------------------------------*/
 
 /*
 =============================================== SIGNAL FINDER PAGE VIEW ===============================================
@@ -1984,3 +2324,91 @@ a,a:ACTIVE,a:AFTER {
 }
 
 /*-------------------------------Stylesheet for splinner loader Ends here---------------------------------------*/
+
+/*---------------------------Starting of Hamburger Help about screen---------------------------*/
+.aboutFooterContainer{
+	width:100%;
+	height:60px;
+	position: fixed;
+	bottom:0;
+	text-align: center;
+	font-family: Roboto-Regular;
+	font-size: 14px;
+	color: #656D78;
+}
+
+.aboutLogoVersionContainer{
+	width:91px;
+	height: 220px;
+	position: fixed;
+	top:0;
+	bottom:0;
+	right:0;
+	left:0;
+	margin:auto;
+}
+
+.aboutLogoContainer{
+	width:100%;
+	height:186px;
+	background: URL('../img/assets/logos/WaveLogoDark.svg') no-repeat;
+}
+
+.aboutVersionContainer{
+	width:100%;
+	hieght: 20px !important;
+	margin-top: 10px;
+	font-family: Roboto-Regular;
+	font-size: 14px;
+	color: #656D78;
+}
+
+.privacyPolicyContainer{
+	width: 100%;
+	height:100%;
+	padding:0px 22px 0px 22px !important;
+}
+
+.modalRightBtnContainer{
+	width: 50px !important;
+	height: 22px !important;
+	position: absolute;
+	right: 10px !important;
+	top: 19px;
+	font-family: Roboto-Medium !important;
+    font-size: 16px;
+    color: #FFFFFF;
+}
+
+.feedBackComposer{
+	padding:10px !important;
+}
+
+.emailToContainer, .emailCCContainer, .emailSubContainer{
+	width:100%;
+	height:40px;
+	border-bottom: 1px solid #EBEEF1;
+}
+
+.emailToContainer, .emailCCContainer, .emailSubContainer, .emailBodyContainer{
+	font-family: Roboto-Regular;
+	font-size: 14px;
+	color: #434A54;
+	padding:10px 10px 0px 10px !important;
+}
+
+.emailTo{
+	color: #4FAEE0;
+}
+
+.emailSubject{
+	color: #000;
+}
+
+.emailComposeBody{
+	width:100%;
+	border:none;
+	background: transparent;
+	outline: none;
+}
+/*---------------------------End of Hamburger Help about screen---------------------------*/
