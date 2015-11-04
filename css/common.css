@@ -102,16 +102,16 @@ input, select, button{
 	position: fixed;
 	z-index: 1002;
 	/* display: none; */
+	box-shadow : 0px 2px 4px 0px rgba(0,0,0,0.2);
 }
 
 #bodyContainer {	
-	margin: 0px 6px 0px 6px;
+	padding: 0px 6px 0px 6px !important; 
 	position: relative;
 	padding-top: 100px !important;
 	overflow-y: auto;
 	background: #F5F7FA;
-	height: 100%;
-	/* display: none; */	
+	height: 100%;	
 }
 
 .titlebarWrapper {	
@@ -154,6 +154,16 @@ input, select, button{
 
 #faqPage .expand-more{
 	background: url('../img/assets/icons/ExpandMoreBlue.svg')0;
+	background-size: 125%;
+}
+
+.expand-less{
+	background: url('../img/assets/icons/ExpandLess.svg')0;
+	background-size: 125%;
+}
+
+.expand-more{
+	background: url('../img/assets/icons/ExpandMore.svg')0;
 	background-size: 125%;
 }
 
@@ -354,7 +364,7 @@ input, select, button{
 }
 
 input[type=text], input[type=number] {
-	padding: 0 20px 0 20px !important;
+	padding: 0 20px 0 10px !important;
 }
 
 #registrationFormContainer input, #registrationFormContainer select{
@@ -752,6 +762,10 @@ a,a:ACTIVE,a:AFTER {
 	border: none !important;
 }
 
+.settingsTabViewWrapper{
+	background: #FFF;
+}
+
 .settingsDropIcns {
 	width: 25px;
 	height: 25px;
@@ -842,7 +856,7 @@ a,a:ACTIVE,a:AFTER {
 	height: 30px;
 	margin: 0 0 10px 10px !important;
 	padding-right: 10px !important;
-	
+	width:97%;
 }
 
 #deviceUpdate, #versionUpdate {
@@ -858,12 +872,12 @@ a,a:ACTIVE,a:AFTER {
 	color: #656D78 !important;
 	font-family: Roboto-Regular !important;	
 	font-size: 14px !important;
-	padding: 10px 0 5px 10px !important;
+	padding: 0px 0 5px 10px !important;
 }
 
 .antennaLbl, .boosterLbl {
 	float: left;
-	margin-top: 5px;
+	/*margin-top: 5px;*/
 }
 
 .doneTick {
@@ -876,7 +890,8 @@ a,a:ACTIVE,a:AFTER {
 }
 
 .antennaDetailsWrapper {
-	height: 70px;	
+	height: 100px;
+	/*margin-top: 30px;*/	
 }
 
 .toggleSwitch {
@@ -953,6 +968,20 @@ a,a:ACTIVE,a:AFTER {
 	background-size: 100% 100%;	
 }
 
+.radioBtnSelected.disableRadio {	
+	background: url("../img/assets/icons/RadioButtonCheckedDisabled.svg") no-repeat;
+	background-size: 100% 100%;	
+}
+
+.radioBtnUnSelected.disableRadio {
+	background: url("../img/assets/icons/RadioButtonUncheckedDisabled.svg") no-repeat;
+	background-size: 100% 100%;	
+}
+
+.boosterSelectedTxt.disableLabel, .boosterUnSelectedTxt.disableLabel, .disabledBandTitle{
+	color: #E6E9ED !important;
+}
+
 .boosterSelectedTxt {
 	color:  #4FAEE0;
 	text-indent: 16px;	
@@ -979,12 +1008,42 @@ a,a:ACTIVE,a:AFTER {
 	font-family: Roboto-Regular !important; 
 }
 
+#settingsDataWrapper #collapseFour .hr{
+	margin: 0px 0px 40px 0px;
+}
+
+
+#versionUpdate{
+	margin:0px !important;
+}
+
+.versionLbl{
+	margin-top: 10px;
+	height: 30px;
+}
+
+#deviceDetailsWrapper{
+	margin-right:10px;
+}
+
+.restoreAntenna{
+	margin-bottom: 10px;
+	color: #4FAEE0 !important;
+	text-align: right;
+}
+
+.operatorListWrapper, .deviceListWrapper{
+	position: absolute;
+    width: 100%;
+    background: #fff;
+    z-index: 1005;
+}
 /*
 ==============================================	Tablet view styles ==========================================================
 */
 
 .settingsTabViewWrapper {
-	width: 49.5%;
+	width: 99%;
 	box-shadow: 0 1px 3px 0 rgba(0,0,0,0.28);	
 	margin-bottom: 20px !important;
 	padding: 10px !important;
@@ -996,8 +1055,8 @@ a,a:ACTIVE,a:AFTER {
 
 .settingsTabViewWrapper > div > div:nth-child(2) {
 	margin-top: 10px !important;
-	margin-left: -5px;
-	text-indent: 0px;
+	/*margin-left: -5px;
+	text-indent: 0px;*/
 }
 
 .settingsTabViewWrapper #deviceInput,
@@ -1010,7 +1069,11 @@ a,a:ACTIVE,a:AFTER {
 	float: left;
 }
 
-
+.settingsTabViewWrapper>div>div{
+	font-family: Roboto-Medium;
+    font-size: 12pt;
+    color: #434A54;
+}
 /*
 =============================================== END OF SETTINGS MENU PAGE VIEW ===============================================
 */
@@ -1022,16 +1085,33 @@ a,a:ACTIVE,a:AFTER {
 }
 
 .dashboardPanel2{
-	background-color: #FFFFFF;
+	background-color: #fff;
 	padding:30px !important;
 }
 
 .userGreets{
-	height:55px !important;
+	/*height:55px !important;*/
 	font-family: Roboto-Regular;
 	color: #656D78;
 	font-size: 18px;
 	line-height: 24px;
+}
+
+#fixIt{
+	font-family: Roboto-Regular;
+	color: #4FAEE0 !important;
+	font-size: 16px;
+	line-height: 24px;
+	text-align: right;
+	/*background: url('../img/assets/icons/ArrowForward.svg') no-repeat;*/
+}
+
+#fixItArrow{
+	width:16px;
+	height:16px;
+	background: url('../img/assets/icons/ArrowForwardBlue.svg') no-repeat;
+	background-size: 100% 100% !important;
+    margin-top: 4px;
 }
 
 .good{
@@ -1050,8 +1130,12 @@ a,a:ACTIVE,a:AFTER {
 	height:25px;
 	font-family: Roboto-Regular;
 	color: #656D78;
-	font-size: 8px;
+	font-size: 10px;
 	text-align: center;
+}
+
+.deviceStatusCtnr{
+	text-align: left;
 }
 
 .graphicalRep{
@@ -1173,7 +1257,8 @@ a,a:ACTIVE,a:AFTER {
 	position: fixed;
 	top: 0;
 	left: 0;
-	z-index: 1002;  	
+	z-index: 1002; 
+	box-shadow : 0px 2px 4px 0px rgba(0,0,0,0.2); 	
 }
 
 #modalTitle {
@@ -1732,6 +1817,61 @@ a,a:ACTIVE,a:AFTER {
 	padding-right: 25px !important;
 }
 
+.operatorDetailContainer{
+	width:100%;
+	height: 150px;
+}
+
+.operatorSupportContainer{
+	width:100%;
+	height: 100px;
+	margin-top: 30px;
+}
+
+#contactOperatorModal{
+	padding: 22px !important;
+}
+
+.operatorName, .supportTop, .supportBotom{
+	font-family: Roboto-Regular;
+	font-size: 16px;
+	color: #656D78;
+}
+
+.operatorSupportContactNum, .operatorSupportEmail{
+	margin-top: 15px;
+	font-family: Roboto-Regular;
+	font-size: 16px;
+	color: #4FAEE0;
+	width:80%;
+}
+
+.contactLogo, .emailLogo{
+	width:24px;
+	height:24px;
+	margin-right: 20px;
+}
+
+.contactLogo{
+	background: URL('../img/assets/icons/HelpOutlineBlue.svg') no-repeat;
+}
+
+.emailLogo{
+	background: URL('../img/assets/icons/HelpOutlineBlue.svg') no-repeat;
+}
+
+.operatorSupport{
+	margin-top: 20px;
+}
+
+.supportBotom{
+	margin-top: 20px;
+	font-size: 14px;
+}
+
+.supportLink{
+	color: #4FAEE0;
+}
 /*-----------------------------------------Error codes help page ends here------------------------------*/
 
 /*
@@ -1983,13 +2123,17 @@ a,a:ACTIVE,a:AFTER {
 	}
 	
 	.deviceDUO{
-		background: URL('../img/assets/images/deviceImages/Pro.png')no-repeat;
-		background-size: 100%;
 		height:170px;
+		background: URL('../img/assets/images/deviceImages/Pro.png');
+		background-repeat: no-repeat;
+	    background-position: center; 
+		background-size: auto 100%;
+		margin-top: 20px;
 	}
 	
 	.deviceSerialNumber{
 		bottom:20px;
+		text-align: center;
 	}
 	
 	.dashboardContent{
@@ -2069,7 +2213,7 @@ a,a:ACTIVE,a:AFTER {
 
 @media (min-width:700px){
 	#bodyContainer {
-		margin: 0px 12px 0px 12px;
+		padding: 100px 6px 0px 6px !important;
 	}
 	
 	.connectionBG{
@@ -2142,21 +2286,17 @@ a,a:ACTIVE,a:AFTER {
 	 	padding-left: 5px !important;
 	 }
 	
-	.deviceSerialNumber{
-		text-align: right !important;
-	}
-	
 	.deviceDUO{
-		background: URL('../img/assets/images/deviceImages/Pro.png')no-repeat 0px 0px;
-		background-size: 100%;
+		background: URL('../img/assets/images/deviceImages/Pro.png');
+		background-repeat: no-repeat;
+	    background-position: center; 
+		background-size: auto 100%;
 		height: 208px;
     	margin-top: 20px;
 	}
 	
 	.deviceSerialNumber{
-		margin-top: 210px;
-		text-align: left !important;
-		font-size: 8pt !important;
+		font-size: 10pt !important;
 	}
 	
 	.signalContainerSM{
@@ -2170,6 +2310,10 @@ a,a:ACTIVE,a:AFTER {
 	/* .group3 > div {
 		padding: 0 5px 0 5px !important;
 	} */
+	
+	#settingsDataWrapper .hr{
+		margin: 0px 0px 40px 0px;
+	}
 }
 
 @media (min-width:700px) and (orientation:portrait) {
@@ -2192,7 +2336,7 @@ a,a:ACTIVE,a:AFTER {
 	}
 	
 	.signalContainerSM {
-	    width: 49% !important;
+	    width: 50% !important;
 	}
 	
 	.privacyPolicy{
@@ -2225,10 +2369,6 @@ a,a:ACTIVE,a:AFTER {
 	.dashboardContent{
 		height:200px;
 		text-align: center;
-	}
-	
-	.deviceDUO{
-		background-size: 80% !important;
 	}
 	
 	#boosterLevel{

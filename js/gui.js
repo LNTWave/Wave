@@ -48,10 +48,7 @@ var szRegCountry                = "";
 var szRegPhone                  = "";
 var szUserValidation            = "Mandatory Input: Please enter";
 var bProgBarDisplayed           = false;
-var settingsPanelContentMobile	= "<div id='settingsDataWrapper' class='col-sm-12'> <div class='group1 col-sm-12'> <div class='operatorContainer col-sm-6'> <div class='panel panel-default'> <div class='panel-group' id='settingsDataContainer'> <div class='panel-heading dropDown' id='operatorTitle'><h4 class='panel-title'><a data-toggle='collapse' data-parent='#settingsDataWrapper' href='#collapseOne'><div><div class='settingsDropIcns' id='operatorIcn'></div>Operator</div><span class='pull-right'><span class='toggle-icon glyphicon glyphicon-chevron-up'></span></span></a></h4></div><div id='collapseOne' class='panel-collapse collapse in'><div class='panel-body'><div><div class='operatorList col-xs-8'><button type='button' class='form-control'><span data-bind='label' id='operatorVal'>Verizon</span></span>&nbsp;<span class='caret'></span></button><div class='operatorListWrapper'><ul><li>AT&T</li><li>T-Mobile</li><li class='selectedListVal'>Verizon</li><li>I don't see my Operator</li></ul></div></div></div></div></div></div></div></div><div class='deviceContainer col-sm-6'> <div class='panel panel-default'> <div class='panel-heading dropDown' id='deviceTitle'><h4 class='panel-title'><a data-toggle='collapse' data-parent='#settingsDataWrapper' href='#collapseTwo'><div><div class='settingsDropIcns' id='deviceIcn'></div>Device</div><span class='pull-right'><span class='toggle-icon glyphicon glyphicon-chevron-down'></span></span></a></h4></div><div id='collapseTwo' class='panel-collapse collapse'><div class='panel-body'><div id='deviceDetailsWrapper'><div id='devicesFoundLbl'>Devices Found</div><div class='deviceList'><button type='button' class='form-control'><span data-bind='label' id='deviceVal'>Device 2</span></span>&nbsp;<span class='caret'></span></button><div class='deviceListWrapper'><ul><li>Device 1</li><li class='selectedListVal'>Device 2</li><li>Device 3</li><li>Device 4</li></ul></div></div><div class='cb'></div><div class='hr'></div><div id='devicesFoundLbl'>Give your Device a name</div><input type='text' id='deviceInput' class='col-xs-12'><div class='form-group' align='right'><button type='button' class='defaultButton' id='deviceUpdate' onclick=''>Update</button></div></div></div></div></div></div></div><div class='group2 col-sm-6'> <div class='versionContainer col-sm-12'> <div class='panel panel-default'> <div class='panel-heading dropDown' id='softwareTitle'><h4 class='panel-title'><a data-toggle='collapse' data-parent='#settingsDataWrapper' href='#collapseThree'><div><div class='settingsDropIcns' id='versionIcn'></div>Software Version</div><span class='pull-right'><span class='toggle-icon glyphicon glyphicon-chevron-down'></span></span></a></h4></div><div id='collapseThree' class='panel-collapse collapse'><div class='panel-body'><div id='versionWrapper'><div class='versionLbl'>Please update your software</div><div class='form-group' align='right'><button type='button' class='primaryButton' id='versionUpdate' onclick=''>Update</button></div><div class='versionLbl'>You're up-to-date</div><div class='doneTick'></div></div></div></div></div></div></div><div class='group3 col-sm-12'> <div class='antennaContainer col-sm-6'> <div class='panel panel-default'> <div class='panel-heading dropDown'><h4 class='panel-title'><a data-toggle='collapse' data-parent='#settingsDataWrapper' href='#collapseFour'><div><div class='settingsDropIcns' id='antennaIcn'></div>Antenna Settings</div><span class='pull-right'><span class='toggle-icon glyphicon glyphicon-chevron-down'></span></span></a></h4></div><div id='collapseFour' class='panel-collapse collapse'><div class='panel-body'><div class='hr'></div><div class='antennaDetailsWrapper'><div class='antennaLbl'>Antenna Control:</div><div class='toggleSwitch'> <label class='leftToggle on' for='antennaAuto'> Auto </label> <input type='radio' name='antennaCtrl' value='auto' id='antennaAuto'/> <label class='rightToggle off' for='antennaManual'> Manual </label> <input type='radio' checked name='antennaCtrl' value='manual' id='antennaManual'/> </div></div><div class='hr'></div><div class='antennaDetailsWrapper'> <div class='antennaLbl'>Band 17 (700):</div><div class='toggleSwitch'> <label class='leftToggle on' for='band_1_internal'> Internal </label> <input type='radio' name='band1' value='internal' id='band_1_internal'/> <label class='rightToggle off' for='band_1_external'> External </label> <input type='radio' checked name='band1' value='external' id='band_1_external'/> </div></div><div class='hr'></div><div class='antennaDetailsWrapper'> <div class='antennaLbl'>Band 4 (1700):</div><div class='toggleSwitch'> <label class='leftToggle on' for='band_2_internal'> Internal </label> <input type='radio' name='band2' value='internal' id='band_2_internal'/> <label class='rightToggle off' for='band_2_external'> External </label> <input type='radio' checked name='band2' value='external' id='band_2_external'/> </div></div><div class='hr'></div><div class='antennaDetailsWrapper'> <div class='antennaLbl disabledToggle'>Band 5 (850):</div><div class='toggleSwitch'> <label class='leftToggle disabledOn' for='band_3_internal'> Internal </label> <input type='radio' disabled name='band3' value='internal' id='band_3_internal'/> <label class='rightToggle disabledOff' for='band_3_external'> External </label> <input type='radio' disabled name='band3' value='external' id='band_3_external'/> </div></div><div class='hr'></div><div class='antennaDetailsWrapper'> <div class='antennaLbl'>Band 2 (1900):</div><div class='toggleSwitch'> <label class='leftToggle on' for='band_4_internal'> Internal </label> <input type='radio' name='band4' value='internal' id='band_4_internal'/> <label class='rightToggle off' for='band_4_external'> External </label> <input type='radio' checked name='band4' value='external' id='band_4_external'/> </div></div></div></div></div></div><div class='boosterContainer col-sm-6'> <div class='panel panel-default'> <div class='panel-heading dropDown'><h4 class='panel-title'><a data-toggle='collapse' data-parent='#settingsDataWrapper' href='#collapseFive'><div><div class='settingsDropIcns' id='boosterIcn'></div>Booster Settings</div><span class='pull-right'><span class='toggle-icon glyphicon glyphicon-chevron-down'></span></span></a></h4></div><div id='collapseFive' class='panel-collapse collapse'><div class='panel-body'><div id='boosterWrapper'><div class='boosterLbl'>Select by Technology:</div><div class='cb'></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnSelected col-xs-6' for='auto'></label><div for='auto' class='boosterSelectedTxt'>Auto</div><input type='radio' name='technologyType' value='auto' id='auto'/></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='3g_4g'></label><div for='3g_4g' class='boosterUnSelectedTxt'>3G/4G</div><input type='radio' name='technologyType' value='3g_4g' id='3g_4g'/></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='lte'></label><div for='lte' class='boosterUnSelectedTxt'>LTE</div><input type='radio' name='technologyType' value='lte' id='lte'/></div><div class='boosterLbl'>Select by Band (Advanced):</div><div class='cb'></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='band3'></label><div for='band3' class='boosterUnSelectedTxt'>Band 3</div><input type='radio' name='technologyType' value='band3' id='band3'/></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='band5'></label><div for='band5' class='boosterUnSelectedTxt'>Band 5</div><input type='radio' name='technologyType' value='band5' id='band5'/></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='band28'></label><div for='band28' class='boosterUnSelectedTxt'>Band 28</div><input type='radio' name='technologyType' value='band28' id='band28'/></div></div></div></div></div></div></div></div>";
-var settingsPanelContentTablet	= "<div id='settingsDataWrapper' class='col-sm-12'> <div class='operatorDataWrapper col-sm-6 settingsTabViewWrapper'><div class='col-sm-12'><div><div class='settingsDropIcns' id='operatorIcn'></div>Operator</div><div><div class='operatorList col-xs-8'><button type='button' class='form-control'><span data-bind='label' id='operatorVal'>Verizon</span>&nbsp;<span class='caret'></span></button><div class='operatorListWrapper'><ul><li>AT&T</li><li>T-Mobile</li><li class='selectedListVal'>Verizon</li><li>I don't see my Operator</li></ul></div></div></div></div></div><div class='deviceDataWrapper col-sm-6 settingsTabViewWrapper'><div class='col-sm-12'><div><div class='settingsDropIcns' id='deviceIcn'></div>Device</div><div id='deviceDetailsWrapper'><div id='devicesFoundLbl'>Devices Found</div><div class='deviceList col-sm-8'><button type='button' class='form-control'><span data-bind='label' id='deviceVal'>Device 2</span></span>&nbsp;<span class='caret'></span></button><div class='deviceListWrapper'><ul><li>Device 1</li><li class='selectedListVal'>Device 2</li><li>Device 3</li><li>Device 4</li></ul></div></div><div class='cb'></div><div class='hr'></div><div id='devicesFoundLbl'>Give your Device a name</div><input type='text' id='deviceInput' class='col-sm-8'><div class='form-group' align='right'><button type='button' class='defaultButton' id='deviceUpdate' onclick=''>Update</button></div></div></div></div><div class='versionDataWrapper col-sm-6 settingsTabViewWrapper'><div class='col-sm-12'><div><div class='settingsDropIcns' id='versionIcn'></div>Software Version</div><div id='versionWrapper'><div class='versionLbl'>Please update your software</div><div class='form-group' align='right'><button type='button' class='primaryButton' id='versionUpdate' onclick=''>Update</button></div><div class='versionLbl'>You're up-to-date</div><div class='doneTick'></div></div></div></div><div class='antennaDataWrapper col-sm-6 settingsTabViewWrapper'><div class='col-sm-12'><div><div class='settingsDropIcns' id='antennaIcn'></div>Antenna Settings</div><div class='antennaDetailsWrapper'><div class='antennaLbl'>Antenna Control:</div><div class='antennaRadioWrapper col-sm-4'><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnSelected col-xs-6' for='antennaAuto'></label><div for='auto' class='boosterSelectedTxt'>Auto</div><input type='radio' name='antennaCtrl' value='auto' id='antennaAuto'/></div><div class='cb'></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='3g_4g'></label><div for='3g_4g' class='boosterUnSelectedTxt'>3G/4G</div><input type='radio' name='antennaCtrl' value='manual' id='antennaManual'/></div></div></div><div class='hr'></div><div class='antennaDetailsWrapper'> <div class='antennaLbl'>Band 17 (700):</div><div class='antennaRadioWrapper col-sm-4'><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnSelected col-xs-6' for='band_1_internal'></label><div for='band_1_internal' class='boosterSelectedTxt'>Internal</div><input type='radio' name='antennaCtrl' value='internal' id='band_1_internal'/></div><div class='cb'></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='band_1_external'></label><div for='band_1_external' class='boosterUnSelectedTxt'>3G/4G</div><input type='radio' name='antennaCtrl' value='external' id='band_1_external'/></div></div></div><div class='hr'></div><div class='antennaDetailsWrapper'> <div class='antennaLbl'>Band 4 (1700):</div><div class='antennaRadioWrapper col-sm-4'><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnSelected col-xs-6' for='band_2_internal'></label><div for='band_1_internal' class='boosterSelectedTxt'>Internal</div><input type='radio' name='antennaCtrl' value='internal' id='band_2_internal'/></div><div class='cb'></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='band_2_external'></label><div for='band_1_external' class='boosterUnSelectedTxt'>3G/4G</div><input type='radio' name='antennaCtrl' value='external' id='band_2_external'/></div></div></div><div class='hr'></div><div class='antennaDetailsWrapper'> <div class='antennaLbl disabledToggle'>Band 5 (850):</div><div class='antennaRadioWrapper col-sm-4'><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnSelected col-xs-6' for='band_3_internal'></label><div for='band_1_internal' class='boosterSelectedTxt'>Internal</div><input type='radio' name='antennaCtrl' value='internal' id='band_1_internal'/></div><div class='cb'></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='band_3_external'></label><div for='band_1_external' class='boosterUnSelectedTxt'>3G/4G</div><input type='radio' name='antennaCtrl' value='external' id='band_3_external'/></div></div></div><div class='hr'></div><div class='antennaDetailsWrapper'> <div class='antennaLbl'>Band 2 (1900):</div><div class='antennaRadioWrapper col-sm-4'><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnSelected col-xs-6' for='band_4_internal'></label><div for='band_1_internal' class='boosterSelectedTxt'>Internal</div><input type='radio' name='antennaCtrl' value='internal' id='band_1_internal'/></div><div class='cb'></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='band_4_external'></label><div for='band_1_external' class='boosterUnSelectedTxt'>3G/4G</div><input type='radio' name='antennaCtrl' value='external' id='band_1_external'/></div></div></div></div></div><div class='boosterSettingsWrapper col-sm-6 settingsTabViewWrapper'><div class='col-sm-12'><div><div class='settingsDropIcns' id='boosterIcn'></div>Booster Settings</div><div id='boosterWrapper'><div class='boosterLbl'>Select by Technology:</div><div class='cb'></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnSelected col-xs-6' for='auto'></label><div for='auto' class='boosterSelectedTxt'>Auto</div><input type='radio' name='technologyType' value='auto' id='auto'/></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='3g_4g'></label><div for='3g_4g' class='boosterUnSelectedTxt'>3G/4G</div><input type='radio' name='technologyType' value='3g_4g' id='3g_4g'/></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='lte'></label><div for='lte' class='boosterUnSelectedTxt'>LTE</div><input type='radio' name='technologyType' value='lte' id='lte'/></div><div class='boosterLbl'>Select by Band (Advanced):</div><div class='cb'></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='band3'></label><div for='band3' class='boosterUnSelectedTxt'>Band 3</div><input type='radio' name='technologyType' value='band3' id='band3'/></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='band5'></label><div for='band5' class='boosterUnSelectedTxt'>Band 5</div><input type='radio' name='technologyType' value='band5' id='band5'/></div><div class='radioButtonWrapper'><label class='radioBtnWrapper radioBtnUnSelected col-xs-6' for='band28'></label><div for='band28' class='boosterUnSelectedTxt'>Band 28</div><input type='radio' name='technologyType' value='band28' id='band28'/></div></div></div></div></div>";
-var dashboardPanelContent		= "<div class='dashboardPanel1'> <div class='col-xs-12 col-sm-3 userGreets'> Welcome<span id='userDpName'></span> <br><span id='userDeviceStatusLine'>Things look </span> <span id='deviceStatus' class='good'></span> </div><div class='col-xs-12 col-sm-7 deviceDUO' id='deviceTypeBG'></div><div class='col-xs-12 col-sm-2 deviceSerialNumber'></div></div><div class='dashboardPanel2 w100'> <div class='col-xs-6 col-sm-3 dashboardContent'> <div id='gaugeContainer' class='graphicalRep'> <canvas id='boostGauge'></canvas> <div id='boosterLevel'>7</div></div><div class='dataTypeTitle'>BOOST</div></div><div class='col-xs-6 col-sm-3 dashboardContent'> <div id='signalStrengthContainer' class='graphicalRep'> <div class='signalContainer'> <div id='networkSignal1' class='networkSignalIndi activeStatus'></div><div id='networkSignal2' class='networkSignalIndi activeStatus'></div><div id='networkSignal3' class='networkSignalIndi activeStatus'></div><div id='networkSignal4' class='networkSignalIndi deactiveStatus'></div><div id='networkSignal5' class='networkSignalIndi deactiveStatus'></div></div></div><div class='dataTypeTitle'>NETWORK STREGNTH</div></div><div class='col-xs-6 col-sm-3 dashboardContent'> <div id='operatorContainer' class='graphicalRep'> <span>T-Mobile</span> </div><div class='dataTypeTitle'>OPERATOR</div></div><div class='col-xs-6 col-sm-3 dashboardContent'> <div id='coverageNamecontainer' class='graphicalRep'> <span>LTE</span> </div><div class='dataTypeTitle'>COVERAGE</div></div></div>";
-//var advancedPanelContent		= "<div class='advancedIcnContainer col-xs-12 col-sm-12' ><div id='sendIcnWrapper'><div id='sendIcn'></div><div class='advancedIcnLbl'>Send</div></div><div id='refreshIcnWrapper'><div id='refreshIcn'></div><div class='advancedIcnLbl'>Refresh</div></div></div><div class='cb'></div><div id='advancedContentwrapper'> <div class='panel-group' id='advancedDataContainer'> <div class='divider'>OVERVIEW</div><div class='panel panel-default col-sm-6'> <div class='panel-heading dropDown'> <h4 class='panel-title'><a data-toggle='collapse' data-parent='#advancedContentwrapper' href='#collapseOne'><div>Network Strength</div><span class='pull-right'> <span class='toggle-icon glyphicon glyphicon-chevron-up'></span></span></a></h4> </div><div id='collapseOne' class='panel-collapse collapse in'> <div class='panel-body'> <div id='networkDataContainer'> <div id='networkData1' class='col-xs-3 col-sm-3 networkData'> <div class='networkTitle'>A</div><div class='networkStrength'> <div class='signalContainerSM'> <div class='networkSignalIndiSM activeStatus networkBar1'></div><div class='networkSignalIndiSM activeStatus networkBar2'></div><div class='networkSignalIndiSM activeStatus networkBar3'></div><div class='networkSignalIndiSM deactiveStatus networkBar4'></div><div class='networkSignalIndiSM deactiveStatus networkBar5'></div></div></div><div class='networkStatus'> <div class='networkStatusLbl'>LTE</div><div class='networkFreq'>739 MHz</div></div></div><div id='networkData2' class='col-xs-3 col-sm-3 networkData'> <div class='networkTitle'>B</div><div class='networkStrength'> <div class='signalContainerSM'> <div class='networkSignalIndiSM activeStatus networkBar1'></div><div class='networkSignalIndiSM activeStatus networkBar2'></div><div class='networkSignalIndiSM activeStatus networkBar3'></div><div class='networkSignalIndiSM deactiveStatus networkBar4'></div><div class='networkSignalIndiSM deactiveStatus networkBar5'></div></div></div><div class='networkStatus'> <div class='networkStatusLbl'>LTE</div><div class='networkFreq'>739 MHz</div></div></div><div id='networkData3' class='col-xs-3 col-sm-3 networkData'> <div class='networkTitle'>C</div><div class='networkStrength'> <div class='signalContainerSM'> <div class='networkSignalIndiSM activeStatus networkBar1'></div><div class='networkSignalIndiSM activeStatus networkBar2'></div><div class='networkSignalIndiSM activeStatus networkBar3'></div><div class='networkSignalIndiSM activeStatus networkBar4'></div><div class='networkSignalIndiSM deactiveStatus networkBar5'></div></div></div><div class='networkStatus'> <div class='networkStatusLbl'>LTE</div><div class='networkFreq'>739 MHz</div></div></div><div id='networkData4' class='col-xs-3 col-sm-3 networkData'> <div class='networkTitle'>D</div><div class='networkStrength'> <div class='signalContainerSM'> <div class='networkSignalIndiSM activeStatus networkBar1'></div><div class='networkSignalIndiSM activeStatus networkBar2'></div><div class='networkSignalIndiSM deactiveStatus networkBar3'></div><div class='networkSignalIndiSM deactiveStatus networkBar4'></div><div class='networkSignalIndiSM deactiveStatus networkBar5'></div></div></div><div class='networkStatus'> <div class='networkStatusLbl'>LTE</div><div class='networkFreq'>739 MHz</div></div></div></div></div></div></div><div class='cb'></div><div class='divider'>SUPER CHANNELS</div><div class='firstGroup col-sm-6'> <div class='panel panel-default'> <div class='panel-heading drop-green dropDown'> <h4 class='panel-title'><a data-toggle='collapse' data-parent='#advancedContentwrapper' href='#collapseTwo'><div>Radio A Band 17: LTE (Boosting)</div><span class='pull-right'><span class='toggle-icon glyphicon glyphicon-chevron-down'></span></span></a></h4> </div><div id='collapseTwo' class='panel-collapse collapse'> <div class='panel-body'> <div class='dropDownList'> <div class='dropDownInnerTitle '> <div class='col-xs-8 col-sm-8'>Description</div><div class='col-xs-4 col-sm-4'>Value</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Bandwidth</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Download centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Uplink centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>PRI Cell_ID</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSSI</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSCP</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSRQ</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Donor SINR</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Ext. antenna in use</div><div class='col-xs-4 col-sm-4'>0</div></div></div></div></div></div><div class='panel panel-default'> <div class='panel-heading drop-green dropDown'> <h4 class='panel-title'><a data-toggle='collapse' data-parent='#advancedContentwrapper' href='#collapseThree'><div>Radio B Band 4: LTE (Idle)</div><span class='pull-right'><span class='toggle-icon glyphicon glyphicon-chevron-down'></span></span></a></h4> </div><div id='collapseThree' class='panel-collapse collapse'> <div class='panel-body'> <div class='dropDownList'> <div class='dropDownInnerTitle '> <div class='col-xs-8 col-sm-8'>Description</div><div class='col-xs-4 col-sm-4'>Value</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Bandwidth</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Download centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Uplink centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>PRI Cell_ID</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSSI</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSCP</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSRQ</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Donor SINR</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Ext. antenna in use</div><div class='col-xs-4 col-sm-4'>0</div></div></div></div></div></div></div><div class='secondGroup col-sm-6'> <div class='panel panel-default'> <div class='panel-heading drop-red dropDown'> <h4 class='panel-title'> <a data-toggle='collapse' data-parent='#advancedContentwrapper' href='#collapseFour'> <div>Radio C: Unused</div><span class='pull-right'> <span class='toggle-icon glyphicon glyphicon-chevron-down'></span> </span> </a> </h4> </div><div id='#collapseFour' class='panel-collapse collapse'> <div class='panel-body'> <div class='dropDownList'> <div class='dropDownInnerTitle '> <div class='col-xs-8 col-sm-8'>Description</div><div class='col-xs-4 col-sm-4'>Value</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Bandwidth</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Download centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Uplink centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>PRI Cell_ID</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSSI</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSCP</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSRQ</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Donor SINR</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Ext. antenna in use</div><div class='col-xs-4 col-sm-4'>0</div></div></div></div></div></div><div class='panel panel-default'> <div class='panel-heading drop-red dropDown'> <h4 class='panel-title'> <a data-toggle='collapse' data-parent='#advancedContentwrapper' href='#collapseFive'> <div>Radio D: Unused</div><span class='pull-right'> <span class='toggle-icon glyphicon glyphicon-chevron-down'></span> </span> </a> </h4> </div><div id='#collapseFive' class='panel-collapse collapse'> <div class='panel-body'> <div class='dropDownList'> <div class='dropDownInnerTitle '> <div class='col-xs-8 col-sm-8'>Description</div><div class='col-xs-4 col-sm-4'>Value</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Bandwidth</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Download centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Uplink centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>PRI Cell_ID</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSSI</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSCP</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSRQ</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Donor SINR</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Ext. antenna in use</div><div class='col-xs-4 col-sm-4'>0</div></div></div></div></div></div></div><div class='cb'></div><div class='divider'>SYSTEM OVERVIEW</div><div class='panel panel-default col-sm-6'> <div class='panel-heading drop-violet dropDown'> <h4 class='panel-title'> <a data-toggle='collapse' data-parent='#advancedContentwrapper' href='#collapseSix'> <div>Device State</div><span class='pull-right'> <span class='toggle-icon glyphicon glyphicon-chevron-down'></span> </span> </a> </h4> </div><div id='collapseSix' class='panel-collapse collapse'> <div class='panel-body'> <div class='dropDownList'> <div class='dropDownInnerTitle '> <div class='col-xs-8 col-sm-8'>Description</div><div class='col-xs-4 col-sm-4'>Value</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Bandwidth</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Download centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Uplink centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>PRI Cell_ID</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSSI</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSCP</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSRQ</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Donor SINR</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Ext. antenna in use</div><div class='col-xs-4 col-sm-4'>0</div></div></div></div></div></div><div class='cb'></div><div class='divider'>TECH DATA</div><div class='panel panel-default col-sm-6'> <div class='panel-heading drop-yellow dropDown'> <h4 class='panel-title'> <a data-toggle='collapse' data-parent='#advancedContentwrapper' href='#collapseSeven'> <div>Stuff you won't understand</div><span class='pull-right'> <span class='toggle-icon glyphicon glyphicon-chevron-down'></span> </span> </a> </h4> </div><div id='collapseSeven' class='panel-collapse collapse'> </div></div><div class='cb'></div><div class='divider'>DEVICE VERSION</div><div class='panel panel-default col-sm-6'> <div class='panel-heading drop-lite-green dropDown'> <h4 class='panel-title'> <a data-toggle='collapse' data-parent='#advancedContentwrapper' href='#collapseTeehree'> <div>Software Versions</div><span class='pull-right'> <span class='toggle-icon glyphicon glyphicon-chevron-down'></span> </span> </a> </h4> </div><div id='collapseTeehree' class='panel-collapse collapse'> <div class='panel-body'> <div class='dropDownList'> <div class='dropDownInnerTitle '> <div class='col-xs-8 col-sm-8'>Description</div><div class='col-xs-4 col-sm-4'>Value</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Bandwidth</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Download centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Uplink centre freq.</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>PRI Cell_ID</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSSI</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSCP</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue'> <div class='col-xs-8 col-sm-8'>Donor RSRQ</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Donor SINR</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Downlink [CU] TX powerc</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Uplink [NU] TX power</div><div class='col-xs-4 col-sm-4'>0</div></div><div class='dropDownListValue '> <div class='col-xs-8 col-sm-8'>Ext. antenna in use</div><div class='col-xs-4 col-sm-4'>0</div></div></div></div></div></div></div></div>";
+var dashboardPanelContent		= "<div class='dashboardPanel1'><div class='col-xs-12 col-sm-12 userGreets'>Welcome<span id='userDpName'></span></div><div class='col-xs-12 col-sm-12' id='fixIt'><div class='col-xs-8 col-sm-10 userGreets deviceStatusCtnr'><span id='userDeviceStatusLine'></span><span id='deviceStatus' class='good'></span></div><div class='col-xs-4 col-sm-2'><div class='fr' id='fixItArrow'></div><div class='fr' id='fixItContent'></div><div class='cb'></div></div></div><div class='col-xs-12 col-sm-12 deviceDUO' id='deviceTypeBG'></div><div class='col-xs-12 col-sm-12 deviceSerialNumber'></div></div><div class='dashboardPanel2 col-sm-12 col-xs-12'><div class='col-xs-6 col-sm-3 dashboardContent'><div id='signalStrengthContainer' class='graphicalRep'><div class='signalContainer'><div id='networkSignal1' class='networkSignalIndi activeStatus'></div><div id='networkSignal2' class='networkSignalIndi activeStatus'></div><div id='networkSignal3' class='networkSignalIndi activeStatus'></div><div id='networkSignal4' class='networkSignalIndi deactiveStatus'></div><div id='networkSignal5' class='networkSignalIndi deactiveStatus'></div></div></div><div class='dataTypeTitle'>NETWORK STREGNTH</div></div><div class='col-xs-6 col-sm-3 dashboardContent'><div id='gaugeContainer' class='graphicalRep'><canvas id='boostGauge'></canvas><div id='boosterLevel'>7</div></div><div class='dataTypeTitle'>BOOST</div></div><div class='col-xs-6 col-sm-3 dashboardContent'><div id='operatorContainer' class='graphicalRep'> <span>T-Mobile</span> </div><div class='dataTypeTitle'>OPERATOR</div></div><div class='col-xs-6 col-sm-3 dashboardContent'><div id='coverageNamecontainer' class='graphicalRep'> <span>LTE</span> </div><div class='dataTypeTitle'>COVERAGE</div></div></div>";
 var topHorizontalMenu			= "<div class='headerContainer' id='headerContainer'> <div class='titlebarWrapper'> <div class='sliderMenuWrapper col-xs-2 col-sm-2'> <a href='#menu' class='menu-link'> <div class='sliderMenuIcn'></div></a> </div><div class='logoWrapper col-xs-8 col-sm-8'> <div class='logoImg'></div></div><div class='faqIcnWrapper col-xs-2 col-sm-2'> <div class='faqIcn'></div></div></div><div class='menuWrapper'> <div class='col-xs-4 col-sm-2 selectedTab' id='dashboardMenu'> <div>DASHBOARD</div></div><div class='col-xs-4 col-sm-2' id='settingsMenu'> <div>SETTINGS</div></div><div class='col-xs-4 col-sm-2' id='advancedMenu'> <div>ADVANCED</div></div></div></div><div class='cb'></div><div id='bodyContainer'></div>";
 var mainContainerWithMenu		= "<div id='menu' class='panelMenu' role='navigation'> <div class='panelLogoWrapper'> <div class='panelLogo'></div></div><div class='panelMenuList'> <ul> <li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='finderIcn'></div><span>Signal Finder</span><div class='cb'></div></a> </li><li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='aboutIcn'></div><span onclick='util.showAboutUs()'>About</span><div class='cb'></div></a> </li><li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='feedBackIcn'></div><span onclick='util.showSendFeedback()'>Send Feedback</span><div class='cb'></div></a> </li><li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='policyIcn'></div><span onclick='util.showPrivacyPolicy()'>Privacy Policy</span><div class='cb'></div></a> </li><li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='registerIcn'></div><span>Register Booster</span><div class='cb'></div></a> </li></ul> </div><div class='socialLinkWrapper'> <div class='socialLinkTitle'>Follow us:</div><div class='socialLinkIcnWrapper'> <div class='socialIcns' id='facebookIcn' onclick='window.open(\'https://www.facebook.com/5bars\', \'_system\')'></div><div class='socialIcns' id='twitterIcn' onclick='window.open(\'http://twitter.com/#!/5bars\', \'_system\')'></div><div class='socialIcns' id='linkedinIcn' onclick='window.open(\'http://www.linkedin.com/company/nextivity-inc.\', \'_system\')'></div><div class='socialIcns' id='googleIcn'></div></div></div></div><div id='mainContainer' class='push'></div>";
 var mainContainerWithoutMenu	= "<div id='mainContainer'></div>";
@@ -1247,7 +1244,7 @@ function ProcessSettingsView()
         PrintLog(1, "GUI: ProcessSettingsView()");
         
         // Draw the view...
-        var myUniiIcon = (bUniiStatusKnown == false) ? szUniiIconButton + "</button>"  : bUniiUp ? szUniiIconButton + szUniiIconUp + "</button>" : szUniiIconButton + szUniiIconDown + "</button>";
+        /*var myUniiIcon = (bUniiStatusKnown == false) ? szUniiIconButton + "</button>"  : bUniiUp ? szUniiIconButton + szUniiIconUp + "</button>" : szUniiIconButton + szUniiIconDown + "</button>";
         var mySbIfIcon = isSouthBoundIfCnx ? szSbIfIconButton + szSbIfIconOn + "</button>" : szSbIfIconButton + szSbIfIconOff + "</button>";
         var myRegIcon  = (nxtyRxRegLockStatus == 0x00) ? szRegIconButton + "</button>" : isRegistered ? szRegIconButton + szRegIconReg + "</button>" : szRegIconButton + szRegIconNotReg + "</button>";
 
@@ -1330,9 +1327,13 @@ function ProcessSettingsView()
         document.getElementById("unii_icon_id").addEventListener('touchend',   HandleButtonDown );    // down, back to normal, no transparency
                  
         document.getElementById("back_button_id").addEventListener('touchstart', HandleButtonDown );
-        document.getElementById("back_button_id").addEventListener('touchend',   HandleButtonUp );
+        document.getElementById("back_button_id").addEventListener('touchend',   HandleButtonUp );*/
         
-        
+        if(deviceType == "phone"){
+			util.loadPhoneSettingsContainer();
+		}else{
+			util.loadTabletSettingsContainer();
+		}
         lastGuiCurrentMode = guiCurrentMode;    
     }
     
@@ -1354,7 +1355,8 @@ function ProcessSettingsView()
 
 function disableAntButtons()
 {
-    var i;
+	//alert("inside disable ant btns");
+    /*var i;
 
     // Disable all radio buttons to keep user from changing while 
     // we are trying to set the hardware...
@@ -1365,13 +1367,13 @@ function disableAntButtons()
     {
         document.getElementById("bi_id"+i).disabled = true;
         document.getElementById("be_id"+i).disabled = true;
-    }
+    }*/
 }
 
 
 function updateAntButtons()
 {
-    var i;
+   /* var i;
 
     document.getElementById("ba_id").disabled = false;    
     document.getElementById("bm_id").disabled = false;    
@@ -1431,14 +1433,14 @@ function updateAntButtons()
             document.getElementById("bi_id"+i).disabled = true;
             document.getElementById("be_id"+i).disabled = true;
         }
-    }
+    }*/
 }
 
 
 
 function updateBoosterButtons()
 {
-    var i;
+    /*var i;
     
     if( guiBoosterCurrentMode == GO_MODE_AUTO )                 
     {
@@ -1472,7 +1474,7 @@ function updateBoosterButtons()
             var myId = "band_id" + i;
             document.getElementById(myId).innerHTML = "Band: " + guiBoosterBands[i];
         }
-    }
+    }*/
 }
 
 // End of Settings View ............................................................................................
@@ -2109,7 +2111,7 @@ var util = {
     },
     
     showSearchAnimation: function(){
-    	console.log(typeof searchTimeOut);
+    	//console.log(typeof searchTimeOut);
     	if(typeof searchTimeOut != "undefined"){
     		clearTimeout(searchTimeOut);
     	}
@@ -2129,8 +2131,8 @@ var util = {
     	searchMessageBox.align = "center";
     	searchMessageBox.innerHTML = util.searchMessage;
     	var searchIconContainer = util.createAppendElem("div", "searchIconContainer", "searchIconContainer", mainContainer);
-    	//searchTimeOut = setTimeout(function(){ util.showNoDeviceFoundErrorPopup(); }, 120*1000);
-    	searchTimeOut = setTimeout(function(){ util.showNoDeviceFoundErrorPopup(); }, 30*1000);
+    	searchTimeOut = setTimeout(function(){ util.showNoDeviceFoundErrorPopup(); }, 120*1000);
+    	//searchTimeOut = setTimeout(function(){ util.showNoDeviceFoundErrorPopup(); }, 30*1000);
     },
     
     initiateSearchAnimation: function(){
@@ -2155,8 +2157,8 @@ var util = {
     
     deviceIdentified: function(){
     	mainContainerDisplayFlag = 1;
-    	util.stopSearchAnimation();
-    	clearInterval(searchAnimationLoop);
+    	//util.stopSearchAnimation();
+    	//clearInterval(searchAnimationLoop);
     	document.getElementById("searchIconContainer").style.background = "";
     	document.getElementById("searchIconContainer").style.background = "url('img/assets/icons/Done.svg') no-repeat";
     	document.getElementById("searchMessageBox").innerHTML = util.syncData;
@@ -2345,274 +2347,978 @@ var util = {
 	
 	loadBodyContainer: function(menuElem){
 		mainScreenSelectedTab = menuElem;
-		if(menuElem == "dashboard"){$('#bodyContainer').html(dashboardPanelContent);util.updateContainerElements(menuElem);}
+		if(menuElem == "dashboard"){
+			$('#bodyContainer').html(dashboardPanelContent);
+			util.loadDashboardContainer(menuElem);
+		}
 		else if(menuElem == "settings"){
-			if(deviceType == "phone"){
-				$('#bodyContainer').html(settingsPanelContentMobile);
-			}else{
-				$('#bodyContainer').html(settingsPanelContentTablet);
-			}
+			updateAntStatus();
+			setTimeout(function(){
+				if(deviceType == "phone"){
+					util.loadPhoneSettingsContainer();
+				}else{
+					util.loadTabletSettingsContainer();
+				}
+			},400);
+			guiCurrentMode = PROG_MODE_SETTINGS;
 		}
 		else if(menuElem == "advanced"){
-			
-			var advancedButtonWrapper = "<div class='advancedIcnContainer col-xs-12 col-sm-12' >"										
-										+ "<div id='sendIcnWrapper'>"
-										+ "<div id='sendIcn'></div>"
-										+ "<div class='advancedIcnLbl' onclick='util.showAdvancedFeedBack()'>Send</div>"
-										+ "</div>"
-										+ "<div id='refreshIcnWrapper'>"
-										+ "<div id='refreshIcn'></div>"
-										+ "<div class='advancedIcnLbl'>Refresh</div>"
-										+ "</div></div>";										
-			
-			
-			
-			var advancedHeader = "<div id='advancedContentwrapper'>"
-									+ "<div class='panel-group' id='advancedDataContainer'>";
-			var overViewContent = '';
-			overViewContent = overViewContent + "<div class='divider'>OVERVIEW</div><div class='panel panel-default col-sm-6'>";
-			overViewContent = overViewContent + "<div class='panel-heading dropDown'>"
-												+ "<h4 class='panel-title'>"
-												+ "<a data-toggle='collapse' data-parent='#advancedDataContainer' href='#networkBarsCollapse'>"
-												+ "<div>Network Strength</div>"
-												+ "<span class='pull-right'>"								 
-												+ "<span class='toggle-icon glyphicon glyphicon-chevron-up'></span>"
-												+ "</span></a></h4></div>"
-												+ "<div id='networkBarsCollapse' class='panel-collapse collapse in'>"
-												+ "<div class='panel-body' id='networkDataContainer'>";
-			
-			for(var i = 0; i < guiBands.length; i++) {
-				overViewContent = overViewContent + "<div class='col-xs-3 col-sm-3 networkData'>"
-													+ "<div class='networkTitle'>" + guiRadios[i] + "</div><div class='networkStrength'>"
-													+ "<div class='signalContainerSM'>";
-				if(guiBands[i] !== 0) {
-					for(var j = 1; j < 6; j++) {
-						if(j <= guiNetworkBars[i])
-							overViewContent = overViewContent + "<div class='networkSignalIndiSM activeStatus networkBar" + j + "'></div>";
-						else
-							overViewContent = overViewContent + "<div class='networkSignalIndiSM deactiveStatus networkBar" + j + "'></div>";
-					}					
-				}
-				overViewContent = overViewContent + "</div></div>";
-				
-				var techType = '',
-					freq = '';
-				if(guiBands[i] !== 0) {
-					techType = guiTechnologyTypes[i] === 1 ? 'LTE' : 'WCDMA';
-					freq = guiFreqArrayMHz[i] + " MHz";
-				}
-				overViewContent = overViewContent + "<div class='networkStatus'>"
-													+ "<div class='networkStatusLbl'>"+ techType +"</div>"
-													+ "<div class='networkFreq'>" + freq + "</div>"
-													+ "</div>";				
-				overViewContent = overViewContent + "</div>";
-				
-			}
-						
-			overViewContent = overViewContent + "</div></div></div>";
-			
-			
-			var clearFloat = "<div class='cb'></div>";
-											
-			var cellStates = ['Idle', 'RssiScan', 'CsrchStart', 'WaitAfc', 'CellSearch', 'ReleaseMeas', 'ReleaseXCh', 'FreqSelect', 'SetupPlace', 'Place', 'Ranging', 'SetupRelay', 'Relay'];
-			var superChannelsContent = '';
-			superChannelsContent = superChannelsContent + "<div class='divider'>SUPER CHANNELS</div>";
-			for(var i = 0; i < guiBands.length; i++) {
-				var techType = guiTechnologyTypes[i] === 1 ? 'LTE' : 'WCDMA';
-				superChannelsContent = superChannelsContent + "<div class='panel panel-default'>"
-				
-				var radioStatusColour = '';
-				var radioHeader = '';
-				if(guiBands[i] !== 0) {
-					radioStatusColour = 'drop-green';
-					radioHeader = "<div>Radio " + guiRadios[i] + " Band " + guiBands[i] + " : " + techType +" ("+cellStates[guiCellState[i]]+")</div>";
-				} else {
-					radioStatusColour = 'drop-red';
-					radioHeader = "<div>Radio " + guiRadios[i] + " : Unused</div>";
-				}
-				
-				superChannelsContent = superChannelsContent + "<div class='panel-heading " + radioStatusColour + " dropDown'>"
-															+ "<h4 class='panel-title'>"
-															+ "<a data-toggle='collapse' data-parent='#advancedDataContainer' href='#channel"+ i +"'>"
-															+ radioHeader
-															+ "<span class='pull-right'>"
-															+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
-															+ "</span></a></h4></div>";
-				
-				superChannelsContent = superChannelsContent + "<div id='channel" + i + "' class='panel-collapse collapse'>" 
-															+ "<div class='panel-body dropDownList'>";														
-				if(guiBands[i] !== 0) {					
-					superChannelsContent = superChannelsContent + "<div class='dropDownInnerTitle '>"
-																+ "<div class='col-xs-8 col-sm-8'>Description</div>"
-																+ "<div class='col-xs-4 col-sm-4'>Value</div>"
-																+ "</div>";
-					var keyParams = ['Bandwidth', 'DL Center Freq', 'UL Center Freq', 'PRI', 'DL RSSI', 'Max DL RSCP', 'RSRQ', 'SINR', 'CU Tx Pwr', 'NU Tx Pwr', 'Ext Ant In Use'];
-					var titleArray = ['Bandwidth', 'Download centre freq.', 'Uplink centre freq.', 'PRI Cell_ID', 'Donor RSSI', 'Donor RSCP', 'Donor RSRQ', 'Donor SINR', 'Downlink [CU] TX power', 'Uplink [NU] TX power', 'Ext. antenna in use'];
-					var unitsArray = ['MHz', 'MHz', 'MHz', '', 'dBm', 'dBm', 'dBm', 'dB', 'dBm', '', ''];
-					for(var j = 0; j < keyParams.length; j++) {
-						var techValue = '';
-						
-						if(j !== 3 && j !== 8 && j !== 9)
-							techValue = GetTechValue(keyParams[j], i);
-						else if(j === 8 || j === 9)
-							techValue = GetTechValue(keyParams[j], 4);
-						else if(j === 3)
-							techValue = 0;						
-						superChannelsContent = superChannelsContent + "<div class='dropDownListValue'>"
-																	+ "<div class='col-xs-8 col-sm-8'>" + titleArray[j] + "</div>"
-																	+ "<div class='col-xs-4 col-sm-4'>" + techValue + " "+unitsArray[j] + "</div>"
-																	+ "</div>";
-					}				
-				}
-				superChannelsContent = superChannelsContent + "</div></div>";
-				superChannelsContent = superChannelsContent + "</div>";
-			}
-			
-			
-			var deviceStateContent = '';
-			if(guiProductType === 'DUO' || guiProductType === 'PRO') {
-				deviceStateContent = deviceStateContent + "<div class='divider'>SYSTEM OVERVIEW</div>";
-				deviceStateContent = deviceStateContent + "<div class='panel panel-default col-sm-6'>"
-														+ "<div class='panel-heading drop-purple dropDown'>"
-														+ "<h4 class='panel-title'>"
-														+ "<a data-toggle='collapse' data-parent='#advancedDataContainer' href='#deviceStateCollapse'>"
-														+ "<div>Device State</div>"
-														+ "<span class='pull-right'>"
-														+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
-														+ "</span></a></h4></div>"
-														+ "<div id='deviceStateCollapse' class='panel-collapse collapse'>"
-														+ "<div class='panel-body dropDownList'>"
-														+ "<div class='dropDownInnerTitle '>"
-														+ "<div class='col-xs-8 col-sm-8'>Description</div>"
-														+ "<div class='col-xs-4 col-sm-4'>Value</div></div>";	
-				var deviceStates = ['WuUnniState', '5GHz DL Freq', '5GHz UL Freq', 'Distance Metric', 'Remote Shutdown State', 'NU Temp', 'CU Temp'],
-					deviceStateUnits = ['MHz', 'MHz', 'MHz', '', '', '&deg;C', '&deg;C'],
-					deviceStateKeys = ['NU UNII State', 'NU 5G DL', 'NU 5G UL', 'NU Dist Metric', 'Remote Shutdown',  'NU Temp', 'CU Temp'];
-				
-				for(var i = 0; i < deviceStateKeys.length; i++) {
-					var techValue = GetTechValue(deviceStateKeys[i], 4);					
-					deviceStateContent = deviceStateContent + "<div class='dropDownListValue'>"
-															+ "<div class='col-xs-8 col-sm-8'>" + deviceStates[i] + "</div>"
-															+ "<div class='col-xs-4 col-sm-4'>" + techValue + " " + deviceStateUnits[i] +"</div></div>";
-				}
-				
-				deviceStateContent = deviceStateContent + "</div></div>";
-				deviceStateContent = deviceStateContent + "</div>";
-				
-			}
-			
-			
-			var techDataContent = "<div class='divider'>TECH DATA</div>"
-									+ "<div class='panel panel-default col-sm-6'>"
-									+ "<div class='panel-heading drop-orange dropDown'>"
-									+ "<h4 class='panel-title'>"
-									+ "<a data-toggle='collapse' data-parent='#advancedDataContainer' href='#unknownCollapse'>"
-									+ "<div>Stuff you won't understand</div>"
-									+ "<span class='pull-right'>"
-									+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
-									+ "</span></a></h4></div>"				                    
-									+ "<div id='unknownCollapse' class='panel-collapse collapse'>"	
-									+ "<div class='panel-body dropDownList'></div>"			                        			                       
-									+ "</div></div>";			
-			
-			
-			var softwareVersionContent = '';
-			softwareVersionContent = softwareVersionContent + "<div class='divider'>DEVICE VERSION</div><div class='panel panel-default col-sm-6'>";
-			
-			softwareVersionContent = softwareVersionContent + "<div class='panel-heading drop-teal dropDown'>"
-															+ "<h4 class='panel-title'>"
-															+ "<a data-toggle='collapse' data-parent='#advancedDataContainer' href='#versionCollapse'>"
-															+ "<div>Software Versions</div>"
-															+ "<span class='pull-right'>"
-															+ "<span class='toggle-icon glyphicon glyphicon-chevron-down'></span>"
-															+ "</span></a></h4></div>"
-															+"<div id='versionCollapse' class='panel-collapse collapse'>"
-															+ "<div class='panel-body dropDownList'>" 
-															+ "<div class='dropDownInnerTitle'>"
-															+ "<div class='col-xs-6 col-sm-6'>Name</div>"
-															+ "<div class='col-xs-3 col-sm-3'>Cel-Fi</div>"
-															+ "<div class='col-xs-3 col-sm-3'>Cloud</div></div>";
-			for(var i = 0 ; i < guiSwNames.length; i++) {
-				var celFiVersion = guiSwCelFiVers[i] === '' ? "000.000" : guiSwCelFiVers[i];				
-				softwareVersionContent = softwareVersionContent + "<div class='dropDownListValue'>"
-																+ "<div class='col-xs-6 col-sm-6'>" + guiSwNames[i] + "</div>"
-																+ "<div class='col-xs-3 col-sm-3'>" + celFiVersion + "</div>"
-																+ "<div class='col-xs-3 col-sm-3'>" + guiSwStatus[i] + "</div></div>"
-			}
-			
-			
-			
-			softwareVersionContent = softwareVersionContent + "</div></div>";
-			softwareVersionContent = softwareVersionContent + "</div>";
-			
-			var footer = "</div></div>";
-			
-			var advancedPanelContent = advancedButtonWrapper + clearFloat 
-										+ advancedHeader 
-										+ overViewContent + clearFloat 
-										+ superChannelsContent + clearFloat 
-										+ deviceStateContent + clearFloat
-										+ techDataContent + clearFloat
-										+ softwareVersionContent
-										+ footer;			
-			$('#bodyContainer').html(advancedPanelContent);
+			util.loadAdvancedContainer();
 		}
-		
 	},
 	
-	updateContainerElements: function(menuElem){
+	loadPhoneSettingsContainer: function(){
+		var bodyContainer = document.getElementById("bodyContainer");
+		bodyContainer.innerHTML = "";
+		var settingScreenWrapper = util.createAppendElem("div", "settingsDataWrapper", "col-sm-12", bodyContainer);
 		
-		/*UI element updates for Dashboard view*/
-		if(menuElem == "dashboard"){
-			if(typeof window.localStorage.getItem("firstName")!=null && window.localStorage.getItem("firstName")!=""){
-				$('#userDpName').html(" " + window.localStorage.getItem("firstName")+",");
-			}else{ 
-				$('#userDpName').html(",");
+		guiOperator = "Verizon";
+		guiOperatorList = ['AT&T','T-Mobile','Verizon','I don\'t see my Operator'];
+		
+		var selectedDevice = "Device 04"; 
+		guiDeviceList = ['Device 01', 'Device 02', 'Device 04', 'Device 07', 'Device 11'];
+		
+		var operatorListPanel = "";
+		var deviceListDropDown = "";
+		
+		//operator list drop dwon panel
+		if(guiOperatorFlag){
+			operatorListPanel = "<div class='panel panel-default'>"
+					        		+"<div class='panel-heading dropDown' id='operatorTitle'>"
+					        		+"<h4 class='panel-title'>"
+					        		+"<a data-toggle='collapse' data-parent='#settingsDataWrapper' href='#collapseOne'>"
+					        		+"<div><div class='settingsDropIcns' id='operatorIcn'></div>Operator</div>"
+					        		+"<span class='pull-right'>"
+					        		+"<span class='toggle-icon expand-less'></span>"
+					        		+"</span>"
+					        		+"</a>"
+					        		+"</h4>"
+					        		+"</div>"
+					        		+"<div id='collapseOne' class='panel-collapse collapse in'>"
+					        		+"<div class='panel-body'>"
+					        		+"<div>"
+					        		+"<div class='operatorList col-xs-8'>"
+					        		+"<button type='button' class='form-control'>"
+					        		+"<span data-bind='label' id='operatorVal'>";
+			
+			operatorListPanel = operatorListPanel + guiOperator + "</span>"
+								+"</span>&nbsp;<span class='caret'></span>"
+								+"</button>"
+								+"<div class='operatorListWrapper'>"
+								+"<ul>";
+			
+			for(var operLen = 0; operLen < guiOperatorList.length; operLen++){
+				if(guiOperator==guiOperatorList[operLen]){
+					operatorListPanel = operatorListPanel + "<li class='selectedListVal'>" + guiOperatorList[operLen] + "</li>";
+				}else{
+					operatorListPanel = operatorListPanel + "<li>" + guiOperatorList[operLen] + "</li>";
+				}
 			}
 			
-			if(guiBoost >= 0 && guiBoost <= 3){
-				$('#userDeviceStatusLine').html("Looks like there's a ");
-				$('#deviceStatus').html('problem');
-				$('#deviceStatus').removeClass().addClass('problem');
-			}
-			else if(guiBoost >= 4 && guiBoost <= 5){
-				$('#userDeviceStatusLine').html("Things look ");
-				$('#deviceStatus').html('poor');
-				$('#deviceStatus').removeClass().addClass('problem');
-			}
-			else if(guiBoost >= 6 && guiBoost <= 7){
-				$('#userDeviceStatusLine').html("Things look ");
-				$('#deviceStatus').html('ok');
-				$('#deviceStatus').removeClass().addClass('ok');
-			}
-			else if(guiBoost >= 8 && guiBoost <= 9){
-				$('#userDeviceStatusLine').html("Things look ");
-				$('#deviceStatus').html('good');
-				$('#deviceStatus').removeClass().addClass('good');
+			operatorListPanel = operatorListPanel + "</ul></div></div></div></div></div></div>";
+			$(operatorListPanel).appendTo('#settingsDataWrapper');
+		}
+		
+		//Device list drop down panel
+		if(guiDeviceFlag){
+			deviceListDropDown = "<div class='panel panel-default'>"
+				        			 +"<div class='panel-heading dropDown' id='deviceTitle'>"
+				        			 +"<h4 class='panel-title'>"
+				        			 +"<a data-toggle='collapse' data-parent='#settingsDataWrapper' href='#collapseTwo'>"
+				        			 +"<div><div class='settingsDropIcns' id='deviceIcn'></div>Device</div>"						
+				        			 +"<span class='pull-right'>"
+				        			 +"<span class='toggle-icon expand-more'></span>"
+				        			 +"</span>"
+				        			 +"</a>"
+				        			 +"</h4>"
+				        			 +"</div>"
+				        			 +"<div id='collapseTwo' class='panel-collapse collapse'>"
+				        			 +"<div class='panel-body'>"
+				        			 +"<div id='deviceDetailsWrapper'>"									
+				        			 +"<div id='devicesFoundLbl'>Devices Found</div>"
+				        			 +"<div class='deviceList'>"
+				        			 +"<button type='button' class='form-control'>"
+				        			 +"<span data-bind='label' id='deviceVal'>"
+				        			 + selectedDevice +"</span>"
+									 +"</span>&nbsp;<span class='caret'></span>"
+									 +"</button>"
+									 +"<div class='deviceListWrapper'>"
+									 +"<ul>";
+			for(var devLen = 0; devLen < guiDeviceList.length; devLen++){
+				if(selectedDevice == guiDeviceList[devLen]){
+					deviceListDropDown = deviceListDropDown + "<li class='selectedListVal'>" + guiDeviceList[devLen] + "</li>";
+				}else{
+					deviceListDropDown = deviceListDropDown + "<li>" + guiDeviceList[devLen] + "</li>";
+				}
 			}
 			
-			if(guiProductType=="590NP34"){$('.deviceDUO').css("background","URL('img/assets/images/deviceImages/Pro.png')no-repeat");}
-			else if(guiProductType=="590ND32"){$('.deviceDUO').css("background","URL('img/assets/images/deviceImages/Duo.png')no-repeat");}
-			else if(guiProductType=="590NS32"){$('.deviceDUO').css("background","URL('img/assets/images/deviceImages/RS1.png')no-repeat");}
-			else if(guiProductType=="590NG31"){$('.deviceDUO').css("background","URL('img/assets/images/deviceImages/RS2 White.png')no-repeat");}
-			else if(guiProductType=="590NT34"){$('.deviceDUO').css("background","URL('img/assets/images/deviceImages/RS2.png')no-repeat");}
+			deviceListDropDown = deviceListDropDown + "</ul>"
+													+"</div>"
+													+"</div>"
+													+"<div class='cb'></div>"
+													+"<div class='hr'></div>"
+													+"<div id='devicesFoundLbl'>Give your Device a name</div>"
+													+"<input type='text' id='deviceInput'>"
+													+"<div class='form-group' align='right'>"
+													+"<button type='button' class='defaultButton' id='deviceUpdate' onclick=''>Update</button>"
+													+"</div></div></div></div></div>";
 			
-			$('.deviceSerialNumber').html('Device Serial Number: '+guiSerialNumber);
-			$('#boosterLevel').html(guiBoost);
-			util.showGauge(guiBoost);
-			
-			var netWorkSignalArr = ['networkSignal1', 'networkSignal2', 'networkSignal3', 'networkSignal4', 'networkSignal5'];
-			var networkBarArr = guiNetworkBars;
-			var i = networkBarArr.indexOf(Math.max.apply(Math, networkBarArr));
-			for(var n=1; n<=networkBarArr[i]; n++){
-				$('#networkSignal'+n).removeClass('deactiveStatus').addClass('activeStatus');
+			$(deviceListDropDown).appendTo('#settingsDataWrapper');
+		}
+		
+		//Software update status panel
+		var softwareUpdatePanel = 	"<div class='panel panel-default'>"
+			        				+"<div class='panel-heading dropDown' id='softwareTitle'>"
+			        				+"<h4 class='panel-title'>"
+			        				+"<a data-toggle='collapse' data-parent='#settingsDataWrapper' href='#collapseThree'>"
+			        				+"<div><div class='settingsDropIcns' id='versionIcn'></div>Software Version</div>"								
+			        				+"<span class='pull-right'>"
+			        				+"<span class='toggle-icon expand-more'></span>"
+			        				+"</span>"
+			        				+"</a>"
+			        				+"</h4>"
+			        				+"</div>"
+			        				+"<div id='collapseThree' class='panel-collapse collapse'>"
+			        				+"<div class='panel-body'>"
+			        				+"<div id='versionWrapper'>";
+		
+		var SWUpdateUIFlag = true;
+		var deViceUpdatePositiveState = "OK";
+		for(var sw=0; sw < guiSwStatus.length; sw++){
+			if(deViceUpdatePositiveState!=guiSwStatus[sw]){
+				SWUpdateUIFlag = false;
+				break;
 			}
+		}
+		if(SWUpdateUIFlag){
+			softwareUpdatePanel = softwareUpdatePanel + "<div class='versionLbl fl'>You\'re up-to-date</div><div class='doneTick'></div>";
+		}else{
+			softwareUpdatePanel = softwareUpdatePanel + "<div class='versionLbl col-xs-7'>Please update your software</div>"
+														+"<div class='form-group col-xs-4'>"
+														+"<button type='button' class='primaryButton' id='versionUpdate' onclick=''>Update</button>"
+														+"</div>";
+		}
+		
+		softwareUpdatePanel = softwareUpdatePanel + "</div></div></div></div>";
+		
+		$(softwareUpdatePanel).appendTo('#settingsDataWrapper');
+		
+		//Antenna settings panel
+
+		if(guiAntennaFlag){
+			var antennaSettingsPanel = "<div class='panel panel-default'>"
+										+"<div class='panel-heading dropDown'>"
+										+"<h4 class='panel-title'>"
+										+"<a data-toggle='collapse' data-parent='#settingsDataWrapper' href='#collapseFour'>"
+										+"<div><div class='settingsDropIcns' id='antennaIcn'></div>Antenna Settings</div>"									
+										+"<span class='pull-right'>"
+										+"<span class='toggle-icon expand-more'></span>"
+										+"</span>"
+										+"</a>"
+										+"</h4>"
+										+"</div>"
+										+"<div id='collapseFour' class='panel-collapse collapse'>"
+										+"<div class='panel-body'>"
+										+"<div class='antennaDetailsWrapper'>"
+										+"<div class='antennaLbl col-xs-6'>Antenna Control:</div>"
+										+"<div class='antennaRadioWrapper col-xs-6'>";
 			
-			if(guiTechnologyTypes.indexOf('LTE') > -1){
-				$('#coverageNamecontainer').html('<span>LTE</span>');
+			if(guiAntennaManualFlag){
+				antennaSettingsPanel = antennaSettingsPanel +"<div class='radioButtonWrapper'>"
+															+"<label class='radioBtnWrapper radioBtnUnSelected col-xs-3' for='antennaAuto' id='radioAntennaAuto'></label>"
+															+"<div for='auto' class='boosterUnSelectedTxt' id='labelAntennaAuto'>Auto</div>"
+															+"<input type='radio' name='antennaCtrl' value='auto' id='antennaSettingAuto'/>"
+															+"</div>"
+															+"<div class='cb'></div>"
+															+"<div class='radioButtonWrapper'>"
+															+"<label class='radioBtnWrapper radioBtnSelected col-xs-3' for='manual' id='radioAntennaManual'></label>"
+															+"<div for='manual' class='boosterSelectedTxt' id='labelAntennaManual'>Manual</div>"
+															+"<input type='radio' name='antennaCtrl' value='manual' id='antennaSettingManual'/>"
+															+"</div>";
 			}else{
-				$('#coverageNamecontainer').html('<span>3G/4G</span>');
+				antennaSettingsPanel = antennaSettingsPanel +"<div class='radioButtonWrapper'>"
+															+"<label class='radioBtnWrapper radioBtnSelected col-xs-3' for='antennaAuto' id='radioAntennaAuto'></label>"
+															+"<div for='auto' class='boosterSelectedTxt' id='labelAntennaAuto'>Auto</div>"
+															+"<input type='radio' name='antennaCtrl' value='auto' id='antennaSettingAuto'/>"
+															+"</div>"
+															+"<div class='cb'></div>"
+															+"<div class='radioButtonWrapper'>"
+															+"<label class='radioBtnWrapper radioBtnUnSelected col-xs-3' for='manual' id='radioAntennaManual'></label>"
+															+"<div for='manual' class='boosterUnSelectedTxt' id='labelAntennaManual'>Manual</div>"
+															+"<input type='radio' name='antennaCtrl' value='manual' id='antennaSettingManual'/>"
+															+"</div>";
 			}
+			
+			antennaSettingsPanel = antennaSettingsPanel + "</div></div><div class='hr'></div>";
+			
+			for(var bandLen = 0; bandLen < guiBands.length; bandLen++){
+				antennaSettingsPanel = antennaSettingsPanel + "<div class='antennaDetailsWrapper'><div class='antennaLbl col-xs-6' id='bandTitle_"+bandLen+"'>";
+				antennaSettingsPanel = antennaSettingsPanel + "Band " + guiBands[bandLen] + " (" + guiAntennaFreqArrayMHz[bandLen] + ")";
+				antennaSettingsPanel = antennaSettingsPanel + "</div><div class='antennaRadioWrapper col-xs-6'>";
+				if(guiAntennaIntFlags){
+					antennaSettingsPanel = antennaSettingsPanel + "<div class='radioButtonWrapper'>"
+											+"<label class='radioBtnWrapper radioBtnUnSelected col-xs-3' for='band_"+bandLen+"_internal' id='band_"+bandLen+"_internalBtn'></label>"
+											+"<div for='band_"+bandLen+"_internal' id='band_"+bandLen+"_internalLbl' class='boosterUnSelectedTxt'>Internal</div>"
+											+"<input type='radio' name='antennaCtrl' value='internal' id='band_"+bandLen+"_internal'/>"
+											+"</div>"
+											+"<div class='cb'></div>"
+											+"<div class='radioButtonWrapper'>"
+											+"<label class='radioBtnWrapper radioBtnSelected col-xs-3' for='band_"+bandLen+"_external' id='band_"+bandLen+"_externalBtn'></label>"
+											+"<div for='band_"+bandLen+"_external' id='band_"+bandLen+"_externalLbl' class='boosterSelectedTxt'>External</div>"
+											+"<input type='radio' name='antennaCtrl' value='external' id='band_"+bandLen+"_external' checked/>"
+											+"</div>";
+				}else{
+					antennaSettingsPanel = antennaSettingsPanel + "<div class='radioButtonWrapper'>"
+											+"<label class='radioBtnWrapper radioBtnSelected col-xs-3' for='band_"+bandLen+"_internal' id='band_"+bandLen+"_internalBtn'></label>"
+											+"<div for='band_"+bandLen+"_internal' id='band_"+bandLen+"_internalLbl' class='boosterSelectedTxt'>Internal</div>"
+											+"<input type='radio' name='antennaCtrl' value='internal' id='band_"+bandLen+"_internal' checked/>"
+											+"</div>"
+											+"<div class='cb'></div>"
+											+"<div class='radioButtonWrapper'>"
+											+"<label class='radioBtnWrapper radioBtnUnSelected col-xs-3' for='band_"+bandLen+"_external' id='band_"+bandLen+"_externalBtn'></label>"
+											+"<div for='band_"+bandLen+"_external' id='band_"+bandLen+"_externalLbl' class='boosterUnSelectedTxt'>External</div>"
+											+"<input type='radio' name='antennaCtrl' value='external' id='band_"+bandLen+"_external'/>"
+											+"</div>";
+				}
+				antennaSettingsPanel = antennaSettingsPanel + "</div></div>";
+			}
+			antennaSettingsPanel = antennaSettingsPanel + "<div class='restoreAntenna col-xs-11' id='restoreAntennaSettings'>Restore factory default</div>"
+														+"</div></div></div>";
+			
+			$(antennaSettingsPanel).appendTo('#settingsDataWrapper');
+			
+			util.updateAntennaButtonStatus(guiAntennaManualFlag);
+		}
+		
+		//Booster settings panel
+		if(guiProductType == "GO" && guiBoosterFlag){
+			var boosterSettingsPanel = "<div class='panel panel-default'>"
+										+"<div class='panel-heading dropDown'>"
+										+"<h4 class='panel-title'>"
+										+"<a data-toggle='collapse' data-parent='#settingsDataWrapper' href='#collapseFive'>"
+										+"<div><div class='settingsDropIcns' id='boosterIcn'></div>Booster Settings</div>"									
+										+"<span class='pull-right'>"
+										+"<span class='toggle-icon expand-more'></span>"
+										+"</span>"
+										+"</a>"
+										+"</h4>"
+										+"</div>"
+										+"<div id='collapseFive' class='panel-collapse collapse'>"
+										+"<div class='panel-body'>"
+										+"<div id='boosterWrapper'>"
+										+"<div class='boosterLbl'>Select by Technology:</div>"
+										+"<div class='cb'></div>";
+			
+			var boosterModeArr = ["auto", "3G/4G", "LTE"];
+			for(var bstLen = 0; bstLen < boosterModeArr.length; bstLen++){
+				if(guiBoosterCurrentMode == boosterModeArr[bstLen]){
+					boosterSettingsPanel = boosterSettingsPanel + "<div class='radioButtonWrapper'>"
+											+"<label class='radioBtnWrapper radioBtnSelected col-xs-3' for='"+boosterModeArr[bstLen]+"'></label>"
+											+"<div for='"+boosterModeArr[bstLen]+"' class='boosterSelectedTxt'>"+boosterModeArr[bstLen]+"</div>"
+											+"<input type='radio' name='technologyType' value='"+boosterModeArr[bstLen]+"' id='"+boosterModeArr[bstLen]+"' checked/>"
+											+"</div>";
+				}else{
+					boosterSettingsPanel = boosterSettingsPanel + "<div class='radioButtonWrapper'>"
+											+"<label class='radioBtnWrapper radioBtnUnSelected col-xs-3' for='"+boosterModeArr[bstLen]+"'></label>"
+											+"<div for='"+boosterModeArr[bstLen]+"' class='boosterUnSelectedTxt'>"+boosterModeArr[bstLen]+"</div>"
+											+"<input type='radio' name='technologyType' value='"+boosterModeArr[bstLen]+"' id='"+boosterModeArr[bstLen]+"'/>"
+											+"</div>";
+				}
+			}
+			
+			boosterSettingsPanel = boosterSettingsPanel + "<div class='boosterLbl'>Select by Band (Advanced):</div><div class='cb'></div>";
+			
+			for(var bbandLen=0; bbandLen<guiBoosterBands.length; bbandLen++){
+				boosterSettingsPanel = boosterSettingsPanel + "<div class='radioButtonWrapper'>"
+															+"<label class='radioBtnWrapper radioBtnUnSelected col-xs-3' for='band"+guiBoosterBands[bbandLen]+"'></label>"
+															+"<div for='band"+guiBoosterBands[bbandLen]+"' class='boosterUnSelectedTxt'>Band "+guiBoosterBands[bbandLen]+"</div>"
+															+"<input type='radio' name='technologyType' value='band"+guiBoosterBands[bbandLen]+"' id='band"+guiBoosterBands[bbandLen]+"'/>"
+															+"</div>";
+			}
+			boosterSettingsPanel = boosterSettingsPanel + "</div></div></div></div>";
+			$(boosterSettingsPanel).appendTo('#settingsDataWrapper');
+		}
+		
+		$(document.body).on('click', '.operatorListWrapper > ul li', function(event) {
+			var $target = $(event.currentTarget);											
+			$('#operatorVal').html($target.text());
+			$('.operatorListWrapper > ul li').removeClass('selectedListVal');
+			$(this).addClass('selectedListVal');
+			return false;
+		});	
+			
+		$(document.body).on('click', '.deviceListWrapper > ul li', function(event) {
+			var $target = $(event.currentTarget);											
+			$('#deviceVal').html($target.text());  
+			$('.deviceListWrapper > ul li').removeClass('selectedListVal');
+			$(this).addClass('selectedListVal');
+			return false;
+		});
+			
+		$('a[data-toggle="collapse"]').click(function () {
+			$('span.toggle-icon').not($(this).find('span.toggle-icon')).removeClass('expand-less');
+			$('span.toggle-icon').not($(this).find('span.toggle-icon')).addClass('expand-more');
+			$(this).find('span.toggle-icon').toggleClass('expand-less expand-more');
+		});																			
+		
+		$('.operatorList').click(function (e) {
+			e.preventDefault();					
+			$('.operatorListWrapper > ul').toggle();
+		});
+		
+		$('#operatorTitle').click(function (e) {
+			e.preventDefault();					
+			$('.operatorListWrapper > ul').css('display', 'none');
+		});
+						
+		$('.deviceList').click(function (e) {
+			e.preventDefault();					
+			$('.deviceListWrapper > ul').toggle();
+		});
+		
+		$('#deviceTitle').click(function (e) {
+			e.preventDefault();					
+			$('.deviceListWrapper > ul').css('display', 'none');
+		});
+	},
+	
+	loadTabletSettingsContainer: function(){
+	//loadPhoneSettingsContainer: function(){
+		var bodyContainer = document.getElementById("bodyContainer");
+		bodyContainer.innerHTML = "";
+		var settingScreenWrapper = util.createAppendElem("div", "settingsDataWrapper", "col-sm-12", bodyContainer);
+		
+		guiOperator = "Verizon";
+		guiOperatorList = ['AT&T','T-Mobile','Verizon','I don\'t see my Operator'];
+		
+		var selectedDevice = "Device 04"; 
+		guiDeviceList = ['Device 01', 'Device 02', 'Device 04', 'Device 07', 'Device 11'];
+		
+		var deviceListDropDown = ""; 
+		var colSMTab = "<div class='col-sm-6'>";
+		$(colSMTab).appendTo('#settingsDataWrapper');
+		//operator list drop dwon panel
+		if(guiOperatorFlag){
+			var operatorListPanel = "";
+			operatorListPanel = "<div class='settingsTabViewWrapper fl'>"
+								+"<div class='col-sm-12'>"
+								+"<div id='operatorTitle'><div class='settingsDropIcns' id='operatorIcn'></div>Operator</div>"
+								+"<div>"
+								+"<div class='operatorList col-xs-8'>"
+								+"<button type='button' class='form-control'>"
+								+"<span data-bind='label' id='operatorVal'>"+guiOperator+"</span>"
+								+"&nbsp;<span class='caret'></span>"
+								+"</button>"
+								+"<div class='operatorListWrapper'>"
+								+"<ul>";
+			
+			for(var operLen = 0; operLen < guiOperatorList.length; operLen++){
+				if(guiOperatorList[operLen] == guiOperator){
+					operatorListPanel = operatorListPanel + "<li class='selectedListVal'>" + guiOperatorList[operLen] + "</li>";
+				}else{
+					operatorListPanel = operatorListPanel + "<li>" + guiOperatorList[operLen] + "</li>";
+				}
+			}
+			
+			operatorListPanel = operatorListPanel + "</ul></div></div></div></div></div>";
+			$(operatorListPanel).appendTo('#settingsDataWrapper');
+		}
+		
+		//Software update status panel
+		var softwareUpdatePanel = 	"<div class='settingsTabViewWrapper fl'>"
+									+"<div class='col-sm-12'>"
+									+"<div><div class='settingsDropIcns' id='versionIcn'></div>Software Version</div>"
+									+"<div id='versionWrapper'>";
+		
+		var SWUpdateUIFlag = true;
+		var deViceUpdatePositiveState = "OK";
+		for(var sw=0; sw < guiSwStatus.length; sw++){
+			if(deViceUpdatePositiveState!=guiSwStatus[sw]){
+				SWUpdateUIFlag = false;
+				break;
+			}
+		}
+		if(SWUpdateUIFlag){
+			softwareUpdatePanel = softwareUpdatePanel + "<div class='versionLbl'>You're up-to-date</div>"
+														+"<div class='doneTick'></div>";
+		}else{
+			softwareUpdatePanel = softwareUpdatePanel + "<div class='versionLbl col-sm-7'>Please update your software</div>"
+														+"<div class='form-group col-sm-5' align='right'>"
+														+"<button type='button' class='primaryButton' id='versionUpdate' onclick=''>Update</button>"
+														+"</div>";
+		}
+		
+		softwareUpdatePanel = softwareUpdatePanel + "</div></div></div>";
+		
+		$(softwareUpdatePanel).appendTo('#settingsDataWrapper');
+		
+		//Antenna settings panel
+		if(guiAntennaFlag){
+			var antennaSettingsPanel = "<div class='settingsTabViewWrapper fl cb'>"
+										+"<div class='col-sm-12'>"
+										+"<div><div class='settingsDropIcns' id='antennaIcn'></div>Antenna Settings</div>"							
+										+"<div class='antennaDetailsWrapper'>"
+										+"<div class='antennaLbl col-sm-7 fl'>"
+										+"Antenna Control:"
+										+"</div>"
+										+"<div class='col-sm-5 fr'>";
+			
+			if(guiAntennaManualFlag){
+				antennaSettingsPanel = antennaSettingsPanel + "<div class='radioButtonWrapper'>"
+															+"<label class='radioBtnWrapper radioBtnUnSelected col-sm-3' for='antennaAuto' id='radioAntennaAuto'></label>"
+															+"<div for='auto' class='boosterUnSelectedTxt' id='labelAntennaAuto'>Auto</div>"
+															+"<input type='radio' name='antennaCtrl' value='auto' id='antennaSettingAuto'/>"
+															+"</div>"
+															+"<div class='cb'></div>"
+															+"<div class='radioButtonWrapper'>"
+															+"<label class='radioBtnWrapper radioBtnSelected col-sm-3' for='manual' id='radioAntennaManual'></label>"
+															+"<div for='manual' class='boosterSelectedTxt' id='labelAntennaManual'>Manual</div>"
+															+"<input type='radio' name='antennaCtrl' value='manual' id='antennaSettingManual'/>"
+															+"</div>";
+			}else{
+				antennaSettingsPanel = antennaSettingsPanel + "<div class='radioButtonWrapper'>"
+															+"<label class='radioBtnWrapper radioBtnSelected col-sm-3' for='antennaAuto' id='radioAntennaAuto'></label>"
+															+"<div for='auto' class='boosterSelectedTxt' id='labelAntennaAuto'>Auto</div>"
+															+"<input type='radio' name='antennaCtrl' value='auto' id='antennaSettingAuto'/>"
+															+"</div>"
+															+"<div class='cb'></div>"
+															+"<div class='radioButtonWrapper'>"
+															+"<label class='radioBtnWrapper radioBtnUnSelected col-sm-3' for='manual' id='radioAntennaManual'></label>"
+															+"<div for='manual' class='boosterUnSelectedTxt' id='labelAntennaManual'>Manual</div>"
+															+"<input type='radio' name='antennaCtrl' value='manual' id='antennaSettingManual'/>"
+															+"</div>";
+			}
+			
+			antennaSettingsPanel = antennaSettingsPanel + "</div></div><div class='hr'></div>";
+			
+			for(var bandLen = 0; bandLen < guiBands.length; bandLen++){
+				antennaSettingsPanel = antennaSettingsPanel + "<div class='antennaDetailsWrapper'><div class='antennaLbl col-sm-7 fl' id='bandTitle_"+bandLen+"'>";
+				antennaSettingsPanel = antennaSettingsPanel + "Band " + guiBands[bandLen] + " (" + guiAntennaFreqArrayMHz[bandLen] + ")";
+				antennaSettingsPanel = antennaSettingsPanel + "</div><div class='antennaRadioWrapper col-sm-5'>";
+				if(guiAntennaIntFlags[bandLen]){
+					antennaSettingsPanel = antennaSettingsPanel + "<div class='radioButtonWrapper'>"
+											+"<label class='radioBtnWrapper radioBtnUnSelected col-sm-3' for='band_"+bandLen+"_internal' id='band_"+bandLen+"_internalBtn'></label>"
+											+"<div for='band_"+bandLen+"_internal' id='band_"+bandLen+"_internalLbl' class='boosterUnSelectedTxt'>Internal</div>"
+											+"<input type='radio' name='antennaCtrl' value='internal' id='band_"+bandLen+"_internal'/>"
+											+"</div>"
+											+"<div class='cb'></div>"
+											+"<div class='radioButtonWrapper'>"
+											+"<label class='radioBtnWrapper radioBtnSelected col-sm-3' for='band_"+bandLen+"_external' id='band_"+bandLen+"_externalBtn'></label>"
+											+"<div for='band_"+bandLen+"_external' id='band_"+bandLen+"_externalLbl' class='boosterSelectedTxt'>External</div>"
+											+"<input type='radio' name='antennaCtrl' value='external' id='band_"+bandLen+"_external' checked/>"
+											+"</div>";
+				}else{
+					antennaSettingsPanel = antennaSettingsPanel + "<div class='radioButtonWrapper'>"
+											+"<label class='radioBtnWrapper radioBtnSelected col-sm-3' for='band_"+bandLen+"_internal' id='band_"+bandLen+"_internalBtn'></label>"
+											+"<div for='band_"+bandLen+"_internal' id='band_"+bandLen+"_internalLbl' class='boosterSelectedTxt'>Internal</div>"
+											+"<input type='radio' name='antennaCtrl' value='internal' id='band_"+bandLen+"_internal' checked/>"
+											+"</div>"
+											+"<div class='cb'></div>"
+											+"<div class='radioButtonWrapper'>"
+											+"<label class='radioBtnWrapper radioBtnUnSelected col-sm-3' for='band_"+bandLen+"_external' id='band_"+bandLen+"_externalBtn'></label>"
+											+"<div for='band_"+bandLen+"_external' id='band_"+bandLen+"_externalLbl' class='boosterUnSelectedTxt'>External</div>"
+											+"<input type='radio' name='antennaCtrl' value='external' id='band_"+bandLen+"_external'/>"
+											+"</div>";
+				}
+				antennaSettingsPanel = antennaSettingsPanel + "</div></div>";
+			}
+			antennaSettingsPanel = antennaSettingsPanel + "<div class='restoreAntenna col-xs-11' id='restoreAntennaSettings'>Restore factory default</div>"
+														+"</div></div>";
+			
+			$(antennaSettingsPanel).appendTo('#settingsDataWrapper');
+			util.updateAntennaButtonStatus(guiAntennaManualFlag);
+		}
+		
+		var colSMTab = "</div><div class='col-sm-6'>";
+		$(colSMTab).appendTo('#settingsDataWrapper');
+		
+		//Device list drop down panel
+		if(guiDeviceFlag){
+			deviceListDropDown = "<div class='settingsTabViewWrapper fr'>"
+								+"<div class='col-sm-12'>"
+								+"<div id='deviceTitle'><div class='settingsDropIcns' id='deviceIcn'></div>Device</div>"
+								+"<div id='deviceDetailsWrapper'>"
+								+"<div id='devicesFoundLbl'>Devices Found</div>"
+								+"<div class='deviceList col-sm-8'>"
+								+"<button type='button' class='form-control'>"
+								+"<span data-bind='label' id='deviceVal'>"+selectedDevice+"</span>"
+								+"</span>&nbsp;<span class='caret'></span>"
+								+"</button>"
+								+"<div class='deviceListWrapper'>"
+								+"<ul>";
+			for(var devLen = 0; devLen < guiDeviceList.length; devLen++){
+				if(selectedDevice == guiDeviceList[devLen]){
+					deviceListDropDown = deviceListDropDown + "<li class='selectedListVal'>" + guiDeviceList[devLen] + "</li>";
+				}else{
+					deviceListDropDown = deviceListDropDown + "<li>" + guiDeviceList[devLen] + "</li>";
+				}
+			}
+			
+			deviceListDropDown = deviceListDropDown + "</ul>"
+									+"</div>"
+									+"</div>"
+									+"<div class='cb'></div>"
+									+"<div class='hr'></div>"
+									+"<div id='devicesFoundLbl'>Give your Device a name</div>"
+									+"<input type='text' id='deviceInput' class='col-sm-8'>"
+									+"<div class='form-group' align='right'>"
+									+"<button type='button' class='defaultButton' id='deviceUpdate'>Update</button>"
+									+"</div></div></div></div>";
+			
+			$(deviceListDropDown).appendTo('#settingsDataWrapper');
+		}
+		
+		//Booster settings panel
+		if(guiProductType == "GO" && guiBoosterFlag){
+			var boosterSettingsPanel = "<div class='settingsTabViewWrapper fr'>"
+										+"<div class='col-sm-12'>"
+										+"<div><div class='settingsDropIcns' id='boosterIcn'></div>Booster Settings</div>"
+										+"<div id='boosterWrapper'>"
+										+"<div class='boosterLbl'>Select by Technology:</div>"
+										+"<div class='cb'></div>";
+			
+			var boosterModeArr = ["auto", "3G/4G", "LTE"];
+			for(var bstLen = 0; bstLen < boosterModeArr.length; bstLen++){
+				if(guiBoosterCurrentMode == boosterModeArr[bstLen]){
+					boosterSettingsPanel = boosterSettingsPanel + "<div class='radioButtonWrapper'>"
+											+"<label class='radioBtnWrapper radioBtnSelected col-sm-3' for='"+boosterModeArr[bstLen]+"'></label>"
+											+"<div for='"+boosterModeArr[bstLen]+"' class='boosterSelectedTxt'>"+boosterModeArr[bstLen]+"</div>"
+											+"<input type='radio' name='technologyType' value='"+boosterModeArr[bstLen]+"' id='"+boosterModeArr[bstLen]+"' checked/>"
+											+"</div>";
+				}else{
+					boosterSettingsPanel = boosterSettingsPanel + "<div class='radioButtonWrapper'>"
+											+"<label class='radioBtnWrapper radioBtnUnSelected col-sm-3' for='"+boosterModeArr[bstLen]+"'></label>"
+											+"<div for='"+boosterModeArr[bstLen]+"' class='boosterUnSelectedTxt'>"+boosterModeArr[bstLen]+"</div>"
+											+"<input type='radio' name='technologyType' value='"+boosterModeArr[bstLen]+"' id='"+boosterModeArr[bstLen]+"'/>"
+											+"</div>";
+				}
+			}
+			
+			boosterSettingsPanel = boosterSettingsPanel + "<div class='boosterLbl'>Select by Band (Advanced):</div><div class='cb'></div>";
+			
+			for(var bbandLen=0; bbandLen<guiBoosterBands.length; bbandLen++){
+				boosterSettingsPanel = boosterSettingsPanel + "<div class='radioButtonWrapper'>"
+															+"<label class='radioBtnWrapper radioBtnUnSelected col-sm-3' for='band"+guiBoosterBands[bbandLen]+"'></label>"
+															+"<div for='band"+guiBoosterBands[bbandLen]+"' class='boosterUnSelectedTxt'>Band "+guiBoosterBands[bbandLen]+"</div>"
+															+"<input type='radio' name='technologyType' value='band"+guiBoosterBands[bbandLen]+"' id='band"+guiBoosterBands[bbandLen]+"'/>"
+															+"</div>";
+			}
+			
+			boosterSettingsPanel = boosterSettingsPanel + "</div></div></div>";
+			
+			$(boosterSettingsPanel).appendTo('#settingsDataWrapper');
+		}
+		var colSMTab = "</div>";
+		$(colSMTab).appendTo('#settingsDataWrapper');
+		
+		$('a[data-toggle="collapse"]').click(function () {
+			$('span.toggle-icon').not($(this).find('span.toggle-icon')).removeClass('glyphicon-chevron-up');
+			$('span.toggle-icon').not($(this).find('span.toggle-icon')).addClass('glyphicon-chevron-down');
+			$(this).find('span.toggle-icon').toggleClass('glyphicon-chevron-up glyphicon-chevron-down');
+		});																			
+		
+		$('.operatorList').click(function (e) {
+			e.preventDefault();					
+			$('.operatorListWrapper > ul').toggle();
+		});
+		
+		$('#operatorTitle').click(function (e) {
+			e.preventDefault();					
+			$('.operatorListWrapper > ul').css('display', 'none');
+		});
+						
+		$('.deviceList').click(function (e) {
+			e.preventDefault();					
+			$('.deviceListWrapper > ul').toggle();
+		});
+		
+		$('#deviceTitle').click(function (e) {
+			e.preventDefault();					
+			$('.deviceListWrapper > ul').css('display', 'none');
+		});
+		
+		$(document.body).on('click', '.operatorListWrapper > ul li', function(event) {
+			var $target = $(event.currentTarget);											
+			$('#operatorVal').html($target.text());
+			$('.operatorListWrapper > ul li').removeClass('selectedListVal');
+			$(this).addClass('selectedListVal');
+			return false;
+		});	
+		
+		$(document.body).on('click', '.deviceListWrapper > ul li', function(event) {
+			var $target = $(event.currentTarget);											
+			$('#deviceVal').html($target.text());
+			$('.deviceListWrapper > ul li').removeClass('selectedListVal');
+			$(this).addClass('selectedListVal');
+			return false;
+		});	
+	},
+	
+	updateAntennaButtonStatus: function(){
+		util.updateAntennaBandButtons();
+		$('#radioAntennaManual, #labelAntennaManual').click(function(){
+			$('#radioAntennaAuto, #radioAntennaManual').toggleClass('radioBtnUnSelected radioBtnSelected');
+			$('#labelAntennaAuto, #labelAntennaManual').toggleClass('boosterUnSelectedTxt boosterSelectedTxt');
+			SetAntenna(0x2000);
+			//util.updateAntennaBandButtons();
+		});
+		
+		$('#radioAntennaAuto, #labelAntennaAuto').click(function(){
+			$('#radioAntennaAuto, #radioAntennaManual').toggleClass('radioBtnUnSelected radioBtnSelected');
+			$('#labelAntennaAuto, #labelAntennaManual').toggleClass('boosterUnSelectedTxt boosterSelectedTxt');
+			SetAntenna(0x0020);
+			//util.updateAntennaBandButtons();
+		});
+	},
+	
+	updateAntennaBandButtons: function(){
+		if(guiAntennaManualFlag){
+			$('#radioAntennaAuto').removeClass('radioBtnSelected').addClass('radioBtnUnSelected')
+			$('#radioAntennaManual').removeClass('radioBtnUnSelected').addClass('radioBtnSelected');
+			
+			$('#labelAntennaAuto').removeClass('boosterSelectedTxt').addClass('boosterUnSelectedTxt')
+			$('#labelAntennaManual').removeClass('boosterUnSelectedTxt').addClass('boosterSelectedTxt');
+			
+			for(var bandId=0; bandId<guiBands.length; bandId++){
+				if(guiBands[bandId]!=0){
+					$('#band_'+bandId+'_internal, #band_'+bandId+'_external').attr('disabled',false);
+					$('#band_'+bandId+'_internalBtn, #band_'+bandId+'_externalBtn').removeClass('disableRadio');
+					$('#band_'+bandId+'_internalLbl, #band_'+bandId+'_externalLbl').removeClass('disableLabel');
+					$('#bandTitle_'+bandId).removeClass('disabledBandTitle');
+				}else{
+					$('#band_'+bandId+'_internal, #band_'+bandId+'_external').attr('disabled',true);
+					$('#band_'+bandId+'_internalBtn, #band_'+bandId+'_externalBtn').addClass('disableRadio');
+					$('#band_'+bandId+'_internalLbl, #band_'+bandId+'_externalLbl').addClass('disableLabel');
+					$('#bandTitle_'+bandId).addClass('disabledBandTitle');
+				}
+			}
+		}else{
+			$('#radioAntennaAuto').removeClass('radioBtnUnSelected').addClass('radioBtnSelected')
+			$('#radioAntennaManual').removeClass('radioBtnSelected').addClass('radioBtnUnSelected');
+			
+			$('#labelAntennaAuto').removeClass('boosterUnSelectedTxt').addClass('boosterSelectedTxt')
+			$('#labelAntennaManual').removeClass('boosterSelectedTxt').addClass('boosterUnSelectedTxt');
+			for(var bandId=0; bandId<guiBands.length; bandId++){
+				$('#band_'+bandId+'_internal, #band_'+bandId+'_external').attr('disabled',true);
+				$('#band_'+bandId+'_internalBtn, #band_'+bandId+'_externalBtn').addClass('disableRadio');
+				$('#band_'+bandId+'_internalLbl, #band_'+bandId+'_externalLbl').addClass('disableLabel');
+				$('#bandTitle_'+bandId).addClass('disabledBandTitle');
+			}
+		}
+		var antennaBandIntValArr = [0x0002, 0x0004, 0x0008, 0x0010];
+		var antennaBandExtValArr = [0x0200, 0x0400, 0x0800, 0x1000];
+		for(var intFlg=0; intFlg<guiAntennaIntFlags.length; intFlg++){
+			if(guiAntennaIntFlags[intFlg]){
+				$('#band_'+intFlg+'_internalBtn').removeClass('radioBtnUnSelected').addClass('radioBtnSelected')
+				$('#band_'+intFlg+'_externalBtn').removeClass('radioBtnSelected').addClass('radioBtnUnSelected');
+				
+				$('#band_'+intFlg+'_internalLbl').removeClass('boosterUnSelectedTxt').addClass('boosterSelectedTxt')
+				$('#band_'+intFlg+'_externalLbl').removeClass('boosterSelectedTxt').addClass('boosterUnSelectedTxt');
+			}else{
+				$('#band_'+intFlg+'_internalBtn').removeClass('radioBtnSelected').addClass('radioBtnUnSelected')
+				$('#band_'+intFlg+'_externalBtn').removeClass('radioBtnUnSelected').addClass('radioBtnSelected');
+				
+				$('#band_'+intFlg+'_internalLbl').removeClass('boosterSelectedTxt').addClass('boosterUnSelectedTxt')
+				$('#band_'+intFlg+'_externalLbl').removeClass('boosterUnSelectedTxt').addClass('boosterSelectedTxt');
+			}
+			
+			if(guiBands[intFlg]){
+				$('#band_'+intFlg+'_internalBtn, #band_'+intFlg+'_internalLbl').click(function(){
+					$('#band_'+intFlg+'_internalBtn, #band_'+intFlg+'_externalBtn').toggleClass('radioBtnUnSelected radioBtnSelected');
+					$('#band_'+intFlg+'_internalLbl, #band_'+intFlg+'_externalLbl').toggleClass('boosterUnSelectedTxt boosterSelectedTxt');
+					//SetAntenna(antennaBandIntValArr[intFlg]);
+					//util.updateAntennaBandButtons();
+				});
+				
+				$('#band_'+intFlg+'_externalBtn, #band_'+intFlg+'_externalLbl').click(function(){
+					$('#band_'+intFlg+'_internalBtn, #band_'+intFlg+'_externalBtn').toggleClass('radioBtnUnSelected radioBtnSelected');
+					$('#band_'+intFlg+'_internalLbl, #band_'+intFlg+'_externalLbl').toggleClass('boosterUnSelectedTxt boosterSelectedTxt');
+					//SetAntenna(antennaBandExtValArr[intFlg]);
+					//util.updateAntennaBandButtons();
+				});
+			}
+		}
+	},
+	
+	changeAntennaSettings: function(){
+		var antennaSetting = $('#antennaSetting').val();
+		$('#radioAntennaAuto, #radioAntennaManual').toggleClass('radioBtnUnSelected radioBtnSelected');
+		$('#labelAntennaAuto, #labelAntennaManual').toggleClass('boosterUnSelectedTxt boosterSelectedTxt');
+	},
+	
+	loadAdvancedContainer : function(){
+		var advancedButtonWrapper = "<div class='advancedIcnContainer col-xs-12 col-sm-12' >"										
+			+ "<div id='sendIcnWrapper'>"
+			+ "<div id='sendIcn'></div>"
+			+ "<div class='advancedIcnLbl' onclick='util.showAdvancedFeedBack()'>Send</div>"
+			+ "</div>"
+			+ "<div id='refreshIcnWrapper'>"
+			+ "<div id='refreshIcn'></div>"
+			+ "<div class='advancedIcnLbl'>Refresh</div>"
+			+ "</div></div>";										
+
+		var advancedHeader = "<div id='advancedContentwrapper'>"
+				+ "<div class='panel-group' id='advancedDataContainer'>";
+		var overViewContent = '';
+		overViewContent = overViewContent + "<div class='divider'>OVERVIEW</div><div class='panel panel-default col-sm-6'>";
+		overViewContent = overViewContent + "<div class='panel-heading dropDown'>"
+							+ "<h4 class='panel-title'>"
+							+ "<a data-toggle='collapse' data-parent='#advancedDataContainer' href='#networkBarsCollapse'>"
+							+ "<div>Network Strength</div>"
+							+ "<span class='pull-right'>"								 
+							+ "<span class='toggle-icon expand-less'></span>"
+							+ "</span></a></h4></div>"
+							+ "<div id='networkBarsCollapse' class='panel-collapse collapse in'>"
+							+ "<div class='panel-body' id='networkDataContainer'>";
+		
+		for(var i = 0; i < guiBands.length; i++) {
+			overViewContent = overViewContent + "<div class='col-xs-3 col-sm-3 networkData'>"
+									+ "<div class='networkTitle'>" + guiRadios[i] + "</div><div class='networkStrength'>"
+									+ "<div class='signalContainerSM'>";
+			if(guiBands[i] !== 0) {
+				for(var j = 1; j < 6; j++) {
+					if(j <= guiNetworkBars[i])
+					overViewContent = overViewContent + "<div class='networkSignalIndiSM activeStatus networkBar" + j + "'></div>";
+					else
+					overViewContent = overViewContent + "<div class='networkSignalIndiSM deactiveStatus networkBar" + j + "'></div>";
+				}					
+			}
+			overViewContent = overViewContent + "</div></div>";
+			
+			var techType = '',
+			freq = '';
+			if(guiBands[i] !== 0) {
+			techType = guiTechnologyTypes[i] === 1 ? 'LTE' : 'WCDMA';
+			freq = guiFreqArrayMHz[i] + " MHz";
+			}
+			overViewContent = overViewContent + "<div class='networkStatus'>"
+									+ "<div class='networkStatusLbl'>"+ techType +"</div>"
+									+ "<div class='networkFreq'>" + freq + "</div>"
+									+ "</div>";				
+			overViewContent = overViewContent + "</div>";
+		
+		}
+		
+		overViewContent = overViewContent + "</div></div></div>";
+		
+		
+		var clearFloat = "<div class='cb'></div>";
+						
+		var cellStates = ['Idle', 'RssiScan', 'CsrchStart', 'WaitAfc', 'CellSearch', 'ReleaseMeas', 'ReleaseXCh', 'FreqSelect', 'SetupPlace', 'Place', 'Ranging', 'SetupRelay', 'Relay'];
+		var superChannelsContent = '';
+		superChannelsContent = superChannelsContent + "<div class='divider'>SUPER CHANNELS</div>";
+		for(var i = 0; i < guiBands.length; i++) {
+			var techType = guiTechnologyTypes[i] === 1 ? 'LTE' : 'WCDMA';
+			superChannelsContent = superChannelsContent + "<div class='panel panel-default'>"
+			
+			var radioStatusColour = '';
+			var radioHeader = '';
+			if(guiBands[i] !== 0) {
+				radioStatusColour = 'drop-green';
+				radioHeader = "<div>Radio " + guiRadios[i] + " Band " + guiBands[i] + " : " + techType +" ("+cellStates[guiCellState[i]]+")</div>";
+			} else {
+				radioStatusColour = 'drop-red';
+				radioHeader = "<div>Radio " + guiRadios[i] + " : Unused</div>";
+			}
+			
+			superChannelsContent = superChannelsContent + "<div class='panel-heading " + radioStatusColour + " dropDown'>"
+											+ "<h4 class='panel-title'>"
+											+ "<a data-toggle='collapse' data-parent='#advancedDataContainer' href='#channel"+ i +"'>"
+											+ radioHeader
+											+ "<span class='pull-right'>"
+											+ "<span class='toggle-icon  expand-more'></span>"
+											+ "</span></a></h4></div>";
+			
+			superChannelsContent = superChannelsContent + "<div id='channel" + i + "' class='panel-collapse collapse'>" 
+											+ "<div class='panel-body dropDownList'>";														
+			if(guiBands[i] !== 0) {					
+				superChannelsContent = superChannelsContent + "<div class='dropDownInnerTitle '>"
+													+ "<div class='col-xs-8 col-sm-8'>Description</div>"
+													+ "<div class='col-xs-4 col-sm-4'>Value</div>"
+													+ "</div>";
+				var keyParams = ['Bandwidth', 'DL Center Freq', 'UL Center Freq', 'ID0', 'DL RSSI', 'Max DL RSCP', 'RSRQ', 'SINR', 'CU Tx Pwr', 'NU Tx Pwr', 'Ext Ant In Use'];
+				var titleArray = ['Bandwidth', 'Download centre freq.', 'Uplink centre freq.', 'PRI Cell ID', 'Donor RSSI', 'Donor RSCP', 'Donor RSRQ', 'Donor SINR', 'Downlink [CU] TX power', 'Uplink [NU] TX power', 'Ext. antenna in use'];
+				var unitsArray = ['MHz', 'MHz', 'MHz', '', 'dBm', 'dBm', 'dBm', 'dB', 'dBm', '', ''];
+				for(var j = 0; j < keyParams.length; j++) {
+					var techValue = '';
+					
+					if(j !== 3 && j !== 8 && j !== 9)
+						techValue = GetTechValue(keyParams[j], i);
+					else if(j === 8 || j === 9)
+						techValue = GetTechValue(keyParams[j], 4);						
+											
+					superChannelsContent = superChannelsContent + "<div class='dropDownListValue'>"
+															+ "<div class='col-xs-8 col-sm-8'>" + titleArray[j] + "</div>"
+															+ "<div class='col-xs-4 col-sm-4'>" + techValue + " "+unitsArray[j] + "</div>"
+															+ "</div>";
+				}				
+			}
+			superChannelsContent = superChannelsContent + "</div></div>";
+			superChannelsContent = superChannelsContent + "</div>";
+		}
+		
+		
+		var deviceStateContent = '';
+		if(guiProductType === 'DUO' || guiProductType === 'PRO') {
+		deviceStateContent = deviceStateContent + "<div class='divider'>SYSTEM OVERVIEW</div>";
+		deviceStateContent = deviceStateContent + "<div class='panel panel-default col-sm-6'>"
+									+ "<div class='panel-heading drop-purple dropDown'>"
+									+ "<h4 class='panel-title'>"
+									+ "<a data-toggle='collapse' data-parent='#advancedDataContainer' href='#deviceStateCollapse'>"
+									+ "<div>Device State</div>"
+									+ "<span class='pull-right'>"
+									+ "<span class='toggle-icon  expand-more'></span>"
+									+ "</span></a></h4></div>"
+									+ "<div id='deviceStateCollapse' class='panel-collapse collapse'>"
+									+ "<div class='panel-body dropDownList'>"
+									+ "<div class='dropDownInnerTitle '>"
+									+ "<div class='col-xs-8 col-sm-8'>Description</div>"
+									+ "<div class='col-xs-4 col-sm-4'>Value</div></div>";	
+		var deviceStates = ['WuUnniState', '5GHz DL Freq', '5GHz UL Freq', 'Distance Metric', 'Remote Shutdown State', 'NU Temp', 'CU Temp'],
+		deviceStateUnits = ['MHz', 'MHz', 'MHz', '', '', '&deg;F', '&deg;F'],
+		deviceStateKeys = ['NU UNII State', 'NU 5G DL', 'NU 5G UL', 'NU Dist Metric', 'Remote Shutdown',  'NU Temp', 'CU Temp'];
+		
+		for(var i = 0; i < deviceStateKeys.length; i++) {
+		var techValue = '';
+		if(i === (deviceStateKeys.length - 3)) {
+		for(var j = 0; j < guiBands.length; j++) {
+		if(guiBands[j] !== 0) {
+			techValue = GetTechValue(deviceStateKeys[i], j);
+			break;
+		}
+		}
+		}
+		
+		else
+		techValue = GetTechValue(deviceStateKeys[i], 4);	
+		if(i === (deviceStateKeys.length - 1 ) || i === (deviceStateKeys.length - 2))
+		techValue = techValue * 9 / 5 + 32; // Celcius to Fahrenheit conversion
+		
+		deviceStateContent = deviceStateContent + "<div class='dropDownListValue'>"
+										+ "<div class='col-xs-8 col-sm-8'>" + deviceStates[i] + "</div>"
+										+ "<div class='col-xs-4 col-sm-4'>" + techValue + " " + deviceStateUnits[i] +"</div></div>";
+		}
+		
+		deviceStateContent = deviceStateContent + "</div></div>";
+		deviceStateContent = deviceStateContent + "</div>";
+		
+		}
+		
+		
+		var techDataContent = "<div class='divider'>TECH DATA</div>"
+				+ "<div class='panel panel-default col-sm-6'>"
+				+ "<div class='panel-heading drop-orange dropDown'>"
+				+ "<h4 class='panel-title'>"
+				+ "<a data-toggle='collapse' data-parent='#advancedDataContainer' href='#unknownCollapse'>"
+				+ "<div>Stuff you won't understand</div>"
+				+ "<span class='pull-right'>"
+				+ "<span class='toggle-icon expand-more'></span>"
+				+ "</span></a></h4></div>"				                    
+				+ "<div id='unknownCollapse' class='panel-collapse collapse'>"	
+				+ "<div class='panel-body dropDownList'></div>"			                        			                       
+				+ "</div></div>";			
+		
+		
+		var softwareVersionContent = '';
+		softwareVersionContent = softwareVersionContent + "<div class='divider'>DEVICE VERSION</div><div class='panel panel-default col-sm-6'>";
+		
+		softwareVersionContent = softwareVersionContent + "<div class='panel-heading drop-teal dropDown'>"
+										+ "<h4 class='panel-title'>"
+										+ "<a data-toggle='collapse' data-parent='#advancedDataContainer' href='#versionCollapse'>"
+										+ "<div>Software Versions</div>"
+										+ "<span class='pull-right'>"
+										+ "<span class='toggle-icon expand-more'></span>"
+										+ "</span></a></h4></div>"
+										+"<div id='versionCollapse' class='panel-collapse collapse'>"
+										+ "<div class='panel-body dropDownList'>" 
+										+ "<div class='dropDownInnerTitle'>"
+										+ "<div class='col-xs-3 col-sm-3'>Name</div>"
+										+ "<div class='col-xs-3 col-sm-3'>Cel-Fi</div>"
+										+ "<div class='col-xs-3 col-sm-3'>Cloud</div>"
+										+ "<div class='col-xs-3 col-sm-3'>Status</div></div>";
+		for(var i = 0 ; i < guiSwNames.length; i++) {
+		var celFiVersion = guiSwCelFiVers[i] === '' ? "000.000" : guiSwCelFiVers[i],
+		cloudVersion = guiSwCldVers[i] === '' ? "000.000" : guiSwCldVers[i];
+		softwareVersionContent = softwareVersionContent + "<div class='dropDownListValue'>"
+											+ "<div class='col-xs-3 col-sm-3'>" + guiSwNames[i] + "</div>"
+											+ "<div class='col-xs-3 col-sm-3'>" + celFiVersion + "</div>"
+											+ "<div class='col-xs-3 col-sm-3'>" + cloudVersion + "</div>"
+											+ "<div class='col-xs-3 col-sm-3'>" + guiSwStatus[i] + "</div></div>"
+		}
+		
+		
+		
+		softwareVersionContent = softwareVersionContent + "</div></div>";
+		softwareVersionContent = softwareVersionContent + "</div>";
+		
+		var footer = "</div></div>";
+		
+		var advancedPanelContent = advancedButtonWrapper + clearFloat 
+					+ advancedHeader 
+					+ overViewContent + clearFloat 
+					+ superChannelsContent + clearFloat 
+					+ deviceStateContent + clearFloat
+					+ techDataContent + clearFloat
+					+ softwareVersionContent
+					+ footer;			
+		$('#bodyContainer').html(advancedPanelContent);
+	},
+	
+	loadDashboardContainer: function(menuElem){
+		/*UI element updates for Dashboard view*/
+		if(typeof window.localStorage.getItem("firstName")!=null || window.localStorage.getItem("firstName")!=""){
+			$('#userDpName').html(" " + window.localStorage.getItem("firstName")+",");
+		}else{
+			$('#userDpName').html(",");
+		}
+		
+		if(guiBoost >= 0 && guiBoost <= 3){
+			$('#userDeviceStatusLine').html("Looks like there's a ");
+			$('#deviceStatus').html('problem');
+			$('#deviceStatus').removeClass().addClass('problem');
+			$('#fixItContent').html('Fix it now');
+			$('#userDeviceStatusLine, #deviceStatus').css('font-size','13px');
+		}
+		else if(guiBoost >= 4 && guiBoost <= 5){
+			$('#userDeviceStatusLine').html("Things look ");
+			$('#deviceStatus').html('poor');
+			$('#deviceStatus').removeClass().addClass('problem');
+			$('#fixItContent').html('Boosting tips');
+		}
+		else if(guiBoost >= 6 && guiBoost <= 7){
+			$('#userDeviceStatusLine').html("Things look ");
+			$('#deviceStatus').html('ok');
+			$('#deviceStatus').removeClass().addClass('ok');
+			$('#fixIt').hide();
+		}
+		else if(guiBoost >= 8 && guiBoost <= 9){
+			$('#userDeviceStatusLine').html("Things look ");
+			$('#deviceStatus').html('good');
+			$('#deviceStatus').removeClass().addClass('good');
+			$('#fixIt').hide();
+		}
+		
+		if(guiProductType=="590NP34"){$('.deviceDUO').css("background","URL('img/assets/images/deviceImages/Pro.png')no-repeat");}
+		else if(guiProductType=="590ND32"){$('.deviceDUO').css("background","URL('img/assets/images/deviceImages/Duo.png')no-repeat");}
+		else if(guiProductType=="590NS32"){$('.deviceDUO').css("background","URL('img/assets/images/deviceImages/RS1.png')no-repeat");}
+		else if(guiProductType=="590NG31"){$('.deviceDUO').css("background","URL('img/assets/images/deviceImages/RS2 White.png')no-repeat");}
+		else if(guiProductType=="590NT34"){$('.deviceDUO').css("background","URL('img/assets/images/deviceImages/RS2.png')no-repeat");}
+		
+		$('.deviceSerialNumber').html(guiSerialNumber);
+		$('#boosterLevel').html(guiBoost);
+		util.showGauge(guiBoost);
+		
+		var netWorkSignalArr = ['networkSignal1', 'networkSignal2', 'networkSignal3', 'networkSignal4', 'networkSignal5'];
+		var networkBarArr = guiNetworkBars;
+		var i = networkBarArr.indexOf(Math.max.apply(Math, networkBarArr));
+		for(var n=1; n<=networkBarArr[i]; n++){
+			$('#networkSignal'+n).removeClass('deactiveStatus').addClass('activeStatus');
+		}
+		
+		if(guiTechnologyTypes.indexOf('LTE') > -1){
+			$('#coverageNamecontainer').html('<span>LTE</span>');
+		}else{
+			$('#coverageNamecontainer').html('<span>3G/4G</span>');
 		}
 	},
 	
@@ -2696,8 +3402,8 @@ var util = {
 	},
 	
 	removeModal: function () {
-		helpMenuDeviceType = "";
-		helpMenuSelectedDevice = "";
+		//helpMenuDeviceType = "";
+		//helpMenuSelectedDevice = "";
 		$('.modalWrapper').remove();
 		$('.headerContainer, #bodyContainer').show();
 	},
@@ -2881,7 +3587,7 @@ var util = {
 								+ "<div class='modalContentPadding'>"                      
 								+ "<div class='helpSubTitle installGuideContent'>STEP 1</div>"
 								+ "<div class='helpHeadLine'>Find the best cellular signal</div>"
-								+ "<div class='helpContent'>For Cel-Fi to work correctly, use your phone to find the best 3G, 4G or LTE signal. </br>Typically, you will get the best signal upstairs near a window.</div>"
+								+ "<div class='helpContent'>For Cel-Fi to work correctly, use your phone to find the best 3G, 4G or LTE signal. Typically, you will get the best signal upstairs near a window.</div>"
 								+ "<div class='helpSubTitle installGuideContent'>STEP 2</div>"
 								+ "<div class='helpHeadLine'>Place the Network Unit</div>"
 								+ "<div class='helpContent'>Place the Network Unit (NU) in the location where you get the best cellular signal.</div>"								
@@ -2984,7 +3690,36 @@ var util = {
 	
 	contactInfo: function () {
 		// Yet to be given
+		//$('#modalTitle').html('Contact Us');
+		this.createModalWrapper();
 		$('#modalTitle').html('Contact Us');
+		var operatorName = "T-Mobile";
+		var operatorContactNum = "1-877-453-1304";
+		var operatorContactEmail = "support@t-mobile.com";
+		var contactInfo =	'<div id="contactOperatorModal">'
+							+'<div class="operatorDetailContainer col-sm-6 col-xs-12">'
+							+'<div class="operatorName">It looks like your network operator is '+ operatorName +'</div>'
+							+'<div class="operatorSupport">'
+							+'<div class="operatorSupportContactNum">'
+							+'<div class="contactLogo fl"></div>'
+							+'<div class="contactNumber fl">'+ operatorContactNum +'</div>'
+							+'<div class="cb"></div>'
+							+'</div>'
+							+'<div class="operatorSupportEmail">'
+							+'<div class="emailLogo fl"></div>'
+							+'<div class="contactEmail fl">'+ operatorContactEmail +'</div>'
+							+'<div class="cb"></div>'
+							+'</div>'
+							+'</div>'
+							+'</div>'
+							+'<div class="operatorSupportContainer col-sm-6 col-xs-12">'
+							+'<div class="supportTop">Not a '+ operatorName +' customer?</div>'
+							+'<div class="supportBotom">Visit <span class="supportLink">www.cel-fi.com</span> to contact us.</div>'
+							+'</div>'
+							+'</div>';
+		$(contactInfo).appendTo('.modalBodyWrapper');
+		$('.headerContainer, #bodyContainer').hide();
+		$('.modalWrapper').show();
 	},
 	
 	showAdvancedFeedBack : function() {
@@ -3029,6 +3764,7 @@ var util = {
 	},
 	
 	showPrivacyPolicy: function(){
+		var privacyPolicyContent = '<h1 class="modelBodyHeaderTitle modalContentTitle">Terms/Policy</h1><P class="modelBodyContent">At Nextivity, Inc., we adhere to industry-standard procedures to ensure your privacy. This privacy policy applies to data collection and usage on all Nextivity websites and related services (including, without limitation, any Nextivity mobile application) (collectively, the "Services"). Nextivity\'s websites are general audience websites.</br></br>Personal information of all users of the Services is collected, used and disclosed by us as described in this policy statement.  This policy statement does not cover the treatment, collection, use or disclosure of personal information by companies that we don\'t own or control, or people that we don\'t manage.</P><h2 class="modelBodySubHeaderTitle">Gathering/tracking personal information</h2><p class="modelBodyContent">We do not collect personal information about you unless you voluntarily provide it to us. For example, some of the purposes for which we collect such information are: to register your Nextivity product; provide feedback in our online surveys; request product information; and/or request contact from a Nextivity representative. Nextivity collects and uses your personal information in connection with the Services, to deliver the products and services you have requested, and as explained in more detail below.  In certain cases, we may share some of your personal information with third parties, but only as described below.</br></br>Please note that Nextivity may contact you about matters pertaining to your ownership of Nextivity products, or your interactive use of the company\'s website(s); for example, access to download new product software releases.  If you do not want to receive communications from us, please indicate your preference by sending an email to: support@cel-fi.com </br></br>The personal information that may be gathered includes your name, telephone number(s), fax number, street address, mailing address and e-mail address. You may also be asked to furnish other information about yourself such as your job category, industry type, company name and job title, and/or the number of people in your company.</p><h1 class="modelBodySubHeaderTitle">Sharing personal information</h1> <p class="modelBodyContent" >Telecommunications operators such as AT&T or T-Mobile (an "Operator") may be required under applicable law (for example, 47 CFR 20.21(h) in the United States) to register users of a Nextivity Product.  If, through the Services, you choose to register your Nextivity Product with an Operator, then we may disclose your personal information to such Operator or its affiliates in connection with such registration.  We have no control over the policies and practices of Operators as to privacy, their use or disclosure of your personal information, or anything else.  So if you choose to register your Nextivity Product with an Operator, please review all of that Operator\'s relevant policies on privacy.  For your information, and without limiting what an Operator may do with your personal information, please recognize that Operators may be required to disclose your personal information in accordance with applicable law.  By submitting personal information to us in connection with the registration of a Nextivity Product, you agree to hold Nextivity harmless against any disclosure, use, or security of such personal information by an Operator or its agents.</br></br>We may anonymize your personal information so that you are not individually identified, and provide that information to our partners or other third parties. We may also use your personal information on an aggregated basis to improve our products, services, and offerings thereof. However, we never disclose aggregate information to a partner or third party in a manner that would identify you personally, as an individual.</br></br>Personal information collected on any or all Nextivity websites may be stored and processed in the United States or any other country in which Nextivity or its affiliates, subsidiaries or agents maintain facilities. By using this site, or our Services, you consent to any such transfer of information outside of your country.</p><h1  class="modelBodySubHeaderTitle">Agents</h1><p class="modelBodyContent">We employ other companies and people to perform tasks on our behalf and need to share your information with them to provide products or services to you.  Unless we tell you differently, our agents do not have any right to use the personal information we share with them beyond what is necessary to assist us. </p><h1  class="modelBodySubHeaderTitle">Business Transfers</h1><p class="modelBodyContent">We may choose to buy or sell assets, and may share and/or transfer customer information in connection with the evaluation of and entry into such transactions. Also, if we (or our assets) are acquired, or if we go out of business, enter bankruptcy, or go through some other change of control, personal information could be one of the assets transferred to or acquired by a third party.<p><h1  class="modelBodySubHeaderTitle">Protection of Company and Others</h1><p class="modelBodyContent">We reserve the right to access, read, preserve, and disclose any information that we reasonably believe is necessary to comply with law or court order; enforce our agreements; or protect the rights, property, or safety of Company, our employees, our users, or others<p><h1 class="modelBodySubHeaderTitle">Managing personal information</h1><p class="modelBodyContent">You may contact Nextivity via e-mail at info@nextivityinc.com and we will attempt to assist you to remove, review, or revise any or all personal information that you have previously provided to us.  <p><h1  class="modelBodySubHeaderTitle">Additional information regarding privacy policy</h1><p class="modelBodyContent">If at any time you believe that Nextivity has not adhered to this privacy policy, or if you have questions regarding the policy or our methods of collecting and/or use of your personal information, please contact us. You may contact Nextivity via e-mail at info@nextivityinc.com, using the word "privacy" in the subject line.</br></br>This policy does not apply to Operators or other online or offline partner or affiliated sites, products or services that may be electronically linked to our company website(s). Nextivity is not responsible for enforcing the privacy policies of such websites. Further, Nextivity is not responsible for the content included on such websites, including but not limited to special offers, text, copy, photos, images and advertising claims, names or</br></br>Under California Civil Code Sections 1798.83-1798.84, California residents are entitled to ask us for a notice identifying the categories of personal information which we share with our affiliates and/or third parties for marketing purposes, and providing contact information for such affiliates and/or third parties.  If you are a California resident and would like a copy of this notice, please submit a written request to: info@nextivityinc.com.</br></br>Your browser may offer you a "Do Not Track" option, which allows you to signal to operators of websites and web applications and services (including behavioral advertising services) that you do not wish such operators to track certain of your online activities over time and across different websites.  Our Services do not support Do Not Track requests at this time, which means that we collect information about your online activity both while you are using the Services and after you leave our Services.<p>';
 		util.createHamburgerContent();
 		$('.modalLeftBtnContainer').addClass('hamburgerBackBtn');
 		$('.modalLeftBtnContainer').click(function(){util.removeModal();bigSlideAPI.view.toggleOpen();});
@@ -3271,7 +4007,7 @@ var splashScreen = {
 		logoContainer.className = "w100 vh100";
 		mainContainer.appendChild(logoContainer);
 		setTimeout(function(){ app.initialize(); }, 2000);
-//		setTimeout(function(){ window.location = "advanced.html"; }, 2000);
+		//setTimeout(function(){ window.location = "advanced.html"; }, 2000);
 	}
 };
 

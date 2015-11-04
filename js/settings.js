@@ -140,8 +140,8 @@ function SetAntenna(code)
                 
     // Disable all radio buttons to keep user from changing while 
     // we are trying to set the hardware...
-    disableAntButtons();
-
+    //disableAntButtons();
+ 
     // Clear the UNII timer...
     // Note that the StgLoop will actually start in 1 second due to the call below so any pending UNII check responses should be cleared by then... 
     clearTimeout(checkUniiStatusStgTimer);
@@ -156,6 +156,7 @@ function SetAntenna(code)
 
 function updateAntStatus()
 {
+	//alert("Update Ant status");
     var i;
     var ubd;
     var uTemp;        
@@ -209,7 +210,7 @@ function updateAntStatus()
         // Move to the next bd...
         uTemp >>= 8;
     }
-    
+    util.updateAntennaBandButtons();
     guiSettingsDirtyFlag = true;
 }
 
@@ -297,7 +298,7 @@ var Stg = {
     
 function StgLoop() 
 {
-
+	//alert('inside stgloop');
     PrintLog(1, "Settings loop...StgState=" + StgState + " StgTimeoutCount= " + StgTimeoutCount );
     StgTimeoutCount++; 
         
@@ -308,6 +309,7 @@ function StgLoop()
         ShowAlertPopUpMsg("Timeout.", "Unable to set antenna configuration.   Try again.");
         
         // Reset to last known Ant configuration
+        //alert(guiAntennaManualFlag);
         updateAntStatus();
         
         clearInterval(StgLoopIntervalHandle);

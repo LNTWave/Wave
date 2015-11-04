@@ -246,7 +246,7 @@ function PrintLog(level, txt)
     {
 //        console.log("**** Error: (" + d.getSeconds() + "." + d.getMilliseconds() + ") " + txt);
         var logText = "(" + d.getMinutes() + ":" + d.getSeconds() + "." + myMs + ") **** Error: " + txt;
-        console.log( logText );
+        //console.log( logText );
         WriteLogFile( logText );
         
 //jdo        console.error(txt);            // console.error does not work on phonegap
@@ -254,7 +254,7 @@ function PrintLog(level, txt)
     else if( level <= PrintLogLevel )
     { 
         var logText = "(" + d.getMinutes() + ":" + d.getSeconds() + "." + myMs + ") " + txt;
-        console.log( logText );
+        //console.log( logText );
         WriteLogFile( logText );
     }
     
