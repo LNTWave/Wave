@@ -1328,13 +1328,13 @@ function ProcessSettingsView()
                  
         document.getElementById("back_button_id").addEventListener('touchstart', HandleButtonDown );
         document.getElementById("back_button_id").addEventListener('touchend',   HandleButtonUp );*/
-        
-        if(deviceType == "phone"){
+        //alert("inside settings view mode");
+        /*if(deviceType == "phone"){
 			util.loadPhoneSettingsContainer();
 		}else{
 			util.loadTabletSettingsContainer();
 		}
-        lastGuiCurrentMode = guiCurrentMode;    
+        lastGuiCurrentMode = guiCurrentMode;*/    
     }
     
     if( guiSettingsDirtyFlag == true )
@@ -1919,7 +1919,7 @@ var statusObj =
 var faqQuesAns = [
   	{
   		"question"	: "What is Cel-Fi?",
-  		"answer"	: "Cel-Fi is Nextivity's brand of self-configuring, environmentally aware, indoor coverage solutions. Each Cel-Fi system consists of two units. The Network Unit is placed in the area where the strongest native signal can be received from the carrier network (signal levels as low as -120 dBm are acceptable). The Network Unit comprises a transmitter and receiver which communicates with the cell tower. The Coverage Unit is placed in the center of the home, communicates wirelessly with the Network Unit and ìlights upî the interior of the house with significantly enhanced signal levels, thus enabling better quality calls and greater data throughput."
+  		"answer"	: "Cel-Fi is Nextivity's brand of self-configuring, environmentally aware, indoor coverage solutions. Each Cel-Fi system consists of two units. The Network Unit is placed in the area where the strongest native signal can be received from the carrier network (signal levels as low as -120 dBm are acceptable). The Network Unit comprises a transmitter and receiver which communicates with the cell tower. The Coverage Unit is placed in the center of the home, communicates wirelessly with the Network Unit and ‚Äúlights up‚Äù the interior of the house with significantly enhanced signal levels, thus enabling better quality calls and greater data throughput."
   	},
   	
   	{
@@ -2504,7 +2504,6 @@ var util = {
 		$(softwareUpdatePanel).appendTo('#settingsDataWrapper');
 		
 		//Antenna settings panel
-
 		if(guiAntennaFlag){
 			var antennaSettingsPanel = "<div class='panel panel-default'>"
 										+"<div class='panel-heading dropDown'>"
@@ -2522,30 +2521,30 @@ var util = {
 										+"<div class='antennaDetailsWrapper'>"
 										+"<div class='antennaLbl col-xs-6'>Antenna Control:</div>"
 										+"<div class='antennaRadioWrapper col-xs-6'>";
-			
+			//guiAntennaManualFlag = true;
 			if(guiAntennaManualFlag){
 				antennaSettingsPanel = antennaSettingsPanel +"<div class='radioButtonWrapper'>"
-															+"<label class='radioBtnWrapper radioBtnUnSelected col-xs-3' for='antennaAuto' id='radioAntennaAuto'></label>"
-															+"<div for='auto' class='boosterUnSelectedTxt' id='labelAntennaAuto'>Auto</div>"
-															+"<input type='radio' name='antennaCtrl' value='auto' id='antennaSettingAuto'/>"
+															+"<label class='radioBtnWrapper radioBtnUnSelected col-xs-3' for='antennaSettingAuto' id='radioAntennaAuto'></label>"
+															+"<div class='boosterUnSelectedTxt' id='labelAntennaAuto'>Auto</div>"
+															+"<input type='radio' name='antennaCtrl' value='auto' id='antennaSettingAuto' onchange='util.updateAntennaSetting(this.value)' />"
 															+"</div>"
 															+"<div class='cb'></div>"
 															+"<div class='radioButtonWrapper'>"
-															+"<label class='radioBtnWrapper radioBtnSelected col-xs-3' for='manual' id='radioAntennaManual'></label>"
-															+"<div for='manual' class='boosterSelectedTxt' id='labelAntennaManual'>Manual</div>"
-															+"<input type='radio' name='antennaCtrl' value='manual' id='antennaSettingManual'/>"
+															+"<label class='radioBtnWrapper radioBtnSelected col-xs-3' for='antennaSettingManual' id='radioAntennaManual'></label>"
+															+"<div class='boosterSelectedTxt' id='labelAntennaManual'>Manual</div>"
+															+"<input type='radio' name='antennaCtrl' value='manual' id='antennaSettingManual' checked onchange='util.updateAntennaSetting(this.value)' />"
 															+"</div>";
 			}else{
 				antennaSettingsPanel = antennaSettingsPanel +"<div class='radioButtonWrapper'>"
-															+"<label class='radioBtnWrapper radioBtnSelected col-xs-3' for='antennaAuto' id='radioAntennaAuto'></label>"
-															+"<div for='auto' class='boosterSelectedTxt' id='labelAntennaAuto'>Auto</div>"
-															+"<input type='radio' name='antennaCtrl' value='auto' id='antennaSettingAuto'/>"
+															+"<label class='radioBtnWrapper radioBtnSelected col-xs-3' for='antennaSettingAuto' id='radioAntennaAuto'></label>"
+															+"<div class='boosterSelectedTxt' id='labelAntennaAuto'>Auto</div>"
+															+"<input type='radio' name='antennaCtrl' value='auto' id='antennaSettingAuto' checked onchange='util.updateAntennaSetting(this.value)' />"
 															+"</div>"
 															+"<div class='cb'></div>"
 															+"<div class='radioButtonWrapper'>"
-															+"<label class='radioBtnWrapper radioBtnUnSelected col-xs-3' for='manual' id='radioAntennaManual'></label>"
-															+"<div for='manual' class='boosterUnSelectedTxt' id='labelAntennaManual'>Manual</div>"
-															+"<input type='radio' name='antennaCtrl' value='manual' id='antennaSettingManual'/>"
+															+"<label class='radioBtnWrapper radioBtnUnSelected col-xs-3' for='antennaSettingManual' id='radioAntennaManual'></label>"
+															+"<div class='boosterUnSelectedTxt' id='labelAntennaManual'>Manual</div>"
+															+"<input type='radio' name='antennaCtrl' value='manual' id='antennaSettingManual' onchange='util.updateAntennaSetting(this.value)' />"
 															+"</div>";
 			}
 			
@@ -2555,29 +2554,29 @@ var util = {
 				antennaSettingsPanel = antennaSettingsPanel + "<div class='antennaDetailsWrapper'><div class='antennaLbl col-xs-6' id='bandTitle_"+bandLen+"'>";
 				antennaSettingsPanel = antennaSettingsPanel + "Band " + guiBands[bandLen] + " (" + guiAntennaFreqArrayMHz[bandLen] + ")";
 				antennaSettingsPanel = antennaSettingsPanel + "</div><div class='antennaRadioWrapper col-xs-6'>";
-				if(guiAntennaIntFlags){
-					antennaSettingsPanel = antennaSettingsPanel + "<div class='radioButtonWrapper'>"
-											+"<label class='radioBtnWrapper radioBtnUnSelected col-xs-3' for='band_"+bandLen+"_internal' id='band_"+bandLen+"_internalBtn'></label>"
-											+"<div for='band_"+bandLen+"_internal' id='band_"+bandLen+"_internalLbl' class='boosterUnSelectedTxt'>Internal</div>"
-											+"<input type='radio' name='antennaCtrl' value='internal' id='band_"+bandLen+"_internal'/>"
-											+"</div>"
-											+"<div class='cb'></div>"
-											+"<div class='radioButtonWrapper'>"
-											+"<label class='radioBtnWrapper radioBtnSelected col-xs-3' for='band_"+bandLen+"_external' id='band_"+bandLen+"_externalBtn'></label>"
-											+"<div for='band_"+bandLen+"_external' id='band_"+bandLen+"_externalLbl' class='boosterSelectedTxt'>External</div>"
-											+"<input type='radio' name='antennaCtrl' value='external' id='band_"+bandLen+"_external' checked/>"
-											+"</div>";
-				}else{
+				if(guiAntennaIntFlags[bandLen]){
 					antennaSettingsPanel = antennaSettingsPanel + "<div class='radioButtonWrapper'>"
 											+"<label class='radioBtnWrapper radioBtnSelected col-xs-3' for='band_"+bandLen+"_internal' id='band_"+bandLen+"_internalBtn'></label>"
-											+"<div for='band_"+bandLen+"_internal' id='band_"+bandLen+"_internalLbl' class='boosterSelectedTxt'>Internal</div>"
-											+"<input type='radio' name='antennaCtrl' value='internal' id='band_"+bandLen+"_internal' checked/>"
+											+"<div id='band_"+bandLen+"_internalLbl' class='boosterSelectedTxt'>Internal</div>"
+											+"<input type='radio' name='antennaBang"+bandLen+"' value='internal' id='band_"+bandLen+"_internal' checked onchange='util.updateBandSettings(this.value,"+bandLen+")'/>"
 											+"</div>"
 											+"<div class='cb'></div>"
 											+"<div class='radioButtonWrapper'>"
 											+"<label class='radioBtnWrapper radioBtnUnSelected col-xs-3' for='band_"+bandLen+"_external' id='band_"+bandLen+"_externalBtn'></label>"
-											+"<div for='band_"+bandLen+"_external' id='band_"+bandLen+"_externalLbl' class='boosterUnSelectedTxt'>External</div>"
-											+"<input type='radio' name='antennaCtrl' value='external' id='band_"+bandLen+"_external'/>"
+											+"<div id='band_"+bandLen+"_externalLbl' class='boosterUnSelectedTxt'>External</div>"
+											+"<input type='radio' name='antennaBang"+bandLen+"' value='external' id='band_"+bandLen+"_external' onchange='util.updateBandSettings(this.value,"+bandLen+")'/>"
+											+"</div>";
+				}else{
+					antennaSettingsPanel = antennaSettingsPanel + "<div class='radioButtonWrapper'>"
+											+"<label class='radioBtnWrapper radioBtnUnSelected col-xs-3' for='band_"+bandLen+"_internal' id='band_"+bandLen+"_internalBtn'></label>"
+											+"<div id='band_"+bandLen+"_internalLbl' class='boosterUnSelectedTxt'>Internal</div>"
+											+"<input type='radio' name='antennaBang"+bandLen+"' value='internal' id='band_"+bandLen+"_internal' onchange='util.updateBandSettings(this.value,"+bandLen+")'/>"
+											+"</div>"
+											+"<div class='cb'></div>"
+											+"<div class='radioButtonWrapper'>"
+											+"<label class='radioBtnWrapper radioBtnSelected col-xs-3' for='band_"+bandLen+"_external' id='band_"+bandLen+"_externalBtn'></label>"
+											+"<div id='band_"+bandLen+"_externalLbl' class='boosterSelectedTxt'>External</div>"
+											+"<input type='radio' name='antennaBang"+bandLen+"' value='external' id='band_"+bandLen+"_external' checked onchange='util.updateBandSettings(this.value,"+bandLen+")'/>"
 											+"</div>";
 				}
 				antennaSettingsPanel = antennaSettingsPanel + "</div></div>";
@@ -2586,8 +2585,7 @@ var util = {
 														+"</div></div></div>";
 			
 			$(antennaSettingsPanel).appendTo('#settingsDataWrapper');
-			
-			util.updateAntennaButtonStatus(guiAntennaManualFlag);
+			util.updateAntennaBandButtons();
 		}
 		
 		//Booster settings panel
@@ -2683,7 +2681,6 @@ var util = {
 	},
 	
 	loadTabletSettingsContainer: function(){
-	//loadPhoneSettingsContainer: function(){
 		var bodyContainer = document.getElementById("bodyContainer");
 		bodyContainer.innerHTML = "";
 		var settingScreenWrapper = util.createAppendElem("div", "settingsDataWrapper", "col-sm-12", bodyContainer);
@@ -2697,6 +2694,7 @@ var util = {
 		var deviceListDropDown = ""; 
 		var colSMTab = "<div class='col-sm-6'>";
 		$(colSMTab).appendTo('#settingsDataWrapper');
+		
 		//operator list drop dwon panel
 		if(guiOperatorFlag){
 			var operatorListPanel = "";
@@ -2765,27 +2763,27 @@ var util = {
 			
 			if(guiAntennaManualFlag){
 				antennaSettingsPanel = antennaSettingsPanel + "<div class='radioButtonWrapper'>"
-															+"<label class='radioBtnWrapper radioBtnUnSelected col-sm-3' for='antennaAuto' id='radioAntennaAuto'></label>"
+															+"<label class='radioBtnWrapper radioBtnUnSelected col-sm-3' for='antennaSettingAuto' id='radioAntennaAuto'></label>"
 															+"<div for='auto' class='boosterUnSelectedTxt' id='labelAntennaAuto'>Auto</div>"
-															+"<input type='radio' name='antennaCtrl' value='auto' id='antennaSettingAuto'/>"
+															+"<input type='radio' name='antennaCtrl' value='auto' id='antennaSettingAuto' onchange='util.updateAntennaSetting(this.value)'/>"
 															+"</div>"
 															+"<div class='cb'></div>"
 															+"<div class='radioButtonWrapper'>"
-															+"<label class='radioBtnWrapper radioBtnSelected col-sm-3' for='manual' id='radioAntennaManual'></label>"
+															+"<label class='radioBtnWrapper radioBtnSelected col-sm-3' for='antennaSettingManual' id='radioAntennaManual'></label>"
 															+"<div for='manual' class='boosterSelectedTxt' id='labelAntennaManual'>Manual</div>"
-															+"<input type='radio' name='antennaCtrl' value='manual' id='antennaSettingManual'/>"
+															+"<input type='radio' name='antennaCtrl' value='manual' id='antennaSettingManual' checked onchange='util.updateAntennaSetting(this.value)'/>"
 															+"</div>";
 			}else{
 				antennaSettingsPanel = antennaSettingsPanel + "<div class='radioButtonWrapper'>"
-															+"<label class='radioBtnWrapper radioBtnSelected col-sm-3' for='antennaAuto' id='radioAntennaAuto'></label>"
+															+"<label class='radioBtnWrapper radioBtnSelected col-sm-3' for='antennaSettingAuto' id='radioAntennaAuto'></label>"
 															+"<div for='auto' class='boosterSelectedTxt' id='labelAntennaAuto'>Auto</div>"
-															+"<input type='radio' name='antennaCtrl' value='auto' id='antennaSettingAuto'/>"
+															+"<input type='radio' name='antennaCtrl' value='auto' id='antennaSettingAuto' checked onchange='util.updateAntennaSetting(this.value)'/>"
 															+"</div>"
 															+"<div class='cb'></div>"
 															+"<div class='radioButtonWrapper'>"
-															+"<label class='radioBtnWrapper radioBtnUnSelected col-sm-3' for='manual' id='radioAntennaManual'></label>"
+															+"<label class='radioBtnWrapper radioBtnUnSelected col-sm-3' for='antennaSettingManual' id='radioAntennaManual'></label>"
 															+"<div for='manual' class='boosterUnSelectedTxt' id='labelAntennaManual'>Manual</div>"
-															+"<input type='radio' name='antennaCtrl' value='manual' id='antennaSettingManual'/>"
+															+"<input type='radio' name='antennaCtrl' value='manual' id='antennaSettingManual' onchange='util.updateAntennaSetting(this.value)'/>"
 															+"</div>";
 			}
 			
@@ -2797,27 +2795,27 @@ var util = {
 				antennaSettingsPanel = antennaSettingsPanel + "</div><div class='antennaRadioWrapper col-sm-5'>";
 				if(guiAntennaIntFlags[bandLen]){
 					antennaSettingsPanel = antennaSettingsPanel + "<div class='radioButtonWrapper'>"
-											+"<label class='radioBtnWrapper radioBtnUnSelected col-sm-3' for='band_"+bandLen+"_internal' id='band_"+bandLen+"_internalBtn'></label>"
-											+"<div for='band_"+bandLen+"_internal' id='band_"+bandLen+"_internalLbl' class='boosterUnSelectedTxt'>Internal</div>"
-											+"<input type='radio' name='antennaCtrl' value='internal' id='band_"+bandLen+"_internal'/>"
-											+"</div>"
-											+"<div class='cb'></div>"
-											+"<div class='radioButtonWrapper'>"
-											+"<label class='radioBtnWrapper radioBtnSelected col-sm-3' for='band_"+bandLen+"_external' id='band_"+bandLen+"_externalBtn'></label>"
-											+"<div for='band_"+bandLen+"_external' id='band_"+bandLen+"_externalLbl' class='boosterSelectedTxt'>External</div>"
-											+"<input type='radio' name='antennaCtrl' value='external' id='band_"+bandLen+"_external' checked/>"
-											+"</div>";
-				}else{
-					antennaSettingsPanel = antennaSettingsPanel + "<div class='radioButtonWrapper'>"
 											+"<label class='radioBtnWrapper radioBtnSelected col-sm-3' for='band_"+bandLen+"_internal' id='band_"+bandLen+"_internalBtn'></label>"
 											+"<div for='band_"+bandLen+"_internal' id='band_"+bandLen+"_internalLbl' class='boosterSelectedTxt'>Internal</div>"
-											+"<input type='radio' name='antennaCtrl' value='internal' id='band_"+bandLen+"_internal' checked/>"
+											+"<input type='radio' name='antennaBang"+bandLen+"' value='internal' id='band_"+bandLen+"_internal' checked onchange='util.updateBandSettings(this.value,"+bandLen+")'/>"
 											+"</div>"
 											+"<div class='cb'></div>"
 											+"<div class='radioButtonWrapper'>"
 											+"<label class='radioBtnWrapper radioBtnUnSelected col-sm-3' for='band_"+bandLen+"_external' id='band_"+bandLen+"_externalBtn'></label>"
 											+"<div for='band_"+bandLen+"_external' id='band_"+bandLen+"_externalLbl' class='boosterUnSelectedTxt'>External</div>"
-											+"<input type='radio' name='antennaCtrl' value='external' id='band_"+bandLen+"_external'/>"
+											+"<input type='radio' name='antennaBang"+bandLen+"' value='external' id='band_"+bandLen+"_external' onchange='util.updateBandSettings(this.value,"+bandLen+")'/>"
+											+"</div>";
+				}else{
+					antennaSettingsPanel = antennaSettingsPanel + "<div class='radioButtonWrapper'>"
+											+"<label class='radioBtnWrapper radioBtnUnSelected col-sm-3' for='band_"+bandLen+"_internal' id='band_"+bandLen+"_internalBtn'></label>"
+											+"<div for='band_"+bandLen+"_internal' id='band_"+bandLen+"_internalLbl' class='boosterUnSelectedTxt'>Internal</div>"
+											+"<input type='radio' name='antennaBang"+bandLen+"' value='internal' id='band_"+bandLen+"_internal' onchange='util.updateBandSettings(this.value,"+bandLen+")'/>"
+											+"</div>"
+											+"<div class='cb'></div>"
+											+"<div class='radioButtonWrapper'>"
+											+"<label class='radioBtnWrapper radioBtnSelected col-sm-3' for='band_"+bandLen+"_external' id='band_"+bandLen+"_externalBtn'></label>"
+											+"<div for='band_"+bandLen+"_external' id='band_"+bandLen+"_externalLbl' class='boosterSelectedTxt'>External</div>"
+											+"<input type='radio' name='antennaBang"+bandLen+"' value='external' id='band_"+bandLen+"_external' checked onchange='util.updateBandSettings(this.value,"+bandLen+")'/>"
 											+"</div>";
 				}
 				antennaSettingsPanel = antennaSettingsPanel + "</div></div>";
@@ -2826,7 +2824,7 @@ var util = {
 														+"</div></div>";
 			
 			$(antennaSettingsPanel).appendTo('#settingsDataWrapper');
-			util.updateAntennaButtonStatus(guiAntennaManualFlag);
+			util.updateAntennaBandButtons();
 		}
 		
 		var colSMTab = "</div><div class='col-sm-6'>";
@@ -2954,30 +2952,32 @@ var util = {
 		});	
 	},
 	
-	updateAntennaButtonStatus: function(){
-		util.updateAntennaBandButtons();
-		$('#radioAntennaManual, #labelAntennaManual').click(function(){
-			$('#radioAntennaAuto, #radioAntennaManual').toggleClass('radioBtnUnSelected radioBtnSelected');
-			$('#labelAntennaAuto, #labelAntennaManual').toggleClass('boosterUnSelectedTxt boosterSelectedTxt');
-			SetAntenna(0x2000);
-			//util.updateAntennaBandButtons();
-		});
-		
-		$('#radioAntennaAuto, #labelAntennaAuto').click(function(){
-			$('#radioAntennaAuto, #radioAntennaManual').toggleClass('radioBtnUnSelected radioBtnSelected');
-			$('#labelAntennaAuto, #labelAntennaManual').toggleClass('boosterUnSelectedTxt boosterSelectedTxt');
+	updateAntennaSetting: function(antSetFlag){
+		if(antSetFlag=="auto"){
+			$('#radioAntennaAuto').removeClass('radioBtnUnSelected').addClass('radioBtnSelected');
+			$('#labelAntennaAuto').removeClass('boosterUnSelectedTxt').addClass('boosterSelectedTxt');
+			$('#radioAntennaManual').removeClass('radioBtnSelected').addClass('radioBtnUnSelected');
+			$('#labelAntennaManual').removeClass('boosterSelectedTxt').addClass('boosterUnSelectedTxt');
 			SetAntenna(0x0020);
-			//util.updateAntennaBandButtons();
-		});
+		}else{
+			$('#radioAntennaAuto').removeClass('radioBtnSelected').addClass('radioBtnUnSelected');
+			$('#labelAntennaAuto').removeClass('boosterSelectedTxt').addClass('boosterUnSelectedTxt');
+			$('#radioAntennaManual').removeClass('radioBtnUnSelected').addClass('radioBtnSelected');
+			$('#labelAntennaManual').removeClass('boosterUnSelectedTxt').addClass('boosterSelectedTxt');
+			SetAntenna(0x2000);
+		}
+		
+		util.updateAntennaBandButtons();
 	},
 	
 	updateAntennaBandButtons: function(){
+		//band_"+bandLen+"_internal
 		if(guiAntennaManualFlag){
-			$('#radioAntennaAuto').removeClass('radioBtnSelected').addClass('radioBtnUnSelected')
+			$('#radioAntennaAuto').removeClass('radioBtnSelected').addClass('radioBtnUnSelected');
+			$('#labelAntennaAuto').removeClass('boosterSelectedTxt').addClass('boosterUnSelectedTxt');
 			$('#radioAntennaManual').removeClass('radioBtnUnSelected').addClass('radioBtnSelected');
-			
-			$('#labelAntennaAuto').removeClass('boosterSelectedTxt').addClass('boosterUnSelectedTxt')
 			$('#labelAntennaManual').removeClass('boosterUnSelectedTxt').addClass('boosterSelectedTxt');
+			$('#antennaSettingManual').prop('checked', true);
 			
 			for(var bandId=0; bandId<guiBands.length; bandId++){
 				if(guiBands[bandId]!=0){
@@ -2993,11 +2993,12 @@ var util = {
 				}
 			}
 		}else{
-			$('#radioAntennaAuto').removeClass('radioBtnUnSelected').addClass('radioBtnSelected')
+			$('#radioAntennaAuto').removeClass('radioBtnUnSelected').addClass('radioBtnSelected');
+			$('#labelAntennaAuto').removeClass('boosterUnSelectedTxt').addClass('boosterSelectedTxt');
 			$('#radioAntennaManual').removeClass('radioBtnSelected').addClass('radioBtnUnSelected');
-			
-			$('#labelAntennaAuto').removeClass('boosterUnSelectedTxt').addClass('boosterSelectedTxt')
 			$('#labelAntennaManual').removeClass('boosterSelectedTxt').addClass('boosterUnSelectedTxt');
+			$('#antennaSettingAuto').prop('checked', true);
+			
 			for(var bandId=0; bandId<guiBands.length; bandId++){
 				$('#band_'+bandId+'_internal, #band_'+bandId+'_external').attr('disabled',true);
 				$('#band_'+bandId+'_internalBtn, #band_'+bandId+'_externalBtn').addClass('disableRadio');
@@ -3005,45 +3006,43 @@ var util = {
 				$('#bandTitle_'+bandId).addClass('disabledBandTitle');
 			}
 		}
-		var antennaBandIntValArr = [0x0002, 0x0004, 0x0008, 0x0010];
-		var antennaBandExtValArr = [0x0200, 0x0400, 0x0800, 0x1000];
-		for(var intFlg=0; intFlg<guiAntennaIntFlags.length; intFlg++){
-			if(guiAntennaIntFlags[intFlg]){
-				$('#band_'+intFlg+'_internalBtn').removeClass('radioBtnUnSelected').addClass('radioBtnSelected')
-				$('#band_'+intFlg+'_externalBtn').removeClass('radioBtnSelected').addClass('radioBtnUnSelected');
+		for(var bandId=0; bandId<guiBands.length; bandId++){
+			if(guiAntennaIntFlags[bandId]){
+				$('#band_'+bandId+'_internal').prop('checked', true);
+				$('#band_'+bandId+'_internalBtn').removeClass('radioBtnUnSelected').addClass('radioBtnSelected');
+				$('#band_'+bandId+'_internalLbl').removeClass('boosterUnSelectedTxt').addClass('boosterSelectedTxt');
 				
-				$('#band_'+intFlg+'_internalLbl').removeClass('boosterUnSelectedTxt').addClass('boosterSelectedTxt')
-				$('#band_'+intFlg+'_externalLbl').removeClass('boosterSelectedTxt').addClass('boosterUnSelectedTxt');
+				$('#band_'+bandId+'_externalBtn').removeClass('radioBtnSelected').addClass('radioBtnUnSelected');
+				$('#band_'+bandId+'_externalLbl').removeClass('boosterSelectedTxt').addClass('boosterUnSelectedTxt');
 			}else{
-				$('#band_'+intFlg+'_internalBtn').removeClass('radioBtnSelected').addClass('radioBtnUnSelected')
-				$('#band_'+intFlg+'_externalBtn').removeClass('radioBtnUnSelected').addClass('radioBtnSelected');
+				$('#band_'+bandId+'_external').prop('checked', true);
+				$('#band_'+bandId+'_internalBtn').removeClass('radioBtnSelected').addClass('radioBtnUnSelected');
+				$('#band_'+bandId+'_internalLbl').removeClass('boosterSelectedTxt').addClass('boosterUnSelectedTxt');
 				
-				$('#band_'+intFlg+'_internalLbl').removeClass('boosterSelectedTxt').addClass('boosterUnSelectedTxt')
-				$('#band_'+intFlg+'_externalLbl').removeClass('boosterUnSelectedTxt').addClass('boosterSelectedTxt');
-			}
-			
-			if(guiBands[intFlg]){
-				$('#band_'+intFlg+'_internalBtn, #band_'+intFlg+'_internalLbl').click(function(){
-					$('#band_'+intFlg+'_internalBtn, #band_'+intFlg+'_externalBtn').toggleClass('radioBtnUnSelected radioBtnSelected');
-					$('#band_'+intFlg+'_internalLbl, #band_'+intFlg+'_externalLbl').toggleClass('boosterUnSelectedTxt boosterSelectedTxt');
-					//SetAntenna(antennaBandIntValArr[intFlg]);
-					//util.updateAntennaBandButtons();
-				});
-				
-				$('#band_'+intFlg+'_externalBtn, #band_'+intFlg+'_externalLbl').click(function(){
-					$('#band_'+intFlg+'_internalBtn, #band_'+intFlg+'_externalBtn').toggleClass('radioBtnUnSelected radioBtnSelected');
-					$('#band_'+intFlg+'_internalLbl, #band_'+intFlg+'_externalLbl').toggleClass('boosterUnSelectedTxt boosterSelectedTxt');
-					//SetAntenna(antennaBandExtValArr[intFlg]);
-					//util.updateAntennaBandButtons();
-				});
+				$('#band_'+bandId+'_externalBtn').removeClass('radioBtnUnSelected').addClass('radioBtnSelected');
+				$('#band_'+bandId+'_externalLbl').removeClass('boosterUnSelectedTxt').addClass('boosterSelectedTxt');
 			}
 		}
 	},
 	
-	changeAntennaSettings: function(){
-		var antennaSetting = $('#antennaSetting').val();
-		$('#radioAntennaAuto, #radioAntennaManual').toggleClass('radioBtnUnSelected radioBtnSelected');
-		$('#labelAntennaAuto, #labelAntennaManual').toggleClass('boosterUnSelectedTxt boosterSelectedTxt');
+	updateBandSettings: function(bandVal, bandSettingID){
+		var antennaBandIntValArr = [0x0002, 0x0004, 0x0008, 0x0010];
+		var antennaBandExtValArr = [0x0200, 0x0400, 0x0800, 0x1000];
+		if(bandVal=="internal"){
+			$('#band_'+bandSettingID+'_internalBtn').removeClass('radioBtnUnSelected').addClass('radioBtnSelected');
+			$('#band_'+bandSettingID+'_internalLbl').removeClass('boosterUnSelectedTxt').addClass('boosterSelectedTxt');
+			
+			$('#band_'+bandSettingID+'_externalBtn').removeClass('radioBtnSelected').addClass('radioBtnUnSelected');
+			$('#band_'+bandSettingID+'_externalLbl').removeClass('boosterSelectedTxt').addClass('boosterUnSelectedTxt');
+			SetAntenna(antennaBandIntValArr[bandSettingID]);
+		}else{
+			$('#band_'+bandSettingID+'_internalBtn').removeClass('radioBtnSelected').addClass('radioBtnUnSelected');
+			$('#band_'+bandSettingID+'_internalLbl').removeClass('boosterSelectedTxt').addClass('boosterUnSelectedTxt');
+			
+			$('#band_'+bandSettingID+'_externalBtn').removeClass('radioBtnUnSelected').addClass('radioBtnSelected');
+			$('#band_'+bandSettingID+'_externalLbl').removeClass('boosterUnSelectedTxt').addClass('boosterSelectedTxt');
+			SetAntenna(antennaBandExtValArr[bandSettingID]);
+		}
 	},
 	
 	loadAdvancedContainer : function(){
@@ -3534,35 +3533,35 @@ var util = {
 		var duoTroubleShoot = "<div class='installGuideWrapper'>"						
 								+ "<p class='pageTitleContainer modalContentTitle modalContentPadding'>Network Unit Troubleshooting</p>"
 								+ "<div class='modalContentPadding'>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Power ñ My Network Unit (aka Window Unit) wonít turn on!</div>"
-								+ "<div class='helpContent'></br>When your system does not power up, one of the following things could be happening. You could have a power adaptor failure, a hardware failure, or the system could need a simple restart.</br></br>Try thisÖ Both the Network Unit and Coverage Unit have identical power supplies. Try switching the power supplies to see if one of the following issues could be occurring:</br></br>If you switch the power supplies and the problem moves from one unit to the other unit then you are experiencing a power supply issue. Please reach out to your point of sale for a replacement power supply.</br></br>If, after switching power supplies, you still have no power on your Network Unit try another outlet, or lamp/appliance in the same outlet. If you continue to have problems with the Network Unit please reach out to your point of sale for a system replacement.</br></br>If, after switching power supplies both system are functioning properly then your Cel-Fi DUO system simply needed a restart. This is not something that should continue, but if it occurs frequently please reach out to your point of sale for support.</div>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Bars ñ My Network Unit is not finding the cellular signal!</div>"
-								+ "<div class='helpContent'></br>If your power light is still blinking while you have no bars, your Network Unit is still trying to find the incoming cellular network signal. This can sometimes take more than a few minutes.</br></br>Taking longer than 60 minutes? Try thisÖ</br></br>Walk around your home/office with your cellular device. Try to find a signal inside your home/office with at least one consistent bar of 3G/4G/LTE. More bars is always better! Once you have found a signal place your Network Unit in that location.</br></br>If you have bars of service on your phone in the location of your Network Unit, and after 60 minutes you are still unable to receive bars of service on your Network Unit try a restart. To restart your Network Unit simply unplug for a moment and then it plug back in. If the restart does not solve the issue please reach out to your point of sale for support.</br></br>No bars and a red power indicator? Please refer to the section below about ìRed power indicatorî.</div>"												
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No LTE ñ My phone still doesnít have LTE!</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Power ‚Äì My Network Unit (aka Window Unit) won‚Äôt turn on!</div>"
+								+ "<div class='helpContent'></br>When your system does not power up, one of the following things could be happening. You could have a power adaptor failure, a hardware failure, or the system could need a simple restart.</br></br>Try this‚Ä¶ Both the Network Unit and Coverage Unit have identical power supplies. Try switching the power supplies to see if one of the following issues could be occurring:</br></br>If you switch the power supplies and the problem moves from one unit to the other unit then you are experiencing a power supply issue. Please reach out to your point of sale for a replacement power supply.</br></br>If, after switching power supplies, you still have no power on your Network Unit try another outlet, or lamp/appliance in the same outlet. If you continue to have problems with the Network Unit please reach out to your point of sale for a system replacement.</br></br>If, after switching power supplies both system are functioning properly then your Cel-Fi DUO system simply needed a restart. This is not something that should continue, but if it occurs frequently please reach out to your point of sale for support.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Bars ‚Äì My Network Unit is not finding the cellular signal!</div>"
+								+ "<div class='helpContent'></br>If your power light is still blinking while you have no bars, your Network Unit is still trying to find the incoming cellular network signal. This can sometimes take more than a few minutes.</br></br>Taking longer than 60 minutes? Try this‚Ä¶</br></br>Walk around your home/office with your cellular device. Try to find a signal inside your home/office with at least one consistent bar of 3G/4G/LTE. More bars is always better! Once you have found a signal place your Network Unit in that location.</br></br>If you have bars of service on your phone in the location of your Network Unit, and after 60 minutes you are still unable to receive bars of service on your Network Unit try a restart. To restart your Network Unit simply unplug for a moment and then it plug back in. If the restart does not solve the issue please reach out to your point of sale for support.</br></br>No bars and a red power indicator? Please refer to the section below about ‚ÄúRed power indicator‚Äù.</div>"												
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No LTE ‚Äì My phone still doesn‚Äôt have LTE!</div>"
 								+ "<div class='helpContent'></br>There are a few reasons why your phone would experience an issue with the LTE service. </br></br>You may not have LTE in your area, your Cel-Fi system may have lost the LTE signal due to intermittent network outages, your phone may not support LTE, or your phone may not be compatible with the frequency being boosted by the Cel-Fi DUO.</br></br></br>A flashing LTE light means that your Cel-Fi DUO system is actively searching for the LTE signal. The Cel-Fi DUO will scan at startup and scan again every 24 hours.</br></br>If your LTE light is not lit and not flashing, your Cel-Fi DUO has lost, or never found an LTE signal and has momentarily stopped searching. The Cel-Fi DUO will scan at startup and scan again every 24 hours.</div>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Red Power Indicator ñ My Network Unit has a red power light!</div>"
-								+ "<div class='helpContent'></br>With a flashing red power indicator you may also see an error code displayed on the Coverage Unit (flashing an E then correlating error number).</br></br>E1 ñ Cellular Signal too weak to boost. Try thisÖ Walk around your home/office with your cellular device. Try to find a signal indoors with at least one consistent bar of 3G/4G/LTE. More bars is always better! Once you have found a usable signal place your Network Unit in this location.</br></br>E3 ñ Coverage Unit is overheating. Insure that your Coverage Unit vents are uncovered and free of debris, and that the location of the unit allows free flow of air. Once the Coverage Unit has cooled to a normal functioning temperature it will restart and operate as normal.</br></br>E4 ñ Network Unit is overheating. Insure that your Network Unit vents are uncovered and free of debris, and that the location of the unit allows free flow of air. Once the Coverage Unit has cooled to a normal functioning temperature it will restart and operate as normal.</br></br>With a solid red power indicator you may also see and error code displayed on the Coverage Unit (flashing an E then correlating error number).</br></br>E8 ñ Input signal too strong. An E8 error code is letting you know that your Network Unit is too close to a cellular tower, not necessarily for your operator. This has reduced the output power (coverage bubble) to limit network interference. Try thisÖMove your Network Unit to another location. You might need to move your system to the other side of your home/office. Note: When you have an E8 your system will still offer you indoor cellular coverage.</br></br>E6 ñ Network Unit hardware error that may be remedied by a reset. Your Coverage Unit may not display a flashing error code. You will likely only see the solid red power indicator on your Network Unit. Try thisÖreset your Network Unit. Simply unplug your Network Unit for a few seconds and plug it back in.</div>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Flashing Green Power Indicator ñ My Network Unitís power light is flashing green!</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Red Power Indicator ‚Äì My Network Unit has a red power light!</div>"
+								+ "<div class='helpContent'></br>With a flashing red power indicator you may also see an error code displayed on the Coverage Unit (flashing an E then correlating error number).</br></br>E1 ‚Äì Cellular Signal too weak to boost. Try this‚Ä¶ Walk around your home/office with your cellular device. Try to find a signal indoors with at least one consistent bar of 3G/4G/LTE. More bars is always better! Once you have found a usable signal place your Network Unit in this location.</br></br>E3 ‚Äì Coverage Unit is overheating. Insure that your Coverage Unit vents are uncovered and free of debris, and that the location of the unit allows free flow of air. Once the Coverage Unit has cooled to a normal functioning temperature it will restart and operate as normal.</br></br>E4 ‚Äì Network Unit is overheating. Insure that your Network Unit vents are uncovered and free of debris, and that the location of the unit allows free flow of air. Once the Coverage Unit has cooled to a normal functioning temperature it will restart and operate as normal.</br></br>With a solid red power indicator you may also see and error code displayed on the Coverage Unit (flashing an E then correlating error number).</br></br>E8 ‚Äì Input signal too strong. An E8 error code is letting you know that your Network Unit is too close to a cellular tower, not necessarily for your operator. This has reduced the output power (coverage bubble) to limit network interference. Try this‚Ä¶Move your Network Unit to another location. You might need to move your system to the other side of your home/office. Note: When you have an E8 your system will still offer you indoor cellular coverage.</br></br>E6 ‚Äì Network Unit hardware error that may be remedied by a reset. Your Coverage Unit may not display a flashing error code. You will likely only see the solid red power indicator on your Network Unit. Try this‚Ä¶reset your Network Unit. Simply unplug your Network Unit for a few seconds and plug it back in.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Flashing Green Power Indicator ‚Äì My Network Unit‚Äôs power light is flashing green!</div>"
 								+ "<div class='helpContent'></br>A flashing green power indicator on your Network Unit means that your system is still performing startup procedures. This could indicate that the Network Unit is trying to find a connection to either the cellular network or your Coverage Unit.</br></br>No bars with a flashing power indicator means the system is trying to locate the cellular network. This normally takes less 60 minutes. Make sure that your phone (cellular device) has at least one bar of 3G/4G/LTE signal where the Network Unit is located.</br></br>If you have bars but the power indicator is flashing this means that your Network Unit has located the cellular network and is now trying to locate your coverage unit. For more information about Coverage Unit issues <a href=\"#\" onclick=\"window.open('https://support.cel-fi.com/hc/en-us/articles/202987766-Troubleshoot-the-Cel-Fi-Network-Unit', '_system');\">click here</a></div>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Flashing Bars ñ My Network Unit bars are flashing. </div>"
-								+ "<div class='helpContent'></br>With flashing bars on your Network Unit you may also see and error code displayed on the Coverage Unit (flashing an E then correlating error number).</br></br>E7 ñ The system has been disabled by the mobile network operator. Contact your operator for more information.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Flashing Bars ‚Äì My Network Unit bars are flashing. </div>"
+								+ "<div class='helpContent'></br>With flashing bars on your Network Unit you may also see and error code displayed on the Coverage Unit (flashing an E then correlating error number).</br></br>E7 ‚Äì The system has been disabled by the mobile network operator. Contact your operator for more information.</div>"
 								+ "</div></br>"
 								+ "<p class='pageTitleContainer modalContentTitle modalContentPadding'>Coverage Unit Troubleshooting</p>" 
 								+ "<div class='modalContentPadding'>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Power ñ My Coverage Unit wonít turn on!</div>"
-								+ "<div class='helpContent'></br>When your system does not power up, or has a red power indicator, one of the following things could be happening. You might have a power adaptor failure, a hardware failure, or the system may need a simple restart.</br></br>Try thisÖ Both the Coverage Unit and Network Unit have identical power supplies. Try switching the power supplies to see if one of the following issues could be occurring:</br></br>If you switch the power supplies and the problem moves from one unit to the other unit then you are experiencing a power supply issue. Please reach out to your point of sale for a replacement power supply.</br></br>If, after switching power supplies, you still have no power on your Coverage Unit try another outlet, or another lamp/appliance in the same outlet. If you continue to have problems with the unit please reach out to your point of sale for a system replacement.</br></br>If, after switching power supplies both system are functioning properly then your Cel-Fi DUO system simply needed a restart. This is not something that should continue, but if it occurs frequently please reach out to your point of sale for support.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Power ‚Äì My Coverage Unit won‚Äôt turn on!</div>"
+								+ "<div class='helpContent'></br>When your system does not power up, or has a red power indicator, one of the following things could be happening. You might have a power adaptor failure, a hardware failure, or the system may need a simple restart.</br></br>Try this‚Ä¶ Both the Coverage Unit and Network Unit have identical power supplies. Try switching the power supplies to see if one of the following issues could be occurring:</br></br>If you switch the power supplies and the problem moves from one unit to the other unit then you are experiencing a power supply issue. Please reach out to your point of sale for a replacement power supply.</br></br>If, after switching power supplies, you still have no power on your Coverage Unit try another outlet, or another lamp/appliance in the same outlet. If you continue to have problems with the unit please reach out to your point of sale for a system replacement.</br></br>If, after switching power supplies both system are functioning properly then your Cel-Fi DUO system simply needed a restart. This is not something that should continue, but if it occurs frequently please reach out to your point of sale for support.</div>"
 								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Numeric display keep cycling/rotating</div>"
-								+ "<div class='helpContent'></br>When your Coverage Unit displays a rotating ì0î zero your system is still preforming startup procedures. This process usually takes less than 20 minutes. If it takes longer than 45 minutes, please restart both units.</div>"
+								+ "<div class='helpContent'></br>When your Coverage Unit displays a rotating ‚Äú0‚Äù zero your system is still preforming startup procedures. This process usually takes less than 20 minutes. If it takes longer than 45 minutes, please restart both units.</div>"
 								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Low Number on my Coverage Unit (0-6)</div>"
-								+ "<div class='helpContent'></br>When you have a display of 0, 1, 2, 3, 4, 5, or 6 your Cel-Fi DUO system has established a connection but is not working to the fullest ability. Try thisÖ move your units further apart. If you have a particular spot in your home that you want coverage more than others try installing your Cel-Fi system in reverse. Put your Coverage Unit where you need coverage the most then place your Network Unit at the furthest location where you can get at least 1 bar of service.</br></br>If you cannot get your systems further apart, and you have the coverage you need, a higher number is not always possible or necessary.</br></br>When you have a solid ì0î zero display you may also see a flashing green power indicator. This display indicates that your Network Unit and Coverage Unit are ìToo Closeî together. Try moving the units further apart, starting with the Coverage Unit.</div>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Small Coverage Bubble ñ I only have signal within a few feet of the Coverage Unit!</div>"
+								+ "<div class='helpContent'></br>When you have a display of 0, 1, 2, 3, 4, 5, or 6 your Cel-Fi DUO system has established a connection but is not working to the fullest ability. Try this‚Ä¶ move your units further apart. If you have a particular spot in your home that you want coverage more than others try installing your Cel-Fi system in reverse. Put your Coverage Unit where you need coverage the most then place your Network Unit at the furthest location where you can get at least 1 bar of service.</br></br>If you cannot get your systems further apart, and you have the coverage you need, a higher number is not always possible or necessary.</br></br>When you have a solid ‚Äú0‚Äù zero display you may also see a flashing green power indicator. This display indicates that your Network Unit and Coverage Unit are ‚ÄúToo Close‚Äù together. Try moving the units further apart, starting with the Coverage Unit.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Small Coverage Bubble ‚Äì I only have signal within a few feet of the Coverage Unit!</div>"
 								+ "<div class='helpContent'></br>Changes to your Cel-Fi placement can be made to improve your 3G/4G/LTE coverage.</br></br>The more bars shown on the Network Unit the better. Try moving the Network Unit to an area that has better 3G/4G/LTE coverage. If the home/office has more than 1 floor upstairs is usually better than downstairs. Putting the Network Unit near a window or higher on a shelf often helps as well.</br></br>The numeric value on the display of the Coverage Unit is an indication of the area covered. A higher number means a larger area is covered. To increase the coverage area move the Coverage Unit farther away from the Network Unit. The less obstacles in their direct line of sight the further apart you can get them. The higher the Coverage Unit number, the better the coverage.</div>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No LTE ñ My phone still doesnít have LTE</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No LTE ‚Äì My phone still doesn‚Äôt have LTE</div>"
 								+ "<div class='helpContent'></br>There are a few reasons why your phone would experience an issue with the LTE service. You may not have LTE in your area, your Cel-Fi system may have lost the LTE signal due to intermittent network outages, your phone may not support LTE, or your phone may not be compatible with the frequency being boosted by the Cel-Fi DUO. You will need to check the display on your Network Unit for more information <a href=\"#\" onclick=\"window.open('https://support.cel-fi.com/hc/en-us/articles/202987756-Troubleshoot-the-Cel-Fi-Window-Network-Unit', '_system');\">click here</a></div>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Frequent or Intermitten ìToo Farî message</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Frequent or Intermitten ‚ÄúToo Far‚Äù message</div>"
 								+ "<div class='helpContent'></br>Intermittent rotating/too far issues. While the number 9 is the largest distance between your Coverage Unit and your Network Unit you can have the systems slightly too far apart. This may cause you to experience intermittent interference which can cause the connection to break. Frequent or intermittent issues can be related to heavy WiFi saturation in your home/office, or obstacles that move between the two units line of sight. Make sure that each unit is as far as possible from any access points or other WiFi enabled devices. An example of a wireless device could be, but is not limited to, a wireless home phone, laptop computer, or wireless router.</div>"
 								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Flashing E message.</div>"
-								+ "<div class='helpContent'></br>E1 Cellular Signal too weak to boost. Try thisÖ Walk around your home/office with your cellular device. Try to find a signal indoors with at least one consistent bar of 3G/4G/LTE. More bars is always better! Once you have found a usable signal place your Network Unit in this location.</br></br>E2 Coverage Unit hardware error that may be remedied by a reset. Your Coverage Unit may not display a flashing error code. You will likely only see the solid red power indicator on your Coverage Unit.Try thisÖ.Reset your Coverage Unit. Simply unplug your Coverage Unit for a few seconds and plug back in.</br></br>E3 Your Coverage Unit is overheating. Try thisÖ ensure that your Coverage Unit vents are clear of any blockage, and that the location of the unit allows free flow of air. Once your Coverage Unit has cooled down it will operate as normal.</br></br>E4 Your Network Unit is overheating. Try thisÖ ensure that your Network Unit vents are clear of any blockage, and that the location of the unit allows free flow of air. If you have your Network Unit in an attic space you may need to relocate the device to ensure that the system does not continue to overheat. Once your Network Unit has cooled down it will operate as normal.</br></br>E7 The system has been disabled by the mobile network carrier. Contact your point of sale.</br></br>E8 Input signal too strong. An E8 error code is letting you know that your Network Unit is too close to a cellular tower, not necessarily for your operator. This has reduced the output power (coverage bubble) to limit network interference. Try thisÖMove your Network Unit to another location. You might need to move your system to the other side of your home. Note: When you have an E8 your system will still offer you indoor cellular coverage.</br></br>Too close, you may also see a solid zero on your Coverage Unit. Your Coverage Unit is ìToo Closeî to your Network Unit. Try thisÖmoving the units further apart, starting with the Coverage Unit.</br></br>Too far, you may also see a rotating/cycling zero with red arrows on your Coverage Unit. Your Coverage Unit is ìToo Farî from your Network Unit. Try moving the units slightly (5-10 feet) closer together, starting with the Coverage Unit.</br></br>Intermittent ìToo Farî message? Frequent or intermittent issues can be related to heavy WiFi saturation in your home/office. Make sure that each unit is as far as possible from any access points or other WiFi enabled devices.</div>"
+								+ "<div class='helpContent'></br>E1 Cellular Signal too weak to boost. Try this‚Ä¶ Walk around your home/office with your cellular device. Try to find a signal indoors with at least one consistent bar of 3G/4G/LTE. More bars is always better! Once you have found a usable signal place your Network Unit in this location.</br></br>E2 Coverage Unit hardware error that may be remedied by a reset. Your Coverage Unit may not display a flashing error code. You will likely only see the solid red power indicator on your Coverage Unit.Try this‚Ä¶.Reset your Coverage Unit. Simply unplug your Coverage Unit for a few seconds and plug back in.</br></br>E3 Your Coverage Unit is overheating. Try this‚Ä¶ ensure that your Coverage Unit vents are clear of any blockage, and that the location of the unit allows free flow of air. Once your Coverage Unit has cooled down it will operate as normal.</br></br>E4 Your Network Unit is overheating. Try this‚Ä¶ ensure that your Network Unit vents are clear of any blockage, and that the location of the unit allows free flow of air. If you have your Network Unit in an attic space you may need to relocate the device to ensure that the system does not continue to overheat. Once your Network Unit has cooled down it will operate as normal.</br></br>E7 The system has been disabled by the mobile network carrier. Contact your point of sale.</br></br>E8 Input signal too strong. An E8 error code is letting you know that your Network Unit is too close to a cellular tower, not necessarily for your operator. This has reduced the output power (coverage bubble) to limit network interference. Try this‚Ä¶Move your Network Unit to another location. You might need to move your system to the other side of your home. Note: When you have an E8 your system will still offer you indoor cellular coverage.</br></br>Too close, you may also see a solid zero on your Coverage Unit. Your Coverage Unit is ‚ÄúToo Close‚Äù to your Network Unit. Try this‚Ä¶moving the units further apart, starting with the Coverage Unit.</br></br>Too far, you may also see a rotating/cycling zero with red arrows on your Coverage Unit. Your Coverage Unit is ‚ÄúToo Far‚Äù from your Network Unit. Try moving the units slightly (5-10 feet) closer together, starting with the Coverage Unit.</br></br>Intermittent ‚ÄúToo Far‚Äù message? Frequent or intermittent issues can be related to heavy WiFi saturation in your home/office. Make sure that each unit is as far as possible from any access points or other WiFi enabled devices.</div>"
 								+ "</div></div>";
 		$(duoTroubleShoot).appendTo('.modalBodyWrapper');
 		$('.headerContainer, #bodyContainer').hide();
@@ -3572,7 +3571,7 @@ var util = {
 	duoErrorCodes: function () {
 		this.createModalWrapper();
 		$('#modalTitle').html('Error codes');
-		var errorCodesDuo = '<div class="errorCodeModal"><h1 class="modelErrorCodeSubHeader modalContentTitle">E1: "(Error 1) Not Receiving Signal"</h1><div class="errorCodeEC_DUO_1"></div><div class="errorCodeEC_DUO_2"></div><p class="modelBodyContent">The Cellular Signal is too weak to boost. Try walking around your home/office with your cellular device to find a signal indoors with at least one consistent bar of 3G/4G/LTE. More bars is always better! Once you have found a usable signal place your Network Unit in this location.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E2: "(Error 2) CU Hardware Error"</h1><div class="errorCodeEC_DUO_3"></div><p class="modelBodyContent">Your Coverage Unit is experiencing a hardware error that may be remedied by a reset. Try this... reset your Coverage Unit. Simply unplug your Coverage Unit for a few seconds and plug back in.</br></br>The Network Unit will continue to search for the Coverage Unit, flashing the power indicator.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E3: "(Error 3) CU is overheating"</h1><div class="errorCodeEC_DUO_4"></div><p class="modelBodyContent">Your Coverage Unit is overheating. Please ensure that your Coverage Unit vents are clear of any blockage, and that the location of the unit allows free flow of air.</br></br>Once your Coverage Unit has cooled down it will operate as normal.</br></br>The Network Unit will continue to search for the Coverage Unit, flashing the power indicator.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E4: "(Error 4) NU is overheating"</h1><div class="errorCodeEC_DUO_1"></div><div class="errorCodeEC_DUO_5"></div><p class="modelBodyContent">Your Network Unit is overheating. Please ensure that your Network Unit vents are clear of any blockage, and that the location of the unit allows free flow of air. If you have your Network Unit in an attic space you may need to relocate the device to insure that the system does not continue to overheat. Once your Network Unit has cooled down it will operate as normal.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E6: "(Error 6) NU Hardware Error"</h1><div class="errorCodeEC_DUO_1"></div><p class="modelBodyContent">Your Network Unit is experiencing a hardware error that may be remedied by a reset. Try this... reset your Network Unit. Simply unplug your Network Unit for a few seconds and plug it back in.</br></br>The Coverage Unit will continue to look for the Network Unit, and eventually time out to a Too Far error message.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E7: "(Error 7) Unit disabled by network"</h1><div class="errorCodeEC_DUO_6"></div><div class="errorCodeEC_DUO_7"></div><p class="modelBodyContent">The system has been disabled by the mobile network carrier. Contact your point of sale.</br></br>Bars and LTE indicator will flash on the NU</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E8: "(Error 8) Input signal too strong."</h1><div class="errorCodeEC_DUO_8"></div><div class="errorCodeEC_DUO_9"></div><p class="modelBodyContent">Your Network Unit is too close to a cellular tower, not necessarily for your operator. This has reduced the output power (coverage bubble) to limit network interference. Try this... move your Network Unit to another location. You might need to move your system to the other side of your home. Note: When you have an E8 Error your system will still offer you indoor cellular coverage.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">Too Far</h1><div class="errorCodeEC_DUO_10"></div><p class="modelBodyContent">Your Coverage Unit is "Too Far" from your Network Unit. Try moving the units slightly (5-10 feet) closer together, starting with the Coverage Unit.</br></br>Intermittent "Too Far" message? Frequent or intermittent issues can be related to heavy WiFi saturation in your home/office. Make sure that each unit is as far as possible from any access points or other WiFi enabled devices.</br></br>The Network Unit will continue to search for the Coverage Unit, flashing the power indicator. Make sure that your Network Unit is operating normally, with a green power light and green bars.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">Too Close</h1><div class="errorCodeEC_DUO_11"></div><p class="modelBodyContent">Your Coverage Unit is ìToo Closeî to your Network Unit. Try moving the units further apart, starting with the Coverage Unit.</br></br>The Network Unit will continue to search for the Coverage Unit, flashing the power indicator.</P></div>';
+		var errorCodesDuo = '<div class="errorCodeModal"><h1 class="modelErrorCodeSubHeader modalContentTitle">E1: "(Error 1) Not Receiving Signal"</h1><div class="errorCodeEC_DUO_1"></div><div class="errorCodeEC_DUO_2"></div><p class="modelBodyContent">The Cellular Signal is too weak to boost. Try walking around your home/office with your cellular device to find a signal indoors with at least one consistent bar of 3G/4G/LTE. More bars is always better! Once you have found a usable signal place your Network Unit in this location.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E2: "(Error 2) CU Hardware Error"</h1><div class="errorCodeEC_DUO_3"></div><p class="modelBodyContent">Your Coverage Unit is experiencing a hardware error that may be remedied by a reset. Try this... reset your Coverage Unit. Simply unplug your Coverage Unit for a few seconds and plug back in.</br></br>The Network Unit will continue to search for the Coverage Unit, flashing the power indicator.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E3: "(Error 3) CU is overheating"</h1><div class="errorCodeEC_DUO_4"></div><p class="modelBodyContent">Your Coverage Unit is overheating. Please ensure that your Coverage Unit vents are clear of any blockage, and that the location of the unit allows free flow of air.</br></br>Once your Coverage Unit has cooled down it will operate as normal.</br></br>The Network Unit will continue to search for the Coverage Unit, flashing the power indicator.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E4: "(Error 4) NU is overheating"</h1><div class="errorCodeEC_DUO_1"></div><div class="errorCodeEC_DUO_5"></div><p class="modelBodyContent">Your Network Unit is overheating. Please ensure that your Network Unit vents are clear of any blockage, and that the location of the unit allows free flow of air. If you have your Network Unit in an attic space you may need to relocate the device to insure that the system does not continue to overheat. Once your Network Unit has cooled down it will operate as normal.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E6: "(Error 6) NU Hardware Error"</h1><div class="errorCodeEC_DUO_1"></div><p class="modelBodyContent">Your Network Unit is experiencing a hardware error that may be remedied by a reset. Try this... reset your Network Unit. Simply unplug your Network Unit for a few seconds and plug it back in.</br></br>The Coverage Unit will continue to look for the Network Unit, and eventually time out to a Too Far error message.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E7: "(Error 7) Unit disabled by network"</h1><div class="errorCodeEC_DUO_6"></div><div class="errorCodeEC_DUO_7"></div><p class="modelBodyContent">The system has been disabled by the mobile network carrier. Contact your point of sale.</br></br>Bars and LTE indicator will flash on the NU</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E8: "(Error 8) Input signal too strong."</h1><div class="errorCodeEC_DUO_8"></div><div class="errorCodeEC_DUO_9"></div><p class="modelBodyContent">Your Network Unit is too close to a cellular tower, not necessarily for your operator. This has reduced the output power (coverage bubble) to limit network interference. Try this... move your Network Unit to another location. You might need to move your system to the other side of your home. Note: When you have an E8 Error your system will still offer you indoor cellular coverage.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">Too Far</h1><div class="errorCodeEC_DUO_10"></div><p class="modelBodyContent">Your Coverage Unit is "Too Far" from your Network Unit. Try moving the units slightly (5-10 feet) closer together, starting with the Coverage Unit.</br></br>Intermittent "Too Far" message? Frequent or intermittent issues can be related to heavy WiFi saturation in your home/office. Make sure that each unit is as far as possible from any access points or other WiFi enabled devices.</br></br>The Network Unit will continue to search for the Coverage Unit, flashing the power indicator. Make sure that your Network Unit is operating normally, with a green power light and green bars.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">Too Close</h1><div class="errorCodeEC_DUO_11"></div><p class="modelBodyContent">Your Coverage Unit is ‚ÄúToo Close‚Äù to your Network Unit. Try moving the units further apart, starting with the Coverage Unit.</br></br>The Network Unit will continue to search for the Coverage Unit, flashing the power indicator.</P></div>';
 		$(errorCodesDuo).appendTo('.modalBodyWrapper');
 		$('.modalBodyWrapper').css('overflow-y','visible');
 		$('.headerContainer, #bodyContainer').hide();
@@ -3609,25 +3608,25 @@ var util = {
 		var proTroubleShoot = "<div class='installGuideWrapper'>"						
 								+ "<p class='pageTitleContainer modalContentTitle modalContentPadding'>Coverage Unit Troubleshooting</p>"
 								+ "<div class='modalContentPadding'>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Power ñ My Coverage Unit wonít turn on!</div>"
-								+ "<div class='helpContent'></br>When your system does not power up, or has a red power indicator, one of the following things could be happening. You might have a power adaptor failure, a hardware failure, or the system may need a simple restart.</br></br>Try thisÖ Both the Coverage Unit and Network Unit have identical power supplies. Try switching the power supplies to see if one of the following issues could be occurring:</br></br>If you switch the power supplies and the problem moves from one unit to the other unit then you are experiencing a power supply issue. Please reach out to your point of sale for a replacement power supply.</br></br>If, after switching power supplies, you still have no power on your Coverage Unit try another outlet, or another lamp/appliance in the same outlet (changed). If you continue to have problems with the unit please reach out to your point of sale for a system replacement.</br></br>If, after switching power supplies both system are functioning properlythen your Cel-Fi PRO system simply needed a restart. This is not something that should continue, but if it occurs frequently please reach out to your point of sale for support.</div>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Bars ñ My Coverage Unit is not finding the Network Unit!</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Power ‚Äì My Coverage Unit won‚Äôt turn on!</div>"
+								+ "<div class='helpContent'></br>When your system does not power up, or has a red power indicator, one of the following things could be happening. You might have a power adaptor failure, a hardware failure, or the system may need a simple restart.</br></br>Try this‚Ä¶ Both the Coverage Unit and Network Unit have identical power supplies. Try switching the power supplies to see if one of the following issues could be occurring:</br></br>If you switch the power supplies and the problem moves from one unit to the other unit then you are experiencing a power supply issue. Please reach out to your point of sale for a replacement power supply.</br></br>If, after switching power supplies, you still have no power on your Coverage Unit try another outlet, or another lamp/appliance in the same outlet (changed). If you continue to have problems with the unit please reach out to your point of sale for a system replacement.</br></br>If, after switching power supplies both system are functioning properlythen your Cel-Fi PRO system simply needed a restart. This is not something that should continue, but if it occurs frequently please reach out to your point of sale for support.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Bars ‚Äì My Coverage Unit is not finding the Network Unit!</div>"
 								+ "<div class='helpContent'></br>When you Coverage Unit does not have bars but your Network Unit icon does, the system is still performing startup procedures. </br></br>If it takes longer than 45 minutes, please restart both units and make sure they are within sight of each other.</br></br>Try placing the units roughly 30 feet from each other as a test to confirm that the units will pair, if not make sure you have matching serial numbers.</div>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Low amount of bars on your Coverage Unit ñ I canít get more than 1/2 bars over the CU icon!</div>"
-								+ "<div class='helpContent'></br>When you have a 1, or 2 bars on the Coverage Unit, your Cel-Fi PRO system has established a connection but might not be (changed) working to the fullest ability. Try thisÖ move your units further apart. If you have a particular spot in your home that you want coverage more than others try installing your Cel-Fi system in reverse. Put your Coverage Unit where you need coverage the most then place your Network Unit at the furthest location where you can get at least 1 bar of service.</br></br>If you cannot get your systems further apart, and you have the coverage you need, a higher number is not always possible or necessary.</div>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Small Coverage Bubble ñ I only have signal within a few feet of the Coverage Unit!</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Low amount of bars on your Coverage Unit ‚Äì I can‚Äôt get more than 1/2 bars over the CU icon!</div>"
+								+ "<div class='helpContent'></br>When you have a 1, or 2 bars on the Coverage Unit, your Cel-Fi PRO system has established a connection but might not be (changed) working to the fullest ability. Try this‚Ä¶ move your units further apart. If you have a particular spot in your home that you want coverage more than others try installing your Cel-Fi system in reverse. Put your Coverage Unit where you need coverage the most then place your Network Unit at the furthest location where you can get at least 1 bar of service.</br></br>If you cannot get your systems further apart, and you have the coverage you need, a higher number is not always possible or necessary.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Small Coverage Bubble ‚Äì I only have signal within a few feet of the Coverage Unit!</div>"
 								+ "<div class='helpContent'></br>Changes to your Cel-Fi placement can be made to improve your 3G/4G/LTE coverage.</br></br>The more bars shown on the Network Unit the better. Try moving the Network Unit to an area that has better 3G/4G/LTE coverage. If the home/office has more than 1 floor. Upstairs is usually better than downstairs. Putting the Network Unit near a window or higher on a self often helps as well.</br></br>The bar display of the Coverage Unit is an indication of the area covered. More bars on the Coverage Unit means a larger area is covered. To increase the coverage area move the Coverage Unit farther away from the Network Unit. The less obstacles in their direct line of sight the further apart you can get them. The more bars on your Coverage Unit, the better the coverage area will be.</div>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No LTE ñ My phone still doesnít have LTE</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No LTE ‚Äì My phone still doesn‚Äôt have LTE</div>"
 								+ "<div class='helpContent'></br>There are a few reasons why your phone would experience an issue with the LTE service. </br></br>You may not have LTE in your area, your Cel-Fi system may have lost the LTE signal due to intermittent network outages, or your phone may not support LTE. </br></br>Check to see that your phone shows an LTE signal in the location of your Network Unit.</div>"									
 								+ "</div></br>"
 								+ "<p class='pageTitleContainer modalContentTitle modalContentPadding'>Network Unit Troubleshooting</p>" 
 								+ "<div class='modalContentPadding'>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Power ñ My Network Unit wonít turn on!</div>"
-								+ "<div class='helpContent'></br>When your system does not power up, one of the following things could be happening. You could have a power adaptor failure, a hardware failure, or the system could need a simple restart.</br></br>Try thisÖ Both the Network Unit and Coverage Unit have identical power supplies. Try switching the power supplies to see if one of the following issues could be occurring:</br></br>If you switch the power supplies and the problem moves from one unit to the other unit then you are experiencing a power supply issue. Please reach out to your point of sale for a replacement power supply.</br></br>If, after switching power supplies, you still have no power on your Network Unit try another outlet, or lamp/appliance in the same outlet. If you continue to have problems with the Network Unit please reach out to your point of sale for a system replacement.</br></br>If, after switching power supplies both system are functioning properly then your Cel-Fi PRO system simply needed a restart. This is not something that should continue, but if it occurs frequently please reach out to your point of sale for support.</br></br>If you have power on your Network Unit with a white or otherwise abnormal colored display, please contact your point of sale for specific warranty support.</div>"
-								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Bars ñ My Network Unit is not finding the cellular signal!</div>"
-								+ "<div class='helpContent'></br>If you have no bars, your Network Unit is still trying to find the incoming cellular network signal. Your Network Unit may display the ìSearching for the NetworkÖî message. This can sometimes take more than a few minutes.</br></br>Taking longer than 60 minutes? Try thisÖ</br></br>Walk around your home/office with your cellular device. Try to find a signal inside your home/office with at least one consistent bar of 3G/4G/LTE. More bars is always better! Once you have found a signal place your Network Unit in that location.</br></br>If you have bars of service on your phone in the location of your Network Unit, and after 60 minutes you are still unable to receive bars of service on your Network Unit try a simple restart. To restart your Network Unit simply unplug for a moment and then plug back in. If the restart does not solve the issue please reach out to your point of sale for support.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Power ‚Äì My Network Unit won‚Äôt turn on!</div>"
+								+ "<div class='helpContent'></br>When your system does not power up, one of the following things could be happening. You could have a power adaptor failure, a hardware failure, or the system could need a simple restart.</br></br>Try this‚Ä¶ Both the Network Unit and Coverage Unit have identical power supplies. Try switching the power supplies to see if one of the following issues could be occurring:</br></br>If you switch the power supplies and the problem moves from one unit to the other unit then you are experiencing a power supply issue. Please reach out to your point of sale for a replacement power supply.</br></br>If, after switching power supplies, you still have no power on your Network Unit try another outlet, or lamp/appliance in the same outlet. If you continue to have problems with the Network Unit please reach out to your point of sale for a system replacement.</br></br>If, after switching power supplies both system are functioning properly then your Cel-Fi PRO system simply needed a restart. This is not something that should continue, but if it occurs frequently please reach out to your point of sale for support.</br></br>If you have power on your Network Unit with a white or otherwise abnormal colored display, please contact your point of sale for specific warranty support.</div>"
+								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>No Bars ‚Äì My Network Unit is not finding the cellular signal!</div>"
+								+ "<div class='helpContent'></br>If you have no bars, your Network Unit is still trying to find the incoming cellular network signal. Your Network Unit may display the ‚ÄúSearching for the Network‚Ä¶‚Äù message. This can sometimes take more than a few minutes.</br></br>Taking longer than 60 minutes? Try this‚Ä¶</br></br>Walk around your home/office with your cellular device. Try to find a signal inside your home/office with at least one consistent bar of 3G/4G/LTE. More bars is always better! Once you have found a signal place your Network Unit in that location.</br></br>If you have bars of service on your phone in the location of your Network Unit, and after 60 minutes you are still unable to receive bars of service on your Network Unit try a simple restart. To restart your Network Unit simply unplug for a moment and then plug back in. If the restart does not solve the issue please reach out to your point of sale for support.</div>"
 								+ "<div class='helpHeadLine installGuideContent troubleShootSubTitle'>Network Unit (NU) continues to search for the Coverage Unit (CU)</div>"
-								+ "<div class='helpContent'></br>Your Cel-Fi PRO has found the network and is displaying bars over the (NU) Network Unit icon, but continues to try and find a connection to the Coverage Unit (CU).</br></br>If this screen is displayed for more than 30 minutes, after your Network Unit shows bars, you could have one of the following issues with your Cel-Fi PRO system.</br></br>Try thisÖ Insure that your Coverage Unit (CU) is plugged in and has power. If your Coverage Unit does not have power <a href=\"#\" onclick=\"window.open('https://support.cel-fi.com/hc/en-us/articles/202987766-Troubleshoot-the-Cel-Fi-Network-Unit', '_system');\">click here</a> for a link to the PRO Coverage Unit (CU) troubleshooting section.</br></br>Make sure that your Units are not too far apart. Try placing the systems 10-15 feet apart to insure they can connect. The more interference (i.e. walls, doors, refrigerators, filing cabinets) between the two units the closer they will need to be. Once you have established a connection you can optimize the displayed number by moving either unit.</br></br>Intermittent too far issues. While five CU bars is the largest distance between your Coverage Unit and your Network Unit you can have the systems slightly too far apart. This may cause you to experience intermittent interference which can cause the connection to break. Frequent or intermittent issues can be related to heavy WiFi saturation in your home/office, or obstacles that move between the two units line of sight. Make sure that each unit is as far as possible from any access points or other WiFi enabled devices. An example of a wireless device could be, but is not limited to, a wireless home phone, laptop computer, or wireless router.</div>"
+								+ "<div class='helpContent'></br>Your Cel-Fi PRO has found the network and is displaying bars over the (NU) Network Unit icon, but continues to try and find a connection to the Coverage Unit (CU).</br></br>If this screen is displayed for more than 30 minutes, after your Network Unit shows bars, you could have one of the following issues with your Cel-Fi PRO system.</br></br>Try this‚Ä¶ Insure that your Coverage Unit (CU) is plugged in and has power. If your Coverage Unit does not have power <a href=\"#\" onclick=\"window.open('https://support.cel-fi.com/hc/en-us/articles/202987766-Troubleshoot-the-Cel-Fi-Network-Unit', '_system');\">click here</a> for a link to the PRO Coverage Unit (CU) troubleshooting section.</br></br>Make sure that your Units are not too far apart. Try placing the systems 10-15 feet apart to insure they can connect. The more interference (i.e. walls, doors, refrigerators, filing cabinets) between the two units the closer they will need to be. Once you have established a connection you can optimize the displayed number by moving either unit.</br></br>Intermittent too far issues. While five CU bars is the largest distance between your Coverage Unit and your Network Unit you can have the systems slightly too far apart. This may cause you to experience intermittent interference which can cause the connection to break. Frequent or intermittent issues can be related to heavy WiFi saturation in your home/office, or obstacles that move between the two units line of sight. Make sure that each unit is as far as possible from any access points or other WiFi enabled devices. An example of a wireless device could be, but is not limited to, a wireless home phone, laptop computer, or wireless router.</div>"
 								+ "</div></div>";
 			
 		$(proTroubleShoot).appendTo('.modalBodyWrapper');
@@ -3638,7 +3637,7 @@ var util = {
 	proErrorCodes: function () {
 		this.createModalWrapper();
 		$('#modalTitle').html('Error codes');
-		var errorCodesPro = '<div class="errorCodeModal"><h1 class="modelErrorCodeSubHeader modalContentTitle">E1: "(Error 1) Not Receiving Signal"</h1><div class="errorCodeEC_PRO_1"></div><p class="modelBodyContent">The Cellular Signal is too weak to boost. Try walking around your home/office with your cellular device to find a signal indoors with at least one consistent bar of 3G/4G/LTE. More bars is always better! Once you have found a usable signal place your Network Unit in this location.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E2: "(Error 2) CU Hardware Error"</h1><div class="errorCodeEC_PRO_2"></div>Your Coverage Unit is experiencing a hardware error that may be remedied by a reset. Try this... reset your Coverage Unit. Simply unplug your Coverage Unit for a few seconds and plug back in.</br></br>The Network Unit will continue to search for the Coverage Unit, flashing the power indicator.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E3: "(Error 3) CU is overheating"</h1><div class="errorCodeEC_PRO_3"></div>Your Coverage Unit is overheating. Please ensure that your Coverage Unit vents are clear of any blockage, and that the location of the unit allows free flow of air.</br></br>Once your Coverage Unit has cooled down it will operate as normal.</br></br>The Network Unit will continue to search for the Coverage Unit, flashing the power indicator.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E4: "(Error 4) NU is overheating"</h1><div class="errorCodeEC_PRO_4"></div><p class="modelBodyContent">Your Network Unit is overheating. Please ensure that your Network Unit vents are clear of any blockage, and that the location of the unit allows free flow of air. If you have your Network Unit in an attic space you may need to relocate the device to insure that the system does not continue to overheat. Once your Network Unit has cooled down it will operate as normal.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E6: "(Error 6) NU Hardware Error"</h1><div class="errorCodeEC_PRO_6"></div><p class="modelBodyContent">Your Network Unit is experiencing a hardware error that may be remedied by a reset. Try this... reset your Network Unit. Simply unplug your Network Unit for a few seconds and plug it back in.</br></br>The Coverage Unit will continue to look for the Network Unit, and eventually time out to a Too Far error message.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E7: "(Error 7) Unit disabled by network"</h1><div class="errorCodeEC_PRO_7"></div><p class="modelBodyContent">The system has been disabled by the mobile network carrier. Contact your point of sale.</br></br>Bars and LTE indicator will flash on the NU</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E8: "(Error 8) Input signal too strong."</h1><div class="errorCodeEC_PRO_8"></div><p class="modelBodyContent">Your Network Unit is too close to a cellular tower, not necessarily for your operator. This has reduced the output power (coverage bubble) to limit network interference. Try this... move your Network Unit to another location. You might need to move your system to the other side of your home. Note: When you have an E8 Error your system will still offer you indoor cellular coverage.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">Too Far</h1><div class="errorCodeEC_PRO_9"></div><p class="modelBodyContent">Your Coverage Unit is "Too Far" from your Network Unit. Try moving the units slightly (5-10 feet) closer together, starting with the Coverage Unit.</br></br>Intermittent "Too Far" message? Frequent or intermittent issues can be related to heavy WiFi saturation in your home/office. Make sure that each unit is as far as possible from any access points or other WiFi enabled devices.</br></br>The Network Unit will continue to search for the Coverage Unit, flashing the power indicator. Make sure that your Network Unit is operating normally, with a green power light and green bars. </P><h1 class="modelErrorCodeSubHeader modalContentTitle">Too Close</h1><div class="errorCodeEC_PRO_10"></div><p class="modelBodyContent">Your Coverage Unit is ìToo Closeî to your Network Unit. Try moving the units further apart, starting with the Coverage Unit.</br></br>The Network Unit will continue to search for the Coverage Unit, flashing the power indicator.</P></div>';
+		var errorCodesPro = '<div class="errorCodeModal"><h1 class="modelErrorCodeSubHeader modalContentTitle">E1: "(Error 1) Not Receiving Signal"</h1><div class="errorCodeEC_PRO_1"></div><p class="modelBodyContent">The Cellular Signal is too weak to boost. Try walking around your home/office with your cellular device to find a signal indoors with at least one consistent bar of 3G/4G/LTE. More bars is always better! Once you have found a usable signal place your Network Unit in this location.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E2: "(Error 2) CU Hardware Error"</h1><div class="errorCodeEC_PRO_2"></div>Your Coverage Unit is experiencing a hardware error that may be remedied by a reset. Try this... reset your Coverage Unit. Simply unplug your Coverage Unit for a few seconds and plug back in.</br></br>The Network Unit will continue to search for the Coverage Unit, flashing the power indicator.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E3: "(Error 3) CU is overheating"</h1><div class="errorCodeEC_PRO_3"></div>Your Coverage Unit is overheating. Please ensure that your Coverage Unit vents are clear of any blockage, and that the location of the unit allows free flow of air.</br></br>Once your Coverage Unit has cooled down it will operate as normal.</br></br>The Network Unit will continue to search for the Coverage Unit, flashing the power indicator.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E4: "(Error 4) NU is overheating"</h1><div class="errorCodeEC_PRO_4"></div><p class="modelBodyContent">Your Network Unit is overheating. Please ensure that your Network Unit vents are clear of any blockage, and that the location of the unit allows free flow of air. If you have your Network Unit in an attic space you may need to relocate the device to insure that the system does not continue to overheat. Once your Network Unit has cooled down it will operate as normal.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E6: "(Error 6) NU Hardware Error"</h1><div class="errorCodeEC_PRO_6"></div><p class="modelBodyContent">Your Network Unit is experiencing a hardware error that may be remedied by a reset. Try this... reset your Network Unit. Simply unplug your Network Unit for a few seconds and plug it back in.</br></br>The Coverage Unit will continue to look for the Network Unit, and eventually time out to a Too Far error message.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E7: "(Error 7) Unit disabled by network"</h1><div class="errorCodeEC_PRO_7"></div><p class="modelBodyContent">The system has been disabled by the mobile network carrier. Contact your point of sale.</br></br>Bars and LTE indicator will flash on the NU</P><h1 class="modelErrorCodeSubHeader modalContentTitle">E8: "(Error 8) Input signal too strong."</h1><div class="errorCodeEC_PRO_8"></div><p class="modelBodyContent">Your Network Unit is too close to a cellular tower, not necessarily for your operator. This has reduced the output power (coverage bubble) to limit network interference. Try this... move your Network Unit to another location. You might need to move your system to the other side of your home. Note: When you have an E8 Error your system will still offer you indoor cellular coverage.</P><h1 class="modelErrorCodeSubHeader modalContentTitle">Too Far</h1><div class="errorCodeEC_PRO_9"></div><p class="modelBodyContent">Your Coverage Unit is "Too Far" from your Network Unit. Try moving the units slightly (5-10 feet) closer together, starting with the Coverage Unit.</br></br>Intermittent "Too Far" message? Frequent or intermittent issues can be related to heavy WiFi saturation in your home/office. Make sure that each unit is as far as possible from any access points or other WiFi enabled devices.</br></br>The Network Unit will continue to search for the Coverage Unit, flashing the power indicator. Make sure that your Network Unit is operating normally, with a green power light and green bars. </P><h1 class="modelErrorCodeSubHeader modalContentTitle">Too Close</h1><div class="errorCodeEC_PRO_10"></div><p class="modelBodyContent">Your Coverage Unit is ‚ÄúToo Close‚Äù to your Network Unit. Try moving the units further apart, starting with the Coverage Unit.</br></br>The Network Unit will continue to search for the Coverage Unit, flashing the power indicator.</P></div>';
 		$(errorCodesPro).appendTo('.modalBodyWrapper');
 		$('.headerContainer, #bodyContainer').hide();
 		$('.modalWrapper').show();
