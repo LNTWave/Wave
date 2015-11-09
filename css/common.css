@@ -28,6 +28,10 @@ input, select, button{
 	width:50%;
 }
 
+.w49{
+	width:49%;
+}
+
 .cb{
 	clear:both;
 }
@@ -243,6 +247,13 @@ input, select, button{
 	border-radius: 40px;
 	border:none;
 	margin-top:20px;
+}
+
+.BtnWBG{
+	background: none !important;
+	color: #4faee0 !important;
+	border: 1px solid #4faee0 !important;
+	padding: 0px 20px 0px 20px !important;
 }
 
 .defaultButton:hover{
@@ -739,7 +750,7 @@ a,a:ACTIVE,a:AFTER {
 .signalContainerSM{
 	margin:auto;
 	height:90%;
-	width: 59%;
+	width: 60%;
 	bottom: 10px !important;
     position: relative;
 }
