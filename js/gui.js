@@ -1486,7 +1486,8 @@ function updateBoosterButtons()
 // ProcessDownloadView............................................................................................
 function ProcessDownloadView()
 {
-    var i;
+	//alert("inside download view");
+    /*var i;
     var myId;
     
     if( lastGuiCurrentMode != guiCurrentMode )
@@ -1568,8 +1569,13 @@ function ProcessDownloadView()
         
     
         guiSoftwareDirtyFlag = false;
+    }*/
+	lastGuiCurrentMode = guiCurrentMode;
+	if( guiSoftwareDirtyFlag == true )
+    {
+		//alert("Update required");
+		errorHandler.showErrorPopup('updateBooster');
     }
-    
 }
 // End of Download View ............................................................................................
 
@@ -2111,7 +2117,6 @@ var util = {
     },
     
     showSearchAnimation: function(){
-    	//console.log(typeof searchTimeOut);
     	if(typeof searchTimeOut != "undefined"){
     		clearTimeout(searchTimeOut);
     	}
@@ -2206,14 +2211,45 @@ var util = {
 	},
 	
 	getCurrentLocationPrompt: function(msg){
-    	util.createBlackOverlay();
-    	util.createPromptPopup();
-    	var promptElem = document.getElementById("promptPopup");
-    	util.modifyLocationAccessPrompt(msg);
+		if(deviceOS == "Android"){
+			util.showErrorPopup();
+    		var locationHeader = document.getElementById("popupHeader");
+        	var locationBody = document.getElementById("popupBody");
+        	var locationFooter = document.getElementById("popupFooter");
+        	locationHeader.className = "locationHeader";
+        	locationBody.className = "locationBody";
+        	locationFooter.className = "locationFooter";
+        	locationFooter.align = "center";
+        	
+        	locationHeader.innerHTML = "Location Access";
+        	locationBody.innerHTML = "Allow Wave access to your current GPS location?";
+        	
+        	var locBtn1 = util.createAppendElem("button", "locationDeny", "defaultButton BtnWBG fl w50", locationFooter);
+        	var locBtn2 = util.createAppendElem("button", "locationAllow", "defaultButton fr w50", locationFooter);
+        	util.createAppendElem("div", "locationCB", "cb", locationFooter);
+	        locBtn1.innerHTML = "Don't Allow";
+	        locBtn2.innerHTML = "Allow";
+	        locBtn1.addEventListener("click", function(){
+	        	util.removeElement("blackOverlay");
+		    	util.removeElement("commonPopup");
+		    	HandleConfirmLocation(2);
+	        }, false);
+	        
+	        locBtn2.addEventListener("click", function(){
+	        	util.removeElement("blackOverlay");
+		    	util.removeElement("commonPopup");
+		    	HandleConfirmLocation(1);
+	        }, false);
+		}else{
+			util.createBlackOverlay();
+	    	util.createPromptPopup();
+	    	var promptElem = document.getElementById("promptPopup");
+	    	util.modifyLocationAccessPrompt(msg);
+		}
     },
     
     modifyLocationAccessPrompt: function(msg){
-    	var promptBody = document.getElementById("promptBody");
+		var promptBody = document.getElementById("promptBody");
     	var promptFooter = document.getElementById("promptFooter");
     	promptBody.innerHTML = msg;
     	var buttonDiv1 = util.createAppendElem("div", "buttonDiv1", "w50 h100", promptFooter);
@@ -3088,7 +3124,7 @@ var util = {
 			freq = '';
 			if(guiBands[i] !== 0) {
 			techType = guiTechnologyTypes[i] === 1 ? 'LTE' : 'WCDMA';
-			freq = guiFreqArrayMHz[i] + " MHz";
+			freq = parseInt(guiFreqArrayMHz[i]) + " MHz";
 			}
 			overViewContent = overViewContent + "<div class='networkStatus'>"
 									+ "<div class='networkStatusLbl'>"+ techType +"</div>"
@@ -3261,6 +3297,11 @@ var util = {
 					+ softwareVersionContent
 					+ footer;			
 		$('#bodyContainer').html(advancedPanelContent);
+		$('a[data-toggle="collapse"]').click(function () {
+			$('span.toggle-icon').not($(this).find('span.toggle-icon')).removeClass('expand-less');
+			$('span.toggle-icon').not($(this).find('span.toggle-icon')).addClass('expand-more');
+			$(this).find('span.toggle-icon').toggleClass('expand-less expand-more');
+		});
 	},
 	
 	loadDashboardContainer: function(menuElem){
@@ -3876,6 +3917,10 @@ var errorHandler = {
     	errorTitle : "Unable to acquire GPS.",
     	errorBody : "No location information will be stored.",
     },
+    updateBoosterError:{
+    	errorTitle : "Booster update required",
+    	errorBody : "Your booster software is out of date. Please install the latest version to make sure your Cel-Fi system is working correctly.",
+    },
     
     showErrorPopup: function(errorType){
     	util.createBlackOverlay();
@@ -3972,6 +4017,16 @@ var errorHandler = {
 		        	util.hideCommonPopup();
 		        	HandleLocationBack(1);}, false);
 				break;
+				
+			case "updateBooster":
+				var errObj = errorHandler.updateBoosterError;
+		        var errBtn = util.createAppendElem("button", "errBoosterUpdate", "defaultButton", errFooter);
+		        errBtn.innerHTML = errorHandler.updateNowBtnContent;
+		        errBtn.addEventListener("click", function(){
+		        	util.hideCommonPopup();
+		        	//HandleLocationBack(1);
+		        }, false);
+				break;
 		}
     	errTitleContainer.innerHTML = errObj.errorTitle;
     	errBody.innerHTML = errObj.errorBody;
@@ -3992,7 +4047,7 @@ var errorHandler = {
 var splashScreen = {
 	initiate: function(){
 		window.localStorage.setItem("deviceType", deviceType);
-		if(deviceType == "phone"){
+		if(deviceType == "phone" && deviceOS != "iOS"){
 			window.plugins.orientationchanger.lockOrientation('portrait');
 		}
 		$('body').html(mainContainerWithoutMenu);
