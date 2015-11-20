@@ -842,6 +842,9 @@ function ProcessTechView()
 			mainScreenSelectedTab = "dashboard";
 			util.loadBodyContainer(mainScreenSelectedTab);
 		}
+		$('.faqIcnWrapper').bind("click",function() {			
+			util.showHelpMenu();
+    	});
     	lastGuiCurrentMode  = guiCurrentMode;
     }
     
