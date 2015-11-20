@@ -18,16 +18,21 @@ const   UNII_TRY_COUNTER_MAX    = 15;
 const   SwPnNuCu                = "700.036.";
 const   SwPnPic                 = "700.040.";
 const   SwPnBt                  = "700.041.";
+const   SwPnNuCfg               = "700.037.";       // Both Secured and Unsecured  (Hash Alpha)
+const   SwPnArt                 = "800.003.";
+const   SwPnNuEvm               = "800.004.";
+
 
 const   PROG_MODE_MAIN          = 100;
 const   PROG_MODE_DOWNLOAD      = 200;
+const   PROG_MODE_DOWNLOAD_AUTO = 201;      // Same as DOWNLOAD but no user button presses.
 const   PROG_MODE_TECH          = 300;
 const   PROG_MODE_SETTINGS      = 400;
 const   PROG_MODE_REGISTRATION  = 500;
 const   NUM_CHANNELS            = 4;
 const   BOOST_TOO_CLOSE         = -1;
 const   BOOST_TOO_FAR           = 10;
-
+const	PROG_MODE_ADVANCED		= 600;
 
 
 var bSendLocalInfoToCloud       = false;
@@ -56,7 +61,7 @@ var pcBrowserPlatform           = "PcBrowser";
 
 var uIcd                    = 0;
 var swVerBtScan             = "--.--";          // Filled in by scan results. 
-var szVerApp                = "01.00.04";       // In BCD, remember config.xml as well.
+var szVerApp                = "01.00.06";       // In BCD, remember config.xml as well.
 
 // Determine which messages get sent to the console.  1 normal, 10 verbose.
 // Level  1: Flow and errors.
@@ -65,7 +70,9 @@ var szVerApp                = "01.00.04";       // In BCD, remember config.xml a
 // Level  4: Timing loops
 // Level 10: Bluetooth processing.
 // Level 99: Error, print in red.
+
 var PrintLogLevel = 3;
+var softwareVersionFlag = 0;
 
 
 
@@ -132,6 +139,26 @@ function RequestModeChange(newMode)
             }
         }   // if button is displayed...
     }
+    else if( newMode == PROG_MODE_ADVANCED )
+    {
+        // Handle if button is displayed...
+        if( guiButtonTkHtml.length > 10 )
+        {
+            PrintLog(1, "");
+            PrintLog(1, "Advanced Mode key pressed-----------------------------------------------------------");
+            clearInterval(MainLoopIntervalHandle); 
+                        
+            if( isSouthBoundIfCnx )
+            {
+//                clearTimeout(checkUniiStatusMainTimer);
+                setTimeout(tech.renderAdvancedView, 300);
+            }
+            else
+            {
+                ShowAlertPopUpMsg(szSouthBoundIfNotCnxMsg, "Advanced mode not allowed...");
+            }
+        }   // if button is displayed...
+    }
     else if( newMode == PROG_MODE_SETTINGS )
     {
         // Handle if button is displayed...
@@ -183,6 +210,27 @@ function RequestModeChange(newMode)
         } // if button is displayed...            
         
     }
+    else if( newMode == PROG_MODE_DOWNLOAD_AUTO )
+    {
+        {
+            PrintLog(1, "");
+            PrintLog(1, "SW Update Auto mode----------------------------------------------------------");
+            clearInterval(MainLoopIntervalHandle);  
+        
+            if( isSouthBoundIfCnx )
+            {
+                StopGatheringTechData();
+//                clearTimeout(checkUniiStatusMainTimer);
+                bDldAutoMode = true;
+                Dld.renderDldView();  
+            }
+            else
+            {
+                ShowAlertPopUpMsg(szSouthBoundIfNotCnxMsg, "SW Update mode not allowed..." );
+            }
+        } // if button is displayed...            
+        
+    }
     else
     {
         PrintLog(99, "RequestModeChange(unknown)=" + newMode );
@@ -212,7 +260,7 @@ function HandleBackKey()
     {
         Stg.handleBackKey();
     }
-    else if( guiCurrentMode == PROG_MODE_DOWNLOAD )
+    else if( (guiCurrentMode == PROG_MODE_DOWNLOAD) || (guiCurrentMode == PROG_MODE_DOWNLOAD_AUTO)  )
     {
         Dld.handleBackKey();
     }
@@ -522,8 +570,8 @@ function HandleOsConfirmation(buttonIndex)
 
 
 
-// HandlePicUpdateConfirmation.......................................................................................
-function HandlePicUpdateConfirmation(buttonIndex) 
+// HandleSwUpdateConfirmation.......................................................................................
+function HandleSwUpdateConfirmation(buttonIndex) 
 {
     // buttonIndex = 0 if dialog dismissed, i.e. back button pressed.
     // buttonIndex = 1 if 'Ok'
@@ -557,12 +605,13 @@ function HandlePrivacyConfirmation(buttonIndex)
         
         if( buttonIndex == 1 )
         {
-            if( isSouthBoundIfCnx == false )
+        	//alert(isSouthBoundIfCnx +"---"+ guiDeviceFlag);
+            if( (isSouthBoundIfCnx == false) && (guiDeviceFlag == false) )
             {
-                // Start the spinner..
+                // Start the spinner..if BT not connected and we are not asking the user to select a BT device.
                 //ShowWaitPopUpMsg( "Please wait", "Searching for Cel-Fi devices..." );
                 //UpdateStatusLine("Searching for Cel-Fi devices...");
-            	util.showSearchAnimation();
+				//util.showSearchAnimation();
             }
         }
         
@@ -749,7 +798,6 @@ var app = {
                 ((window.device.platform == iOSPlatform)     && (parseFloat(window.device.version) < 7.1))      )
             {
                 PrintLog(1, "Phone's Operating System is out of date.   Please upgrade to latest version." );
-                
                 ShowConfirmPopUpMsg(
                     'Phone Operating System is out of date.   Please upgrade to latest version.  Exiting Wave App.',    // message
                     HandleOsConfirmation,                   // callback to invoke with index of button pressed
@@ -758,6 +806,7 @@ var app = {
             } 
             else
             {
+            	softwareVersionFlag = true;
                 // Start the handler to be called every second...
                 MainLoopIntervalHandle = setInterval(app.mainLoop, 1000 );
             } 
@@ -793,8 +842,7 @@ var app = {
             // When PhoneGap is loaded and talking with the native device,
             // it will call the event `deviceready`.
             // 
-            //document.addEventListener('deviceready', this.onDeviceReady, false);
-            this.onDeviceReady();
+            document.addEventListener('deviceready', this.onDeviceReady, false);
         }
     },
 
@@ -836,6 +884,13 @@ var app = {
                 }
                 else
                 {
+                    // Wait until the BT list has been gathered...
+                    if( isSouthBoundIfListDone == false )
+                    {
+                        return;
+                    }
+                    
+                    
                     // Normal flow should come here once bluetooth has been enabled...
                     bCheckSouthBoundIfOnStartup = false;
 
@@ -860,19 +915,28 @@ var app = {
         
         if( bPrivacyViewed == false )
         {
-          if( CFG_RUN_ON_SANDBOX )
-          {
-            var jText = "App sw: " + szVerApp + "(S)  Cel-fi BT sw: " + swVerBtScan;
-          }
-          else
-          {
-            var jText = "App sw: " + szVerApp + "(P)  Cel-fi BT sw: " + swVerBtScan;
-          }
-                
-          UpdateStatusLine( jText );
+            var jText;
+            if( CFG_RUN_ON_SANDBOX )
+            {
+                jText = "App sw: " + szVerApp + "(S)  Cel-fi BT sw: " + swVerBtScan;
+            }
+            else
+            {
+                jText = "App sw: " + szVerApp + "(P)  Cel-fi BT sw: " + swVerBtScan;
+            }
+            
+/*            
+            // Add the MAC address if android.   IOS encodes the MAC address.    
+            if( window.device.platform == androidPlatform )
+            {
+                jText += " BT MAC: " + myLastBtAddress;
+            }
+*/  
+            
+            UpdateStatusLine( jText );
 //          PrintLog(1, jText );
           
-          return;
+            return;
         }
         
         
@@ -889,10 +953,9 @@ var app = {
                     isNetworkConnected = NorthBoundConnectionActive();
                     
                     // Start the spinner..
+                    
                     //ShowWaitPopUpMsg( "Please wait", "Syncing data..." );
-                    util.showSearchAnimation();
-                    clearTimeout(searchTimeOut);
-                    setTimeout(function(){ util.deviceIdentified(); }, 2000);
+                    
                 }
                 else if( uMainLoopCounter == 2 )
                 {
@@ -917,8 +980,6 @@ var app = {
                     u8TempBuff[0] = NXTY_PHONE_ICD_VER;
                     nxty.SendNxtyMsg(NXTY_STATUS_REQ, u8TempBuff, 1);
     
-
-                
                     bNxtySuperMsgRsp = false;
                 }
             } 
@@ -940,7 +1001,7 @@ var app = {
                     
                     ShowConfirmPopUpMsg(
                         'PIC software is out of date.   Select Ok to update...',    // message
-                        HandlePicUpdateConfirmation,                                // callback to invoke with index of button pressed
+                        HandleSwUpdateConfirmation,                                // callback to invoke with index of button pressed
                         'Update PIC Software',                                      // title
                         ['Ok'] );                                                   // buttonLabels
                 
@@ -972,24 +1033,42 @@ var app = {
                         bUniiUp = true;
                         UpdateUniiIcon(bUniiUp);
                         
-                        // Display the GO booster...
-                        guiBoosterFlag = true;
-                        
                         // Since Tech mode pulls from the CU cloud buffer set it to the retrieved NU address...
                         nxtyCuCloudBuffAddr = nxtyNuCloudBuffAddr;
+                        
+                        // Update the CU's build ID to be used on Build ID check below.
+                        nxtySwBuildIdCu     = nxtySwBuildIdNu;
+                        
+                        GetNxtyOperatorCode(nxtyConfigPn);
                     }
 
-
                     // Get SKU, i.e. now the Model Number...
-                    GetSkuFromUniqueId(); 
+                    GetNxtyPartNumber( nxtyCuUniqueId );              // Get the SKU, i.e. 590N number which is now the model number.
+                    GetNxtyOperatorList();                          // 
+                    bNxtySuperMsgRsp = false;
+
                 }
             }    
 
+            // Get the 2nd Glob of local information from the unit that the BT is attached to, i.e. CU ..............
+            else if( bNxtySuperMsgLocalInfo2 == false )
+            {
+                if( bNxtySuperMsgRsp == false )
+                {
+                    UpdateStatusLine("Retrieving Local Info 2...");
+                    GetNxtySuperMsgInfo2();
+                }
+                else
+                {
+                    bNxtySuperMsgLocalInfo2 = true;
+                }
+            }    
 
             // Wait until the model number is retrieved from the Nextivity Server........................
             else if( myModel == null )
             {
                 // Wait until we get the model number...
+                PrintLog(1, "Main: Waiting on model number to be returned from Nextivity server..." );
                 return;
             }
 
@@ -1001,6 +1080,46 @@ var app = {
                 SendCloudAsset();
                 SendCloudData( "'SerialNumber':'" + mySn + "'" );
                 guiSerialNumber = mySn;
+  
+                // Get the user's first name just in case local storage got cleared.              
+                SendCloudData( "'getUserInfoAction':'true'" );  
+                              
+                // Get the list of Operators, i.e. 590 numbers, that this device can be changed to.              
+                SendCloudData( "'getOperatorInfoAction':'true'" );    
+
+
+                // Force a SW update if build ID < SW5_1_45
+/*                if( parseInt(nxtySwBuildIdCu, 16) < parseInt("0x0501002D", 16) )
+jdo                {
+                    PrintLog(1, "Cel-Fi software needs to be updated:  Build ID = " + nxtySwBuildIdCu  );
+                    UpdateStatusLine("SW Update Required...");
+                
+                    clearInterval(MainLoopIntervalHandle);  
+                    StopWaitPopUpMsg();
+                    
+                    // Make sure that after the SW update that we grab the new status so we can update the Build ID
+                    isNxtyStatusCurrent = false;
+
+                    // If not on a 1-box then assume that the NU has the same software version as the CU
+                    // since we are not talking to the NU yet.
+                    if( bCnxToOneBoxNu == false )
+                    {
+                        nxtySwVerNuCf  = nxtySwVerCuCf;
+                        nxtySwVerNuPic = nxtySwVerCuPic;
+                    }
+
+                    
+                    ShowConfirmPopUpMsg(
+                        'Cel-Fi software is out of date.   Select Ok to update...',    // message
+                        HandleSwUpdateConfirmation,                                 // callback to invoke with index of button pressed
+                        'Cel-Fi Software Update Required',                          // title
+                        ['Ok'] );                                                   // buttonLabels
+                
+                    return;
+                }
+*/
+
+
 
             
                 // Register for push notifications after we can communicate with the cloud
@@ -1017,23 +1136,29 @@ var app = {
                 }
                 
                 
-                
                 // Send the data to the cloud
                 if( bCnxToCu )
                 {
                     SendCloudData( "'SwVerCU_CF':'"  + SwPnNuCu + nxtySwVerCuCf  + "'" );
                     SendCloudData( "'SwVerCU_PIC':'" + SwPnPic  + nxtySwVerCuPic + "'" );
                     SendCloudData( "'SwVer_BT':'"    + SwPnBt   + nxtySwVerCuBt    + "', 'OperatorCode':'" + myOperatorCode + "'"  );
+                    SendCloudData( "'SwVerCU_ART':'" + SwPnArt  + nxtySwVerCuArt + "'" );
                 }
                 else
                 {
                     SendCloudData( "'SwVerNU_CF':'"  + SwPnNuCu + nxtySwVerNuCf  + "'" );
                     SendCloudData( "'SwVerNU_PIC':'" + SwPnPic  + nxtySwVerNuPic + "'" );
 // TBD                    SendCloudData( "'SwVerNU_BT':'"    + SwPnBt   + nxtySwVerNuBt    + "', 'OperatorCode':'" + myOperatorCode + "'"  );
+                    SendCloudData( "'SwVerNU_SCFG':'" + SwPnNuCfg  + nxtySwVerNuSCfg + "'" );
+                    SendCloudData( "'SwVerNU_UCFG':'" + SwPnNuCfg  + nxtySwVerNuUCfg + "'" );
+                    SendCloudData( "'SwVerNU_ART':'"  + SwPnArt    + nxtySwVerNuArt  + "'" );
+                    SendCloudData( "'SwVerNU_EVM':'"  + SwPnNuEvm  + nxtySwVerNuEvm + "'" );
                 }
+
                 
-                SendCloudData( "'UniqueId':'"    + nxtyUniqueId + "'" );
+                SendCloudData( "'UniqueId':'"   + nxtyCuUniqueId + "'" );
                 SendCloudData( "'SKU_Number':'" + mySku + "'" );
+                
                 
                 if( bCnxToOneBoxNu == true )
                 {
@@ -1137,31 +1262,49 @@ mySn = myTempSn;
                     else
                     {
                         bNxtySuperMsgRemoteInfo = true;
-//                        SetUartLocal();            // Cancel the UART redirect...
                         uStateCounter    = 0;
     
-                        // Send the data to the cloud
-                        if( !bCnxToCu )
-                        {
-                            SendCloudData( "'SwVerCU_CF':'"  + SwPnNuCu + nxtySwVerCuCf  + "'" );
-                            SendCloudData( "'SwVerCU_PIC':'" + SwPnPic  + nxtySwVerCuPic + "'" );
-                            SendCloudData( "'SwVer_BT':'"    + SwPnBt   + nxtySwVerCuBt    + "', 'OperatorCode':'" + myOperatorCode + "'"  );
-                        }
-                        else
-                        {
-                            SendCloudData( "'SwVerNU_CF':'"  + SwPnNuCu + nxtySwVerNuCf  + "'" );
-                            SendCloudData( "'SwVerNU_PIC':'" + SwPnPic  + nxtySwVerNuPic + "'" );
-    // TBD                        SendCloudData( "'SwVerNU_BT':'"    + SwPnBt   + nxtySwVerNuBt    + "', 'OperatorCode':'" + myOperatorCode + "'"  );
-                        }
-                        
-                        
+                        GetNxtyOperatorCode(nxtyConfigPn);
+                        bNxtySuperMsgRsp    = false;
                     }
-                    
                 }
-                
                                 
             }
 
+
+            // Get the 2nd Glob of information ..............
+            else if( (bNxtySuperMsgRemoteInfo2 == false) && (bCnxToOneBoxNu == false) )
+            {
+                UpdateStatusLine("Retrieving Remote Info 2...");
+                
+                if( bNxtySuperMsgRsp == false )
+                {
+                    GetNxtySuperMsgInfo2();
+                }
+                else
+                {
+                    bNxtySuperMsgRemoteInfo2 = true;
+                    
+                    if( !bCnxToCu )
+                    {
+                        SendCloudData( "'SwVerCU_CF':'"  + SwPnNuCu + nxtySwVerCuCf  + "'" );
+                        SendCloudData( "'SwVerCU_PIC':'" + SwPnPic  + nxtySwVerCuPic + "'" );
+                        SendCloudData( "'SwVer_BT':'"    + SwPnBt   + nxtySwVerCuBt    + "', 'OperatorCode':'" + myOperatorCode + "'"  );
+                        SendCloudData( "'SwVerCU_ART':'" + SwPnArt  + nxtySwVerCuArt + "'" );
+                    }
+                    else
+                    {
+                        SendCloudData( "'SwVerNU_CF':'"  + SwPnNuCu + nxtySwVerNuCf  + "'" );
+                        SendCloudData( "'SwVerNU_PIC':'" + SwPnPic  + nxtySwVerNuPic + "'" );
+// TBD                    SendCloudData( "'SwVerNU_BT':'"    + SwPnBt   + nxtySwVerNuBt    + "', 'OperatorCode':'" + myOperatorCode + "'"  );
+                        SendCloudData( "'SwVerNU_SCFG':'" + SwPnNuCfg  + nxtySwVerNuSCfg + "'" );
+                        SendCloudData( "'SwVerNU_UCFG':'" + SwPnNuCfg  + nxtySwVerNuUCfg + "'" );
+                        SendCloudData( "'SwVerNU_ART':'"  + SwPnArt    + nxtySwVerNuArt  + "'" );
+                        SendCloudData( "'SwVerNU_EVM':'"  + SwPnNuEvm  + nxtySwVerNuEvm + "'" );
+                    }
+                    
+                }
+            }    
 
             // Get Reg Lock status...........................................................
             else if( bGotRegLockStatus == false )
@@ -1177,7 +1320,10 @@ mySn = myTempSn;
                 {
                     // Start gathering the tech mode data.............                    
                     StartGatheringTechData();
-                    ShowWaitPopUpMsg( "Please wait", "Gathering data..." );
+                    //ShowWaitPopUpMsg( "Please wait", "Gathering data..." );
+                    document.getElementById("searchMessageBox").innerHTML = "Gathering data...";
+                    // Also, silently start checking for Software updates...
+                    CheckForSoftwareUpdates();
                 }
             
                 UpdateStatusLine("Gathering Tech Mode Data...");
@@ -1218,6 +1364,7 @@ mySn = myTempSn;
                 }  
                 else
                 {
+                	//alert("clear till gathering data");
                 
                     // No critical alerts so post the buttons....
                     guiButtonSwHtml = szSwButtonImg;
@@ -1229,6 +1376,16 @@ mySn = myTempSn;
                     guiMainButtonsDisabled  = false;
                     
                     UpdateStatusLine( "Select button...<br>Cnx: " + myModel + ":" + mySn );                             
+
+
+                    // Fill in some interface variables...
+                    // Version info from the hardware...    should have already been filled in by now...
+                    guiSwCelFiVers[0] = nxtySwVerNuCf;
+                    guiSwCelFiVers[1] = nxtySwVerCuCf;
+                    guiSwCelFiVers[2] = nxtySwVerNuPic;
+                    guiSwCelFiVers[3] = nxtySwVerCuPic;
+                    guiSwCelFiVers[4] = nxtySwVerCuBt;
+                    
 
                     if( (nxtyRxRegLockStatus == 0x0B) || (nxtyRxRegLockStatus == 0x07) )     // State 8 (0x0B) or 12 (0x07)
                     {
@@ -1254,15 +1411,14 @@ mySn = myTempSn;
                             isRegistered = true;    
                             UpdateRegIcon(1);       // Set reg ICON to Registered...
                             UpdateRegButton(1);     // Remove the reg button.
-                            lastGuiCurrentMode = PROG_MODE_TECH; // Redirect user when already registered
-                            mainContainerDisplayFlag = 1;
-                            ProcessMainView();	// Showing dashboard
                         }else{
-                        	lastGuiCurrentMode = PROG_MODE_TECH; // Redirect user when already registered
-                            mainContainerDisplayFlag = 1;
-                            ProcessMainView();	// Showing dashboard
+                        	isRegistered = true;
+                        	//mainContainerDisplayFlag = 1;
+                        	RequestModeChange(PROG_MODE_TECH);
                         }
                     }
+                      
+                    guiRegistrationFlag = isRegistered;
                                                             
                     
                     // Look at the registered status to update the cloud.   Must wait until after the nxtyRxRegLockStatus check above
@@ -1279,6 +1435,9 @@ mySn = myTempSn;
                     // Start a timer to check the UNII status every so often...  
 //                    checkUniiStatusMainTimer = setTimeout(CheckUniiStatusMain, 5000);
   
+                    // Take a snapshot of where we are...
+                    DumpDataTables();
+                    
                     // Start gathering tech data.  Note that the UNII is also checked every so often...                  
                     StartGatheringTechData();
                     
@@ -1301,13 +1460,14 @@ mySn = myTempSn;
                 if( isNxtyStatusCurrent == false )          eTxt = "Unable to get Model Number from Cel-Fi";
                 else if( nxtySwVerNuCf  == null )           eTxt = "Unable to get NU SW Ver from Cel-Fi";
                 else if( nxtySwVerNuPic == null )           eTxt = "Unable to get NU PIC SW Ver from Cel-Fi";
-                else if( nxtyUniqueId   == null )           eTxt = "Unable to get Unique ID from Cel-Fi";
+                else if( nxtyNuUniqueId   == null )         eTxt = "Unable to get NU Unique ID from Cel-Fi";
                 
                 if( bCnxToOneBoxNu == false )
                 {
                     if( nxtySwVerCuCf  == null )            eTxt = "Unable to get CU SW Ver from Cel-Fi";
                     else if( nxtySwVerCuPic == null )       eTxt = "Unable to get CU PIC SW Ver from Cel-Fi";
                     else if( nxtySwVerCuBt  == null )       eTxt = "Unable to get BT SW Ver from Cel-Fi";
+                    else if( nxtyCuUniqueId   == null )     eTxt = "Unable to get CU Unique ID from Cel-Fi";
                 }
                 
                 
@@ -1318,113 +1478,11 @@ mySn = myTempSn;
         }   // End if( isSouthBoundIfCnx )
 
         
-    }, // End of MainLoop()
+    } // End of MainLoop()
 
 };
 
 
-
-
-// GetSkuFromUniqueId.............................................................................................................
-function GetSkuFromUniqueId() 
-{ 
-//    var wsUri = "ws://echo.websocket.org/";           // Echo server
-//    var wsUri = "ws://172.16.10.151:443/";            // Test server
-//    var wsUri = "ws://nxt-rdhk:443/";                 // Nextivity server (internal)
-    var wsUri = "ws://celfi.nextivityinc.com:443/";     // Nextivity server (external)
-    
-    PrintLog(1, "WS: GetSkuFromUniqueId()");
-     
-    websocket = new WebSocket(wsUri); 
-    websocket.onopen = function(evt) { onOpen(evt) }; 
-    websocket.onclose = function(evt) { onClose(evt) }; 
-    websocket.onmessage = function(evt) { onMessage(evt) }; 
-    websocket.onerror = function(evt) { onError(evt) }; 
-}  
-
-function onOpen(evt) 
-{ 
-    PrintLog(1, "WS: CONNECTED"); 
-
-    var u8UniqueIdBuff = new Uint8Array(
-    [
-        0,0,0,0,0,0,0,0,                                            // Unique ID LSB first...
-
-        0x46, 0x32, 0xa5, 0x22, 0xe8, 0xbb, 0x40, 0xae,             // User hash for user "anonymous", LSB first
-
-        0x35, 0xe0, 0xca, 0xb5, 0xc9, 0x1d, 0xe8, 0x70, 0x0d, 0xed, 0x52, 0x20, 0x44, 0x2c, 0xb8, 0x6d, 
-        0x81, 0xf4, 0x07, 0xc3, 0x67, 0x8b, 0xd1, 0x8e, 0x40, 0xbf, 0x7b, 0xf1, 0xaf, 0x5a, 0xd5, 0xd4,           // Password hash for user "anonymous", LSB first
-         
-        0xff, 0xff, 0xff, 0xff,                                     // Version of the client tool, since we don't want updates via this mechanism I make this max
-        0xFE                                                        // The magic opcode to request a partnumber
-    ]);
-
-    // Unique ID LSB first....
-    u8UniqueIdBuff[0] = u8UniqueId[7];
-    u8UniqueIdBuff[1] = u8UniqueId[6];
-    u8UniqueIdBuff[2] = u8UniqueId[5];
-    u8UniqueIdBuff[3] = u8UniqueId[4];
-    u8UniqueIdBuff[4] = u8UniqueId[3];
-    u8UniqueIdBuff[5] = u8UniqueId[2];
-    u8UniqueIdBuff[6] = u8UniqueId[1];
-    u8UniqueIdBuff[7] = u8UniqueId[0];
-
-    PrintLog(1, "WS: Sent part number request for UniqueId: " + nxtyUniqueId);
-    websocket.send(u8UniqueIdBuff);
-}  
-
-function onClose(evt) 
-{ 
-    PrintLog(1, "WS: DISCONNECTED"); 
-}  
-
-function onMessage(evt) 
-{ 
-    if( evt.data instanceof Blob )
-    {
-//        PrintLog(1, "WS: Blob RESPONSE stringify: " + JSON.stringify(evt.data) );
-
-        var arrayBuffer;
-        var fileReader = new FileReader();
-        fileReader.onload = function() 
-        {
-            arrayBuffer = this.result;
-            var u8Rcvd  = new Uint8Array(arrayBuffer);
-            
-            var outText = u8Rcvd[0].toString(16);
-            mySku       = String.fromCharCode(u8Rcvd[0]); 
-            for( var i = 1; i < u8Rcvd.length; i++ )
-            {
-                outText += " " + u8Rcvd[i].toString(16);
-                mySku   += String.fromCharCode(u8Rcvd[i]);
-            }
-
-            myModel = mySku;
-            guiProductType  = GetProductTypeFromSku( mySku );
-            
-            
-            if( u8Rcvd[16] == 6 )
-            {
-                guiMobilityFlag = true;
-            }
-            
-            PrintLog(1, "WS: u8Rcvd: " + outText + "  SKU: " + mySku + "  Model Number: " + myModel );
-        };
-        fileReader.readAsArrayBuffer(evt.data);        
-        
-    }
-    else
-    {
-        PrintLog(1, "WS: Text RESPONSE: " + evt.data );
-    } 
-    websocket.close(); 
-}  
-
-function onError(evt) 
-{ 
-    PrintLog(1, "WS: ERROR: " + evt.data); 
-}  
-// End GetSkuFromUniqueId..........................................................................................................
 
 
 // GetProductTypeFromSku...........................................................................................................
@@ -1435,30 +1493,29 @@ function GetProductTypeFromSku(tempSku)
     // sku looks like "590NP34...etc"                    
     if( tempSku.search("P34") == 4 )
     {
-        tempProd = "PRO";    
+        tempProd = PRODUCT_TYPE_PRO;    
     }
     else if( tempSku.search("D32") == 4 )
     {
-        tempProd = "DUO";    
+        tempProd = PRODUCT_TYPE_DUO;    
     }
     else if( tempSku.search("S32") == 4 )
     {
-        tempProd = "PRIME";    
+        tempProd = PRODUCT_TYPE_PRIME;    
     }
     else if( tempSku.search("G31") == 4 )
     {
-        tempProd = "GO";    
+        tempProd = PRODUCT_TYPE_GO;  
+        guiBoosterFlag = true;  
     }
     else if( tempSku.search("T34") == 4 )
     {
-        tempProd = "TREO";    
+        tempProd = PRODUCT_TYPE_CABLE;    
     }
     else
     {
-        tempProd = "Unknown";    
+        tempProd = PRODUCT_TYPE_UNKNOWN;    
     }
-
-
 
     return( tempProd );
 }  
@@ -1500,15 +1557,16 @@ function GetRegLockStatus()
                 nxtyRxRegLockStatus  = nxtyReadAddrRsp & CLOUD_INFO_DATA_MASK;
                 uRegLockStateCounter = 0;
                 
+                guiRegistrationLockBits = nxtyRxRegLockStatus;
            
-               var rLock = (nxtyRxRegLockStatus & 0x08)?"Reg Desired":"";
-               rLock    += (nxtyRxRegLockStatus & 0x04)?"/Reg Required":"";
-               rLock    += (nxtyRxRegLockStatus & 0x02)?"/Reg Complete":"";
-               rLock    += (nxtyRxRegLockStatus & 0x01)?"/Loc Lock":"";
-               PrintLog(1,  "  RegLock=0x" + nxtyRxRegLockStatus.toString(16).toUpperCase() + " (" + rLock + ")");               
+                var rLock = (nxtyRxRegLockStatus & 0x08)?"Reg Desired":"";
+                rLock    += (nxtyRxRegLockStatus & 0x04)?"/Reg Required":"";
+                rLock    += (nxtyRxRegLockStatus & 0x02)?"/Reg Complete":"";
+                rLock    += (nxtyRxRegLockStatus & 0x01)?"/Loc Lock":"";
+                PrintLog(1,  "  RegLock=0x" + nxtyRxRegLockStatus.toString(16).toUpperCase() + " (" + rLock + ")");               
                 
-               SetUartLocal();            // If remote then cancel the UART redirect...if local then no problem...
-               return( true );
+                SetUartLocal();            // If remote then cancel the UART redirect...if local then no problem...
+                return( true );
             }
             else
             {
@@ -1521,3 +1579,5 @@ function GetRegLockStatus()
     
     return( false );
 }  
+
+

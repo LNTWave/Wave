@@ -33,7 +33,6 @@ var antCode                     = 0;
 var bOkToRedirectUart           = true;
 var uartRedirectTimeout         = null;
 var checkUniiStatusStgTimer     = null;
-const UART_REDIRECT_TIMER_MS    = 6000;
 
 
 const   MAX_bdS               = 44;
@@ -51,35 +50,9 @@ const   STG_STATE_WAIT_FOR_SET_ANT              = 3;
 const   STG_STATE_READ_GLOBAL_FLAGS             = 4;
 const   STG_STATE_WAIT_FOR_ANT_STATUS           = 5;
 const   STG_STATE_WAIT_FOR_GLOBAL_FLAGS         = 6;
-const   STG_STATE_READ_UNII_BLOCK_LIST          = 7;
-const   STG_STATE_WAIT_READ_UNII_BLOCK_LIST     = 8;
-const   STG_STATE_SET_UNII_BLOCK_LIST           = 9;
-const   STG_STATE_WAIT_SET_UNII_BLOCK_LIST      = 10;
-const   STG_STATE_READ_SU_1_PARAMETERS          = 11;
-const   STG_STATE_READ_SU_2_PARAMETERS          = 12;
-const   STG_STATE_READ_SU_3_PARAMETERS          = 13;
-const   STG_STATE_WAIT_READ_SU_PARAMETERS       = 14;
-const   STG_STATE_SET_SU_1_PARAMETERS           = 15;
-const   STG_STATE_SET_SU_2_PARAMETERS           = 16;
-const   STG_STATE_WAIT_SET_SU_PARAMETERS        = 17;
 
 const   GLOBAL_FLAGS_AUTO_ANT_BIT               = 0x20;     // when set do automatic antenna selection...
 const   ANT_STATUS_NO_EXT                       = 0xFFFFFFFF;
-
-var aUniiChanBlock = new Uint32Array(2); // maps to firmware UINT32 UniiChanBlock[2]
-var dfltSuMaxSysGain          = 0; //Default Super User Max system gain [dB]
-var dfltSuMinSysGain          = 0; //Default Super User Min system gain [dB]
-var dfltSuMaxBackOff          = 0; //Default Super User Max back-off [dB]
-var dfltSuMaxCellRssi         = 0; //Default Super User Max Cell RSSI for Pro [dBm]
-var dfltSuMaxRscp             = 0; //Default Super User Max RSCP for GO [dBm]
-var dfltSuMaxRsrp             = 0; //Default Super User Max RSRP for GO [dBm]
-var dfltSuBandMask3G          = ~0;//Shows which Default 3G bands should be allowed
-var dfltSuBandMask4G          = ~0;//Shows which Default 4G bands should be allowed
-var dfltSuTechBandAllowedBias =    //Default TechBandBias :: tech{0=wcdma, 1=lte}, bd:band, blk{0=band will be relayed, 1=band is blocked}, bias
-[
-    {"tech":0, "bd":1, "blk":0, "bias":60}
-];
-
 
 // Called at the end of a 5 second timeout to allow the UART to be redirected...
 function RedirectUartTimeout()
@@ -167,8 +140,8 @@ function SetAntenna(code)
                 
     // Disable all radio buttons to keep user from changing while 
     // we are trying to set the hardware...
-    disableAntButtons();
-
+    //disableAntButtons();
+ 
     // Clear the UNII timer...
     // Note that the StgLoop will actually start in 1 second due to the call below so any pending UNII check responses should be cleared by then... 
     clearTimeout(checkUniiStatusStgTimer);
@@ -183,11 +156,11 @@ function SetAntenna(code)
 
 function updateAntStatus()
 {
+	//alert("Update Ant status");
     var i;
     var ubd;
     var uTemp;        
             
-                
     // Update Auto/Manual
     if( nxtyGlobalFlags & GLOBAL_FLAGS_AUTO_ANT_BIT )
     {
@@ -237,9 +210,7 @@ function updateAntStatus()
         // Move to the next bd...
         uTemp >>= 8;
     }
-
-    PrintLog(1, "UpdateAntStatus(): guiAntennaManualFlag=" + guiAntennaManualFlag + " guiAntennaIntFlags=" + JSON.stringify(guiAntennaIntFlags) + " guiAntennaBands=" + JSON.stringify(guiAntennaBands) + " guiAntennaFreqArrayMHz=" + JSON.stringify(guiAntennaFreqArrayMHz) ); 
-    
+    util.updateAntennaBandButtons();
     guiSettingsDirtyFlag = true;
 }
 
@@ -307,16 +278,9 @@ var Stg = {
     renderSettingsView: function() 
     {    
         guiCurrentMode = PROG_MODE_SETTINGS;
-        DisplayLoop();
+
         // Start the ball rolling...
-        if( parseInt(nxtySwBuildIdNu, 16) > parseInt("0x0501002B", 16) ) // only SW5_1_44 and above supports this API
-        {
-            StgState          = STG_STATE_READ_UNII_BLOCK_LIST;
-        }
-        else
-        {
-            StgState          = STG_STATE_READ_GLOBAL_FLAGS_ON_ENTRY;
-        }
+        StgState              = STG_STATE_READ_GLOBAL_FLAGS_ON_ENTRY;          
         StgTimeoutCount       = 0;
         
         if( bCnxToOneBoxNu )
@@ -325,7 +289,7 @@ var Stg = {
         }
         else
         {
-            StgLoopIntervalHandle = setInterval(StgLoop, 1000);
+            StgLoopIntervalHandle = setInterval(StgLoop, 100);
         }
     },
 };
@@ -334,7 +298,7 @@ var Stg = {
     
 function StgLoop() 
 {
-
+	//alert('inside stgloop');
     PrintLog(1, "Settings loop...StgState=" + StgState + " StgTimeoutCount= " + StgTimeoutCount );
     StgTimeoutCount++; 
         
@@ -345,6 +309,7 @@ function StgLoop()
         ShowAlertPopUpMsg("Timeout.", "Unable to set antenna configuration.   Try again.");
         
         // Reset to last known Ant configuration
+        //alert(guiAntennaManualFlag);
         updateAntStatus();
         
         clearInterval(StgLoopIntervalHandle);
@@ -353,15 +318,15 @@ function StgLoop()
         // Do not allow communication to the NU for another 5 seconds....   
         SetUartLocal();
         bOkToRedirectUart = false;
-        uartRedirectTimeout = setTimeout(RedirectUartTimeout, UART_REDIRECT_TIMER_MS); 
+        uartRedirectTimeout = setTimeout(RedirectUartTimeout, 6000); 
         return;       
     }
     
        
     switch( StgState )
     {
-
-        case STG_STATE_READ_GLOBAL_FLAGS_ON_ENTRY: // 1
+    
+        case STG_STATE_READ_GLOBAL_FLAGS_ON_ENTRY:
         {
             clearInterval(StgLoopIntervalHandle);
             StopWaitPopUpMsg();
@@ -426,7 +391,7 @@ function StgLoop()
                     PrintLog(1, "Try again to set the antenna state.");
                     StgState            = STG_STATE_SET_ANT;
                     bOkToRedirectUart   = false;
-                    uartRedirectTimeout = setTimeout(RedirectUartTimeout, UART_REDIRECT_TIMER_MS);                 
+                    uartRedirectTimeout = setTimeout(RedirectUartTimeout, 6000);                 
                 }
             }
             break;
@@ -498,136 +463,11 @@ function StgLoop()
                 
                 // Do not allow communication to the NU for another 5 seconds....                
                 bOkToRedirectUart = false;
-                uartRedirectTimeout = setTimeout(RedirectUartTimeout, UART_REDIRECT_TIMER_MS);
+                uartRedirectTimeout = setTimeout(RedirectUartTimeout, 5000);
             }
             break; 
         }
 
-
-        case STG_STATE_READ_UNII_BLOCK_LIST: //7
-        {
-            if( bOkToRedirectUart )
-            {
-                SetNxtySuperMsgReadUniiBlockedList();
-                StgState = STG_STATE_WAIT_READ_UNII_BLOCK_LIST;
-            }
-            break;
-        }
-
-        
-        case STG_STATE_WAIT_READ_UNII_BLOCK_LIST: //8
-        {
-            if( bNxtySuperMsgRsp == true )
-            {
-                bOkToRedirectUart   = false;
-                uartRedirectTimeout = setTimeout(RedirectUartTimeout, UART_REDIRECT_TIMER_MS);
-                StgState = STG_STATE_READ_GLOBAL_FLAGS_ON_ENTRY;
-            }
-            break;
-        }
-        
-        
-        case STG_STATE_SET_UNII_BLOCK_LIST: //9
-        {
-            if( bOkToRedirectUart )
-            {
-                SetNxtySuperMsgWriteUniiBlockedList(aUniiChanBlock);
-                StgState = STG_STATE_WAIT_SET_UNII_BLOCK_LIST;
-            }
-            break;
-        }
-        
-        
-        case STG_STATE_WAIT_SET_UNII_BLOCK_LIST: //10
-        {
-            if( bNxtySuperMsgRsp == true )
-            {
-                StgTimeoutCount     = 0;
-                bOkToRedirectUart   = false;
-                uartRedirectTimeout = setTimeout(RedirectUartTimeout, UART_REDIRECT_TIMER_MS);
-                StgState = STG_STATE_READ_UNII_BLOCK_LIST;
-            }
-            break;
-        }
-        
-        
-        case STG_STATE_READ_SU_1_PARAMETERS: //11
-        {
-            if( bOkToRedirectUart )
-            {
-                SetNxtySuperMsgReadSuperUserParams_1();
-                StgState = STG_STATE_READ_SU_2_PARAMETERS;
-            }
-            break;
-        }
-        
-        
-        case STG_STATE_READ_SU_2_PARAMETERS: //12
-        {
-            if( bNxtySuperMsgRsp == true )
-            {
-                SetNxtySuperMsgReadSuperUserParams_2();
-                StgState = STG_STATE_READ_SU_3_PARAMETERS;
-            }
-            break;
-        }
-
-        
-        case STG_STATE_READ_SU_3_PARAMETERS: //13
-        {
-            if( bNxtySuperMsgRsp == true )
-            {
-                SetNxtySuperMsgReadSuperUserParams_3();
-                StgState = STG_STATE_WAIT_READ_SU_PARAMETERS;
-            }
-            break;
-        }
-
-        
-        case STG_STATE_WAIT_READ_SU_PARAMETERS: //14
-        {
-            if( bNxtySuperMsgRsp == true )
-            {
-                bOkToRedirectUart   = false;
-                uartRedirectTimeout = setTimeout(RedirectUartTimeout, UART_REDIRECT_TIMER_MS);
-                StgState = STG_STATE_READ_GLOBAL_FLAGS_ON_ENTRY;
-            }
-            break;
-        }
-        
-        case STG_STATE_SET_SU_1_PARAMETERS: //15
-        {
-            if( bOkToRedirectUart )
-            {
-                SetNxtySuperMsgWriteSuperUserParams_1();
-                StgState = STG_STATE_SET_SU_2_PARAMETERS;
-            }
-            break;
-        }
-        
-        case STG_STATE_SET_SU_2_PARAMETERS: //16
-        {
-            if( bNxtySuperMsgRsp == true )
-            {
-                SetNxtySuperMsgWriteSuperUserParams_2();
-                StgState = STG_STATE_WAIT_SET_SU_PARAMETERS;
-            }
-            break;
-        }
-        
-
-        case STG_STATE_WAIT_SET_SU_PARAMETERS: //17
-        {
-            if( bNxtySuperMsgRsp == true )
-            {
-                bOkToRedirectUart   = false;
-                uartRedirectTimeout = setTimeout(RedirectUartTimeout, UART_REDIRECT_TIMER_MS);
-                StgState = STG_STATE_READ_SU_1_PARAMETERS; // now go read them again to check FW response
-            }
-            break;
-        }
-
-        
         default:
         {
             clearInterval(StgLoopIntervalHandle);
@@ -636,147 +476,4 @@ function StgLoop()
         }
         
     }   // end switch
-}
-
-
-//-----------------------
-function startSetBlockedUniiFreq() 
-{
-    // Using the guiSuUniiList array that the user just filled out, update the aUniiChanBlock[2]
-    var idx = 0;
-    aUniiChanBlock[0] = 0; for(idx=0; idx<32; idx++)              {if((guiSuUniiList[idx].tck)/*&& (guiSuUniiList[idx].dis == 0)*/){aUniiChanBlock[0] |= (1<<idx);}}
-    aUniiChanBlock[1] = 0; for( ; idx<guiSuUniiList.length; idx++){if((guiSuUniiList[idx].tck)/*&& (guiSuUniiList[idx].dis == 0)*/){aUniiChanBlock[1] |= (1<<idx);}}
-    
-    // Fire the message
-    clearTimeout(checkUniiStatusStgTimer);
-    StgTimeoutCount       = 0;
-    StgState              = STG_STATE_SET_UNII_BLOCK_LIST;
-    StgLoopIntervalHandle = setInterval(StgLoop, 1000);
-}
-
-function startReadSuperUserInfo()
-{
-    clearTimeout(checkUniiStatusStgTimer);
-    StgTimeoutCount       = 0;
-    StgState              = STG_STATE_READ_SU_1_PARAMETERS;
-    StgLoopIntervalHandle = setInterval(StgLoop, 1000);
-    
-    // -----also fire of something that will get the PLMN list from cloud (it will have to have egressresponse callback to update the view if it takes longer than the unit query)
-    // for now, just add options based on current time to check dynamic update
-    var x=guiSuPLMNIDlist.splice(0, guiSuPLMNIDlist.length); x=[];var d=new Date();for(var i=0;i<d.getSeconds();i++){var txt = "Operator " + d.getMinutes() + ":" + d.getSeconds() + "(" + i + ")";guiSuPLMNIDlist.push( txt.toString() );}
-    // -----
-}
-
-// For the given frequency, set the tick value if allowed to
-function SetUniiListItem(freq, tick) 
-{
-    for(var I=0; I<guiSuUniiList.length; I++)
-    {
-        if(guiSuUniiList[I].fq == freq)
-        {
-            if(guiSuUniiList[I].dis == 0)
-            {
-                guiSuUniiList[I].tck = tick;
-            }
-            break;
-        }
-    }
-}
-
-// For the given Tech and Band, set the blocked tick and bias
-//  TechBandBias :: tech{0=wcdma, 1=lte}, bd:band, blk{0=band will be relayed, 1=band is blocked}, bias
-function SetTechBandAllowedBiasItem(Tech, Band, BlckTick, Bias)
-{
-    for(var I=0; I<guiSuTechBandAllowedBias.length; I++)
-    {
-        if( (guiSuTechBandAllowedBias[I].tech == Tech) && (guiSuTechBandAllowedBias[I].bd == Band))
-        {
-            if(BlckTick!=null){guiSuTechBandAllowedBias[I].blk = ((BlckTick)?(1):(0));}
-            if(Bias!=null){guiSuTechBandAllowedBias[I].bias = Bias;}
-            break;
-        }
-    }
-}
-
-// Get user confugured params and send to unit
-function startSetSuperUserConfigParams()
-{
-    // When User value equal to the Default value, then write invalid value to board so that it knows that it can use default
-    if(guiSuMaxSysGain  == dfltSuMaxSysGain)  {guiSuMaxSysGain=0;}  //int8 (valid if > 0)
-    if(guiSuMinSysGain  == dfltSuMinSysGain)  {guiSuMinSysGain=0;}  //int8 (valid if > 0)
-    if(guiSuMaxBackOff  == dfltSuMaxBackOff)  {guiSuMaxBackOff=0;}  //int32 (valid if >0)
-    if(guiSuMaxCellRssi == dfltSuMaxCellRssi) {guiSuMaxCellRssi=0;} //int8 (valid if < 0)
-    if(guiSuMaxRscp     == dfltSuMaxRscp)     {guiSuMaxRscp=0;}     //int8 (valid if < 0)
-    if(guiSuMaxRsrp     == dfltSuMaxRsrp)     {guiSuMaxRsrp=0;}     //int8 (valid if < 0)
-    
-    guiSuBandMask3G = buildBandMask(0);
-    guiSuBandMask4G = buildBandMask(1);
-    
-    // Fire the message
-    clearTimeout(checkUniiStatusStgTimer);
-    StgTimeoutCount       = 0;
-    StgState              = STG_STATE_SET_SU_1_PARAMETERS;
-    StgLoopIntervalHandle = setInterval(StgLoop, 1000);
-}
-
-function buildBandMask(theTech)
-{
-    var bandmask = 0;
-    
-    for(var I=0; I<guiSuTechBandAllowedBias.length; I++)
-    {
-        if( guiSuTechBandAllowedBias[I].tech == theTech )
-        {
-            if( guiSuTechBandAllowedBias[I].blk == 0)
-            {
-                bandmask |= ( 1<<(guiSuTechBandAllowedBias[I].bd-1) );
-            }
-        }
-    }
-    return bandmask;
-}
-
-function buildGuiTechBandBias(idx)
-{
-    var techbandbias = 0;
-    if(idx < guiSuTechBandAllowedBias.length)
-    {
-        techbandbias = (guiSuTechBandAllowedBias[idx].bias << 8) | (guiSuTechBandAllowedBias[idx].tech << 7) | (guiSuTechBandAllowedBias[idx].bd);
-    }
-    return techbandbias;
-}
-
-function loadDefaultUniiFreq()
-{
-    PrintLog(1, "User clicked button 'Restore Defaults' for Unii List");
-    // clear any user tick where user allowed to change
-    // frequency, ticked={1=block channel, 0=allow channel}, disabled={0=allow user to change tick state, 1=user cannot change tick state}
-    for(var I=0; I<guiSuUniiList.length; I++)
-    {
-        if(guiSuUniiList[I].dis == 0)
-        {
-            guiSuUniiList[I].tck = 0;
-        }
-    }
-
-}
-
-function loadDefaultSuperUsrConfigurableParams()
-{
-    PrintLog(1, "User clicked button 'Restore Defaults' for Super User configurable params");
-    guiSuMaxSysGain = dfltSuMaxSysGain ;
-    guiSuMinSysGain = dfltSuMinSysGain ;
-    guiSuMaxBackOff = dfltSuMaxBackOff ;
-    guiSuMaxCellRssi= dfltSuMaxCellRssi;
-    guiSuMaxRscp    = dfltSuMaxRscp    ;
-    guiSuMaxRsrp    = dfltSuMaxRsrp    ;
-    guiSuBandMask3G = dfltSuBandMask3G ; 
-    guiSuBandMask4G = dfltSuBandMask4G ; 
-     
-    var x=guiSuTechBandAllowedBias.splice(0, guiSuTechBandAllowedBias.length); x=[];
-    for (var i = 0; i<dfltSuTechBandAllowedBias.length; i++)
-    {
-        var elem = dfltSuTechBandAllowedBias[i];
-        guiSuTechBandAllowedBias.push({"tech":elem.tech, "bd":elem.bd, "blk":elem.blk, "bias":elem.bias});
-    }
 }

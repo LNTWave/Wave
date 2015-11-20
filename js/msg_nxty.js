@@ -8,7 +8,7 @@
 
 const   NXTY_PHONE_ICD_VER                = 0x20;
 
-const   NXTY_STD_MSG_SIZE                   = 0x0C;   // 12
+const   NXTY_STD_MSG_SIZE                 = 0x0C;   // 12
 const   NXTY_MED_MSG_SIZE                 = 0x84;   // 132
 const   NXTY_BIG_MSG_SIZE                 = 0xFF;   // 255
 const   NXTY_V2_MAX_MSG_SIZE              = 260;    // 260
@@ -56,6 +56,14 @@ const     NXTY_SUPER_MSG_RESET_REMOTE_UNIT      = 0x08;
 const     NXTY_SUPER_MSG_RESET_LOCAL_UNIT       = 0x09;
 const     NXTY_SUPER_MSG_GET_BOOSTER_DATA       = 0x0A;
 const     NXTY_SUPER_MSG_SET_WAVE_DATA          = 0x0B;
+const     NXTY_SUPER_MSG_GET_UNII_BLOCKED_LIST  = 0x0C;
+const     NXTY_SUPER_MSG_GET_SPR_USR_PARAMS_1   = 0x0D;
+const     NXTY_SUPER_MSG_GET_SPR_USR_PARAMS_2   = 0x0E;
+const     NXTY_SUPER_MSG_GET_SPR_USR_PARAMS_3   = 0x0F;
+const     NXTY_SUPER_MSG_SET_UNII_BLOCKED_LIST  = 0x10;
+const     NXTY_SUPER_MSG_WRITE_SPR_USR_PARAMS_1 = 0x11;
+const     NXTY_SUPER_MSG_WRITE_SPR_USR_PARAMS_2 = 0x12;
+const     NXTY_SUPER_MSG_INFO2_TYPE             = 0x13;
 
 const   NXTY_SUPER_MSG_RSP                      = 0x53;
 const   NXTY_SUPER_MSG_PARAM_SEL_ARRAY    = ["0:Xfer Bufr",    "UniqueIdLsd",       "UniqueIdMsd",      "BuildId",         "SWVersion",         
@@ -65,14 +73,15 @@ const   NXTY_SUPER_MSG_PARAM_SEL_ARRAY    = ["0:Xfer Bufr",    "UniqueIdLsd",   
                                              "SecuredBands3G", "SecuredBands4G" ];
 
 
-const   NXTY_SUPER_MSG_WAVE_DATA_ARRAY    = ["0:SafemodeBackoff",    "1:UniiBlock[]",       "2:BandMask3G",      "3:BandMask4G",         "4:TechBandBias[]",         
+const   NXTY_SUPER_MSG_WAVE_DATA_ARRAY    = ["0:SafemodeBackoff",    "1:UniiBlock[]",       "2:BandMask3G",      "3:BandMask4G",         "4:TechBandBias[]",
                                              "5:Femto3GMinSC",       "6:Femto3GMaxSC",      "7:Femto4GMinSC",    "8:Femto4GMaxSC",       "9:MinSysGain",
-                                             "10:MaxSysGain",        "11:MaxPilot3G",       "12:MaxPilot4G" ];
+                                             "10:MaxSysGain",        "11:MaxPilot3G",       "12:MaxPilot4G",     "13:MaxCellRssi"];
 
 const   NXTY_PCCTRL_UART_REDIRECT         = 0xF0000024;
 const   NXTY_PCCTRL_CLOUD_INFO            = 0xF0000028;
 const   NXTY_PCCTRL_GLOBALFLAGS           = 0xF0000038;
 const   NXTY_PCCTRL_SELPARAM_REG          = 0xF0000020;
+const   NXTY_PCCTRL_FLASH_REG             = 0xF000003C;
 
 const     NXTY_SEL_PARAM_REG_UID_TYPE     = 0x01;
 const     NXTY_SEL_PARAM_LINK_STATE       = 0x06;
@@ -83,8 +92,20 @@ const     NXTY_SEL_PARAM_REG_SECURE_3G    = 0x14;
 const     NXTY_SEL_PARAM_REG_SECURE_4G    = 0x15;
 const   NXTY_PCCTRL_XFER_BUFFER           = 0xF000001C;
 const   NXTY_PCCTRL_WAVE_ID_REG           = 0xF0000020;     // Same as SELPARAM
-const     NXTY_WAVEID_BAND_MASK_3G_TYPE   = 0x01020000;     // Set bit 24 to 1 for CfgParamId and bits 16 to 23 to 2 for BandMask3G
-const     NXTY_WAVEID_BAND_MASK_4G_TYPE   = 0x01030000;     // Set bit 24 to 1 for CfgParamId and bits 16 to 23 to 3 for BandMask4G
+const     NXTY_WAVEID_BAND_MASK_3G_TYPE   = 0x01020000;     // Set bits 24~31 to 1 for CfgParamId and bits 16 to 23 to 2 for BandMask3G
+const     NXTY_WAVEID_BAND_MASK_4G_TYPE   = 0x01030000;     // Set bits 24~31 to 1 for CfgParamId and bits 16 to 23 to 3 for BandMask4G
+const     NXTY_WAVEID_SECURED_SETUP_PN_0  = 0x03000000;     // Set bits 24~31 to 3 for ReadOnlyParams and bits 16 to 23 to 0 for SecuredSetupPN + 0
+const     NXTY_WAVEID_SECURED_SETUP_PN_1  = 0x03000001;     // Set bits 24~31 to 3 for ReadOnlyParams and bits 16 to 23 to 0 for SecuredSetupPN + 1
+const     NXTY_WAVEID_SECURED_SETUP_PN_2  = 0x03000002;     // Set bits 24~31 to 3 for ReadOnlyParams and bits 16 to 23 to 0 for SecuredSetupPN + 2
+const     NXTY_WAVEID_SECURED_SETUP_PN_3  = 0x03000003;     // Set bits 24~31 to 3 for ReadOnlyParams and bits 16 to 23 to 0 for SecuredSetupPN + 3
+const     NXTY_WAVEID_EVM_PN_0            = 0x03010000;     // Set bits 24~31 to 3 for ReadOnlyParams and bits 16 to 23 to 1 for EvmPartNumber + 0
+const     NXTY_WAVEID_EVM_PN_1            = 0x03010001;     // Set bits 24~31 to 3 for ReadOnlyParams and bits 16 to 23 to 1 for EvmPartNumber + 1
+const     NXTY_WAVEID_EVM_PN_2            = 0x03010002;     // Set bits 24~31 to 3 for ReadOnlyParams and bits 16 to 23 to 1 for EvmPartNumber + 2
+const     NXTY_WAVEID_EVM_PN_3            = 0x03010003;     // Set bits 24~31 to 3 for ReadOnlyParams and bits 16 to 23 to 1 for EvmPartNumber + 3
+const     NXTY_WAVEID_BITMAP_PN_0         = 0x03020000;     // Set bits 24~31 to 3 for ReadOnlyParams and bits 16 to 23 to 2 for DisplayPartNumber + 0
+const     NXTY_WAVEID_BITMAP_PN_1         = 0x03020001;     // Set bits 24~31 to 3 for ReadOnlyParams and bits 16 to 23 to 2 for DisplayPartNumber + 1
+const     NXTY_WAVEID_BITMAP_PN_2         = 0x03020002;     // Set bits 24~31 to 3 for ReadOnlyParams and bits 16 to 23 to 2 for DisplayPartNumber + 2
+const     NXTY_WAVEID_BITMAP_PN_3         = 0x03020003;     // Set bits 24~31 to 3 for ReadOnlyParams and bits 16 to 23 to 2 for DisplayPartNumber + 3
 const   NXTY_PCCTRL_WAVE_DATA_BUFFER      = 0xF000001C;     // Same as XFER_BUFFER
 const   NXTY_RESET_LOCAL_ADDR             = 0x84300458;
 const   NXTY_RESET_REMOTE_ADDR            = 0x82000258;
@@ -121,7 +142,6 @@ var uSendCount                          = 0;
 var uRxBuffIdx                          = 0;
 var uTxMsgNotReadyCnt                   = 0;
 
-
         
 // Status message response data...
 var isNxtyStatusCurrent     = false;
@@ -131,18 +151,18 @@ var nxtyRxRegLockStatus     = 0;
 var nxtyRxStatusBoardConfig = null;
 const V1_ICD                = 0x07;
 const IM_A_CU_MASK          = 0x01;
-const IM_A_1BOX_NU_MASK     = 0x8000;
+const IM_A_1BOX_NU_MASK     = 0x8000;           // Means UNII RF off.  Products: GO, PRIME and CABLE will have UNII RF off.
 
 
 // Sys Info data......
-var nxtyUniqueId            = null;
+var nxtyCuUniqueId          = null;
+var nxtyNuUniqueId          = null;
 var nxtySelParamRegOneRsp   = 0;
 var nxtySelParamRegTwoRsp   = 0;
 var nxtySecuredBands3G      = 0;
 var nxtySecuredBands4G      = 0;
 var nxtyBandMask3G          = 0;
 var nxtyBandMask4G          = 0;
-
 
 // Software Version response data...
 var nxtyCurrentReq          = null;
@@ -153,7 +173,12 @@ var nxtySwVerCuPic          = null;
 var nxtySwVerCuBt           = null;
 var nxtySwBuildIdNu         = 0;
 var nxtySwBuildIdCu         = 0;
-var nxtySwBuildIdNu         = 0;
+var nxtyConfigPn            = null;         // Returned from Nextivity server
+var nxtySwVerNuSCfg         = null;
+var nxtySwVerNuUCfg         = null;
+var nxtySwVerCuArt          = null;
+var nxtySwVerNuArt          = null;
+var nxtySwVerNuEvm          = null;
 
 
 
@@ -163,6 +188,11 @@ var nxtySwVerNuCfCld        = swVerNoCldText;
 var nxtySwVerNuPicCld       = swVerNoCldText;
 var nxtySwVerCuPicCld       = swVerNoCldText;
 var nxtySwVerCuBtCld        = swVerNoCldText;
+var nxtySwVerNuSCfgCld      = swVerNoCldText;
+var nxtySwVerNuUCfgCld      = swVerNoCldText;
+var nxtySwVerCuArtCld       = swVerNoCldText;
+var nxtySwVerNuArtCld       = swVerNoCldText;
+var nxtySwVerNuEvmCld       = swVerNoCldText;
 
 
 /*
@@ -204,8 +234,9 @@ var u8TempTxBuff                       = new Uint8Array(NXTY_BIG_MSG_SIZE);
 var bNxtySuperMsgRsp                   = false;
 var iNxtySuperMsgRspStatus             = NXTY_SUPER_MSG_STATUS_PENDING;
 var bNxtySuperMsgLocalInfo             = false;
+var bNxtySuperMsgLocalInfo2            = false;
 var bNxtySuperMsgRemoteInfo            = false;
-var bNxtySuperMsgRemoteInfo            = false;
+var bNxtySuperMsgRemoteInfo2           = false;
 var bNxtyUserSetInProgress             = false;
 
 var nxtyCuCloudBuffAddr                = 0;
@@ -215,6 +246,8 @@ var nxtyNuCloudInfo                    = 0;
 var uLastUartRedirectTimeMs            = 0;
 var nxtyGlobalFlags                    = 0;
 var nxtyAntStatus                      = 0;
+var nxtyNuChanListFlashAddr            = 0;
+var nxtyNuXferBufferAddr               = 0;
 
 
 // CU Cloud Info bits....................................
@@ -585,10 +618,6 @@ var nxty = {
             {
                 nxtyRxStatusIcd = u8RxBuff[4];
 
-// jdo test - force ICD ver to be 0x07
-// nxtyRxStatusIcd = 0x07;
-
-                
                 PrintLog(1,  "Msg: Status Rsp: ICD ver=0x" + nxtyRxStatusIcd.toString(16) );
                 
                 // Only grab the BoardConfig value if old ICD, <= 0x07. 
@@ -854,22 +883,31 @@ var nxty = {
                     //                   11 f0 0 0 20 0 0 0 10  10 f0 0 0 1c    11 f0 0 0 20 0 0 0 5  10 f0 0 0 1c    11 f0 0 0 20 0 0 0 E  10 f0 0 0 1c     10 f0 0 0 28        10 f0 0 0 38
                     //                   51 1                   50 5f f3 b4 58  51 1                  50  0 0 0 7     51 1                  50  x x x x      50 0 2 10 0         50 0  0 0 0
                     //                      [61]                   [63]            [68]                       [72]       [75]                   [77]            [82]             [86]
+
+                    //                   Write SecuredSetupPN  Read             Write SecuredSetupPN  Read            Write SecuredSetupPN  Read             Write SecuredSetupPN  Read                         
+                    //                   11 f0 0 0 20 3 0 0 0  10 f0 0 0 1c     11 f0 0 0 20 3 0 0 1  10 f0 0 0 1c    11 f0 0 0 20 3 0 0 2  10 f0 0 0 1c     11 f0 0 0 20 3 0 0 3  10 f0 0 0 1c
+                    //                   51 1                  50 0 0 0 0       51 1                  50 0 0 0 0      51 1                  50 0 0 0 0       51 1                  50 0 0 0 0   
+                    //                      [92]                 [94]              [99]                  [101]           [106]                 [108]            [113]                 [115]
+
                     
 
                     // Make sure that there were no NAKs...
-                    if( (u8RxBuff[4]  == NXTY_NAK_RSP) || (u8RxBuff[6]  == NXTY_NAK_RSP) ||     // SN MSD 
-                        (u8RxBuff[11] == NXTY_NAK_RSP) || (u8RxBuff[13] == NXTY_NAK_RSP) ||     // SN LSD
-                        (u8RxBuff[18] == NXTY_NAK_RSP) || (u8RxBuff[20] == NXTY_NAK_RSP) ||     // Unique MSD
-                        (u8RxBuff[25] == NXTY_NAK_RSP) || (u8RxBuff[27] == NXTY_NAK_RSP) ||     // Unique LSD
-                        (u8RxBuff[32] == NXTY_NAK_RSP) || (u8RxBuff[34] == NXTY_NAK_RSP) ||     // Ares SW Ver
-                        (u8RxBuff[39] == NXTY_NAK_RSP) || (u8RxBuff[41] == NXTY_NAK_RSP) ||     // Build ID
-                        (u8RxBuff[46] == NXTY_NAK_RSP) || (u8RxBuff[48] == NXTY_NAK_RSP) ||     // PIC SW Ver
-                        (u8RxBuff[53] == NXTY_NAK_RSP) || (u8RxBuff[55] == NXTY_NAK_RSP) ||     // BT SW Ver
-                        (u8RxBuff[60] == NXTY_NAK_RSP) || (u8RxBuff[62] == NXTY_NAK_RSP) ||     // Ant
-                        (u8RxBuff[67] == NXTY_NAK_RSP) || (u8RxBuff[69] == NXTY_NAK_RSP) ||     // Board Config
-                        (u8RxBuff[74] == NXTY_NAK_RSP) || (u8RxBuff[76] == NXTY_NAK_RSP) ||     // Cloud Buff Addr
-                        (u8RxBuff[81] == NXTY_NAK_RSP) || (u8RxBuff[86] == NXTY_NAK_RSP))                                        // Cloud Info
-                        
+                    if( (u8RxBuff[4]  == NXTY_NAK_RSP)  || (u8RxBuff[6]  == NXTY_NAK_RSP)  ||     // SN MSD 
+                        (u8RxBuff[11] == NXTY_NAK_RSP)  || (u8RxBuff[13] == NXTY_NAK_RSP)  ||     // SN LSD
+                        (u8RxBuff[18] == NXTY_NAK_RSP)  || (u8RxBuff[20] == NXTY_NAK_RSP)  ||     // Unique MSD
+                        (u8RxBuff[25] == NXTY_NAK_RSP)  || (u8RxBuff[27] == NXTY_NAK_RSP)  ||     // Unique LSD
+                        (u8RxBuff[32] == NXTY_NAK_RSP)  || (u8RxBuff[34] == NXTY_NAK_RSP)  ||     // Ares SW Ver
+                        (u8RxBuff[39] == NXTY_NAK_RSP)  || (u8RxBuff[41] == NXTY_NAK_RSP)  ||     // Build ID
+                        (u8RxBuff[46] == NXTY_NAK_RSP)  || (u8RxBuff[48] == NXTY_NAK_RSP)  ||     // PIC SW Ver
+                        (u8RxBuff[53] == NXTY_NAK_RSP)  || (u8RxBuff[55] == NXTY_NAK_RSP)  ||     // BT SW Ver
+                        (u8RxBuff[60] == NXTY_NAK_RSP)  || (u8RxBuff[62] == NXTY_NAK_RSP)  ||     // Ant
+                        (u8RxBuff[67] == NXTY_NAK_RSP)  || (u8RxBuff[69] == NXTY_NAK_RSP)  ||     // Board Config
+                        (u8RxBuff[74] == NXTY_NAK_RSP)  || (u8RxBuff[76] == NXTY_NAK_RSP)  ||     // Cloud Buff Addr
+                        (u8RxBuff[81] == NXTY_NAK_RSP)  || (u8RxBuff[86] == NXTY_NAK_RSP)  ||     // Cloud Info and Global Flags
+                        (u8RxBuff[91] == NXTY_NAK_RSP)  || (u8RxBuff[93] == NXTY_NAK_RSP)  ||     // Secured Setup Part number 0
+                        (u8RxBuff[98] == NXTY_NAK_RSP)  || (u8RxBuff[100] == NXTY_NAK_RSP) ||     // Secured Setup Part number 1
+                        (u8RxBuff[105] == NXTY_NAK_RSP) || (u8RxBuff[107] == NXTY_NAK_RSP) ||     // Secured Setup Part number 2
+                        (u8RxBuff[112] == NXTY_NAK_RSP) || (u8RxBuff[114] == NXTY_NAK_RSP) )      // Secured Setup Part number 3
                     {
                         // Got a NAK...
                         iNxtySuperMsgRspStatus = NXTY_SUPER_MSG_STATUS_FAIL_NAK;
@@ -877,20 +915,22 @@ var nxty = {
                     }
                     else
                     {
-                    
                         // Make sure that all of the writes were successfull...
-                        if( (u8RxBuff[5]  == 1) &&      // SN MSD 
-                            (u8RxBuff[12] == 1) &&      // SN LSD
-                            (u8RxBuff[19] == 1) &&      // Unique MSD
-                            (u8RxBuff[26] == 1) &&      // Unique LSD
-                            (u8RxBuff[33] == 1) &&      // Ares SW Ver
-                            (u8RxBuff[40] == 1) &&      // Build ID
-                            (u8RxBuff[47] == 1) &&      // PIC SW Ver
-                            (u8RxBuff[54] == 1) &&      // BT SW Ver
-                            (u8RxBuff[61] == 1) &&      // Ant
-                            (u8RxBuff[68] == 1) &&      // Board Config
-                            (u8RxBuff[75] == 1) )       // Cloud Buff Addr
-                            
+                        if( (u8RxBuff[5]  == 1)  &&     // SN MSD 
+                            (u8RxBuff[12] == 1)  &&     // SN LSD
+                            (u8RxBuff[19] == 1)  &&     // Unique MSD
+                            (u8RxBuff[26] == 1)  &&     // Unique LSD
+                            (u8RxBuff[33] == 1)  &&     // Ares SW Ver
+                            (u8RxBuff[40] == 1)  &&     // Build ID
+                            (u8RxBuff[47] == 1)  &&     // PIC SW Ver
+                            (u8RxBuff[54] == 1)  &&     // BT SW Ver
+                            (u8RxBuff[61] == 1)  &&     // Ant
+                            (u8RxBuff[68] == 1)  &&     // Board Config
+                            (u8RxBuff[75] == 1)  &&     // Cloud Buff Addr
+                            (u8RxBuff[92] == 1)  &&     // Secured Setup 0 
+                            (u8RxBuff[99] == 1)  &&     // Secured Setup 1
+                            (u8RxBuff[106] == 1) &&     // Secured Setup 2
+                            (u8RxBuff[113] == 1) )      // Secured Setup 3
                         {
                             iNxtySuperMsgRspStatus = NXTY_SUPER_MSG_STATUS_SUCCESS;
                         
@@ -937,24 +977,49 @@ var nxty = {
                             }                        
                             
                             // Unique ID .......................................................
-                            if( nxtyUniqueId == null )
+                            if( nxtyRxStatusBoardConfig & IM_A_CU_MASK )
                             {
-                                nxtyUniqueId = "0x";
-                                for( i = 0; i < 8; i++ )
+                                if( nxtyCuUniqueId == null )
                                 {
-                                    if( i < 4 )
+                                    nxtyCuUniqueId = "0x";
+                                    for( i = 0; i < 8; i++ )
                                     {
-                                        u8UniqueId[i] = u8RxBuff[21+i];
-                                        nxtyUniqueId += U8ToHexText(u8RxBuff[21+i]);
+                                        if( i < 4 )
+                                        {
+                                            u8UniqueId[i] = u8RxBuff[21+i];
+                                            nxtyCuUniqueId += U8ToHexText(u8RxBuff[21+i]);
+                                        }
+                                        else
+                                        {
+                                            u8UniqueId[i] = u8RxBuff[24+i];                 // [28] but i is already 4 so 28-4=24
+                                            nxtyCuUniqueId += U8ToHexText(u8RxBuff[24+i]);
+                                        }
                                     }
-                                    else
-                                    {
-                                        u8UniqueId[i] = u8RxBuff[24+i];                 // [28] but i is already 4 so 28-4=24
-                                        nxtyUniqueId += U8ToHexText(u8RxBuff[24+i]);
-                                    }
+                                    PrintLog(1,  "  CU UniqueID=" + nxtyCuUniqueId);
                                 }
-                                PrintLog(1,  "  UniqueID=" + nxtyUniqueId);
                             }
+                            else
+                            {
+                                if( nxtyNuUniqueId == null )
+                                {
+                                    nxtyNuUniqueId = "0x";
+                                    for( i = 0; i < 8; i++ )
+                                    {
+                                        if( i < 4 )
+                                        {
+                                            u8UniqueId[i] = u8RxBuff[21+i];
+                                            nxtyNuUniqueId += U8ToHexText(u8RxBuff[21+i]);
+                                        }
+                                        else
+                                        {
+                                            u8UniqueId[i] = u8RxBuff[24+i];                 // [28] but i is already 4 so 28-4=24
+                                            nxtyNuUniqueId += U8ToHexText(u8RxBuff[24+i]);
+                                        }
+                                    }
+                                    PrintLog(1,  "  NU UniqueID=" + nxtyNuUniqueId);
+                                }
+                            }
+                            
                             
     
                             // Ares SW Version .......................................................
@@ -981,13 +1046,16 @@ var nxty = {
                                 nxtySwVerCuCf   = HexTo3Text(major) + "." + HexTo3Text(minor);
                                 nxtySwBuildIdCu = "0x" + U8ToHexText(u8RxBuff[42]) + U8ToHexText(u8RxBuff[43]) + U8ToHexText(u8RxBuff[44]) + U8ToHexText(u8RxBuff[45]);
                                 PrintLog(1,  "  CU SW Version: Ver=" + nxtySwVerCuCf + " BuildID=" + nxtySwBuildIdCu);
+                                guiSwCelFiVers[1] = nxtySwVerCuCf;
                             }
                             else
                             {
                                 nxtySwVerNuCf   = HexTo3Text(major) + "." + HexTo3Text(minor);
                                 nxtySwBuildIdNu = "0x" + U8ToHexText(u8RxBuff[42]) + U8ToHexText(u8RxBuff[43]) + U8ToHexText(u8RxBuff[44]) + U8ToHexText(u8RxBuff[45]);
                                 PrintLog(1,  "  NU SW Version: Ver=" + nxtySwVerNuCf + " BuildID=" + nxtySwBuildIdNu);
+                                guiSwCelFiVers[0] = nxtySwVerNuCf;
                             }
+                            
                             
     
     
@@ -1005,6 +1073,7 @@ var nxty = {
                                     nxtySwVerCuPic  = DecTo3Text(u8RxBuff[51] & 0x0F) + "." + DecTo3Text(u8RxBuff[52]); 
                                 }
                                 PrintLog(1,  "  CU PIC SW Version=" + nxtySwVerCuPic);
+                                guiSwCelFiVers[3] = nxtySwVerCuPic;
                             }
                             else
                             {
@@ -1017,11 +1086,12 @@ var nxty = {
                                     nxtySwVerNuPic  = DecTo3Text(u8RxBuff[51] & 0x0F) + "." + DecTo3Text(u8RxBuff[52]); 
                                 }
                                 PrintLog(1,  "  NU PIC SW Version=" + nxtySwVerNuPic);
+                                guiSwCelFiVers[2] = nxtySwVerNuPic;
                             }
     
     
                             // BT SW Version .......................................................
-                            if( nxtyRxStatusBoardConfig & IM_A_CU_MASK )
+                            if( (nxtyRxStatusBoardConfig & IM_A_CU_MASK) || (nxtyRxStatusBoardConfig & IM_A_1BOX_NU_MASK) )
                             {
                                 // If the BT returns 0xFFFF, which means that it cannot read the version from flash, may be due to empty flash, 
                                 // then convert the 0xFFFF to "000.000".
@@ -1033,7 +1103,10 @@ var nxty = {
                                 {
                                     nxtySwVerCuBt    = "0" + U8ToHexText(u8RxBuff[58]) + "." + "0" + U8ToHexText(u8RxBuff[59]); 
                                 }
-                                PrintLog(1,  "  CU BT Ver=" + nxtySwVerCuBt);
+                                
+                                
+                                PrintLog(1,  "  BT Ver=" + nxtySwVerCuBt);
+                                guiSwCelFiVers[4] = nxtySwVerCuBt;
                             }
                             else
                             {
@@ -1041,6 +1114,52 @@ var nxty = {
                             }
     
     
+                            // Secured setup Part number (NU Only) ......................................................
+                            if( !(nxtyRxStatusBoardConfig & IM_A_CU_MASK) )
+                            {
+                                nxtyConfigPn = "";
+                                if( (u8RxBuff[94] != 0x00) && (u8RxBuff[94] != 0xFF) && (u8RxBuff[101] != 0x00) && (u8RxBuff[101] != 0xFF) )
+                                {
+                                    for( i = 0; i < 4; i++ )
+                                    {
+                                        nxtyConfigPn += String.fromCharCode(u8RxBuff[94+i]);    // 700N
+                                    }
+                                    for( i = 0; i < 4; i++ )
+                                    {
+                                        nxtyConfigPn += String.fromCharCode(u8RxBuff[101+i]);   // 037-
+                                    }
+                                    for( i = 0; i < 4; i++ )
+                                    {
+                                        nxtyConfigPn += String.fromCharCode(u8RxBuff[108+i]);   // NEXT
+                                    }
+                                    for( i = 0; i < 3; i++ )
+                                    {
+                                        nxtyConfigPn += String.fromCharCode(u8RxBuff[115+i]);   // -XXX
+                                    }
+
+                                    //                      A       T        U        S   
+                                    // Hash it..."ATUS" ==> 65 + (2*84) + (3*85) + (4*83) = 820
+                                    var hashOp = u8RxBuff[108] + (2*u8RxBuff[109]) + (3*u8RxBuff[110]) + (4*u8RxBuff[111]); 
+                                    
+                                    // Hash it...
+                                    var hashVer = u8RxBuff[116] + (2*u8RxBuff[117]);
+                                    
+                                    nxtySwVerNuSCfg = hashOp + "." + hashVer;
+                                    
+                                }
+                                else
+                                {
+                                    PrintLog(99, "Secured Setup PN undefined, setting to 700N037-NEXT-00");
+                                    nxtyConfigPn    = "700N037-NEXT-00";
+                                    nxtySwVerNuSCfg = "816.144";
+                                }
+                                
+                                nxtySwVerNuSCfg = FixInternalVer(nxtySwVerNuSCfg);
+                                nxtySwVerNuUCfg = nxtySwVerNuSCfg;
+                                
+                                PrintLog(1,  "  Secured Setup= " + nxtyConfigPn + "  SwVer Hash= " + nxtySwVerNuSCfg);
+                            }
+
     
                             // Antenna .......................................................
                             if( !(nxtyRxStatusBoardConfig & IM_A_CU_MASK) )
@@ -1072,8 +1191,13 @@ var nxty = {
                                 }
                                 
                                 PrintLog(1,  "  Ant Status=0x" + nxtyAntStatus.toString(16) + " Global Flags=0x" + nxtyGlobalFlags.toString(16));
+                                updateAntStatus();
                                 
                             }
+
+
+
+
                             
                             // Cloud Buff Addr and Cloud Info ................................................
                             if( nxtyRxStatusBoardConfig & IM_A_CU_MASK )
@@ -1115,7 +1239,167 @@ var nxty = {
                         
                     }   // NAK check             
                 
+                }
+                
+                else if( nxtyCurrentReq == NXTY_SUPER_MSG_INFO2_TYPE )
+                {
+                    PrintLog(1,  "Super Msg Rsp: Get Info 2" );
+                
+                    //                   Write Art Display PN  Read             Write Art Display PN  Read            Write Art Display PN  Read             Write Art Display PN  Read                         
+                    // Tx: ae xx xx 13   11 f0 0 0 20 3 2 0 0  10 f0 0 0 1c     11 f0 0 0 20 3 2 0 1  10 f0 0 0 1c    11 f0 0 0 20 3 2 0 2  10 f0 0 0 1c     11 f0 0 0 20 3 2 0 3  10 f0 0 0 1c
+                    // Rx  ae xx xx 53   51 1                  50 0 0 0 0       51 1                  50 0 0 0 0      51 1                  50 0 0 0 0       51 1                  50 0 0 0 0   
+                    //     [0]              [5]                   [7]              [12]                  [14]            [19]                  [21]             [26]                  [28]
+
+                    //                   Write EVM PN          Read             Write EVM PN          Read            Write EVM PN          Read             Write EVM PN          Read                         
+                    //                   11 f0 0 0 20 3 1 0 0  10 f0 0 0 1c     11 f0 0 0 20 3 1 0 1  10 f0 0 0 1c    11 f0 0 0 20 3 1 0 2  10 f0 0 0 1c     11 f0 0 0 20 3 1 0 3  10 f0 0 0 1c
+                    //                   51 1                  50 0 0 0 0       51 1                  50 0 0 0 0      51 1                  50 0 0 0 0       51 1                  50 0 0 0 0   
+                    //                      [33]                  [35]             [40]                  [42]            [47]                  [49]             [54]                  [56]
+                    
+                    
+                    //                   Chan List Flash Addr  Read             Xfer Buffer Addr  Read 
+                    //                   11 f0 0 0 20 0 0 0 C  10 f0 0 0 1c     11 f0 0 0 20 0 0 0 0  10 f0 0 0 1c
+                    //                   51 1                   50 0 0 0 0      51 1                   50 0 0 0 0 
+                    //                      [61]                   [63]            [68]                   [70]
+
+                    // Make sure that there were no NAKs...
+                    if( (u8RxBuff[4]  == NXTY_NAK_RSP)  || (u8RxBuff[6] == NXTY_NAK_RSP)   || (u8RxBuff[11] == NXTY_NAK_RSP)  || (u8RxBuff[13] == NXTY_NAK_RSP) ||    // ART 
+                        (u8RxBuff[18] == NXTY_NAK_RSP)  || (u8RxBuff[20] == NXTY_NAK_RSP)  || (u8RxBuff[25] == NXTY_NAK_RSP)  || (u8RxBuff[27] == NXTY_NAK_RSP) ||    // ART
+                        (u8RxBuff[32] == NXTY_NAK_RSP)  || (u8RxBuff[34] == NXTY_NAK_RSP)  || (u8RxBuff[39] == NXTY_NAK_RSP)  || (u8RxBuff[41] == NXTY_NAK_RSP) ||    // EVM
+                        (u8RxBuff[46] == NXTY_NAK_RSP)  || (u8RxBuff[48] == NXTY_NAK_RSP)  || (u8RxBuff[53] == NXTY_NAK_RSP)  || (u8RxBuff[55] == NXTY_NAK_RSP) ||    // EVM
+                        (u8RxBuff[60] == NXTY_NAK_RSP)  || (u8RxBuff[62] == NXTY_NAK_RSP)  || (u8RxBuff[67] == NXTY_NAK_RSP)  || (u8RxBuff[69] == NXTY_NAK_RSP) )                                                                          // Chan List
+                    {
+                        // Got a NAK...
+                        iNxtySuperMsgRspStatus = NXTY_SUPER_MSG_STATUS_FAIL_NAK;
+                        PrintLog(99,  "Super Msg: Info 2 msg type encountered a NAK." );
+                    }
+                    else
+                    {
+                        // Make sure that all of the writes were successfull...
+                        if( (u8RxBuff[5]  == 1)  &&  (u8RxBuff[12] == 1)  &&  (u8RxBuff[19] == 1)  &&  (u8RxBuff[26] == 1)  &&     // ART
+                            (u8RxBuff[33] == 1)  &&  (u8RxBuff[40] == 1)  &&  (u8RxBuff[47] == 1)  &&  (u8RxBuff[54] == 1)  &&     // EVM
+                            (u8RxBuff[61] == 1)  &&  (u8RxBuff[68] == 1)                                                    ) 
+                        {
+                            iNxtySuperMsgRspStatus = NXTY_SUPER_MSG_STATUS_SUCCESS;
+    
+
+                            // Art ................................................
+                            if( nxtyRxStatusBoardConfig & IM_A_CU_MASK )
+                            {
+                                if( (u8RxBuff[21] != 0x00) && (u8RxBuff[21] != 0xFF) && (u8RxBuff[28] != 0x00) && (u8RxBuff[28] != 0xFF) )
+                                {
+                                    nxtySwVerCuArt = "";
+                                    for( i = 0; i < 3; i++ )
+                                    {
+                                        nxtySwVerCuArt += String.fromCharCode(u8RxBuff[21+i]);
+                                    }
+                                    
+                                    nxtySwVerCuArt += ".";
+                                    
+                                    for( i = 0; i < 3; i++ )
+                                    {
+                                        nxtySwVerCuArt += String.fromCharCode(u8RxBuff[28+i]);
+                                    }
+                                }
+                                else
+                                {
+                                    nxtySwVerCuArt = "000.000";
+                                }
+                            
+                                nxtySwVerCuArt = FixInternalVer(nxtySwVerCuArt);
+                            
+                                PrintLog(1,  "  Art Display = " + nxtySwVerCuArt );
+                            }
+                            else
+                            {
+                                if( (u8RxBuff[21] != 0x00) && (u8RxBuff[21] != 0xFF) && (u8RxBuff[28] != 0x00) && (u8RxBuff[28] != 0xFF) )
+                                {
+                                    nxtySwVerNuArt = "";
+                                    for( i = 0; i < 3; i++ )
+                                    {
+                                        nxtySwVerNuArt += String.fromCharCode(u8RxBuff[21+i]);
+                                    }
+                                    
+                                    nxtySwVerNuArt += ".";
+                                    
+                                    for( i = 0; i < 3; i++ )
+                                    {
+                                        nxtySwVerNuArt += String.fromCharCode(u8RxBuff[28+i]);
+                                    }
+                                }
+                                else
+                                {
+                                    nxtySwVerNuArt = "000.000";
+                                }
+
+                                nxtySwVerNuArt = FixInternalVer(nxtySwVerNuArt);
+                            
+                                PrintLog(1,  "  Art Display = " + nxtySwVerNuArt );
+                            }
+    
+                            // (NU Only) ......................................................
+                            if( !(nxtyRxStatusBoardConfig & IM_A_CU_MASK) )
+                            {
+                                if( (u8RxBuff[35] == 0x00) || (u8RxBuff[35] == 0xFF) ||
+                                    (u8RxBuff[42] == 0x00) || (u8RxBuff[42] == 0xFF) ||
+                                    (u8RxBuff[49] == 0x00) || (u8RxBuff[49] == 0xFF) ||
+                                    (u8RxBuff[56] == 0x00) || (u8RxBuff[56] == 0xFF) )
+                                {
+                                    nxtySwVerNuEvm = "000.000";
+                                }
+                                else
+                                {
+                                    nxtySwVerNuEvm = "";
+                                    for( i = 0; i < 3; i++ )
+                                    {
+                                        nxtySwVerNuEvm += String.fromCharCode(u8RxBuff[49+i]);
+                                    }
+                                    
+                                    nxtySwVerNuEvm += ".";
+                                    
+                                    for( i = 0; i < 3; i++ )
+                                    {
+                                        nxtySwVerNuEvm += String.fromCharCode(u8RxBuff[56+i]);
+                                    }
+                                }
+                            
+                                nxtySwVerNuEvm = FixInternalVer(nxtySwVerNuEvm);
+                            
+                                PrintLog(1,  "  EVM = " + nxtySwVerNuEvm );
+                                
+                                
+                                nxtyNuChanListFlashAddr =  (u8RxBuff[63] << 24) |          
+                                                           (u8RxBuff[64] << 16) |          
+                                                           (u8RxBuff[65] << 8)  |        
+                                                            u8RxBuff[66];
+                                                            
+                                nxtyNuChanListFlashAddr >>>= 0;
+                                PrintLog(1,  "  Chan List Flash Addr = 0x" + nxtyNuChanListFlashAddr.toString(16) );
+                                
+                                nxtyNuXferBufferAddr =     (u8RxBuff[70] << 24) |          
+                                                           (u8RxBuff[71] << 16) |          
+                                                           (u8RxBuff[72] << 8)  |        
+                                                            u8RxBuff[73];
+
+                                nxtyNuXferBufferAddr >>>= 0;
+                                PrintLog(1,  "  Xfer Buffer Addr = 0x" + nxtyNuXferBufferAddr.toString(16) );
+                                
+                                
+                            }
+                            
+    
+                        }
+                        else
+                        {
+                            iNxtySuperMsgRspStatus = NXTY_SUPER_MSG_STATUS_FAIL_WRITE;
+                            PrintLog(99,  "Super Msg: Info 2 msg type encountered write fail." );
+                        }
+                        
+                    }   // NAK check             
+                
                 }               
+                
+                
+                               
                 else if( nxtyCurrentReq == NXTY_SUPER_MSG_LINK_STATE )
                 {
                     //                   Write Link State      Read  
@@ -1530,7 +1814,528 @@ var nxty = {
                         }
                     }
                 }
-               
+                else if( nxtyCurrentReq == NXTY_SUPER_MSG_GET_UNII_BLOCKED_LIST)
+                {
+                    PrintLog(1, "Super Msg Rsp: UNII Blocked list");
+                    
+                    //                 Write Uart redirect   Default UniiBlock[0]  Read          Default UniiBlock[1]  Read           UniiBlock[0]          Read
+                    //Tx: ae xx xx 13  11 f0 0 0 24 0 0 0 1  11 f0 0 0 20 2 1 0 0  10 f0 0 0 1c  11 f0 0 0 20 2 1 0 1  10 f0 0 0 1c   11 f0 0 0 20 1 1 0 0  10 f0 0 0 1c
+                    //Rx: ae xx xx 53  51 1                  51 1                  50 x  x x x   51 1                  50 x  x x x    51 1                  50 x  x x x
+                    //idx 0            4                     6                     8             13                    15             20                    22
+                    
+                    //                 UniiBlock[1]          Read          Uart cancel
+                    //Tx:              11 f0 0 0 20 1 1 0 1  10 f0 0 0 1c  10 f0 0 0 24
+                    //Rx:              51 1                  50 x  x x x   50 x  x x x
+                    //idx              27                    29            34
+                    
+                    // Make sure that there were no NAKs...
+                    if( (u8RxBuff[4]  == NXTY_NAK_RSP) || (u8RxBuff[6]  == NXTY_NAK_RSP) ||
+                        (u8RxBuff[8]  == NXTY_NAK_RSP) || (u8RxBuff[13] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[15] == NXTY_NAK_RSP) || (u8RxBuff[20] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[22] == NXTY_NAK_RSP) || (u8RxBuff[27] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[29] == NXTY_NAK_RSP) || (u8RxBuff[34] == NXTY_NAK_RSP) )  
+                    {
+                        // Got a NAK...
+                        iNxtySuperMsgRspStatus = NXTY_SUPER_MSG_STATUS_FAIL_NAK;
+                        PrintLog(99,  "Super Msg: UNII Blocked list encountered a NAK." );
+                    }
+                    else
+                    {
+                        // Make sure that all of the writes were successfull...
+                        if( (u8RxBuff[5]  == 1) && 
+                            (u8RxBuff[7]  == 1) && 
+                            (u8RxBuff[14] == 1) && 
+                            (u8RxBuff[21] == 1) && 
+                            (u8RxBuff[28] == 1) )  
+                            
+                        {
+                            iNxtySuperMsgRspStatus = NXTY_SUPER_MSG_STATUS_SUCCESS;
+                            
+                            // Read the values and configure guiSuUniiList elements: FW returns byte values, so construct the words and set bits!
+                            // In this array, the FW bits is for blocked freq and also ones that the user cannot change
+                            var fwWords = new Uint32Array(2);
+                            fwWords[0] = makeUINT32BE( u8RxBuff[9],  u8RxBuff[10], u8RxBuff[11], u8RxBuff[12] );
+                            fwWords[1] = makeUINT32BE( u8RxBuff[16], u8RxBuff[17], u8RxBuff[18], u8RxBuff[19] );
+                            PrintLog(3, " FW Default Blocked list[0]=0x" + fwWords[0].toString(16) + ", [1]=0x" + fwWords[1].toString(16) );
+                            var idx=0; var i=0; var j=0;
+                            for(i=0; ((i<fwWords.length)&&(idx<guiSuUniiList.length)); i++)
+                            {
+                                for(j=0; ((j<32)&&(idx<guiSuUniiList.length)); j++)
+                                {
+                                    if(fwWords[i] & (1<<j))
+                                    {
+                                        guiSuUniiList[idx].dis = 1; //blocked
+                                        guiSuUniiList[idx].tck = 1; //user cannot change
+                                    }
+                                    else
+                                    {
+                                        guiSuUniiList[idx].dis = 0; //not blocked
+                                        guiSuUniiList[idx].tck = 0; //user allowed to change
+                                    }
+                                    idx++;
+                                }
+                            }
+                            // In this array, the FW bits is for user blocked freq and they can be changed
+                            fwWords = new Uint32Array(2);
+                            fwWords[0] = makeUINT32BE( u8RxBuff[23], u8RxBuff[24], u8RxBuff[25], u8RxBuff[26] );
+                            fwWords[1] = makeUINT32BE( u8RxBuff[30], u8RxBuff[31], u8RxBuff[32], u8RxBuff[33] );
+                            PrintLog(3, " User additional Blocked list[0]=0x" + fwWords[0].toString(16) + ", [1]=0x" + fwWords[1].toString(16) );
+                            idx=0; i=0; j=0;
+                            for(i=0; ((i<fwWords.length)&&(idx<guiSuUniiList.length)); i++)
+                            {
+                                for(j=0; ((j<32)&&(idx<guiSuUniiList.length)); j++)
+                                {
+                                    if(fwWords[i] & (1<<j))
+                                    {
+                                        guiSuUniiList[idx].tck = 1; //user blocked this one
+                                    }
+                                    idx++;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            iNxtySuperMsgRspStatus = NXTY_SUPER_MSG_STATUS_FAIL_WRITE;
+                            PrintLog(99,  "Super Msg: UNII Blocked list encountered write fail." );
+                        }
+                     }
+                }
+                else if( nxtyCurrentReq == NXTY_SUPER_MSG_GET_SPR_USR_PARAMS_1)
+                {
+                    PrintLog(1, "Super Msg Rsp: Super User params(1)");
+                    
+                    //                 Write Uart redirect   Write MaxSysGain      Read          Write MinSysGain      Read          Write SafemodeBackoff Read
+                    //Tx: ae e9 16 13  11 f0 0 0 24 0 0 0 1  11 f0 0 0 20 2 a 0 0  10 f0 0 0 1c  11 f0 0 0 20 2 9 0 0  10 f0 0 0 1c  11 f0 0 0 20 2 0 0 0  10 f0 0 0 1c
+                    //Rx: ae 3a c5 53  51 1                  51 1                  50 0 0 0 0    51 1                  50 x x x x    51 1                  50 80 0 0 0  
+                    //idx 0            4                     6                     8             13                    15            20                    22
+                    
+                    //                 Write MaxCellRssi     Read          Write MaxPilot3G      Read          Write MaxPilot4G      Read          Write BandMask3G      Read         
+                    //                 11 f0 0 0 20 2 d 0 0  10 f0 0 0 1c  11 f0 0 0 20 2 b 0 0  10 f0 0 0 1c  11 f0 0 0 20 2 c 0 0  10 f0 0 0 1c  11 f0 0 0 20 2 2 0 0  10 f0 0 0 1c 
+                    //                 51 1                  50 0 0 0 0    51 1                  50 0 0 0 0    51 1                  50 0 0 0 0    51 1                  50 x x x x   
+                    //idx              27                    29            34                    36            41                    43            48                    50           
+                    
+                    //                 Write BandMask4G      Read          Write MaxSysGain      Read          Write MinSysGain      Read          Write SafemodeBackoff Read
+                    //                 11 f0 0 0 20 2 3 0 0  10 f0 0 0 1c  11 f0 0 0 20 1 a 0 0  10 f0 0 0 1c  11 f0 0 0 20 1 9 0 0  10 f0 0 0 1c  11 f0 0 0 20 1 0 0 0  10 f0 0 0 1c 
+                    //                 51 1                  50 x x x x    51 1                  50 0 0 0 0    51 1                  50 0 0 0 0    51 1                  50 0 0 0 0   
+                    //idx              55                    57            62                    64            69                    71            76                    78
+                    
+                    //                 Write MaxCellRssi     Read          Write MaxPilot3G      Read          Write MaxPilot4G      Read          Write BandMask3G      Read          
+                    //                 11 f0 0 0 20 1 d 0 0  10 f0 0 0 1c  11 f0 0 0 20 1 b 0 0  10 f0 0 0 1c  11 f0 0 0 20 1 c 0 0  10 f0 0 0 1c  11 f0 0 0 20 1 2 0 0  10 f0 0 0 1c 
+                    //                 51 1                  50 0 0 0 0    51 1                  50 0 0 0 0    51 1                  50 0 0 0 0    51 1                  50 0 0 0 0    
+                    //idx              83                    85            90                    92            97                    99            104                   106
+                    
+                    //                 Write BandMask4G      Read          
+                    //                 11 f0 0 0 20 1 3 0 0  10 f0 0 0 1c
+                    //                 51 1                  50 0 0 0 0    
+                    //idx              111                   113
+                    
+                    // Make sure that there were no NAKs...
+                    if( (u8RxBuff[4]  == NXTY_NAK_RSP) || (u8RxBuff[6]  == NXTY_NAK_RSP) || (u8RxBuff[8]  == NXTY_NAK_RSP) || (u8RxBuff[13] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[15] == NXTY_NAK_RSP) || (u8RxBuff[20] == NXTY_NAK_RSP) || (u8RxBuff[22] == NXTY_NAK_RSP) || (u8RxBuff[27] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[29] == NXTY_NAK_RSP) || (u8RxBuff[34] == NXTY_NAK_RSP) || (u8RxBuff[36] == NXTY_NAK_RSP) || (u8RxBuff[41] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[43] == NXTY_NAK_RSP) || (u8RxBuff[48] == NXTY_NAK_RSP) || (u8RxBuff[50] == NXTY_NAK_RSP) || (u8RxBuff[55] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[57] == NXTY_NAK_RSP) || (u8RxBuff[62] == NXTY_NAK_RSP) || (u8RxBuff[64] == NXTY_NAK_RSP) || (u8RxBuff[69] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[71] == NXTY_NAK_RSP) || (u8RxBuff[76] == NXTY_NAK_RSP) || (u8RxBuff[78] == NXTY_NAK_RSP) || (u8RxBuff[83] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[85] == NXTY_NAK_RSP) || (u8RxBuff[90] == NXTY_NAK_RSP) || (u8RxBuff[92] == NXTY_NAK_RSP) || (u8RxBuff[97] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[99] == NXTY_NAK_RSP) || (u8RxBuff[104]== NXTY_NAK_RSP) || (u8RxBuff[106]== NXTY_NAK_RSP) || (u8RxBuff[111]== NXTY_NAK_RSP) ||
+                        (u8RxBuff[113]== NXTY_NAK_RSP) )
+                    {
+                        // Got a NAK...
+                        iNxtySuperMsgRspStatus = NXTY_SUPER_MSG_STATUS_FAIL_NAK;
+                        PrintLog(99,  "Super Msg: 'Super User param 1' encountered a NAK." );
+                    }
+                    else
+                    {
+                        // Make sure that all of the writes were successfull...
+                        if( (u8RxBuff[5]  == 1) && (u8RxBuff[7]  == 1) && (u8RxBuff[14] == 1) && (u8RxBuff[21] == 1) && (u8RxBuff[28] == 1) &&
+                            (u8RxBuff[35] == 1) && (u8RxBuff[42] == 1) && (u8RxBuff[49] == 1) && (u8RxBuff[56] == 1) && (u8RxBuff[63]  == 1) &&
+                            (u8RxBuff[70] == 1) && (u8RxBuff[77] == 1) && (u8RxBuff[84] == 1) && (u8RxBuff[91] == 1) && (u8RxBuff[98] == 1) && 
+                            (u8RxBuff[105]== 1) && (u8RxBuff[112]== 1) )
+                        {
+                            iNxtySuperMsgRspStatus = NXTY_SUPER_MSG_STATUS_SUCCESS;
+                            
+                            //Hardcoded Defaults on the unit
+                            dfltSuMaxSysGain  = ((u8RxBuff[12]<<24)>>24); //int8 (valid if > 0)
+                            dfltSuMinSysGain  = ((u8RxBuff[19]<<24)>>24); //int8 (valid if > 0)
+                            dfltSuMaxBackOff  = makeUINT32BE( u8RxBuff[23], u8RxBuff[24], u8RxBuff[25], u8RxBuff[26] ); //int32 (valid if >0)
+                            dfltSuMaxCellRssi = ((u8RxBuff[33]<<24)>>24); //int8 (valid if < 0)
+                            dfltSuMaxRscp     = ((u8RxBuff[40]<<24)>>24); //int8 MaxPilot3G (valid if < 0)
+                            dfltSuMaxRsrp     = ((u8RxBuff[47]<<24)>>24); //int8 MaxPilot4G (valid if < 0)
+                            dfltSuBandMask3G  = makeUINT32BE( u8RxBuff[51], u8RxBuff[52], u8RxBuff[53], u8RxBuff[54] ); //uint32 BandMask3G (valid if not 0x80000000)
+                            dfltSuBandMask4G  = makeUINT32BE( u8RxBuff[58], u8RxBuff[59], u8RxBuff[60], u8RxBuff[61] ); //uint32 BandMask4G (valid if not 0x80000000)
+
+                            //User configured from NVRAM
+                            guiSuMaxSysGain   = ((u8RxBuff[68]<<24)>>24); //int8 (valid if > 0)
+                            guiSuMinSysGain   = ((u8RxBuff[75]<<24)>>24); //int8 (valid if > 0)
+                            guiSuMaxBackOff   = makeUINT32BE( u8RxBuff[79], u8RxBuff[80], u8RxBuff[81], u8RxBuff[82] ); //int32 (valid if >0)
+                            guiSuMaxCellRssi  = ((u8RxBuff[89]<<24)>>24); //int8 (valid if < 0)
+                            guiSuMaxRscp      = ((u8RxBuff[96]<<24)>>24); //int8 MaxPilot3G (valid if < 0)
+                            guiSuMaxRsrp      = ((u8RxBuff[103]<<24)>>24);//int8 MaxPilot4G (valid if < 0)
+                            guiSuBandMask3G   = makeUINT32BE( u8RxBuff[107], u8RxBuff[108], u8RxBuff[109], u8RxBuff[110] ); //uint32 BandMask3G (valid if not 0x80000000)
+                            guiSuBandMask4G   = makeUINT32BE( u8RxBuff[114], u8RxBuff[115], u8RxBuff[116], u8RxBuff[117] ); //uint32 BandMask4G (valid if not 0x80000000)
+                            
+                            //If NVRAM has not been used, then the user value should be set to the default
+                            if(!(guiSuMaxSysGain>0)){guiSuMaxSysGain = dfltSuMaxSysGain;}    //int8 (valid if > 0)
+                            if(!(guiSuMinSysGain>0)){guiSuMinSysGain = dfltSuMinSysGain;}    //int8 (valid if > 0)
+                            if(!(guiSuMaxBackOff>0)){guiSuMaxBackOff = dfltSuMaxBackOff;}    //int32 (valid if >0)
+                            if(!(guiSuMaxCellRssi<0)){guiSuMaxCellRssi = dfltSuMaxCellRssi;} //int8 (valid if < 0)
+                            if(!(guiSuMaxRscp<0)){guiSuMaxRscp = dfltSuMaxRscp;}             //int8 (valid if < 0)
+                            if(!(guiSuMaxRsrp<0)){guiSuMaxRsrp = dfltSuMaxRsrp;}             //int8 (valid if < 0)
+
+                            if(PrintLogLevel>=3){
+                            PrintLog(3, " SuMaxSysGain:default =" + dfltSuMaxSysGain + " gui=" + guiSuMaxSysGain );
+                            PrintLog(3, " SuMinSysGain:default =" + dfltSuMinSysGain + " gui=" + guiSuMinSysGain );
+                            PrintLog(3, " SuMaxBackOff:default =" + dfltSuMaxBackOff + " gui=" + guiSuMaxBackOff );
+                            PrintLog(3, " SuMaxCellRssi:default=" + dfltSuMaxCellRssi+ " gui=" + guiSuMaxCellRssi);
+                            PrintLog(3, " SuMaxRscp:default    =" + dfltSuMaxRscp    + " gui=" + guiSuMaxRscp    );
+                            PrintLog(3, " SuMaxRsrp:default    =" + dfltSuMaxRsrp    + " gui=" + guiSuMaxRsrp    );
+                            PrintLog(3, " SuBandMask3G:default =b" + dfltSuBandMask3G.toString(2) + " gui=b" + guiSuBandMask3G.toString(2) );
+                            PrintLog(3, " SuBandMask4G:default =b" + dfltSuBandMask4G.toString(2) + " gui=b" + guiSuBandMask4G.toString(2) );
+                            }
+                        }
+                        else
+                        {
+                            iNxtySuperMsgRspStatus = NXTY_SUPER_MSG_STATUS_FAIL_WRITE;
+                            PrintLog(99,  "Super Msg: 'Super User param 1' encountered write fail." );
+                        }
+                     }
+                }
+                else if( nxtyCurrentReq == NXTY_SUPER_MSG_GET_SPR_USR_PARAMS_2)
+                {
+                    PrintLog(1, "Super Msg Rsp: Super User params(2)");
+
+                    //                 Write TechBandBias[0] Read         Write TechBandBias[1] Read          Write TechBandBias[2] Read          Write TechBandBias[3] Read           
+                    //Tx: ae e5 1a 13  11 f0 0 0 20 2 4 0 0  10 f0 0 0 1c 11 f0 0 0 20 2 4 0 1  10 f0 0 0 1c  11 f0 0 0 20 2 4 0 2  10 f0 0 0 1c  11 f0 0 0 20 2 4 0 3  10 f0 0 0 1c 
+                    //Rx: ae 75 8a 53  51 1                  50 0 0 80 0  51 1                  50 0 0 0 0    51 1                  50 0 0 80 0   51 1                  50 0 0 0 0   
+                    //idx 0            4                     6            11                    13            18                    20            25                    27
+
+                    //                 Write TechBandBias[4] Read          Write TechBandBias[5] Read          Write TechBandBias[6] Read         Write TechBandBias[7] Read          
+                    //                 11 f0 0 0 20 2 4 0 4  10 f0 0 0 1c  11 f0 0 0 20 2 4 0 5  10 f0 0 0 1c  11 f0 0 0 20 2 4 0 6  10 f0 0 0 1c 11 f0 0 0 20 2 4 0 7  10 f0 0 0 1c  
+                    //                 51 1                  50 0 0 80 0   51 1                  50 0 0 0 0    51 1                  50 0 0 0 0   51 1                  50 0 0 0 0     
+                    //idx              32                    34            39                    41            46                    48           53                    55
+                    
+                    //                 Write TechBandBias[8] Read          Write TechBandBias[9] Read          Write TechBandBias[10] Read          Write TechBandBias[11] Read          
+                    //Tx: ae 83 7c 13  11 f0 0 0 20 2 4 0 8  10 f0 0 0 1c  11 f0 0 0 20 2 4 0 9  10 f0 0 0 1c  11 f0 0 0 20 2 4 0 a   10 f0 0 0 1c  11 f0 0 0 20 2 4 0 b   10 f0 0 0 1c    
+                    //Rx: ae 44 bb 53  51 1                  50 0 0 80 0   51 1                  50 0 0 0 0    51 1                   50 0 0 80 0   51 1                   50 0 0 0 0     
+                    //idx 0            60                    62            67                    69            74                     76            81                     83
+
+                    //                 Write TechBandBias[12] Read          Write TechBandBias[13] Read          Write TechBandBias[14] Read          Write TechBandBias[15] Read        
+                    //                 11 f0 0 0 20 2 4 0 c   10 f0 0 0 1c  11 f0 0 0 20 2 4 0 d   10 f0 0 0 1c  11 f0 0 0 20 2 4 0 e   10 f0 0 0 1c  11 f0 0 0 20 2 4 0 f   10 f0 0 0 1c
+                    //                 51 1                   50 0 0 80 0   51 1                   50 0 0 0 0    51 1                   50 0 0 80 0   51 1                   50 0 0 0 0   
+                    //idx              88                     90            95                     97            102                    104           109                    111
+
+
+                    // Make sure that there were no NAKs...
+                    if( (u8RxBuff[4]  == NXTY_NAK_RSP) || (u8RxBuff[6]  == NXTY_NAK_RSP) || (u8RxBuff[11] == NXTY_NAK_RSP) || (u8RxBuff[13] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[18] == NXTY_NAK_RSP) || (u8RxBuff[20] == NXTY_NAK_RSP) || (u8RxBuff[25] == NXTY_NAK_RSP) || (u8RxBuff[27] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[32] == NXTY_NAK_RSP) || (u8RxBuff[34] == NXTY_NAK_RSP) || (u8RxBuff[39] == NXTY_NAK_RSP) || (u8RxBuff[41] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[46] == NXTY_NAK_RSP) || (u8RxBuff[48] == NXTY_NAK_RSP) || (u8RxBuff[53] == NXTY_NAK_RSP) || (u8RxBuff[55] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[60] == NXTY_NAK_RSP) || (u8RxBuff[62] == NXTY_NAK_RSP) || (u8RxBuff[67] == NXTY_NAK_RSP) || (u8RxBuff[69] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[74] == NXTY_NAK_RSP) || (u8RxBuff[76] == NXTY_NAK_RSP) || (u8RxBuff[81] == NXTY_NAK_RSP) || (u8RxBuff[83] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[88] == NXTY_NAK_RSP) || (u8RxBuff[90] == NXTY_NAK_RSP) || (u8RxBuff[95] == NXTY_NAK_RSP) || (u8RxBuff[97] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[102]== NXTY_NAK_RSP) || (u8RxBuff[104]== NXTY_NAK_RSP) || (u8RxBuff[109]== NXTY_NAK_RSP) || (u8RxBuff[111]== NXTY_NAK_RSP) )
+                    {
+                        // Got a NAK...
+                        iNxtySuperMsgRspStatus = NXTY_SUPER_MSG_STATUS_FAIL_NAK;
+                        PrintLog(99,  "Super Msg: 'Super User param 2' encountered a NAK." );
+                    }
+                    else
+                    {
+                        // Make sure that all of the writes were successfull...
+                        if( (u8RxBuff[5]  == 1) && (u8RxBuff[12] == 1) && (u8RxBuff[19] == 1) && (u8RxBuff[26] == 1) && (u8RxBuff[33] == 1) &&
+                            (u8RxBuff[40] == 1) && (u8RxBuff[47] == 1) && (u8RxBuff[54] == 1) && (u8RxBuff[61] == 1) && (u8RxBuff[68] == 1) &&
+                            (u8RxBuff[75] == 1) && (u8RxBuff[82] == 1) && (u8RxBuff[89] == 1) && (u8RxBuff[96] == 1) && (u8RxBuff[103]== 1) &&
+                            (u8RxBuff[110]== 1) )
+                        {
+                            iNxtySuperMsgRspStatus = NXTY_SUPER_MSG_STATUS_SUCCESS;
+                            
+                            var uBS = 0;
+                            var uTB = 0;
+                            
+                            // This message contains the actual configured bands from the secured setup
+                            // Arrays guiSuTechBandAllowedBias and dfltSuTechBandAllowedBias will be emptied here because they will be rebuild based on unit's response
+                            var x=guiSuTechBandAllowedBias.splice(0, guiSuTechBandAllowedBias.length); x=[];
+                            x=dfltSuTechBandAllowedBias.splice(0, dfltSuTechBandAllowedBias.length); x=[];
+
+                            
+                            // Add elements for configured bands (bit 15..8=(INT8)bias, bits7..0=(UINT8)eTechBand, and not valid if 0x0 or 0xff)
+                            //     tech{0=wcdma, 1=lte}, bd:band, blk{0=band will be relayed, 1=band is blocked}, bias
+                            uBS=u8RxBuff[9];   uTB=u8RxBuff[10];  if((uTB!=0)&&uTB!=0xff){dfltSuTechBandAllowedBias.push({"tech":((uTB&0x80)?1:0), "bd":(uTB&0x3F), "blk":0, "bias":uBS});}
+                            uBS=u8RxBuff[16];  uTB=u8RxBuff[17];  if((uTB!=0)&&uTB!=0xff){dfltSuTechBandAllowedBias.push({"tech":((uTB&0x80)?1:0), "bd":(uTB&0x3F), "blk":0, "bias":uBS});}
+                            uBS=u8RxBuff[23];  uTB=u8RxBuff[24];  if((uTB!=0)&&uTB!=0xff){dfltSuTechBandAllowedBias.push({"tech":((uTB&0x80)?1:0), "bd":(uTB&0x3F), "blk":0, "bias":uBS});}
+                            uBS=u8RxBuff[30];  uTB=u8RxBuff[31];  if((uTB!=0)&&uTB!=0xff){dfltSuTechBandAllowedBias.push({"tech":((uTB&0x80)?1:0), "bd":(uTB&0x3F), "blk":0, "bias":uBS});}
+                            uBS=u8RxBuff[37];  uTB=u8RxBuff[38];  if((uTB!=0)&&uTB!=0xff){dfltSuTechBandAllowedBias.push({"tech":((uTB&0x80)?1:0), "bd":(uTB&0x3F), "blk":0, "bias":uBS});}
+                            uBS=u8RxBuff[44];  uTB=u8RxBuff[45];  if((uTB!=0)&&uTB!=0xff){dfltSuTechBandAllowedBias.push({"tech":((uTB&0x80)?1:0), "bd":(uTB&0x3F), "blk":0, "bias":uBS});}
+                            uBS=u8RxBuff[51];  uTB=u8RxBuff[52];  if((uTB!=0)&&uTB!=0xff){dfltSuTechBandAllowedBias.push({"tech":((uTB&0x80)?1:0), "bd":(uTB&0x3F), "blk":0, "bias":uBS});}
+                            uBS=u8RxBuff[58];  uTB=u8RxBuff[59];  if((uTB!=0)&&uTB!=0xff){dfltSuTechBandAllowedBias.push({"tech":((uTB&0x80)?1:0), "bd":(uTB&0x3F), "blk":0, "bias":uBS});}
+                            uBS=u8RxBuff[65];  uTB=u8RxBuff[66];  if((uTB!=0)&&uTB!=0xff){dfltSuTechBandAllowedBias.push({"tech":((uTB&0x80)?1:0), "bd":(uTB&0x3F), "blk":0, "bias":uBS});}
+                            uBS=u8RxBuff[72];  uTB=u8RxBuff[73];  if((uTB!=0)&&uTB!=0xff){dfltSuTechBandAllowedBias.push({"tech":((uTB&0x80)?1:0), "bd":(uTB&0x3F), "blk":0, "bias":uBS});}
+                            uBS=u8RxBuff[79];  uTB=u8RxBuff[80];  if((uTB!=0)&&uTB!=0xff){dfltSuTechBandAllowedBias.push({"tech":((uTB&0x80)?1:0), "bd":(uTB&0x3F), "blk":0, "bias":uBS});}
+                            uBS=u8RxBuff[86];  uTB=u8RxBuff[87];  if((uTB!=0)&&uTB!=0xff){dfltSuTechBandAllowedBias.push({"tech":((uTB&0x80)?1:0), "bd":(uTB&0x3F), "blk":0, "bias":uBS});}
+                            uBS=u8RxBuff[93];  uTB=u8RxBuff[94];  if((uTB!=0)&&uTB!=0xff){dfltSuTechBandAllowedBias.push({"tech":((uTB&0x80)?1:0), "bd":(uTB&0x3F), "blk":0, "bias":uBS});}
+                            uBS=u8RxBuff[100]; uTB=u8RxBuff[101]; if((uTB!=0)&&uTB!=0xff){dfltSuTechBandAllowedBias.push({"tech":((uTB&0x80)?1:0), "bd":(uTB&0x3F), "blk":0, "bias":uBS});}
+                            uBS=u8RxBuff[107]; uTB=u8RxBuff[108]; if((uTB!=0)&&uTB!=0xff){dfltSuTechBandAllowedBias.push({"tech":((uTB&0x80)?1:0), "bd":(uTB&0x3F), "blk":0, "bias":uBS});}
+                            uBS=u8RxBuff[114]; uTB=u8RxBuff[115]; if((uTB!=0)&&uTB!=0xff){dfltSuTechBandAllowedBias.push({"tech":((uTB&0x80)?1:0), "bd":(uTB&0x3F), "blk":0, "bias":uBS});}
+                            
+                            // Copy dfltSuTechBandAllowedBias to the view's guiSuTechBandAllowedBias
+                            for (var i = 0; i<dfltSuTechBandAllowedBias.length; i++)
+                            {
+                                var elem = dfltSuTechBandAllowedBias[i];
+                                guiSuTechBandAllowedBias.push({"tech":elem.tech, "bd":elem.bd, "blk":elem.blk, "bias":elem.bias});
+                            }
+                        }
+                        else
+                        {
+                            iNxtySuperMsgRspStatus = NXTY_SUPER_MSG_STATUS_FAIL_WRITE;
+                            PrintLog(99,  "Super Msg: 'Super User param 2' encountered write fail." );
+                        }
+                     }
+                }
+                else if( nxtyCurrentReq == NXTY_SUPER_MSG_GET_SPR_USR_PARAMS_3)
+                {
+                    PrintLog(1, "Super Msg Rsp: Super User params(3)");
+
+                    //                 Write TechBandBias[0] Read         Write TechBandBias[1] Read          Write TechBandBias[2] Read          Write TechBandBias[3] Read           
+                    //Tx: ae e5 1a 13  11 f0 0 0 20 1 4 0 0  10 f0 0 0 1c 11 f0 0 0 20 1 4 0 1  10 f0 0 0 1c  11 f0 0 0 20 1 4 0 2  10 f0 0 0 1c  11 f0 0 0 20 1 4 0 3  10 f0 0 0 1c 
+                    //Rx: ae 75 8a 53  51 1                  50 0 0 80 0  51 1                  50 0 0 0 0    51 1                  50 0 0 80 0   51 1                  50 0 0 0 0   
+                    //idx 0            4                     6            11                    13            18                    20            25                    27
+
+                    //                 Write TechBandBias[4] Read          Write TechBandBias[5] Read          Write TechBandBias[6] Read         Write TechBandBias[7] Read          
+                    //                 11 f0 0 0 20 1 4 0 4  10 f0 0 0 1c  11 f0 0 0 20 1 4 0 5  10 f0 0 0 1c  11 f0 0 0 20 1 4 0 6  10 f0 0 0 1c 11 f0 0 0 20 1 4 0 7  10 f0 0 0 1c  
+                    //                 51 1                  50 0 0 80 0   51 1                  50 0 0 0 0    51 1                  50 0 0 0 0   51 1                  50 0 0 0 0     
+                    //idx              32                    34            39                    41            46                    48           53                    55
+                    
+                    //                 Write TechBandBias[8] Read          Write TechBandBias[9] Read          Write TechBandBias[10] Read          Write TechBandBias[11] Read          
+                    //Tx: ae 83 7c 13  11 f0 0 0 20 1 4 0 8  10 f0 0 0 1c  11 f0 0 0 20 1 4 0 9  10 f0 0 0 1c  11 f0 0 0 20 1 4 0 a   10 f0 0 0 1c  11 f0 0 0 20 1 4 0 b   10 f0 0 0 1c    
+                    //Rx: ae 44 bb 53  51 1                  50 0 0 80 0   51 1                  50 0 0 0 0    51 1                   50 0 0 80 0   51 1                   50 0 0 0 0     
+                    //idx 0            60                    62            67                    69            74                     76            81                     83
+
+                    //                 Write TechBandBias[12] Read          Write TechBandBias[13] Read          Write TechBandBias[14] Read          Write TechBandBias[15] Read        
+                    //                 11 f0 0 0 20 1 4 0 c   10 f0 0 0 1c  11 f0 0 0 20 1 4 0 d   10 f0 0 0 1c  11 f0 0 0 20 1 4 0 e   10 f0 0 0 1c  11 f0 0 0 20 1 4 0 f   10 f0 0 0 1c
+                    //                 51 1                   50 0 0 80 0   51 1                   50 0 0 0 0    51 1                   50 0 0 80 0   51 1                   50 0 0 0 0   
+                    //idx              88                     90            95                     97            102                    104           109                    111
+
+                    //                 Uart cancel
+                    //                 10 f0 0 0 24
+                    //                 50 0 0 0 0 
+                    //idx              116
+
+                    // Make sure that there were no NAKs...
+                    if( (u8RxBuff[4]  == NXTY_NAK_RSP) || (u8RxBuff[6]  == NXTY_NAK_RSP) || (u8RxBuff[11] == NXTY_NAK_RSP) || (u8RxBuff[13] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[18] == NXTY_NAK_RSP) || (u8RxBuff[20] == NXTY_NAK_RSP) || (u8RxBuff[25] == NXTY_NAK_RSP) || (u8RxBuff[27] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[32] == NXTY_NAK_RSP) || (u8RxBuff[34] == NXTY_NAK_RSP) || (u8RxBuff[39] == NXTY_NAK_RSP) || (u8RxBuff[41] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[46] == NXTY_NAK_RSP) || (u8RxBuff[48] == NXTY_NAK_RSP) || (u8RxBuff[53] == NXTY_NAK_RSP) || (u8RxBuff[55] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[60] == NXTY_NAK_RSP) || (u8RxBuff[62] == NXTY_NAK_RSP) || (u8RxBuff[67] == NXTY_NAK_RSP) || (u8RxBuff[69] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[74] == NXTY_NAK_RSP) || (u8RxBuff[76] == NXTY_NAK_RSP) || (u8RxBuff[81] == NXTY_NAK_RSP) || (u8RxBuff[83] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[88] == NXTY_NAK_RSP) || (u8RxBuff[90] == NXTY_NAK_RSP) || (u8RxBuff[95] == NXTY_NAK_RSP) || (u8RxBuff[97] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[102]== NXTY_NAK_RSP) || (u8RxBuff[104]== NXTY_NAK_RSP) || (u8RxBuff[109]== NXTY_NAK_RSP) || (u8RxBuff[111]== NXTY_NAK_RSP) ||
+                        (u8RxBuff[116]== NXTY_NAK_RSP) )
+                    {
+                        // Got a NAK...
+                        iNxtySuperMsgRspStatus = NXTY_SUPER_MSG_STATUS_FAIL_NAK;
+                        PrintLog(99,  "Super Msg: 'Super User param 3' encountered a NAK." );
+                    }
+                    else
+                    {
+                        // Make sure that all of the writes were successfull...
+                        if( (u8RxBuff[5]  == 1) && (u8RxBuff[12] == 1) && (u8RxBuff[19] == 1) && (u8RxBuff[26] == 1) && (u8RxBuff[33] == 1) &&
+                            (u8RxBuff[40] == 1) && (u8RxBuff[47] == 1) && (u8RxBuff[54] == 1) && (u8RxBuff[61] == 1) && (u8RxBuff[68] == 1) &&
+                            (u8RxBuff[75] == 1) && (u8RxBuff[82] == 1) && (u8RxBuff[89] == 1) && (u8RxBuff[96] == 1) && (u8RxBuff[103]== 1) &&
+                            (u8RxBuff[110]== 1) )
+                        {
+                            iNxtySuperMsgRspStatus = NXTY_SUPER_MSG_STATUS_SUCCESS;
+                            
+                            var uBS = 0;
+                            var uTB = 0;
+                            
+                            // This message contains the user overrides for the configured bands....will have to apply these into the already configured guiSuTechBandAllowedBias
+                            // Add elements for configured bands (bit 15..8=(INT8)bias, bits7..0=(UINT8)eTechBand, and not valid if 0x0 or 0xff)
+                            //     tech{0=wcdma, 1=lte}, bd:band, blk{0=band will be relayed, 1=band is blocked}, bias
+                            uBS=u8RxBuff[9];   uTB=u8RxBuff[10];  if((uTB!=0)&&uTB!=0xff){SetTechBandAllowedBiasItem(((uTB&0x80)?1:0), (uTB&0x3F), null, uBS);}
+                            uBS=u8RxBuff[16];  uTB=u8RxBuff[17];  if((uTB!=0)&&uTB!=0xff){SetTechBandAllowedBiasItem(((uTB&0x80)?1:0), (uTB&0x3F), null, uBS);}
+                            uBS=u8RxBuff[23];  uTB=u8RxBuff[24];  if((uTB!=0)&&uTB!=0xff){SetTechBandAllowedBiasItem(((uTB&0x80)?1:0), (uTB&0x3F), null, uBS);}
+                            uBS=u8RxBuff[30];  uTB=u8RxBuff[31];  if((uTB!=0)&&uTB!=0xff){SetTechBandAllowedBiasItem(((uTB&0x80)?1:0), (uTB&0x3F), null, uBS);}
+                            uBS=u8RxBuff[37];  uTB=u8RxBuff[38];  if((uTB!=0)&&uTB!=0xff){SetTechBandAllowedBiasItem(((uTB&0x80)?1:0), (uTB&0x3F), null, uBS);}
+                            uBS=u8RxBuff[44];  uTB=u8RxBuff[45];  if((uTB!=0)&&uTB!=0xff){SetTechBandAllowedBiasItem(((uTB&0x80)?1:0), (uTB&0x3F), null, uBS);}
+                            uBS=u8RxBuff[51];  uTB=u8RxBuff[52];  if((uTB!=0)&&uTB!=0xff){SetTechBandAllowedBiasItem(((uTB&0x80)?1:0), (uTB&0x3F), null, uBS);}
+                            uBS=u8RxBuff[58];  uTB=u8RxBuff[59];  if((uTB!=0)&&uTB!=0xff){SetTechBandAllowedBiasItem(((uTB&0x80)?1:0), (uTB&0x3F), null, uBS);}
+                            uBS=u8RxBuff[65];  uTB=u8RxBuff[66];  if((uTB!=0)&&uTB!=0xff){SetTechBandAllowedBiasItem(((uTB&0x80)?1:0), (uTB&0x3F), null, uBS);}
+                            uBS=u8RxBuff[72];  uTB=u8RxBuff[73];  if((uTB!=0)&&uTB!=0xff){SetTechBandAllowedBiasItem(((uTB&0x80)?1:0), (uTB&0x3F), null, uBS);}
+                            uBS=u8RxBuff[79];  uTB=u8RxBuff[80];  if((uTB!=0)&&uTB!=0xff){SetTechBandAllowedBiasItem(((uTB&0x80)?1:0), (uTB&0x3F), null, uBS);}
+                            uBS=u8RxBuff[86];  uTB=u8RxBuff[87];  if((uTB!=0)&&uTB!=0xff){SetTechBandAllowedBiasItem(((uTB&0x80)?1:0), (uTB&0x3F), null, uBS);}
+                            uBS=u8RxBuff[93];  uTB=u8RxBuff[94];  if((uTB!=0)&&uTB!=0xff){SetTechBandAllowedBiasItem(((uTB&0x80)?1:0), (uTB&0x3F), null, uBS);}
+                            uBS=u8RxBuff[100]; uTB=u8RxBuff[101]; if((uTB!=0)&&uTB!=0xff){SetTechBandAllowedBiasItem(((uTB&0x80)?1:0), (uTB&0x3F), null, uBS);}
+                            uBS=u8RxBuff[107]; uTB=u8RxBuff[108]; if((uTB!=0)&&uTB!=0xff){SetTechBandAllowedBiasItem(((uTB&0x80)?1:0), (uTB&0x3F), null, uBS);}
+                            uBS=u8RxBuff[114]; uTB=u8RxBuff[115]; if((uTB!=0)&&uTB!=0xff){SetTechBandAllowedBiasItem(((uTB&0x80)?1:0), (uTB&0x3F), null, uBS);}
+                            
+                            // Apply guiSuBandMask3G and guiSuBandMask4G to set "blk" element to indicate that the band is blocked
+                            applyBandMask(0, guiSuBandMask3G);
+                            applyBandMask(1, guiSuBandMask4G);
+                            
+                            // Print
+                            if(PrintLogLevel>=3){
+                            PrintLog(3, " all inclusive guiSuTechBandAllowedBias.length=" + guiSuTechBandAllowedBias.length);
+                            for (var i = 0; i<guiSuTechBandAllowedBias.length; i++)
+                            {
+                                var elem = guiSuTechBandAllowedBias[i];
+                                PrintLog(3, "  guiSuTechBandAllowedBias["+i+"]:tech="+elem.tech +", bd="+ elem.bd +", blk="+elem.blk+", bias="+elem.bias);
+                            }}
+                        }
+                        else
+                        {
+                            iNxtySuperMsgRspStatus = NXTY_SUPER_MSG_STATUS_FAIL_WRITE;
+                            PrintLog(99,  "Super Msg: 'Super User param 3' encountered write fail." );
+                        }
+                     }
+                }
+                else if( nxtyCurrentReq == NXTY_SUPER_MSG_SET_UNII_BLOCKED_LIST)
+                {
+                    PrintLog(1, "Super Msg Rsp: Write new Unii Blocked List");
+                    
+                    //                 Uart redirect         UniiBlock[0]           write new value            UniiBlock[1]           write new value         Uart cancel
+                    //Tx: ae 32 cd 13  11 f0 0 0 24 0 0 0 1  11 f0 0 0 20 1 1 0 0   11 f0 0 0 1c ff e0 38 1f   11 f0 0 0 20 1 1 0 1   11 f0 0 0 1c 0 0 18 1   10 f0 0 0 24
+                    //Rx: ae f f0 53   51 1                  51 1                   51 1                       51 1                   51 1                    50 0 0 0 0
+                    //idx 0            4                     6                      8                          10                     12                      14
+
+                    // Make sure that there were no NAKs...
+                    if( (u8RxBuff[4]  == NXTY_NAK_RSP)||(u8RxBuff[6]  == NXTY_NAK_RSP)||(u8RxBuff[8]  == NXTY_NAK_RSP)||
+                        (u8RxBuff[10] == NXTY_NAK_RSP)||(u8RxBuff[12] == NXTY_NAK_RSP)||(u8RxBuff[14] == NXTY_NAK_RSP) )
+                    {
+                        // Got a NAK...
+                        iNxtySuperMsgRspStatus = NXTY_SUPER_MSG_STATUS_FAIL_NAK;
+                        PrintLog(99,  "Super Msg: 'Write new Unii Blocked List' encountered a NAK." );
+                    }
+                    else
+                    {
+                        // Make sure that all of the writes were successfull...
+                        if( (u8RxBuff[5]==1)&&(u8RxBuff[7]==1)&&(u8RxBuff[9]==1)&&(u8RxBuff[11]==1)&&(u8RxBuff[13]==1) )
+                        {
+                            iNxtySuperMsgRspStatus = NXTY_SUPER_MSG_STATUS_SUCCESS;
+                        }
+                        else
+                        {
+                            iNxtySuperMsgRspStatus = NXTY_SUPER_MSG_STATUS_FAIL_WRITE;
+                            PrintLog(99,  "Super Msg: 'Write new Unii Blocked List' encountered write fail." );
+                        }
+                     }
+                }
+                else if( nxtyCurrentReq == NXTY_SUPER_MSG_WRITE_SPR_USR_PARAMS_1)
+                {
+                    PrintLog(1, "Super Msg Rsp: Write Super user params(1)");
+                    
+                    //                 Uart redirect        Write                                     Write                                     Write                    
+                    //Tx: ae e1 1e 13  11 f0 0 0 24 0 0 0 1 11 f0 0 0 20 1 a 0 0 11 f0 0 0 1c 0 0 0 0 11 f0 0 0 20 1 9 0 0 11 f0 0 0 1c 0 0 0 0 11 f0 0 0 20 1 0 0 0 11 f0 0 0 1c 0 0 0 0 
+                    //Rx: ae 32 cd 53  51 1                 51 1                 51 1                 51 1                 51 1                 51 1                 51 1                 
+                    //idx              4                    6                    8                    10                   12                   14                   16
+                    
+                    //                 Write                                     Write                                     Write                                     Write
+                    //Tx:              11 f0 0 0 20 1 d 0 0 11 f0 0 0 1c 0 0 0 0 11 f0 0 0 20 1 b 0 0 11 f0 0 0 1c 0 0 0 0 11 f0 0 0 20 1 c 0 0 11 f0 0 0 1c 0 0 0 0 11 f0 0 0 20 1 2 0 0 
+                    //Rx:              51 1                 51 1                 51 1                 51 1                 51 1                 51 1                 51 1                    
+                    //idx              18                   20                   22                   24                   26                   28                   30
+                    
+
+                    //                                          Write                                         Write                                     Write                                 
+                    //Tx:              11 f0 0 0 1c ff ff ff ff 11 f0 0 0 20 1 3 0 0 11 f0 0 0 1c ff ff ff ff 11 f0 0 0 20 1 4 0 0 11 f0 0 0 1c 0 0 0 2 11 f0 0 0 20 1 4 0 1 11 f0 0 0 1c 0 0 14 5 
+                    //Rx:              51 1                     51 1                 51 1                     51 1                 51 1                 51 1                 51 1                  
+                    //idx              32                       34                   36                       38                   40                   42                   44 
+                    
+                    //                 Write                                       Write                    
+                    //Tx:              11 f0 0 0 20 1 4 0 2 11 f0 0 0 1c 0 0 1e 91 11 f0 0 0 20 1 4 0 3 11 f0 0 0 1c 0 0 19 84                                        
+                    //Rx:              51 1                 51 1                   51 1                 51 1                                                          
+                    //idx              46                   48                     50                   52
+
+                    // Make sure that there were no NAKs...
+                    if( (u8RxBuff[4]  == NXTY_NAK_RSP) || (u8RxBuff[6]  == NXTY_NAK_RSP) || (u8RxBuff[8]  == NXTY_NAK_RSP) || (u8RxBuff[10] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[12] == NXTY_NAK_RSP) || (u8RxBuff[14] == NXTY_NAK_RSP) || (u8RxBuff[16] == NXTY_NAK_RSP) || (u8RxBuff[18] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[20] == NXTY_NAK_RSP) || (u8RxBuff[22] == NXTY_NAK_RSP) || (u8RxBuff[24] == NXTY_NAK_RSP) || (u8RxBuff[26] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[28] == NXTY_NAK_RSP) || (u8RxBuff[30] == NXTY_NAK_RSP) || (u8RxBuff[32] == NXTY_NAK_RSP) || (u8RxBuff[34] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[36] == NXTY_NAK_RSP) || (u8RxBuff[38] == NXTY_NAK_RSP) || (u8RxBuff[40] == NXTY_NAK_RSP) || (u8RxBuff[42] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[44] == NXTY_NAK_RSP) || (u8RxBuff[46] == NXTY_NAK_RSP) || (u8RxBuff[48] == NXTY_NAK_RSP) || (u8RxBuff[50] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[52] == NXTY_NAK_RSP) )
+                    {
+                        // Got a NAK...
+                        iNxtySuperMsgRspStatus = NXTY_SUPER_MSG_STATUS_FAIL_NAK;
+                        PrintLog(99,  "Super Msg: 'Write Super user params(1)' encountered a NAK." );
+                    }
+                    else
+                    {
+                        // Make sure that all of the writes were successfull...
+                        if( (u8RxBuff[5]  == 1) && (u8RxBuff[7]  == 1) && (u8RxBuff[9]  == 1) && (u8RxBuff[11] == 1) &&
+                            (u8RxBuff[13] == 1) && (u8RxBuff[15] == 1) && (u8RxBuff[17] == 1) && (u8RxBuff[19] == 1) &&
+                            (u8RxBuff[21] == 1) && (u8RxBuff[23] == 1) && (u8RxBuff[25] == 1) && (u8RxBuff[27] == 1) &&
+                            (u8RxBuff[29] == 1) && (u8RxBuff[31] == 1) && (u8RxBuff[33] == 1) && (u8RxBuff[35] == 1) &&
+                            (u8RxBuff[37] == 1) && (u8RxBuff[39] == 1) && (u8RxBuff[41] == 1) && (u8RxBuff[43] == 1) &&
+                            (u8RxBuff[45] == 1) && (u8RxBuff[47] == 1) && (u8RxBuff[49] == 1) && (u8RxBuff[51] == 1) &&
+                            (u8RxBuff[53] == 1) )
+                        {
+                            iNxtySuperMsgRspStatus = NXTY_SUPER_MSG_STATUS_SUCCESS;
+                            // nothing else to do, we just wanted to know that the message arrived as indication that FW treated it
+                        }
+                        else
+                        {
+                            iNxtySuperMsgRspStatus = NXTY_SUPER_MSG_STATUS_FAIL_WRITE;
+                            PrintLog(99,  "Super Msg: 'Write Super user params(1)' encountered write fail." );
+                        }
+                     }
+                }
+                else if( nxtyCurrentReq == NXTY_SUPER_MSG_WRITE_SPR_USR_PARAMS_2)
+                {
+                    PrintLog(1, "Super Msg Rsp: Write Super user params(2)");
+                    
+                    //                 Uart redirect        Write                                      Write                                     Write                                     
+                    //Tx: ae dd 22 13  11 f0 0 0 20 1 4 0 4 11 f0 0 0 1c 0 0 0 82 11 f0 0 0 20 1 4 0 5 11 f0 0 0 1c 0 0 0 0 11 f0 0 0 20 1 4 0 6 11 f0 0 0 1c 0 0 0 0 11 f0 0 0 20 1 4 0 7 
+                    //Rx: ae 35 ca 53  51 1                 51 1                  51 1                 51 1                 51 1                 51 1                 51 1 
+                    //idx 0            4                    6                     8                    10                   12                   14                   16
+
+                    //                 Write                                     Write                                     Write                                     Write                                           
+                    //Tx:              11 f0 0 0 1c 0 0 0 0 11 f0 0 0 20 1 4 0 8 11 f0 0 0 1c 0 0 0 0 11 f0 0 0 20 1 4 0 9 11 f0 0 0 1c 0 0 0 0 11 f0 0 0 20 1 4 0 a 11 f0 0 0 1c 0 0 0 0 11 f0 0 0 20 1 4 0 b 
+                    //Rx:              51 1                 51 1                 51 1                 51 1                 51 1                 51 1                 51 1                 51 1 
+                    //idx              18                   20                   22                   24                   26                   28                   30                   32
+
+                    //                 Write                                     Write                                     Write                                     Write
+                    //Tx:              11 f0 0 0 1c 0 0 0 0 11 f0 0 0 20 1 4 0 c 11 f0 0 0 1c 0 0 0 0 11 f0 0 0 20 1 4 0 d 11 f0 0 0 1c 0 0 0 0 11 f0 0 0 20 1 4 0 e 11 f0 0 0 1c 0 0 0 0 11 f0 0 0 20 1 4 0 f 
+                    //Rx:              51 1                 51 1                 51 1                 51 1                 51 1                 51 1                 51 1                 51 1 
+                    //idx              34                   36                   38                   40                   42                   44                   46                   48
+                    
+                    //                 Write                    Uart Cancel
+                    //Tx:              11 f0 0 0 1c 0 0 0 0 10  f0 0 0 24 e6
+                    //Rx:              51 1                     50 0 0 0 0
+                    //idx              50                       52
+                    
+                    
+                    // Make sure that there were no NAKs...
+                    if( (u8RxBuff[4]  == NXTY_NAK_RSP) || (u8RxBuff[6]  == NXTY_NAK_RSP) || (u8RxBuff[8]  == NXTY_NAK_RSP) || (u8RxBuff[10] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[12] == NXTY_NAK_RSP) || (u8RxBuff[14] == NXTY_NAK_RSP) || (u8RxBuff[16] == NXTY_NAK_RSP) || (u8RxBuff[18] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[20] == NXTY_NAK_RSP) || (u8RxBuff[22] == NXTY_NAK_RSP) || (u8RxBuff[24] == NXTY_NAK_RSP) || (u8RxBuff[26] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[28] == NXTY_NAK_RSP) || (u8RxBuff[30] == NXTY_NAK_RSP) || (u8RxBuff[32] == NXTY_NAK_RSP) || (u8RxBuff[34] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[36] == NXTY_NAK_RSP) || (u8RxBuff[38] == NXTY_NAK_RSP) || (u8RxBuff[40] == NXTY_NAK_RSP) || (u8RxBuff[42] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[44] == NXTY_NAK_RSP) || (u8RxBuff[46] == NXTY_NAK_RSP) || (u8RxBuff[48] == NXTY_NAK_RSP) || (u8RxBuff[50] == NXTY_NAK_RSP) ||
+                        (u8RxBuff[52] == NXTY_NAK_RSP) )
+                    {
+                        // Got a NAK...
+                        iNxtySuperMsgRspStatus = NXTY_SUPER_MSG_STATUS_FAIL_NAK;
+                        PrintLog(99,  "Super Msg: 'Write Super user params(2)' encountered a NAK." );
+                    }
+                    else
+                    {
+                        // Make sure that all of the writes were successfull...
+                        if( (u8RxBuff[5]  == 1) && (u8RxBuff[7]  == 1) && (u8RxBuff[9]  == 1) && (u8RxBuff[11] == 1) &&
+                            (u8RxBuff[13] == 1) && (u8RxBuff[15] == 1) && (u8RxBuff[17] == 1) && (u8RxBuff[19] == 1) &&
+                            (u8RxBuff[21] == 1) && (u8RxBuff[23] == 1) && (u8RxBuff[25] == 1) && (u8RxBuff[27] == 1) &&
+                            (u8RxBuff[29] == 1) && (u8RxBuff[31] == 1) && (u8RxBuff[33] == 1) && (u8RxBuff[35] == 1) &&
+                            (u8RxBuff[37] == 1) && (u8RxBuff[39] == 1) && (u8RxBuff[41] == 1) && (u8RxBuff[43] == 1) &&
+                            (u8RxBuff[45] == 1) && (u8RxBuff[47] == 1) && (u8RxBuff[49] == 1) && (u8RxBuff[51] == 1) )
+                        {
+                            iNxtySuperMsgRspStatus = NXTY_SUPER_MSG_STATUS_SUCCESS;
+                            // nothing else to do, we just wanted to know that the message arrived as indication that FW treated it
+                        }
+                        else
+                        {
+                            iNxtySuperMsgRspStatus = NXTY_SUPER_MSG_STATUS_FAIL_WRITE;
+                            PrintLog(99,  "Super Msg: 'Write Super user params(2)' encountered write fail." );
+                        }
+                     }
+                }
                
                 // Indicate to anyone waiting that a SuperMsg has been received and processed...
                 bNxtySuperMsgRsp = true;
@@ -1724,7 +2529,9 @@ function WriteAddrReq( u32Addr, u32Data )
     {
         outText += "0x" + u32Addr.toString(16) + ",";
     }
- 
+
+    // Convert the data to unsigned for pretty presentation... 
+    u32Data >>>= 0;
     outText += " 0x" + u32Data.toString(16) + ")";
 
     
@@ -1835,7 +2642,7 @@ function GetNxtySuperMsgInfo()
     u8TempTxBuff[i++] = 0x00;                               
     u8TempTxBuff[i++] = 0x00;
     u8TempTxBuff[i++] = 0x00;
-    u8TempTxBuff[i++] = 0x09;                                     // Drop system SN MSD into xfer buffer
+    u8TempTxBuff[i++] = 0x09;                                     // Request SN MSD
     
     u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;                    // Now read the xfer buffer.
     u8TempTxBuff[i++] = (NXTY_PCCTRL_XFER_BUFFER >> 24);  
@@ -1852,7 +2659,7 @@ function GetNxtySuperMsgInfo()
     u8TempTxBuff[i++] = 0x00;                               
     u8TempTxBuff[i++] = 0x00;
     u8TempTxBuff[i++] = 0x00;
-    u8TempTxBuff[i++] = 0x08;                                     // Drop system SN LSD into xfer buffer
+    u8TempTxBuff[i++] = 0x08;                                     // Request SN LSD
 
     u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;                    // Now read the xfer buffer
     u8TempTxBuff[i++] = (NXTY_PCCTRL_XFER_BUFFER >> 24);  
@@ -1870,7 +2677,7 @@ function GetNxtySuperMsgInfo()
     u8TempTxBuff[i++] = 0x00;                               
     u8TempTxBuff[i++] = 0x00;
     u8TempTxBuff[i++] = 0x00;
-    u8TempTxBuff[i++] = 0x02;                                     // Drop unique ID MSD into xfer buffer
+    u8TempTxBuff[i++] = 0x02;                                     // Request unique ID MSD
     
     u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;                    // Now read the xfer buffer.
     u8TempTxBuff[i++] = (NXTY_PCCTRL_XFER_BUFFER >> 24);  
@@ -1887,7 +2694,7 @@ function GetNxtySuperMsgInfo()
     u8TempTxBuff[i++] = 0x00;                               
     u8TempTxBuff[i++] = 0x00;
     u8TempTxBuff[i++] = 0x00;
-    u8TempTxBuff[i++] = 0x01;                                     // Drop unique ID LSD into xfer buffer
+    u8TempTxBuff[i++] = 0x01;                                     // Request unique ID LSD
 
     u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;                    // Now read the xfer buffer
     u8TempTxBuff[i++] = (NXTY_PCCTRL_XFER_BUFFER >> 24);  
@@ -1905,7 +2712,7 @@ function GetNxtySuperMsgInfo()
     u8TempTxBuff[i++] = 0x00;                               
     u8TempTxBuff[i++] = 0x00;
     u8TempTxBuff[i++] = 0x00;
-    u8TempTxBuff[i++] = 0x04;                                     // Drop SW version into xfer buffer
+    u8TempTxBuff[i++] = 0x04;                                     // Request SW version
     
     u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;                    // Now read the xfer buffer.
     u8TempTxBuff[i++] = (NXTY_PCCTRL_XFER_BUFFER >> 24);  
@@ -1922,7 +2729,7 @@ function GetNxtySuperMsgInfo()
     u8TempTxBuff[i++] = 0x00;                               
     u8TempTxBuff[i++] = 0x00;
     u8TempTxBuff[i++] = 0x00;
-    u8TempTxBuff[i++] = 0x03;                                     // Drop Build ID into xfer buffer
+    u8TempTxBuff[i++] = 0x03;                                     // Request Build ID
     
     u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;                    // Now read the xfer buffer.
     u8TempTxBuff[i++] = (NXTY_PCCTRL_XFER_BUFFER >> 24);  
@@ -1940,7 +2747,7 @@ function GetNxtySuperMsgInfo()
     u8TempTxBuff[i++] = 0x00;                               
     u8TempTxBuff[i++] = 0x00;
     u8TempTxBuff[i++] = 0x00;
-    u8TempTxBuff[i++] = 0x0D;                                     // Drop PIC SW version into xfer buffer
+    u8TempTxBuff[i++] = 0x0D;                                     // Request PIC SW version
     
     u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;                    // Now read the xfer buffer.
     u8TempTxBuff[i++] = (NXTY_PCCTRL_XFER_BUFFER >> 24);  
@@ -1958,7 +2765,7 @@ function GetNxtySuperMsgInfo()
     u8TempTxBuff[i++] = 0x00;                               
     u8TempTxBuff[i++] = 0x00;
     u8TempTxBuff[i++] = 0x00;
-    u8TempTxBuff[i++] = 0x0F;                                     // Drop BT SW version into xfer buffer
+    u8TempTxBuff[i++] = 0x0F;                                     // Request BT SW version
     
     u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;                    // Now read the xfer buffer.
     u8TempTxBuff[i++] = (NXTY_PCCTRL_XFER_BUFFER >> 24);  
@@ -1977,7 +2784,7 @@ function GetNxtySuperMsgInfo()
     u8TempTxBuff[i++] = 0x00;                               
     u8TempTxBuff[i++] = 0x00;
     u8TempTxBuff[i++] = 0x00;
-    u8TempTxBuff[i++] = 0x10;                                     // Drop Antenna into xfer buffer
+    u8TempTxBuff[i++] = 0x10;                                     // Request Antenna
     
     u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;                    // Now read the xfer buffer.
     u8TempTxBuff[i++] = (NXTY_PCCTRL_XFER_BUFFER >> 24);  
@@ -1995,7 +2802,7 @@ function GetNxtySuperMsgInfo()
     u8TempTxBuff[i++] = 0x00;                               
     u8TempTxBuff[i++] = 0x00;
     u8TempTxBuff[i++] = 0x00;
-    u8TempTxBuff[i++] = 0x05;                                     // Drop Board Config into xfer buffer
+    u8TempTxBuff[i++] = 0x05;                                     // Request Board Config into xfer buffer
     
     u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;                    // Now read the xfer buffer.
     u8TempTxBuff[i++] = (NXTY_PCCTRL_XFER_BUFFER >> 24);  
@@ -2012,7 +2819,7 @@ function GetNxtySuperMsgInfo()
     u8TempTxBuff[i++] = 0x00;                               
     u8TempTxBuff[i++] = 0x00;
     u8TempTxBuff[i++] = 0x00;
-    u8TempTxBuff[i++] = 0x0E;                                     // Drop Cloud Buffer addr into xfer buffer
+    u8TempTxBuff[i++] = 0x0E;                                     // Request Cloud Buffer addr into xfer buffer
     
     u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;                    // Now read the xfer buffer.
     u8TempTxBuff[i++] = (NXTY_PCCTRL_XFER_BUFFER >> 24);  
@@ -2035,9 +2842,260 @@ function GetNxtySuperMsgInfo()
     u8TempTxBuff[i++] = (NXTY_PCCTRL_GLOBALFLAGS >> 8);
     u8TempTxBuff[i++] = NXTY_PCCTRL_GLOBALFLAGS;
     
+    
+    
+    // Read Wave ID Secured Setup Part Number (700xxx)......................................                
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 24);  
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 16);
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 8);
+    u8TempTxBuff[i++] = NXTY_PCCTRL_WAVE_ID_REG;
+    u8TempTxBuff[i++] = (NXTY_WAVEID_SECURED_SETUP_PN_0 >> 24);                               
+    u8TempTxBuff[i++] = (NXTY_WAVEID_SECURED_SETUP_PN_0 >> 16);
+    u8TempTxBuff[i++] = (NXTY_WAVEID_SECURED_SETUP_PN_0 >> 8);
+    u8TempTxBuff[i++] = NXTY_WAVEID_SECURED_SETUP_PN_0;
+    
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;                    // Now read the data buffer.
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 24);  
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 16);
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 8);
+    u8TempTxBuff[i++] = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 24);  
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 16);
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 8);
+    u8TempTxBuff[i++] = NXTY_PCCTRL_WAVE_ID_REG;
+    u8TempTxBuff[i++] = (NXTY_WAVEID_SECURED_SETUP_PN_1 >> 24);                               
+    u8TempTxBuff[i++] = (NXTY_WAVEID_SECURED_SETUP_PN_1 >> 16);
+    u8TempTxBuff[i++] = (NXTY_WAVEID_SECURED_SETUP_PN_1 >> 8);
+    u8TempTxBuff[i++] = NXTY_WAVEID_SECURED_SETUP_PN_1;
+    
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;                    // Now read the data buffer.
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 24);  
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 16);
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 8);
+    u8TempTxBuff[i++] = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 24);  
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 16);
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 8);
+    u8TempTxBuff[i++] = NXTY_PCCTRL_WAVE_ID_REG;
+    u8TempTxBuff[i++] = (NXTY_WAVEID_SECURED_SETUP_PN_2 >> 24);                               
+    u8TempTxBuff[i++] = (NXTY_WAVEID_SECURED_SETUP_PN_2 >> 16);
+    u8TempTxBuff[i++] = (NXTY_WAVEID_SECURED_SETUP_PN_2 >> 8);
+    u8TempTxBuff[i++] = NXTY_WAVEID_SECURED_SETUP_PN_2;
+    
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;                    // Now read the data buffer.
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 24);  
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 16);
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 8);
+    u8TempTxBuff[i++] = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 24);  
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 16);
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 8);
+    u8TempTxBuff[i++] = NXTY_PCCTRL_WAVE_ID_REG;
+    u8TempTxBuff[i++] = (NXTY_WAVEID_SECURED_SETUP_PN_3 >> 24);                               
+    u8TempTxBuff[i++] = (NXTY_WAVEID_SECURED_SETUP_PN_3 >> 16);
+    u8TempTxBuff[i++] = (NXTY_WAVEID_SECURED_SETUP_PN_3 >> 8);
+    u8TempTxBuff[i++] = NXTY_WAVEID_SECURED_SETUP_PN_3;
+    
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;                    // Now read the data buffer.
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 24);  
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 16);
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 8);
+    u8TempTxBuff[i++] = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    
+    
     nxtyCurrentReq = NXTY_SUPER_MSG_INFO_TYPE;
     nxty.SendNxtyMsg(NXTY_SUPER_MSG_REQ, u8TempTxBuff, i);
 }
+
+
+// GetNxtySuperMsgInfo2 .......................................................................................
+function GetNxtySuperMsgInfo2()
+{ 
+    var i            = 0;
+    
+    PrintLog(1,  "Super Msg Send: Get Info 2" );
+    
+    
+    // Read Wave ID Art Bitmap Display Part Number (800N003-xxx-yyy)......................................                
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 24);  
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 16);
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 8);
+    u8TempTxBuff[i++] = NXTY_PCCTRL_WAVE_ID_REG;
+    u8TempTxBuff[i++] = (NXTY_WAVEID_BITMAP_PN_0 >> 24);                               
+    u8TempTxBuff[i++] = (NXTY_WAVEID_BITMAP_PN_0 >> 16);
+    u8TempTxBuff[i++] = (NXTY_WAVEID_BITMAP_PN_0 >> 8);
+    u8TempTxBuff[i++] = NXTY_WAVEID_BITMAP_PN_0;
+    
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;                    // Now read the data buffer.
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 24);  
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 16);
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 8);
+    u8TempTxBuff[i++] = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 24);  
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 16);
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 8);
+    u8TempTxBuff[i++] = NXTY_PCCTRL_WAVE_ID_REG;
+    u8TempTxBuff[i++] = (NXTY_WAVEID_BITMAP_PN_1 >> 24);                               
+    u8TempTxBuff[i++] = (NXTY_WAVEID_BITMAP_PN_1 >> 16);
+    u8TempTxBuff[i++] = (NXTY_WAVEID_BITMAP_PN_1 >> 8);
+    u8TempTxBuff[i++] = NXTY_WAVEID_BITMAP_PN_1;
+    
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;                    // Now read the data buffer.
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 24);  
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 16);
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 8);
+    u8TempTxBuff[i++] = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 24);  
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 16);
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 8);
+    u8TempTxBuff[i++] = NXTY_PCCTRL_WAVE_ID_REG;
+    u8TempTxBuff[i++] = (NXTY_WAVEID_BITMAP_PN_2 >> 24);                               
+    u8TempTxBuff[i++] = (NXTY_WAVEID_BITMAP_PN_2 >> 16);
+    u8TempTxBuff[i++] = (NXTY_WAVEID_BITMAP_PN_2 >> 8);
+    u8TempTxBuff[i++] = NXTY_WAVEID_BITMAP_PN_2;
+    
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;                    // Now read the data buffer.
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 24);  
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 16);
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 8);
+    u8TempTxBuff[i++] = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 24);  
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 16);
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 8);
+    u8TempTxBuff[i++] = NXTY_PCCTRL_WAVE_ID_REG;
+    u8TempTxBuff[i++] = (NXTY_WAVEID_BITMAP_PN_3 >> 24);                               
+    u8TempTxBuff[i++] = (NXTY_WAVEID_BITMAP_PN_3 >> 16);
+    u8TempTxBuff[i++] = (NXTY_WAVEID_BITMAP_PN_3 >> 8);
+    u8TempTxBuff[i++] = NXTY_WAVEID_BITMAP_PN_3;
+    
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;                    // Now read the data buffer.
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 24);  
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 16);
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 8);
+    u8TempTxBuff[i++] = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    
+
+
+    // Read Wave ID EVM Part Number (700Nxxx-xxx-yyy)......................................                
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 24);  
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 16);
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 8);
+    u8TempTxBuff[i++] = NXTY_PCCTRL_WAVE_ID_REG;
+    u8TempTxBuff[i++] = (NXTY_WAVEID_EVM_PN_0 >> 24);                               
+    u8TempTxBuff[i++] = (NXTY_WAVEID_EVM_PN_0 >> 16);
+    u8TempTxBuff[i++] = (NXTY_WAVEID_EVM_PN_0 >> 8);
+    u8TempTxBuff[i++] = NXTY_WAVEID_EVM_PN_0;
+    
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;                    // Now read the data buffer.
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 24);  
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 16);
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 8);
+    u8TempTxBuff[i++] = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 24);  
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 16);
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 8);
+    u8TempTxBuff[i++] = NXTY_PCCTRL_WAVE_ID_REG;
+    u8TempTxBuff[i++] = (NXTY_WAVEID_EVM_PN_1 >> 24);                               
+    u8TempTxBuff[i++] = (NXTY_WAVEID_EVM_PN_1 >> 16);
+    u8TempTxBuff[i++] = (NXTY_WAVEID_EVM_PN_1 >> 8);
+    u8TempTxBuff[i++] = NXTY_WAVEID_EVM_PN_1;
+    
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;                    // Now read the data buffer.
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 24);  
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 16);
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 8);
+    u8TempTxBuff[i++] = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 24);  
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 16);
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 8);
+    u8TempTxBuff[i++] = NXTY_PCCTRL_WAVE_ID_REG;
+    u8TempTxBuff[i++] = (NXTY_WAVEID_EVM_PN_2 >> 24);                               
+    u8TempTxBuff[i++] = (NXTY_WAVEID_EVM_PN_2 >> 16);
+    u8TempTxBuff[i++] = (NXTY_WAVEID_EVM_PN_2 >> 8);
+    u8TempTxBuff[i++] = NXTY_WAVEID_EVM_PN_2;
+    
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;                    // Now read the data buffer.
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 24);  
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 16);
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 8);
+    u8TempTxBuff[i++] = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 24);  
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 16);
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_ID_REG >> 8);
+    u8TempTxBuff[i++] = NXTY_PCCTRL_WAVE_ID_REG;
+    u8TempTxBuff[i++] = (NXTY_WAVEID_EVM_PN_3 >> 24);                               
+    u8TempTxBuff[i++] = (NXTY_WAVEID_EVM_PN_3 >> 16);
+    u8TempTxBuff[i++] = (NXTY_WAVEID_EVM_PN_3 >> 8);
+    u8TempTxBuff[i++] = NXTY_WAVEID_EVM_PN_3;
+    
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;                    // Now read the data buffer.
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 24);  
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 16);
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_WAVE_DATA_BUFFER >> 8);
+    u8TempTxBuff[i++] = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+
+
+    // Get Channel List Flash Address .................................................                
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_SELPARAM_REG >> 24);  
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_SELPARAM_REG >> 16);
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_SELPARAM_REG >> 8);
+    u8TempTxBuff[i++] = NXTY_PCCTRL_SELPARAM_REG;
+    u8TempTxBuff[i++] = 0x00;                               
+    u8TempTxBuff[i++] = 0x00;
+    u8TempTxBuff[i++] = 0x00;
+    u8TempTxBuff[i++] = 0x0C;                                     // Request Channel List addr into xfer buffer
+    
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;                    // Now read the xfer buffer.
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_XFER_BUFFER >> 24);  
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_XFER_BUFFER >> 16);
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_XFER_BUFFER >> 8);
+    u8TempTxBuff[i++] = NXTY_PCCTRL_XFER_BUFFER;
+
+
+    // Read the Xfer Buffer address for writing to .................................................                
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_SELPARAM_REG >> 24);  
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_SELPARAM_REG >> 16);
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_SELPARAM_REG >> 8);
+    u8TempTxBuff[i++] = NXTY_PCCTRL_SELPARAM_REG;
+    u8TempTxBuff[i++] = 0x00;                               
+    u8TempTxBuff[i++] = 0x00;
+    u8TempTxBuff[i++] = 0x00;
+    u8TempTxBuff[i++] = 0x00;                                     // Request Xfer Buffer address
+    
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;                    // Now read the xfer buffer.
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_XFER_BUFFER >> 24);  
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_XFER_BUFFER >> 16);
+    u8TempTxBuff[i++] = (NXTY_PCCTRL_XFER_BUFFER >> 8);
+    u8TempTxBuff[i++] = NXTY_PCCTRL_XFER_BUFFER;
+
+    
+    nxtyCurrentReq = NXTY_SUPER_MSG_INFO2_TYPE;
+    nxty.SendNxtyMsg(NXTY_SUPER_MSG_REQ, u8TempTxBuff, i);
+}
+
 
 // GetNxtySuperMsgLinkStatus.......................................................................................
 //  Response will set global flag "bUniiUp"
@@ -2600,4 +3658,1080 @@ function SetNxtySuperMsgWaveData( param1, data1, param2, data2 )
     
     nxtyCurrentReq = NXTY_SUPER_MSG_SET_WAVE_DATA;
     nxty.SendNxtyMsg(NXTY_SUPER_MSG_REQ, u8TempTxBuff, i);
+}
+
+// SetNxtySuperMsgReadUniiBlockedList.......................................................................................
+function SetNxtySuperMsgReadUniiBlockedList()
+{
+    var i = 0;
+    var registerAddress = 0x0;
+    var registerValue   = 0x0;
+    
+    PrintLog(1,  "Super Msg Send: Read UNII Blocked list" );
+
+    // Redirect Uart.......................................[0]
+    registerAddress   = NXTY_PCCTRL_UART_REDIRECT;
+    registerValue     = 0x1; //UartRedirect_Mode_WuViaCuUart TODO: if already on NU then nothing to do!
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+   
+    // Request to Read Default UniiBlock[0]................[9]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x02010000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read Default UniiBlock[1]................[23]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x02010001;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read UniiBlock[0]........................[37]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01010000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read UniiBlock[1]........................[51]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01010001;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Cancel Uart redirect................................[65]
+    registerAddress   = NXTY_PCCTRL_UART_REDIRECT;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+   
+    // Release the kraken....yes, send the message
+    nxtyCurrentReq = NXTY_SUPER_MSG_GET_UNII_BLOCKED_LIST;
+    nxty.SendNxtyMsg(NXTY_SUPER_MSG_REQ, u8TempTxBuff, i);
+}
+
+//SetNxtySuperMsgWriteUniiBlockedList.......................................................................................
+function SetNxtySuperMsgWriteUniiBlockedList(theUniiChanBlock)
+{
+    var i = 0;
+    var registerAddress = 0x0;
+    var registerValue   = 0x0;
+    
+    PrintLog(1,  "Super Msg Send: Write SuperUser UniiChanBlock:[0]=0x" +theUniiChanBlock[0].toString(16) + " [1]=0x" +theUniiChanBlock[1].toString(16) );
+    
+    // Redirect Uart.......................................[0]
+    registerAddress   = NXTY_PCCTRL_UART_REDIRECT;
+    registerValue     = 0x1; //UartRedirect_Mode_WuViaCuUart TODO: if already on NU then nothing to do!
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    // Write the new value for UniiChanBlock[0]...........[9]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01010000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    registerValue     = theUniiChanBlock[0];
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+
+    // Write the new value for UniiChanBlock[1]...........[27]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01010001;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    registerValue     = theUniiChanBlock[1];
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    // Cancel Uart redirect................................[45]
+    registerAddress   = NXTY_PCCTRL_UART_REDIRECT;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+    
+    // Send the message
+    nxtyCurrentReq = NXTY_SUPER_MSG_SET_UNII_BLOCKED_LIST;
+    nxty.SendNxtyMsg(NXTY_SUPER_MSG_REQ, u8TempTxBuff, i);    
+}
+
+// SetNxtySuperMsgReadSuperUserParams_1.......................................................................................
+function SetNxtySuperMsgReadSuperUserParams_1()
+{
+    var i = 0;
+    var registerAddress = 0x0;
+    var registerValue   = 0x0;
+    
+    PrintLog(1,  "Super Msg Send: Read SuperUser params(1)" );
+
+    // Redirect Uart.......................................[0]
+    registerAddress   = NXTY_PCCTRL_UART_REDIRECT;
+    registerValue     = 0x1; //UartRedirect_Mode_WuViaCuUart TODO: if already on NU then nothing to do!
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+   
+    // Request to Read Default MaxSysGain..................[9]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x020A0000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read Default MinSysGain..................[23]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x02090000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read Default SafemodeBackoff.............[37]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x02000000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read Default MaxCellRssi.................[51]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x020D0000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read Default MaxPilot3G (RSCP)...........[65]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x020B0000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read Default MaxPilot4G (RSRP)...........[79]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x020C0000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        
+    // Request to Read Default BandMask3G..................[93]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x02020000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read Default BandMask4G..................[107]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x02030000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+   // Request to Read MaxSysGain..........................[121]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x010A0000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read MinSysGain..........................[135]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01090000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read SafemodeBackoff.....................[149]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01000000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read MaxCellRssi.........................[163]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x010D0000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read MaxPilot3G (RSCP)...................[177]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x010B0000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read MaxPilot4G (RSRP)...................[191]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x010C0000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        
+    // Request to Read BandMask3G..........................[205]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01020000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read BandMask4G..........................[219]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01030000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // leave uart open, still need another message
+   
+    // Send the message
+    nxtyCurrentReq = NXTY_SUPER_MSG_GET_SPR_USR_PARAMS_1;
+    nxty.SendNxtyMsg(NXTY_SUPER_MSG_REQ, u8TempTxBuff, i);
+}
+
+// SetNxtySuperMsgReadSuperUserParams_2.......................................................................................
+function SetNxtySuperMsgReadSuperUserParams_2() // Reads the default configured tech bands from secured setup
+{
+    var i = 0;
+    var registerAddress = 0x0;
+    var registerValue   = 0x0;
+    
+    PrintLog(1,  "Super Msg Send: Read SuperUser params(2)" );
+
+    // Request to Read TechBandBias[0].....................[0]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x02040000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read TechBandBias[1].....................[14]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x02040001;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read TechBandBias[2].....................[28]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x02040002;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read TechBandBias[3].....................[42]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x02040003;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read TechBandBias[4].....................[56]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x02040004;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read TechBandBias[5].....................[70]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x02040005;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read TechBandBias[6].....................[84]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x02040006;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+    
+    // Request to Read TechBandBias[7].....................[98]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x02040007;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read TechBandBias[8].....................[112]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x02040008;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read TechBandBias[9].....................[126]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x02040009;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read TechBandBias[10]....................[140]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x0204000A;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read TechBandBias[11]....................[154]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x0204000B;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read TechBandBias[12]....................[168]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x0204000C;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read TechBandBias[13]....................[182]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x0204000D;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read TechBandBias[14]....................[196]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x0204000E;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read TechBandBias[15]....................[210]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x0204000F;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // leave uart redirected
+   
+    // Send the message
+    nxtyCurrentReq = NXTY_SUPER_MSG_GET_SPR_USR_PARAMS_2;
+    nxty.SendNxtyMsg(NXTY_SUPER_MSG_REQ, u8TempTxBuff, i);
+}
+
+// SetNxtySuperMsgReadSuperUserParams_3.......................................................................................
+function SetNxtySuperMsgReadSuperUserParams_3() // Reads the user configured tech bands
+{
+    var i = 0;
+    var registerAddress = 0x0;
+    var registerValue   = 0x0;
+    
+    PrintLog(1,  "Super Msg Send: Read SuperUser params(3)" );
+
+    // Request to Read TechBandBias[0].....................[0]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01040000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read TechBandBias[1].....................[14]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01040001;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read TechBandBias[2].....................[28]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01040002;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read TechBandBias[3].....................[42]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01040003;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read TechBandBias[4].....................[56]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01040004;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read TechBandBias[5].....................[70]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01040005;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read TechBandBias[6].....................[84]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01040006;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+    
+    // Request to Read TechBandBias[7].....................[98]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01040007;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read TechBandBias[8].....................[112]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01040008;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read TechBandBias[9].....................[126]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01040009;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read TechBandBias[10]....................[140]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x0104000A;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read TechBandBias[11]....................[154]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x0104000B;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read TechBandBias[12]....................[168]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x0104000C;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read TechBandBias[13]....................[182]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x0104000D;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read TechBandBias[14]....................[196]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x0104000E;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Request to Read TechBandBias[15]....................[210]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x0104000F;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+
+    // Cancel Uart redirect................................[224]
+    registerAddress   = NXTY_PCCTRL_UART_REDIRECT;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+   
+    // Send the message
+    nxtyCurrentReq = NXTY_SUPER_MSG_GET_SPR_USR_PARAMS_3;
+    nxty.SendNxtyMsg(NXTY_SUPER_MSG_REQ, u8TempTxBuff, i);
+}
+
+function SetNxtySuperMsgWriteSuperUserParams_1()
+{
+    var i = 0;
+    var registerAddress = 0x0;
+    var registerValue   = 0x0;
+    
+    PrintLog(1,  "Super Msg Send: Write SuperUser params(1)" );
+    
+    // Redirect Uart.......................................[0]
+    registerAddress   = NXTY_PCCTRL_UART_REDIRECT;
+    registerValue     = 0x1; //UartRedirect_Mode_WuViaCuUart TODO: if already on NU then nothing to do!
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+   
+   
+   // Request to write MaxSysGain..........................[9]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x010A0000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    registerValue     = guiSuMaxSysGain;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+
+    // Request to write MinSysGain..........................[27]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01090000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    registerValue     = guiSuMinSysGain;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+
+    // Request to write SafemodeBackoff.....................[45]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01000000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    registerValue     = guiSuMaxBackOff;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+
+    // Request to write MaxCellRssi.........................[63]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x010D0000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    registerValue     = guiSuMaxCellRssi;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+
+    // Request to write MaxPilot3G (RSCP)...................[81]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x010B0000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    registerValue     = guiSuMaxRscp;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+
+    // Request to write MaxPilot4G (RSRP)...................[99]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x010C0000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    registerValue     = guiSuMaxRsrp;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+        
+    // Request to write BandMask3G..........................[117]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01020000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    registerValue     = guiSuBandMask3G;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+
+    // Request to write BandMask4G..........................[135]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01030000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    registerValue     = guiSuBandMask4G;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+
+    // Request to write TechBandBias[0].....................[153]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01040000;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    registerValue     = buildGuiTechBandBias(0);
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+
+    // Request to write TechBandBias[1].....................[171]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01040001;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    registerValue     = buildGuiTechBandBias(1);
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+
+    // Request to write TechBandBias[2].....................[189]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01040002;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    registerValue     = buildGuiTechBandBias(2);
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+
+    // Request to write TechBandBias[3].....................[207]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01040003;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    registerValue     = buildGuiTechBandBias(3);
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+
+    // Send the message
+    nxtyCurrentReq = NXTY_SUPER_MSG_WRITE_SPR_USR_PARAMS_1;
+    nxty.SendNxtyMsg(NXTY_SUPER_MSG_REQ, u8TempTxBuff, i);    
+}
+
+function SetNxtySuperMsgWriteSuperUserParams_2()
+{
+    var i = 0;
+    var registerAddress = 0x0;
+    var registerValue   = 0x0;
+    
+    PrintLog(1,  "Super Msg Send: Write SuperUser params(2)" );
+
+    // Request to write TechBandBias[4].....................[0]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01040004;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    registerValue     = buildGuiTechBandBias(4);
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+
+    // Request to write TechBandBias[5].....................[18]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01040005;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    registerValue     = buildGuiTechBandBias(5);
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+
+    // Request to write TechBandBias[6].....................[36]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01040006;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    registerValue     = buildGuiTechBandBias(6);
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    // Request to write TechBandBias[7].....................[54]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01040007;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    registerValue     = buildGuiTechBandBias(7);
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+
+    // Request to write TechBandBias[8].....................[72]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01040008;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    registerValue     = buildGuiTechBandBias(8);
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+
+    // Request to write TechBandBias[9].....................[90]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x01040009;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    registerValue     = buildGuiTechBandBias(9);
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+
+    // Request to write TechBandBias[10]....................[108]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x0104000A;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    registerValue     = buildGuiTechBandBias(10);
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+
+    // Request to write TechBandBias[11]....................[126]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x0104000B;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    registerValue     = buildGuiTechBandBias(11);
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+
+    // Request to write TechBandBias[12]....................[144]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x0104000C;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    registerValue     = buildGuiTechBandBias(12);
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+
+    // Request to write TechBandBias[13]....................[162]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x0104000D;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    registerValue     = buildGuiTechBandBias(13);
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+
+    // Request to write TechBandBias[14]....................[180]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x0104000E;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    registerValue     = buildGuiTechBandBias(14);
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+
+    // Request to write TechBandBias[15]....................[198]
+    registerAddress   = NXTY_PCCTRL_WAVE_ID_REG;
+    registerValue     = 0x0104000F;
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    registerAddress   = NXTY_PCCTRL_WAVE_DATA_BUFFER;
+    registerValue     = buildGuiTechBandBias(15);
+    u8TempTxBuff[i++] = NXTY_WRITE_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+        u8TempTxBuff[i++] = (registerValue >> 24);   u8TempTxBuff[i++] = (registerValue >> 16);   u8TempTxBuff[i++] = (registerValue >> 8);   u8TempTxBuff[i++] = registerValue;
+    
+    // Cancel Uart redirect................................[216]
+    registerAddress   = NXTY_PCCTRL_UART_REDIRECT;
+    u8TempTxBuff[i++] = NXTY_READ_ADDRESS_REQ;
+        u8TempTxBuff[i++] = (registerAddress >> 24); u8TempTxBuff[i++] = (registerAddress >> 16); u8TempTxBuff[i++] = (registerAddress >> 8); u8TempTxBuff[i++] = registerAddress;
+   
+    // Send the message
+    nxtyCurrentReq = NXTY_SUPER_MSG_WRITE_SPR_USR_PARAMS_2;
+    nxty.SendNxtyMsg(NXTY_SUPER_MSG_REQ, u8TempTxBuff, i);
+}
+
+function makeUINT32BE(a3, a2, a1, a0)
+{
+    return ( (a3<<24)|(a2<<16)|(a1<<8)|(a0) );
+}
+
+function applyBandMask(theTech, theBandMask)
+{
+    //for each of the bits, when it is cleared, find the element in guiSuTechBandAllowedBias and set the .blk=1
+    for(var j=0; j<32; j++) //maps to MAX_CELL_BANDS_FDD
+    {
+        if( 0 == (theBandMask & (1<<j)) ) //FW notation:1=allow, 0=block
+        {
+            SetTechBandAllowedBiasItem(theTech, (j+1), true, null); //block the band
+        }
+    }
 }

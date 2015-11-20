@@ -73,7 +73,6 @@ var DldState                        = DLD_STATE_DONE;
 var DldTimeoutCount                 = 0;
 var DldNakCount                     = 0;
 var BluetoothTimeoutTimer           = null;
-var bDldAutoMode                    = false;    // Set to true when DOWNLOAD_AUTO.
 
 const DLD_STATE_INIT                = 1;
 const DLD_STATE_CHECK_FOR_UPDATES   = 2;
@@ -102,21 +101,16 @@ const DldStateNames                 = ["N/A", "Init", "Check for Updates", "Get 
                                         "5_1_9 Check", "5_1_9 Reset", "5_1_9 UNII UP", "Update Ver", "Done", "Wait User"];
 
 var   currentDldIndex               = -1;
-const DLD_NU_UCFG                   = 0;
-const DLD_NU_ART                    = 1;
-const DLD_NU_EVM                    = 2;
-const DLD_NU_PIC                    = 3;
-const DLD_NU_SCFG                   = 4;
-const DLD_NU                        = 5;
-const DLD_CU_ART                    = 6;
-const DLD_CU_BT                     = 7;
-const DLD_CU_PIC                    = 8;
-const DLD_CU                        = 9;
+const DLD_NU                        = 0;
+const DLD_CU                        = 1;
+const DLD_NU_PIC                    = 2;
+const DLD_CU_PIC                    = 3;
+const DLD_CU_BT                     = 4;
  
-const DldNames                      = ["UnSec Cfg", "NU_ART", "NU_EVM", "NU_PIC", "Sec Cfg", "NU", "CU_ART", "Bluetooth", "CU_PIC", "CU"]; 
+const DldNames                      = ["NU", "CU", "NU_PIC", "CU_PIC", "Bluetooth"]; 
  
 // The images will be downloaded in the following order...  
-const DldOrderArray                 = [DLD_NU_UCFG, DLD_NU_ART, DLD_NU_EVM, DLD_NU_PIC, DLD_NU_SCFG, DLD_NU, DLD_CU_ART, DLD_CU_BT, DLD_CU_PIC, DLD_CU];
+const DldOrderArray                 = [DLD_NU_PIC, DLD_NU, DLD_CU_BT, DLD_CU_PIC, DLD_CU];
 
 const DLD_NAK_COUNT_MAX             = 2;
 const DLD_TIMEOUT_COUNT_MAX         = 12;
@@ -134,13 +128,6 @@ const myCuCfFileName                = "CuExecutable.sec";
 const myNuPicFileName               = "NuPICFlashImg.bin";  
 const myCuPicFileName               = "CuPICFlashImg.bin";
 const myBtFileName                  = "BTFlashImg.bin";
-const myNuSCfgFileName              = "NuSCfg.bin";
-const myNuUCfgFileName              = "NuUCfg.bin";
-const myNuArtFileName               = "NuBmpFlash.bin";
-const myCuArtFileName               = "CuBmpFlash.bin";
-const myNuEvmFileName               = "NuEvm.bin";
-
-
 const myInternalPicFileName         = "InternalPic.bin";
 const myInternalPicVer              = "099.099";
 const szNoUnii                      = " Wireless link between units is down.";
@@ -148,9 +135,6 @@ const szNoUnii                      = " Wireless link between units is down.";
 const u8AresFlashAddr               = 0xF8100000;
 const u8PicFlashAddr                = 0xF8FE0000;
 const u8BtFlashAddr                 = 0xF8FC0000;
-const u8ArtFlashAddr                = 0xF8800000;
-const u8EvmFlashAddr                = 0xF8000000;
-
 
 var startType                       = null;
 var startAddr                       = null;
@@ -169,26 +153,11 @@ var fileCuCfCldId                   = 0;
 var fileNuPicCldId                  = 0;
 var fileCuPicCldId                  = 0;
 var fileBtCldId                     = 0;
-var fileNuSCfgCldId                 = 0;
-var fileNuUCfgCldId                 = 0;
-var fileNuArtCldId                  = 0;
-var fileCuArtCldId                  = 0;
-var fileNuEvmCldId                  = 0;
-
-
 var bNeedNuCfCldId                  = false;  
 var bNeedCuCfCldId                  = false;  
 var bNeedNuPicCldId                 = false;
 var bNeedCuPicCldId                 = false;
 var bNeedBtCldId                    = false;
-var bNeedNuSCfgCldId                = false;  
-var bNeedNuUCfgCldId                = false;  
-var bNeedNuArtCldId                 = false;  
-var bNeedCuArtCldId                 = false;  
-var bNeedNuEvmCldId                 = false;  
-
-
-
 var myDownloadFileCldId             = null
 var myDownloadFileName              = null;
 var myDownloadFileVer               = null;
@@ -206,22 +175,10 @@ var bCuCfUpdate                     = false;
 var bNuPicUpdate                    = false;
 var bCuPicUpdate                    = false;
 var bBtUpdate                       = false;
-var bNuSCfgUpdate                   = false;
-var bNuUCfgUpdate                   = false;
-var bNuArtUpdate                    = false;
-var bCuArtUpdate                    = false;
-var bNuEvmUpdate                    = false;
-
 var bNuPicReset                     = false;
 var bCuPicReset                     = false;
 var bBtReset                        = false;
 var bCelFiReset                     = false;
-var bNuSCfgReset                    = false;
-var bNuUCfgReset                    = false;
-var bNuArtReset                     = false;
-var bCuArtReset                     = false;
-var bNuEvmReset                     = false;
-
 var SubState_5_1_9                  = 0;
 var SubStateV2Reset                 = 0;
 var SubStateV2Start                 = 0;
@@ -260,23 +217,17 @@ function StopDownloadLoop()
 function DownloadWho()
 {
     // Determine what gets downloaded.  If the cloud version has been filled in by the ProcessEgressResponse()
-    // function and the cloud version is not equal than the local version then set the update flag to true.
+    // function and the cloud version is greater than the local version then set the update flag to true.
       
-    // Also determine if the NU should be reset after the NU PIC/ART/EVM/SCFG/UCFG has been downloaded or
-    // if the CU should be reset if the CU PIC/ART/BT has been downloaded...
+    // Also determine if the NU should be reset after the NU PIC has been downloaded or
+    // if the CU should be reset if the CU PIC or CU Bluetooth has been downloaded...
     bNuPicReset = false;
     bCuPicReset = false;
     bBtReset    = false;
-    bNuSCfgReset = false;
-    bNuUCfgReset = false;
-    bNuArtReset  = false;
-    bCuArtReset  = false;
-    bNuEvmReset  = false;
       
       
     // Function localCompare() returns -1 if str1 < str2 (str1.localCompage(str2))...
-//    if( (nxtySwVerNuCfCld != swVerNoCldText) && (nxtySwVerNuCf.localeCompare(nxtySwVerNuCfCld) == -1) )
-    if( (nxtySwVerNuCfCld != swVerNoCldText) && (nxtySwVerNuCf != nxtySwVerNuCfCld) )
+    if( (nxtySwVerNuCfCld != swVerNoCldText) && (nxtySwVerNuCf.localeCompare(nxtySwVerNuCfCld) == -1) )
     {
         bNuCfUpdate = true;
     }
@@ -285,8 +236,7 @@ function DownloadWho()
         bNuCfUpdate = false;
     }
 
-//    if( (nxtySwVerCuCfCld != swVerNoCldText) && (nxtySwVerCuCf.localeCompare(nxtySwVerCuCfCld) == -1) )
-    if( (nxtySwVerCuCfCld != swVerNoCldText) && (nxtySwVerCuCf != nxtySwVerCuCfCld) )
+    if( (nxtySwVerCuCfCld != swVerNoCldText) && (nxtySwVerCuCf.localeCompare(nxtySwVerCuCfCld) == -1) )
     {
         bCuCfUpdate = true;
     }
@@ -294,117 +244,33 @@ function DownloadWho()
     {
         bCuCfUpdate = false;
     }
-
-//    if( (nxtySwVerNuSCfgCld != swVerNoCldText) && (nxtySwVerNuSCfg.localeCompare(nxtySwVerNuSCfgCld) == -1) )
-    if( (nxtySwVerNuSCfgCld != swVerNoCldText) && (nxtySwVerNuSCfg != nxtySwVerNuSCfgCld) )
-    {
-        bNuSCfgUpdate = true;
-        bNuSCfgReset  = true;       // The Secured Setup final download command causes an NU reset
-    }
-    else
-    {
-        bNuSCfgUpdate = false;
-    }
-
-
-//    if( (nxtySwVerNuUCfgCld != swVerNoCldText) && (nxtySwVerNuUCfg.localeCompare(nxtySwVerNuUCfgCld) == -1) )
-    if( (nxtySwVerNuUCfgCld != swVerNoCldText) && (nxtySwVerNuUCfg != nxtySwVerNuUCfgCld) )
-    {
-        bNuUCfgUpdate = true;
-        
-        if( (bNuCfUpdate == false) && (bNuSCfgUpdate == false)  )
-        {
-            // Since the NU is not going to be downloaded and reset automatically, then force a reset after downloading.
-            bNuUCfgReset = true;
-        }
-    }
-    else
-    {
-        bNuUCfgUpdate = false;
-    }
-
-
-//    if( (nxtySwVerNuArtCld != swVerNoCldText) && (nxtySwVerNuArt.localeCompare(nxtySwVerNuArtCld) == -1) )
-    if( (nxtySwVerNuArtCld != swVerNoCldText) && (nxtySwVerNuArt != nxtySwVerNuArtCld) )
-    {
-        bNuArtUpdate = true;
-        
-        if( (bNuCfUpdate == false) && (bNuSCfgUpdate == false)  )
-        {
-            // Since the NU is not going to be downloaded and reset automatically, then force a reset after downloading.
-            bNuArtReset  = true;
-            bNuUCfgReset = false;       // Make sure UCFG does not cause a reset
-        }
-    }
-    else
-    {
-        bNuArtUpdate = false;
-    }
-
-//    if( (nxtySwVerNuEvmCld != swVerNoCldText) && (nxtySwVerNuEvm.localeCompare(nxtySwVerNuEvmCld) == -1) )
-    if( (nxtySwVerNuEvmCld != swVerNoCldText) && (nxtySwVerNuEvm != nxtySwVerNuEvmCld) )
-    {
-        bNuEvmUpdate = true;
-        
-        if( (bNuCfUpdate == false) && (bNuSCfgUpdate == false)  )
-        {
-            // Since the NU is not going to be downloaded and reset automatically, then force a reset after downloading.
-            bNuEvmReset  = true;
-            bNuArtReset  = false;       // Make sure Art does not cause a reset
-            bNuUCfgReset = false;       // Make sure UCFG does not cause a reset
-        }
-    }
-    else
-    {
-        bNuEvmUpdate = false;
-    }
-
-
-//    if( (nxtySwVerNuPicCld != swVerNoCldText) && (nxtySwVerNuPic.localeCompare(nxtySwVerNuPicCld) == -1) )
-    if( (nxtySwVerNuPicCld != swVerNoCldText) && (nxtySwVerNuPic != nxtySwVerNuPicCld) )
+    
+    if( (nxtySwVerNuPicCld != swVerNoCldText) && (nxtySwVerNuPic.localeCompare(nxtySwVerNuPicCld) == -1) )
     {
         bNuPicUpdate = true;
         
-        if( (bNuCfUpdate == false) && (bNuSCfgUpdate == false)  )
+        if( bNuCfUpdate == false )
         {
             // Since the NU is not going to be downloaded and reset automatically, then force a reset after downloading the NU PIC.
-            bNuPicReset  = true;
-            bNuEvmReset  = false;       // Make sure Evm does not casue a reset
-            bNuArtReset  = false;       // Make sure Art does not cause a reset
-            bNuUCfgReset = false;       // Make sure UCFG does not cause a reset
+            bNuPicReset = true;
         }
     }
     else
     {
         bNuPicUpdate = false;
     }
+                
 
-//    if( (nxtySwVerCuArtCld != swVerNoCldText) && (nxtySwVerCuArt.localeCompare(nxtySwVerCuArtCld) == -1) )
-    if( (nxtySwVerCuArtCld != swVerNoCldText) && (nxtySwVerCuArt != nxtySwVerCuArtCld) )
-    {
-        bCuArtUpdate = true;
-        
-        if( bCuCfUpdate == false )
-        {
-            // Since the CU is not going to be downloaded and reset automatically, then force a reset after downloading.
-            bCuArtReset = true;
-        }         
-    }
-    else
-    {
-        bCuArtUpdate = false;
-    }    
 
-//    if( (nxtySwVerCuBtCld != swVerNoCldText) && (nxtySwVerCuBt.localeCompare(nxtySwVerCuBtCld) == -1) )
-    if( (nxtySwVerCuBtCld != swVerNoCldText) && (nxtySwVerCuBt != nxtySwVerCuBtCld) )
+
+    if( (nxtySwVerCuBtCld != swVerNoCldText) && (nxtySwVerCuBt.localeCompare(nxtySwVerCuBtCld) == -1) )
     {
         bBtUpdate = true;
         
         if( bCuCfUpdate == false )
         {
             // Since the CU is not going to be downloaded and reset automatically, then force a reset after downloading the BT.
-            bBtReset    = true;
-            bCuArtReset = false;    // Make sure no reset.
+            bBtReset = true;
         }        
     }
     else
@@ -412,15 +278,13 @@ function DownloadWho()
         bBtUpdate = false;
     }
     
-//    if( (nxtySwVerCuPicCld != swVerNoCldText) && (nxtySwVerCuPic.localeCompare(nxtySwVerCuPicCld) == -1) )
-    if( (nxtySwVerCuPicCld != swVerNoCldText) && (nxtySwVerCuPic != nxtySwVerCuPicCld) )
+    if( (nxtySwVerCuPicCld != swVerNoCldText) && (nxtySwVerCuPic.localeCompare(nxtySwVerCuPicCld) == -1) )
     {
         bCuPicUpdate = true;
         
         if( bCuCfUpdate == false )
         {
             // Since the CU is not going to be downloaded and reset automatically, then force a reset after downloading the CU PIC.
-            bCuArtReset = false;    // Make sure no reset.
             bBtReset    = false;    // Make sure that the BT does not cause a reset.
             bCuPicReset = true;
         }         
@@ -429,7 +293,7 @@ function DownloadWho()
     {
         bCuPicUpdate = false;
     }    
-   
+    
 }
 
 function DownloadError( strHead, strText, bBtMsgFail )
@@ -692,95 +556,6 @@ var Dld = {
                                     
                 }
             }
-
-
-            if( idx == DLD_NU_UCFG )
-            {
-                {
-                    PrintLog(1, "NU Un-Secured Setup selected for download." );
-                    
-                    // Fill in the information necessary to transfer from the cloud to the phone
-                    myDownloadFileCldId = fileNuUCfgCldId;
-                    myDownloadFileName  = myNuUCfgFileName;
-                    myDownloadFileVer   = nxtySwVerNuUCfgCld;
-    
-                    startType           = NXTY_SW_NONE_TYPE;
-                    startAddr           = nxtyNuChanListFlashAddr;
-                    resumeAddr          = startAddr;
-                    bOkToDownload       = true;
-                }
-            }
-
-            if( idx == DLD_NU_SCFG )
-            {
-                {
-                    PrintLog(1, "NU Secured Setup selected for download." );
-                    
-                    // Fill in the information necessary to transfer from the cloud to the phone
-                    myDownloadFileCldId = fileNuSCfgCldId;
-                    myDownloadFileName  = myNuSCfgFileName;
-                    myDownloadFileVer   = nxtySwVerNuSCfgCld;
-    
-                    startType           = NXTY_SW_NONE_TYPE;
-                    startAddr           = nxtyNuXferBufferAddr;
-                    resumeAddr          = startAddr;
-                    bOkToDownload       = true;
-                }
-            }
-
-            if( idx == DLD_NU_ART )
-            {
-                {
-                    PrintLog(1, "NU Art selected for download." );
-                    
-                    // Fill in the information necessary to transfer from the cloud to the phone
-                    myDownloadFileCldId = fileNuArtCldId;
-                    myDownloadFileName  = myNuArtFileName;
-                    myDownloadFileVer   = nxtySwVerNuArtCld;
-    
-                    startType           = NXTY_SW_NONE_TYPE;
-                    startAddr           = u8ArtFlashAddr;
-                    resumeAddr          = startAddr;
-                    bOkToDownload       = true;
-                }
-            }
-
-            if( idx == DLD_NU_EVM )
-            {
-                {
-                    PrintLog(1, "NU EVM selected for download." );
-                    
-                    // Fill in the information necessary to transfer from the cloud to the phone
-                    myDownloadFileCldId = fileNuEvmCldId;
-                    myDownloadFileName  = myNuEvmFileName;
-                    myDownloadFileVer   = nxtySwVerNuEvmCld;
-    
-                    startType           = NXTY_SW_NONE_TYPE;
-                    startAddr           = u8EvmFlashAddr;
-                    resumeAddr          = startAddr;
-                    bOkToDownload       = true;
-                }
-            }
-
-
-
-            if( idx == DLD_CU_ART )
-            {
-                {
-                    PrintLog(1, "CU Art selected for download." );
-                    
-                    // Fill in the information necessary to transfer from the cloud to the phone
-                    myDownloadFileCldId = fileCuArtCldId;
-                    myDownloadFileName  = myCuArtFileName;
-                    myDownloadFileVer   = nxtySwVerCuArtCld;
-    
-                    startType           = NXTY_SW_NONE_TYPE;
-                    startAddr           = u8ArtFlashAddr;
-                    resumeAddr          = startAddr;
-                    bOkToDownload       = true;
-                }
-            }
-
             
             if( idx == DLD_CU_PIC )
             {
@@ -892,49 +667,28 @@ var Dld = {
     
     renderDldView: function() 
     {    
-        // If we land here after CheckForSoftwareUpdates() and we need an update go directly to waiting on user.
-        if( guiSoftwareStatus == SW_STATUS_UP_TO_DATE )
+
+        if( nxtyRxStatusIcd > V1_ICD )
         {
-            ShowAlertPopUpMsg( "SW up to Date", "No SW Update Required..." );
-            return;
+            UpdateStatusLine("Checking for updates...");
+            ShowWaitPopUpMsg( "Please wait", "Checking for updates..." );
+            SendCloudData(  "'isUpdateAvailable':'false'" );
         }
         
-        // If we land here after CheckForSoftwareUpdates() and we need an update go directly to waiting on user.
-        else if( guiSoftwareStatus == SW_STATUS_PLEASE_UPDATE )
-        {
-            DldState = DLD_STATE_WAIT_USER;
-        }
-        else
-        {
-    
-            if( nxtyRxStatusIcd > V1_ICD )
-            {
-                UpdateStatusLine("Checking for updates...");
-                ShowWaitPopUpMsg( "Please wait", "Checking for updates..." );
-                SendCloudData(  "'isUpdateAvailable':'false'" );
-            }
-            
-                    
-            // Make sure that we are at full download speed.
-            SetMaxTxPhoneBuffers(7);
-      
-            // Start the ball rolling...this allows the false above to go out about 1 second before the true.
-            DldState = DLD_STATE_INIT;
-            StartDownloadLoop(1000);
-            
-            // Version info from the hardware... 
-            guiSwCelFiVers[0] = nxtySwVerNuUCfg;
-            guiSwCelFiVers[1] = nxtySwVerNuArt;
-            guiSwCelFiVers[2] = nxtySwVerNuEvm;
-            guiSwCelFiVers[3] = nxtySwVerNuPic;
-            guiSwCelFiVers[4] = nxtySwVerNuSCfg;
-            guiSwCelFiVers[5] = nxtySwVerNuCf;
-            guiSwCelFiVers[6] = nxtySwVerCuArt;
-            guiSwCelFiVers[7] = nxtySwVerCuBt;
-            guiSwCelFiVers[8] = nxtySwVerCuPic;
-            guiSwCelFiVers[9] = nxtySwVerCuCf;
-        }
+                
+        // Make sure that we are at full download speed.
+        SetMaxTxPhoneBuffers(7);
+  
+        // Start the ball rolling...this allows the false above to go out about 1 second before the true.
+        DldState = DLD_STATE_INIT;
+        StartDownloadLoop(1000);
         
+        // Version info from the hardware...
+        guiSwCelFiVers[0] = nxtySwVerNuCf;
+        guiSwCelFiVers[1] = nxtySwVerCuCf;
+        guiSwCelFiVers[2] = nxtySwVerNuPic;
+        guiSwCelFiVers[3] = nxtySwVerCuPic;
+        guiSwCelFiVers[4] = nxtySwVerCuBt;
 
         guiSoftwareButtonText = "Update";
         guiSoftwareDirtyFlag  = true;
@@ -994,52 +748,31 @@ function DldLoop()
             nxtySwVerNuPicCld                = swVerNoCldText;
             nxtySwVerCuPicCld                = swVerNoCldText;
             nxtySwVerCuBtCld                 = swVerNoCldText;
-            nxtySwVerNuSCfgCld               = swVerNoCldText;
-            nxtySwVerNuUCfgCld               = swVerNoCldText;
-            nxtySwVerNuArtCld                = swVerNoCldText;
-            nxtySwVerCuArtCld                = swVerNoCldText;
-            nxtySwVerNuEvmCld                = swVerNoCldText;
-            
             fileNuCfCldId                    = 0;        
             fileCuCfCldId                    = 0;  
             fileNuPicCldId                   = 0;               // future proof  
             fileCuPicCldId                   = 0;               // Future proof
             fileBtCldId                      = 0;
-            fileNuSCfgCldId                  = 0;    
-            fileNuUCfgCldId                  = 0;    
-            fileNuArtCldId                   = 0;    
-            fileCuArtCldId                   = 0;    
-            fileNuEvmCldId                   = 0;    
-            
             bNeedNuCfCldId                   = false;  
             bNeedCuCfCldId                   = false;  
             bNeedNuPicCldId                  = false;
             bNeedCuPicCldId                  = false;
             bNeedBtCldId                     = false;
-            bNeedNuSCfgCldId                  = false;
-            bNeedNuUCfgCldId                  = false;
-            bNeedNuArtCldId                  = false;
-            bNeedNuEvmCldId                  = false;
-            bNeedCuArtCldId                  = false;
-            
             isUpdateAvailableFromCloud       = false;
             bGotUpdateAvailableRspFromCloud  = false;
             bGotPackageAvailableRspFromCloud = false;
             
-            // No need to do if called at startup...            
-            if( guiCurrentMode == PROG_MODE_DOWNLOAD )
-            {
-                // Blast out a download end to reset the PIC state machine just in case we start a download
-                // without ending the previous download, i.e. walk away.   This caused a neg % complete
-                // since the PIC would return a memory address response for a different download, Ares instead of PIC for example.
-                var u8Buff  = new Uint8Array(2);
-                u8Buff[0] = 0;                      // No reset
-                nxty.SendNxtyMsg(NXTY_DOWNLOAD_END_REQ, u8Buff, 1);
-                
-                // Take over the phone's auto lock feature so it does not go to sleep.
-                // prevent device from sleeping
-                if( window.device.platform != pcBrowserPlatform ) { window.plugins.powerManagement.acquire( successAcquirePowerManagement, failAcquirePowerManagement ); }
-            }
+
+            // Blast out a download end to reset the PIC state machine just in case we start a download
+            // without ending the previous download, i.e. walk away.   This caused a neg % complete
+            // since the PIC would return a memory address response for a different download, Ares instead of PIC for example.
+            var u8Buff  = new Uint8Array(2);
+            u8Buff[0] = 0;                      // No reset
+            nxty.SendNxtyMsg(NXTY_DOWNLOAD_END_REQ, u8Buff, 1);
+            
+            // Take over the phone's auto lock feature so it does not go to sleep.
+            // prevent device from sleeping
+            if( window.device.platform != pcBrowserPlatform ) { window.plugins.powerManagement.acquire( successAcquirePowerManagement, failAcquirePowerManagement ); }
             
             if( nxtyRxStatusIcd <= V1_ICD )
             {
@@ -1058,39 +791,20 @@ function DldLoop()
                 guiSwCelFiVers[2] = "-";
                 guiSwCelFiVers[3] = "-";
                 guiSwCelFiVers[4] = "-";
-                guiSwCelFiVers[5] = "-";
-                guiSwCelFiVers[6] = "-";
-                guiSwCelFiVers[7] = "-";
-                guiSwCelFiVers[8] = "-";
-                guiSwCelFiVers[9] = "-";
-                
 
                 // Drop our cloud version in...
-                guiSwCldVers[0] = nxtySwVerNuUCfgCld;
-                guiSwCldVers[1] = nxtySwVerNuArtCld;
-                guiSwCldVers[2] = nxtySwVerNuEvmCld;
-                guiSwCldVers[3] = nxtySwVerNuPicCld;
-                guiSwCldVers[4] = nxtySwVerNuSCfgCld;
-                guiSwCldVers[5] = nxtySwVerNuCfCld;
-                guiSwCldVers[6] = nxtySwVerCuArtCld;
-                guiSwCldVers[7] = nxtySwVerCuBtCld;
-                guiSwCldVers[8] = nxtySwVerCuPicCld;
-                guiSwCldVers[9] = nxtySwVerCuCfCld;
-        
+                guiSwCldVers[0] = nxtySwVerNuCfCld;
+                guiSwCldVers[1] = nxtySwVerCuCfCld;
+                guiSwCldVers[2] = nxtySwVerNuPicCld;
+                guiSwCldVers[3] = nxtySwVerCuPicCld;
+                guiSwCldVers[4] = nxtySwVerCuBtCld;
         
                 // Add 0% status to those available in the cloud...
-                guiSwStatus[0] = (bNuUCfgUpdate)?"0%":"OK";
-                guiSwStatus[1] = (bNuArtUpdate)?"0%":"OK";
-                guiSwStatus[2] = (bNuEvmUpdate)?"0%":"OK";
-                guiSwStatus[3] = (bNuPicUpdate)?"0%":"OK";
-                guiSwStatus[4] = (bNuSCfgUpdate)?"0%":"OK";
-                guiSwStatus[5] = (bNuCfUpdate)?"0%":"OK";
-                guiSwStatus[6] = (bCuArtUpdate)?"0%":"OK";
-                guiSwStatus[7] = (bBtUpdate)?"0%":"OK";
-                guiSwStatus[8] = (bCuPicUpdate)?"0%":"OK";
-                guiSwStatus[9] = (bCuCfUpdate)?"0%":"OK";
-                
-                
+                guiSwStatus[0] = (bNuCfUpdate)?"0%":"OK";
+                guiSwStatus[1] = (bCuCfUpdate)?"0%":"OK";
+                guiSwStatus[2] = (bNuPicUpdate)?"0%":"OK";
+                guiSwStatus[3] = (bCuPicUpdate)?"0%":"OK";
+                guiSwStatus[4] = (bBtUpdate)?"0%":"OK";
                 guiSoftwareDirtyFlag = true; 
                 
                 currentDldIndex = -1;
@@ -1102,16 +816,11 @@ function DldLoop()
             {
                 // Send a request to the cloud to send updates...
                 // Bug #1361:  Make sure version on HW is current...
-                var cloudText = "'SwVerCU_CF':'"   + SwPnNuCu   + nxtySwVerCuCf   + "',"    + 
-                                "'SwVerCU_PIC':'"  + SwPnPic    + nxtySwVerCuPic  + "',"    +
-                                "'SwVer_BT':'"     + SwPnBt     + nxtySwVerCuBt   + "',"    +
-                                "'SwVerNU_CF':'"   + SwPnNuCu   + nxtySwVerNuCf   + "',"    +
-                                "'SwVerNU_PIC':'"  + SwPnPic    + nxtySwVerNuPic  + "',"    +
-                                "'SwVerNU_SCFG':'" + SwPnNuCfg  + nxtySwVerNuSCfg + "',"    +
-                                "'SwVerNU_UCFG':'" + SwPnNuCfg  + nxtySwVerNuUCfg + "',"    +
-                                "'SwVerNU_ART':'"  + SwPnArt    + nxtySwVerNuArt  + "',"    +
-                                "'SwVerNU_EVM':'"  + SwPnNuEvm  + nxtySwVerNuEvm  + "',"    +
-                                "'SwVerCU_ART':'"  + SwPnArt    + nxtySwVerCuArt  + "',"    +
+                var cloudText = "'SwVerCU_CF':'"  + SwPnNuCu + nxtySwVerCuCf  + "',"    + 
+                                "'SwVerCU_PIC':'" + SwPnPic  + nxtySwVerCuPic + "',"    +
+                                "'SwVer_BT':'"    + SwPnBt   + nxtySwVerCuBt  + "',"    +
+                                "'SwVerNU_CF':'"  + SwPnNuCu + nxtySwVerNuCf  + "',"    +
+                                "'SwVerNU_PIC':'" + SwPnPic  + nxtySwVerNuPic + "',"    +
                                 "'isUpdateAvailable':'true'";
                 SendCloudData( cloudText );
                 
@@ -1129,13 +838,10 @@ function DldLoop()
  
             if( (bGotUpdateAvailableRspFromCloud) && ((isUpdateAvailableFromCloud == false) || (isUpdateAvailableFromCloud == "false")) )
             {
-                if( guiCurrentMode == PROG_MODE_DOWNLOAD )
-                {
-                    StopDownloadLoop();
-                    StopWaitPopUpMsg();
-                    ShowAlertPopUpMsg("Software update status", "No software updates pending");
-                    UpdateStatusLine("No software updates pending.");
-                }
+                StopDownloadLoop();
+                StopWaitPopUpMsg();
+                ShowAlertPopUpMsg("Software update status", "No software updates pending");
+                UpdateStatusLine("No software updates pending.");
                 
                 // Disable the "Update" button.
                 guiSoftwareButtonFlag = false;
@@ -1148,74 +854,74 @@ function DldLoop()
                 // Received response and handled in ProcessEgressResponse
                 
                 // Version info from the cloud...
-                guiSwCldVers[0] = nxtySwVerNuUCfgCld;
-                guiSwCldVers[1] = nxtySwVerNuArtCld;
-                guiSwCldVers[2] = nxtySwVerNuEvmCld;
-                guiSwCldVers[3] = nxtySwVerNuPicCld;
-                guiSwCldVers[4] = nxtySwVerNuSCfgCld;
-                guiSwCldVers[5] = nxtySwVerNuCfCld;
-                guiSwCldVers[6] = nxtySwVerCuArtCld;
-                guiSwCldVers[7] = nxtySwVerCuBtCld;
-                guiSwCldVers[8] = nxtySwVerCuPicCld;
-                guiSwCldVers[9] = nxtySwVerCuCfCld;
+                guiSwCldVers[0] = nxtySwVerNuCfCld;
+                guiSwCldVers[1] = nxtySwVerCuCfCld;
+                guiSwCldVers[2] = nxtySwVerNuPicCld;
+                guiSwCldVers[3] = nxtySwVerCuPicCld;
+                guiSwCldVers[4] = nxtySwVerCuBtCld;                
        
 
                 // Add 0% status to those available in the cloud...
                 DownloadWho();
-                guiSwStatus[0] = (bNuUCfgUpdate)?"0%":"OK";
-                guiSwStatus[1] = (bNuArtUpdate)?"0%":"OK";
-                guiSwStatus[2] = (bNuEvmUpdate)?"0%":"OK";
-                guiSwStatus[3] = (bNuPicUpdate)?"0%":"OK";
-                guiSwStatus[4] = (bNuSCfgUpdate)?"0%":"OK";
-                guiSwStatus[5] = (bNuCfUpdate)?"0%":"OK";
-                guiSwStatus[6] = (bCuArtUpdate)?"0%":"OK";
-                guiSwStatus[7] = (bBtUpdate)?"0%":"OK";
-                guiSwStatus[8] = (bCuPicUpdate)?"0%":"OK";
-                guiSwStatus[9] = (bCuCfUpdate)?"0%":"OK";
+                guiSwStatus[0] = (bNuCfUpdate)?"0%":"OK";
+                guiSwStatus[1] = (bCuCfUpdate)?"0%":"OK";
+                guiSwStatus[2] = (bNuPicUpdate)?"0%":"OK";
+                guiSwStatus[3] = (bCuPicUpdate)?"0%":"OK";
+                guiSwStatus[4] = (bBtUpdate)?"0%":"OK";
                 guiSoftwareButtonFlag = true;
                 guiSoftwareStatus     = SW_STATUS_PLEASE_UPDATE;
                 guiSoftwareDirtyFlag  = true; 
                 
-                if( guiCurrentMode == PROG_MODE_DOWNLOAD )
-                {
-                    StopDownloadLoop();
-                    StopWaitPopUpMsg();
-                    UpdateStatusLine("Update status acquired.");
-                }
+                StopDownloadLoop();
+                StopWaitPopUpMsg();
+                UpdateStatusLine("Update status acquired.");
                 
                 DldState = DLD_STATE_WAIT_USER;
-                
-                
-                if( bDldAutoMode == true )
-                {
-                    PrintLog(1, "Download State Auto so automatically start the download...." );
-                    Dld.handleDldKey();
-                }
             }
             else
             {
                 // Send the poll command to look for package updates...
                 SendCloudPoll();
-
-                if( guiCurrentMode == PROG_MODE_DOWNLOAD )
-                {
-                    UpdateStatusLine("Checking for updates...poll: " + DldTimeoutCount + " of " + DLD_CLD_PKG_TIMEOUT_COUNT_MAX );
-                } 
+                UpdateStatusLine("Checking for updates...poll: " + DldTimeoutCount + " of " + DLD_CLD_PKG_TIMEOUT_COUNT_MAX ); 
             }
             
             if( DldTimeoutCount >= DLD_CLD_PKG_TIMEOUT_COUNT_MAX )
             {
                 // after DLD_CLD_PKG_TIMEOUT_COUNT_MAX times exit stage left...
                 bGotUpdateFromCloudTimedOut = true;
-                guiSoftwareStatus     = SW_STATUS_UNKNOWN;
-                guiSoftwareDirtyFlag  = true; 
-                
-                if( guiCurrentMode == PROG_MODE_DOWNLOAD )
-                {
-                    DownloadError( "Timeout", "Update status not available.", false );
-                }
+                DownloadError( "Timeout", "Update status not available.", false );
             }
      
+/*
+// jdo Test...            
+if( DldTimeoutCount >= 2 )
+{
+
+    // Note that the 1062 must be changed to match the actual file ID.
+    var rsp = {packages:[
+                            {id:642, instructions:[{"@type":"down", id:1062, fn:"WuExecutable.sec", fp:"."}], priority:0,time:1414810929705},
+                            {id:642, instructions:[{"@type":"down", id:1062, fn:"CuExecutable.sec", fp:"."}], priority:0,time:1414810929705},
+                            {id:642, instructions:[{"@type":"down", id:1062, fn:"PICFlashImg.bin", fp:"."}], priority:0,time:1414810929705},
+                            {id:642, instructions:[{"@type":"down", id:1062, fn:"PICFlashImg.bin", fp:"."}], priority:0,time:1414810929705},
+                            {id:642, instructions:[{"@type":"down", id:1062, fn:"BTFlashImg.bin", fp:"."}], priority:0,time:1414810929705},
+                        ],
+                
+              set:[
+                    {items:{SwVerNU_CF_CldVer:"FF.FF.FF"},priority:0},
+                    {items:{SwVerCU_CF_CldVer:"FF.FF.FF"},priority:0},
+                    {items:{SwVerNU_PIC_CldVer:"FF.FF"},priority:0},
+                    {items:{SwVerCU_PIC_CldVer:"FF.FF"},priority:0},
+                    {items:{SwVer_BT_CldVer:"FF.FF"},priority:0},
+                    {items:{isUpdateAvailable:true},priority:0},
+                ]};
+                      
+    
+    PrintLog( 1, "Rsp..." + JSON.stringify(rsp) );
+    ProcessEgressResponse(rsp);
+}
+*/
+
+            
             break; 
         }
 
@@ -1242,15 +948,7 @@ function DldLoop()
                 DldState                    = DLD_STATE_WAIT_ON_CLOUD;
 //                DldTimeoutCount             = 0;
 
-                if( DldOrderArray[currentDldIndex] == DLD_NU_SCFG)
-                {
-                    // If a Secured Setup Config then get from Nextivity Server...
-                    GetNxtyConfigFile(nxtyNuUniqueId, newOperatorSku);
-                }
-                else
-                { 
-                    FileTransferDownload( myDownloadUrl, myPhoneFilePath );
-                }
+                FileTransferDownload( myDownloadUrl, myPhoneFilePath );
             }
             else
             {
@@ -1406,12 +1104,8 @@ function DldLoop()
                     if( bCnxToCu )
                     {
                         // If connected to the CU and we need to download to the NU then send UART redirect....                    
-                        if(  (DldOrderArray[currentDldIndex] == DLD_NU)      || 
-                             (DldOrderArray[currentDldIndex] == DLD_NU_PIC)  ||    
-                             (DldOrderArray[currentDldIndex] == DLD_NU_SCFG) ||    
-                             (DldOrderArray[currentDldIndex] == DLD_NU_UCFG) ||    
-                             (DldOrderArray[currentDldIndex] == DLD_NU_ART)  ||    
-                             (DldOrderArray[currentDldIndex] == DLD_NU_EVM)  )
+                        if(  (DldOrderArray[currentDldIndex] == DLD_NU) || 
+                            ((DldOrderArray[currentDldIndex] == DLD_NU_PIC) && (bNuPicReset))   )
                         {
                             if( (IsUartRemote() == false) && (bCnxToOneBoxNu == false) )     
                             {
@@ -1432,10 +1126,9 @@ function DldLoop()
                     else
                     {
                         // If connected to the NU and we need to download to the CU then send UART redirect....                    
-                        if(  (DldOrderArray[currentDldIndex] == DLD_CU)         ||
-                             (DldOrderArray[currentDldIndex] == DLD_CU_PIC)     ||
-                             (DldOrderArray[currentDldIndex] == DLD_CU_ART)     ||    
-                             (DldOrderArray[currentDldIndex] == DLD_CU_BT)      )
+                        if(  (DldOrderArray[currentDldIndex] == DLD_CU)                         ||
+                            ((DldOrderArray[currentDldIndex] == DLD_CU_PIC) && (bCuPicReset))   ||
+                            ((DldOrderArray[currentDldIndex] == DLD_CU_BT)  && (bBtReset))      )
                         {
                             if( (IsUartRemote() == false) && (bCnxToOneBoxNu == false) )     
                             {
@@ -1723,14 +1416,9 @@ function DldLoop()
 
             if( (DldOrderArray[currentDldIndex] == DLD_NU) || 
                 (DldOrderArray[currentDldIndex] == DLD_CU) ||
-                ((DldOrderArray[currentDldIndex] == DLD_NU_PIC)  && (bNuPicReset))   ||
-                ((DldOrderArray[currentDldIndex] == DLD_NU_SCFG) && (bNuSCfgReset))  ||
-                ((DldOrderArray[currentDldIndex] == DLD_NU_UCFG) && (bNuUCfgReset))  ||
-                ((DldOrderArray[currentDldIndex] == DLD_NU_ART)  && (bNuArtReset))   ||
-                ((DldOrderArray[currentDldIndex] == DLD_NU_EVM)  && (bNuEvmReset))   ||
-                ((DldOrderArray[currentDldIndex] == DLD_CU_ART)  && (bCuArtReset))   ||
-                ((DldOrderArray[currentDldIndex] == DLD_CU_PIC)  && (bCuPicReset))   ||
-                ((DldOrderArray[currentDldIndex] == DLD_CU_BT)   && (bBtReset))      )
+                ((DldOrderArray[currentDldIndex] == DLD_NU_PIC) && (bNuPicReset))   ||
+                ((DldOrderArray[currentDldIndex] == DLD_CU_PIC) && (bCuPicReset))   ||
+                ((DldOrderArray[currentDldIndex] == DLD_CU_BT)  && (bBtReset))      )
             {
                 bCelFiReset = true;
             }
@@ -1769,17 +1457,10 @@ function DldLoop()
                     u8Buff[0] = 0;  // No reset
                     nxty.SendNxtyMsg(NXTY_DOWNLOAD_END_REQ, u8Buff, 1);
                     
-                    if( bCelFiReset || (DldOrderArray[currentDldIndex] == DLD_NU_UCFG) )
+                    if( bCelFiReset )
                     {
-                        if( DldOrderArray[currentDldIndex] == DLD_NU_UCFG )
-                        {
-                            SubStateV2Reset = 1;
-                        }
-                        else
-                        {
-                            // Go to the next step and figure out how to reset or further processing....
-                            SubStateV2Reset = 2;
-                         }
+                        // Go to the next step and figure out how to reset....
+                        SubStateV2Reset = 1;
                     }
                     else
                     {
@@ -1792,16 +1473,6 @@ function DldLoop()
                 }
                 else if( SubStateV2Reset == 1)
                 {
-                    if( DldOrderArray[currentDldIndex] == DLD_NU_UCFG )
-                    {
-                        // Write 4 to PcCgtrl/Flash to copy to flash.
-                        var tempVal = 0x04;
-                        WriteAddrReq(NXTY_PCCTRL_FLASH_REG, tempVal );
-                    }
-                    SubStateV2Reset = 2;
-                }
-                else if( SubStateV2Reset == 2)
-                {
                 
                     PrintLog(1, "V2 ICD Download End Req Processing, step 2, send a reset to " + DldNames[ DldOrderArray[currentDldIndex] ] );
 
@@ -1811,10 +1482,7 @@ function DldLoop()
                         // Send 0xBEDA221E to 0xF0000040 and read from 0xF8100000.
                         SetNxtySuperMsgResetAresAfterDownload();
                     }
-                    else if( ((DldOrderArray[currentDldIndex] == DLD_NU_PIC)  && (bNuPicReset))  || 
-                             ((DldOrderArray[currentDldIndex] == DLD_NU_ART)  && (bNuArtReset))  ||
-                             ((DldOrderArray[currentDldIndex] == DLD_NU_UCFG) && (bNuUCfgReset)) ||
-                             ((DldOrderArray[currentDldIndex] == DLD_NU_EVM)  && (bNuEvmReset))  )
+                    else if( (DldOrderArray[currentDldIndex] == DLD_NU_PIC) && (bNuPicReset) )
                     {
                         if( bCnxToCu )
                         {
@@ -1825,16 +1493,7 @@ function DldLoop()
                             WriteAddrReq(NXTY_RESET_LOCAL_ADDR, NXTY_RESET_VALUE );
                         }
                     }
-                    else if( DldOrderArray[currentDldIndex] == DLD_NU_SCFG )
-                    {
-                        // Must write bit inverse of first DWORD to Xfer Buffer.
-                        // This causes a copy and NU reset.
-                        var tempVal = ~0x0CfCe1F1;
-                        WriteAddrReq(nxtyNuXferBufferAddr, tempVal );
-                    }
-                    
                     else if( ((DldOrderArray[currentDldIndex] == DLD_CU_PIC) && (bCuPicReset)) ||
-                             ((DldOrderArray[currentDldIndex] == DLD_CU_ART) && (bCuArtReset)) ||
                              ((DldOrderArray[currentDldIndex] == DLD_CU_BT)  && (bBtReset))    )
                     {
                         if( bCnxToCu )
@@ -1848,25 +1507,21 @@ function DldLoop()
                     }
                     
                     // Go to the next substate which will cancel any UART redirect if needed.
-                    SubStateV2Reset = 3;
+                    SubStateV2Reset = 2;
                 
                 }
-                else if( SubStateV2Reset >= 3 )
+                else if( SubStateV2Reset >= 2 )
                 {
 
                     if( bCnxToCu )
                     {
                         // If connected to the CU and we just downloaded to the NU then cancel UART redirect....                    
                         if(  (DldOrderArray[currentDldIndex] == DLD_NU) || 
-                            ((DldOrderArray[currentDldIndex] == DLD_NU_ART)  && (bNuArtReset))  ||
-                            ((DldOrderArray[currentDldIndex] == DLD_NU_EVM)  && (bNuEvmReset))  ||
-                            ((DldOrderArray[currentDldIndex] == DLD_NU_SCFG) && (bNuSCfgReset)) ||
-                            ((DldOrderArray[currentDldIndex] == DLD_NU_UCFG) && (bNuUCfgReset)) ||
-                            ((DldOrderArray[currentDldIndex] == DLD_NU_PIC)  && (bNuPicReset))   )
+                            ((DldOrderArray[currentDldIndex] == DLD_NU_PIC) && (bNuPicReset))   )
                         {
                             // Wait on a NAK from the reset and then go local...
                             PrintLog(1, "V2 ICD Download End Req Processing, step 3, wait on NAK from reset and then cancel UART redirect.");
-                            if( (window.msgRxLastCmd == NXTY_NAK_RSP) || (SubStateV2Reset >= 7) )
+                            if( (window.msgRxLastCmd == NXTY_NAK_RSP) || (SubStateV2Reset >= 6) )
                             {
                                 msgRxLastCmd = NXTY_INIT;
                                 SetUartLocal();
@@ -1885,12 +1540,11 @@ function DldLoop()
                         // If connected to the NU and we just downloaded to the CU then cancel UART redirect....                    
                         if(  (DldOrderArray[currentDldIndex] == DLD_CU)                         ||
                             ((DldOrderArray[currentDldIndex] == DLD_CU_PIC) && (bCuPicReset))   ||
-                            ((DldOrderArray[currentDldIndex] == DLD_CU_ART) && (bCuArtReset))   ||
                             ((DldOrderArray[currentDldIndex] == DLD_CU_BT)  && (bBtReset))      )
                         {
                             // Wait on a NAK from the reset and then go local...
                             PrintLog(1, "V2 ICD Download End Req Processing, step 3, wait on NAK from reset and then cancel UART redirect.");
-                            if( (window.msgRxLastCmd == NXTY_NAK_RSP) || (SubStateV2Reset >= 7) )
+                            if( (window.msgRxLastCmd == NXTY_NAK_RSP) || (SubStateV2Reset >= 6) )
                             {
                                 msgRxLastCmd = NXTY_INIT;
                                 SetUartLocal();
@@ -2256,8 +1910,11 @@ function DldLoop()
                 }
                 else if( iNxtySuperMsgRspStatus == NXTY_SUPER_MSG_STATUS_SUCCESS )
                 {
-                    UpdateStatusLine("Updating Local SW Version Info 2... " );
-                    GetNxtySuperMsgInfo2();
+                    // Good response, fill in the versions...
+                    guiSwCelFiVers[1] = nxtySwVerCuCf;
+                    guiSwCelFiVers[3] = nxtySwVerCuPic;
+                    guiSwCelFiVers[4] = nxtySwVerCuBt; 
+                    guiSoftwareDirtyFlag = true;                   
                     SubStateV2GetVer = 2;
                 }
                 else
@@ -2279,98 +1936,24 @@ function DldLoop()
             }
             else if( SubStateV2GetVer == 2 )
             {
-                if( iNxtySuperMsgRspStatus == NXTY_SUPER_MSG_STATUS_PENDING )
-                {
-                    // just wait
-                }
-                else if( iNxtySuperMsgRspStatus == NXTY_SUPER_MSG_STATUS_SUCCESS )
-                {
-                    // Good response, fill in the versions...
-                    guiSwCelFiVers[0] = nxtySwVerNuUCfg;
-                    guiSwCelFiVers[1] = nxtySwVerNuArt;
-                    guiSwCelFiVers[2] = nxtySwVerNuEvm;
-                    guiSwCelFiVers[3] = nxtySwVerNuPic;
-                    guiSwCelFiVers[4] = nxtySwVerNuSCfg;
-                    guiSwCelFiVers[5] = nxtySwVerNuCf;
-                    guiSwCelFiVers[6] = nxtySwVerCuArt;
-                    guiSwCelFiVers[7] = nxtySwVerCuBt;
-                    guiSwCelFiVers[8] = nxtySwVerCuPic;
-                    guiSwCelFiVers[9] = nxtySwVerCuCf;
-                    guiSoftwareDirtyFlag = true;                   
-                    SubStateV2GetVer = 3;
-                }
-                else
-                {
-                    // Must be a NAK or Write error, try again...
-                    SubStateV2GetVer = 1;
-                    
-                    if( DldNakCount++ >= DLD_NAK_COUNT_MAX )
-                    {
-                        var eText = "Failed to receive SW Ver Rsp Msg from Cel-Fi device.";
-                        
-                        if( bUniiUp == false )
-                        {
-                            eText += szNoUnii;
-                        }
-                        DownloadError( "Msg NAK Max.", eText, false );
-                    }
-                }
-            }
-
-            
-            
-            else if( SubStateV2GetVer == 3 )
-            {
-                // Only update the NU versions if any were downloaded...
-                if( (bNuCfUpdate || bNuPicUpdate || bNuSCfgUpdate || bNuUCfgUpdate || bNuArtUpdate || bNuEvmUpdate) && bUniiUp )
+                // Only update the NU versions if either were downloaded...
+                if( (bNuCfUpdate || bNuPicUpdate) && bUniiUp )
                 {
                     UpdateStatusLine("Updating Remote SW Version Info... " );
                     SetUartRemote();
-                    SubStateV2GetVer = 4;
+                    SubStateV2GetVer = 3;
                 }
                 else
                 {
                     DldState = DLD_STATE_DONE;
                 }
             }
-            else if( SubStateV2GetVer == 4 )
+            else if( SubStateV2GetVer == 3 )
             {
                 GetNxtySuperMsgInfo();
-                SubStateV2GetVer = 5;
+                SubStateV2GetVer = 4;
             }
-            else if( SubStateV2GetVer == 5 )
-            {
-                if( iNxtySuperMsgRspStatus == NXTY_SUPER_MSG_STATUS_PENDING )
-                {
-                    // just wait
-                }
-                else if( iNxtySuperMsgRspStatus == NXTY_SUPER_MSG_STATUS_SUCCESS )
-                {
-                    UpdateStatusLine("Updating Remote SW Version Info 2... " );
-                    GetNxtySuperMsgInfo2();
-                    SubStateV2GetVer = 6;
-                }
-                else
-                {
-                    // Must be a NAK or Write error, try again...
-                    SubStateV2GetVer = 4;
-                    
-                    if( DldNakCount++ >= DLD_NAK_COUNT_MAX )
-                    {
-                        var eText = "Failed to receive SW Ver Rsp Msg from Cel-Fi device.";
-                        
-                        if( bUniiUp == false )
-                        {
-                            eText += szNoUnii;
-                        }
-                    
-                        DownloadError( "Msg NAK Max.", eText, false );
-                    }
-                }
-                
-            }
-
-            else if( SubStateV2GetVer == 6 )
+            else if( SubStateV2GetVer == 4 )
             {
                 if( iNxtySuperMsgRspStatus == NXTY_SUPER_MSG_STATUS_PENDING )
                 {
@@ -2379,23 +1962,15 @@ function DldLoop()
                 else if( iNxtySuperMsgRspStatus == NXTY_SUPER_MSG_STATUS_SUCCESS )
                 {
                     // Good response, fill in the versions...
-                    guiSwCelFiVers[0] = nxtySwVerNuUCfg;
-                    guiSwCelFiVers[1] = nxtySwVerNuArt;
-                    guiSwCelFiVers[2] = nxtySwVerNuEvm;
-                    guiSwCelFiVers[3] = nxtySwVerNuPic;
-                    guiSwCelFiVers[4] = nxtySwVerNuSCfg;
-                    guiSwCelFiVers[5] = nxtySwVerNuCf;
-                    guiSwCelFiVers[6] = nxtySwVerCuArt;
-                    guiSwCelFiVers[7] = nxtySwVerCuBt;
-                    guiSwCelFiVers[8] = nxtySwVerCuPic;
-                    guiSwCelFiVers[9] = nxtySwVerCuCf;
+                    guiSwCelFiVers[0] = nxtySwVerNuCf;
+                    guiSwCelFiVers[2] = nxtySwVerNuPic; 
                     guiSoftwareDirtyFlag = true;                   
-                    SubStateV2GetVer = 7;
+                    SubStateV2GetVer = 5;
                 }
                 else
                 {
                     // Must be a NAK or Write error, try again...
-                    SubStateV2GetVer = 5;
+                    SubStateV2GetVer = 3;
                     
                     if( DldNakCount++ >= DLD_NAK_COUNT_MAX )
                     {
@@ -2411,7 +1986,7 @@ function DldLoop()
                 }
                 
             }
-            else if( SubStateV2GetVer == 7 )
+            else if( SubStateV2GetVer == 5 )
             {
                 SetUartLocal();
                 DldState = DLD_STATE_DONE;
@@ -2450,14 +2025,9 @@ function DldLoop()
             
             guiSoftwareStatus           = SW_STATUS_UP_TO_DATE;
             guiSoftwareDirtyFlag        = true;
-            bDldAutoMode                = false;
             
             // If anyone was downloaded then put a big happy button up...
-            if( bNuSCfgUpdate || bNuUCfgUpdate )
-            {
-                ShowAlertPopUpMsg("Update Complete!",  "New Operator Software has been updated." );
-            }
-            else if( bNuCfUpdate || bCuCfUpdate || bNuPicUpdate || bCuPicUpdate || bBtUpdate || bNuArtUpdate || bCuArtUpdate || bNuEvmUpdate )
+            if( bNuCfUpdate || bCuCfUpdate || bNuPicUpdate || bCuPicUpdate || bBtUpdate )
             {
                 ShowAlertPopUpMsg("Update Complete!",  "Software has been updated." );
             }            
@@ -2598,53 +2168,6 @@ function DldTransferReq()
     }
   }
 }
-
-// CheckForSoftwareUpdates() --------------------------------------------------------------------------------
-//   - Called at startup when all Cel-Fi versions on known.   
-//   - Starts a poll to poll the cloud until it gets a rsponse from the cloud or user goes to download state.
-//
-function CheckForSoftwareUpdates() 
-{
-    // Copied from renderDldView............................................................................. 
-    SendCloudData(  "'isUpdateAvailable':'false'" );
-                
-    // Make sure that we are at full download speed.
-    SetMaxTxPhoneBuffers(7);
-
-    // Version info from the hardware... 
-    guiSwCelFiVers[0] = nxtySwVerNuUCfg;
-    guiSwCelFiVers[1] = nxtySwVerNuArt;
-    guiSwCelFiVers[2] = nxtySwVerNuEvm;
-    guiSwCelFiVers[3] = nxtySwVerNuPic;
-    guiSwCelFiVers[4] = nxtySwVerNuSCfg;
-    guiSwCelFiVers[5] = nxtySwVerNuCf;
-    guiSwCelFiVers[6] = nxtySwVerCuArt;
-    guiSwCelFiVers[7] = nxtySwVerCuBt;
-    guiSwCelFiVers[8] = nxtySwVerCuPic;
-    guiSwCelFiVers[9] = nxtySwVerCuCf;
-
-    // Call DLD_STATE_INIT 
-    DldState = DLD_STATE_INIT;
-    DldLoop();
-
-    // Start the polling loop...
-    PollForSoftwareUpdates();
-}
-
-// PollForSoftwareUpdates....................................................................................
-function PollForSoftwareUpdates()
-{
-    if( (guiSoftwareStatus == SW_STATUS_CHECKING)  && (guiCurrentMode != PROG_MODE_DOWNLOAD) )
-    {
-        // Call DLD_STATE_CHECK_FOR_UPDATES 
-        DldState = DLD_STATE_CHECK_FOR_UPDATES;
-        DldLoop();
-        
-        // Return here in 1 second....
-        setTimeout(PollForSoftwareUpdates, 1000);        
-    }
-}
-
 
 // End of operational code...
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////

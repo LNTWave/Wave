@@ -85,7 +85,7 @@ function SendNorthBoundData( nType, nUrl, nContentType, nData, nRespFormat, succ
 // endNorthBoundDataResponse............................................................................................
 function SendNorthBoundDataResponse( nPassFail, sResponse )
 {
-    PrintLog( 10, "Response:SendNorthBoundData("+nPassFail+",len="+sResponse.length+")...'" + sResponse + "'" );
+    PrintLog( 1, "Response:SendNorthBoundData("+nPassFail+",len="+sResponse.length+")...'" + sResponse + "'" );
     
     if( (nPassFail==0) && (sResponse.length > 0) )
     {
@@ -139,7 +139,7 @@ function FileTransferDownload( fromUrl, toUrl )
 // Download from Cloud File transfer callback..................................................................
 function FileTransferDownloadResponse(nPassFail, sFileName)
 {
-    PrintLog(10, "FileTransferDownloadResponse with " + nPassFail + " for " + sFileName);
+    PrintLog(1, "FileTransferDownloadResponse in JS with " + nPassFail + " " + sFileName);
     if(nPassFail == 0)
     {
         PrintLog(1, "Download from cloud successfully complete: " + sFileName);

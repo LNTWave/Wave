@@ -128,7 +128,7 @@ var tech = {
                         {
                             // Should have most of the values now...
                             guiGotTechModeValues = true;
-// jdo: move to main                            DumpDataTables();
+                            DumpDataTables();
                         }
                       
                         // Every 25 pages grab a link status if not on a 1-Box.
@@ -189,13 +189,9 @@ var tech = {
     renderTechView: function() 
     {
         guiCurrentMode = PROG_MODE_TECH;
-        DisplayLoop();
     },
 
-    renderAdvancedView: function(){
-    	guiCurrentMode = PROG_MODE_ADVANCED;
-        DisplayLoop();
-    },
+
 
     GetFreshPageLoop: function() 
     {
@@ -768,10 +764,9 @@ function ProcessTechData()
         }
  
         // Boost:  -1: Too Close;   0,1,2: Fix it;   3,4,5,6: ok;   7,8,9: good;   10 Too Far
-        guiBoost  = GetTechValue( "CU Bars", 4 );       // CalculateUniiBars():             DB: use as is, PRO: adjust,  
-                                                        // CalculateBoostFromSysGain():     GO and PRIME: use as is
+        guiBoost  = GetTechValue( "CU Bars", 4 );       // CalculateUniiBars(). DB use as is, PRO: adjust,  GO: recalculate
         
-        if( guiProductType == PRODUCT_TYPE_PRO )
+        if( guiProductType == "PRO" )
         {
             switch( guiBoost )
             {
@@ -784,10 +779,7 @@ function ProcessTechData()
                 default:    guiBoost = 0;   break;
             }
         }
-        
-/*
-jdo. Now calculated in Ares and passed up in CU Bars        
-        else if( (guiProductType == PRODUCT_TYPE_GO) || (guiProductType == PRODUCT_TYPE_PRIME) ) 
+        else if( (guiProductType == "GO") || (guiProductType == "PRIME") ) 
         {
             var minSysGain;
             var sysGain;
@@ -807,7 +799,7 @@ jdo. Now calculated in Ares and passed up in CU Bars
                 }
             }
 
-            if( guiProductType == PRODUCT_TYPE_GO )
+            if( guiProductType == "GO" )
             {
                 if( guiMobilityFlag == false )
                 {
@@ -839,7 +831,7 @@ jdo. Now calculated in Ares and passed up in CU Bars
                 }
                
             }
-            else if( guiProductType == PRODUCT_TYPE_PRIME )
+            else if( guiProductType == "PRIME" )
             {
                 if(      minSysGain <  43 )    guiBoost = BOOST_TOO_CLOSE;
                 else if( minSysGain <= 46 )    guiBoost = 1;
@@ -855,7 +847,6 @@ jdo. Now calculated in Ares and passed up in CU Bars
             }
         
         }
-*/
         
         
              

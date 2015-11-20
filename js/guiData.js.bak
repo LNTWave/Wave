@@ -13,27 +13,16 @@
 
 // The following variables are directly related to UI display.
 var guiProductType          = null;             // String based on the 3 digits in the SKU  590Nxxx.
-const   PRODUCT_TYPE_PRO        = "PRO";    
-const   PRODUCT_TYPE_DUO        = "DUO";    
-const   PRODUCT_TYPE_PRIME      = "PRIME";    
-const   PRODUCT_TYPE_GO         = "GO";    
-const   PRODUCT_TYPE_CABLE      = "CABLE";    
-const   PRODUCT_TYPE_UNKNOWN    = "UNKNOWN";
 var guiMobilityFlag         = false;            // Set to true if "P" field of SKU, index 16, is 6 for Auto.
 var guiSerialNumber         = null;             // String based on the serial number.
 var guiBoost                = 0;                // Number from CalculateUniiBars().
 var guiNuBars               = 0;                // Number from CalculateNuBars(). 
-var guiOperator             = null;             // String based on 700 number from Cel-Fi.
-var guiOperatorCode         = null;             // 4 digit operator code.
-var guiUserFirstName        = null;             // Filled in from the cloud.  
+var guiOperator             = null;             // String based on 2 digit code from SKU.
 
 var guiOperatorFlag         = false;            // Flag:  true:  display operator selection 
 var guiOperatorList         = [];               // An array of operators to select.
 var guiDeviceFlag           = false;            // Flag:  true:  display device selection 
 var guiDeviceList           = [];               // An array of devices to select.
-var guiDeviceRssiList       = [];               // An array of associated BT RSSI values...
-var guiRegistrationFlag     = false;            // true if registered.
-var guiRegistrationLockBits = 0;                // Bit 0: Loc Lock, Bit 1: Reg, Bit 2: Reg Required, Bit 3: Reg Desired/Optional
 var guiRegistrationPercent  = -1;               // If >= 0 then display prograss bar...
 var guiSoftwareStatus       = 0;                // Number: 0=unknown, 1=Checking for updates, 2=Please update, 3=Up to date, 4=Update in progress
 const   SW_STATUS_UNKNOWN            = 0;
@@ -41,7 +30,6 @@ const   SW_STATUS_CHECKING           = 1;
 const   SW_STATUS_PLEASE_UPDATE      = 2;
 const   SW_STATUS_UP_TO_DATE         = 3;
 const   SW_STATUS_UPDATE_IN_PROGRESS = 4;
-const guiSoftwareStatusText = ["Unknown", "Checking", "Update", "Up to date", "Update in progress"];
 var guiSoftwareButtonFlag   = false;            // Flag:  true to enable the update button.
 var guiSoftwareButtonText   = "";   
 var guiSoftwareDirtyFlag    = false;            // Flag:  Set to true by program code when status has changed.  Gui code can set to false.
@@ -63,74 +51,11 @@ var guiRadios               = ["","","",""];    // Strings
 var guiCellState            = [0,0,0,0];        // Number:  Array ...
 
 
-var guiSwNames              = ["UnSec Cfg", "NU_ART", "NU_EVM", "NU_PIC", "Sec Cfg", "NU", "CU_ART", "Bluetooth", "CU_PIC", "CU"];         // Software image names
-var guiSwCelFiVers          = ["","","","","","","","","",""];               // Software versions in the Cel-Fi hardware
-var guiSwCldVers            = ["","","","","","","","","",""];               // Software versions in the Cloud
-var guiSwStatus             = ["OK","OK","OK","OK","OK","OK","OK","OK","OK","OK"];                    // Status
+var guiSwNames              = ["NU","CU","NU PIC","CU PIC","CU BT"];         // Software image names
+var guiSwCelFiVers          = ["","","","",""];                              // Software versions in the Cel-Fi hardware
+var guiSwCldVers            = ["","","","",""];                              // Software versions in the Cloud
+var guiSwStatus             = ["OK","OK","OK","OK","OK"];                    // Status
 
-
-var guiSuMaxSysGain         = 0; //Super User Max system gain [dB]
-var guiSuMinSysGain         = 0; //Super User Min system gain [dB]
-var guiSuMaxBackOff         = 0; //Super User Max back-off [dB]
-var guiSuMaxCellRssi        = 0; //Super User Max Cell RSSI for Pro [dBm]
-var guiSuMaxRscp            = 0; //Super User Max RSCP for GO [dBm]
-var guiSuMaxRsrp            = 0; //Super User Max RSRP for GO [dBm]
-var guiSuBandMask3G         = 0; //Shows which 3G bands should be allowed
-var guiSuBandMask4G         = 0; //Shows which 4G bands should be allowed
-var guiSuPLMNIDlist         =    //Super User list with available options to download from cloud and flash onto board
-[ "None Available      " ];
-var guiSuUniiList           =    //Blocked UNII freq list
-[
-    {"fq":5190, "tck":0, "dis":1}, // frequency, ticked={1=block channel, 0=allow channel}, disabled={0=allow user to change tick state, 1=user cannot change tick state}
-    {"fq":5200, "tck":0, "dis":1},
-    {"fq":5210, "tck":0, "dis":1},
-    {"fq":5220, "tck":0, "dis":1},
-    {"fq":5230, "tck":0, "dis":1},
-    {"fq":5240, "tck":0, "dis":1},
-    {"fq":5250, "tck":0, "dis":1},
-    {"fq":5260, "tck":0, "dis":1},
-    {"fq":5270, "tck":0, "dis":1},
-    {"fq":5280, "tck":0, "dis":1},
-    {"fq":5290, "tck":0, "dis":1},
-    {"fq":5300, "tck":0, "dis":1},
-    {"fq":5310, "tck":0, "dis":1},
-    {"fq":5510, "tck":0, "dis":1},
-    {"fq":5520, "tck":0, "dis":1},
-    {"fq":5530, "tck":0, "dis":1},
-    {"fq":5540, "tck":0, "dis":1},
-    {"fq":5550, "tck":0, "dis":1},
-    {"fq":5560, "tck":0, "dis":1},
-    {"fq":5570, "tck":0, "dis":1},
-    {"fq":5580, "tck":0, "dis":1},
-    {"fq":5590, "tck":0, "dis":1},
-    {"fq":5600, "tck":0, "dis":1},
-    {"fq":5610, "tck":0, "dis":1},
-    {"fq":5620, "tck":0, "dis":1},
-    {"fq":5630, "tck":0, "dis":1},
-    {"fq":5640, "tck":0, "dis":1},
-    {"fq":5650, "tck":0, "dis":1},
-    {"fq":5660, "tck":0, "dis":1},
-    {"fq":5670, "tck":0, "dis":1},
-    {"fq":5680, "tck":0, "dis":1},
-    {"fq":5690, "tck":0, "dis":1},
-    {"fq":5700, "tck":0, "dis":1},
-    {"fq":5715, "tck":0, "dis":1},
-    {"fq":5725, "tck":0, "dis":1},
-    {"fq":5735, "tck":0, "dis":1},
-    {"fq":5745, "tck":0, "dis":1},
-    {"fq":5755, "tck":0, "dis":1},
-    {"fq":5765, "tck":0, "dis":1},
-    {"fq":5775, "tck":0, "dis":1},
-    {"fq":5785, "tck":0, "dis":1},
-    {"fq":5795, "tck":0, "dis":1},
-    {"fq":5805, "tck":0, "dis":1},
-    {"fq":5815, "tck":0, "dis":1},
-    {"fq":5825, "tck":0, "dis":1}
- ];
-var guiSuTechBandAllowedBias =   //TechBandBias :: tech{0=wcdma, 1=lte}, bd:band, blk{0=band will be relayed, 1=band is blocked}, bias
-[
-    {"tech":0, "bd":0, "blk":0, "bias":0}
-];
 
 //-------------------------------------------------------------------------------------------
 var guiCurrentMode          = null;
@@ -537,18 +462,14 @@ function DumpDataTables()
     PrintLog(1, "guiProductType         = " + guiProductType );                    // String based on the 3 digits in the SKU  590Nxxx.
     PrintLog(1, "guiMobilityFlag        = " + guiMobilityFlag );                   // Flag based on the "P" field of the SKU.
     PrintLog(1, "guiSerialNumber        = " + guiSerialNumber );                   // String based on the serial number.
-    PrintLog(1, "guiUserFirstName       = " + guiUserFirstName );                  // First name that registered.
     PrintLog(1, "guiBoost               = " + guiBoost );                          // CalculateUniiBars().
     PrintLog(1, "guiNuBars              = " + guiNuBars );                         // CalculateNuBars().
-    PrintLog(1, "guiRegistrationFlag    = " + guiRegistrationFlag );               // true if registered.
-    PrintLog(1, "guiRegistrationLockBits= 0x" + guiRegistrationLockBits.toString(16) );    // Bit 0: Loc Lock, Bit 1: Reg, Bit 2: Reg Required, Bit 3: Reg Desired/Optional
-    PrintLog(1, "guiOperator            = " + guiOperator );                       // String based on 700 number from Cel-Fi.
-    PrintLog(1, "guiOperatorCode        = " + guiOperatorCode );                   // 4-digit operator code.
+    PrintLog(1, "guiOperator            = " + guiOperator );                       // String based on 2 digit code from SKU.
     PrintLog(1, "guiOperatorFlag        = " + guiOperatorFlag );                   // Flag:  true:  display operator selection 
     PrintLog(1, "guiOperatorList        = " + JSON.stringify(guiOperatorList) );   // An array of operators to select.
     PrintLog(1, "guiDeviceFlag          = " + guiDeviceFlag );                     // Flag:  true:  display device selection 
     PrintLog(1, "guiDeviceList          = " + JSON.stringify(guiDeviceList) );     // An array of devices to select.
-    PrintLog(1, "guiSoftwareStatus      = " + guiSoftwareStatusText[guiSoftwareStatus] );                 // Number: 0=unknown, 1=Checking for updates, 2=Please update, 3=Up to date, 4=Update in progress
+    PrintLog(1, "guiSoftwareStatus      = " + guiSoftwareStatus );                 // Number: 0=unknown, 1=Checking for updates, 2=Please update, 3=Up to date, 4=Update in progress
     PrintLog(1, "guiSoftwareButtonFlag  = " + guiSoftwareButtonFlag );             // Flag: true to enable the update button.
     
     PrintLog(1, "guiSoftwareDirtyFlag   = " + guiSoftwareDirtyFlag );              // Flag:  Set to true by program code when status has changed.  Gui code can set to false.
@@ -611,25 +532,14 @@ function MakeI32( iVal )
 
 
 // Called by the gui code for user selection.
-// opSelectionIdx:  Index into guiOperatorList[].
 //.................................................................................................................
-function SetOperatorSelection( opSelectionIdx )
+function SetOperatorSelection( opSelection )
 {
-    SetNewOperatorSku( opSelectionIdx );
 }
 
 //.................................................................................................................
-function SetDeviceSelection( devSelectionIdx )
+function SetDeviceSelection( devSelection )
 {
-    if( (devSelectionIdx >= 0) && (devSelectionIdx < guiDeviceList.length) )
-    {
-        ConnectSouthBoundIf( devSelectionIdx );
-    }
-    else
-    {
-        PrintLog(99, "GUI: SelectBluetooth() bad index: " + devSelectionIdx );
-    }
-
 }
 
 //.................................................................................................................
@@ -675,6 +585,7 @@ function ResetNu()
     }
     
 }
+
 
 
 

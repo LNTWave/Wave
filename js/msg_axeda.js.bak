@@ -73,9 +73,9 @@ function SendCloudData(dataText)
             'json',    // response format
             function(response) 
             {
+                PrintLog( 1, "Response success: SendCloudData()..." + JSON.stringify(response)  );
                 if( response != null )
                 {
-                    PrintLog( 1, "Response success: SendCloudData()..." + JSON.stringify(response)  );
                     ProcessEgressResponse(response);
                 }
             },
@@ -194,7 +194,7 @@ function SendCloudPoll()
             'json',     // response format
             function(response) 
             {
-            	PrintLog( 1, "Response success: SendCloudPoll()..." + JSON.stringify(response) );
+                PrintLog( 1, "Response success: SendCloudPoll()..." + JSON.stringify(response) );
                 if( response != null )
                 {
                     ProcessEgressResponse(response);
@@ -276,62 +276,6 @@ function FixCloudVer(ver)
     return( ver );
 }
 
-// FixInternalVer....................................................................................
-// 
-// Convert version strings, yyy.zzz to yyy.zzz making sure 7 characters...
-//
-function FixInternalVer(ver)
-{
-    var inVer = ver;
-
-    // First check to make sure that there is a period "." in the string...
-    if( ver.search(/\x2E/) != -1 )
-    {
-        // Make sure that it is zero loaded up front... xxx.yyy
-        if( ver.length < 7 )
-        {
-            var str1 = ver.substring(0,ver.search(/\x2E/));         // grab xxx
-            var str2 = ver.substring(ver.search(/\x2E/) + 1);       // grab yyy
-            
-            if( str1.length == 0 )                        // test for .yyy
-            {
-                str1 = "000";
-            }
-            else if( str1.length == 1 )                   // test for x.yyy
-            {
-                str1 = "00" + str1;
-            }
-            else if( str1.length == 2 )                   // test for xx.yyy
-            {
-                str1 = "0" + str1;
-            }
-            
-            if( str2.length == 0 )                        // test for xxx.null
-            {
-                str2 = "000";
-            }
-            else if( str2.length == 1 )                   // test for xxx.y
-            {
-                str2 = "00" + str2;
-            }
-            else if( str2.length == 2 )                   // test for xxx.yy
-            {
-                str2 = "0" + str2;
-            }
-            
-            ver = str1 + "." + str2;
-        }
-    }
-    else
-    {
-        // No period so make something up...
-        ver = "000.000";
-    }    
-    
-//    PrintLog(1, "FixInternalVer() in =" + inVer + " out=" + ver );
-
-    return( ver );
-}
 
 
 // ProcessEgressResponse......................................................................................
@@ -358,15 +302,13 @@ function ProcessEgressResponse(eg)
         {
             egStr = JSON.stringify(eg.set[i].items);
             
-
+/*
+jdo: no longer used...            
             // Search for strings associated with getUserInfoAction (search() returns -1 if no match found)
             //   getUserInfoAction returns false if there is no information but set bGotUserInfoRspFromCloud
             //   just to know that the cloud has returned nothing or something.
             if(      egStr.search("getUserInfoAction") != -1 )   bGotUserInfoRspFromCloud   = true;        
-            else if( egStr.search("firstName")         != -1 )   guiUserFirstName = szRegFirstName  = eg.set[i].items.firstName;
-            
-/*
-jdo: only grab first name just in case phone data gets cleared.                    
+            else if( egStr.search("firstName")         != -1 )   szRegFirstName             = eg.set[i].items.firstName;        
             else if( egStr.search("lastName")          != -1 )   szRegLastName              = eg.set[i].items.lastName;        
             else if( egStr.search("addr_1")            != -1 )   szRegAddr1                 = eg.set[i].items.addr_1;        
             else if( egStr.search("addr_2")            != -1 )   szRegAddr2                 = eg.set[i].items.addr_2;
@@ -377,20 +319,6 @@ jdo: only grab first name just in case phone data gets cleared.
             else if( egStr.search("phone")             != -1 )   szRegPhone                 = eg.set[i].items.phone;
 */                    
                     
-
-            // Search for strings associated with OperatorList egress...
-            if(      egStr.search("OperatorList")      != -1 )   
-            {
-                bGotOperatorInfoRspFromCloud = true;
-                szOperatorSkus               = eg.set[i].items.OperatorList;
-                
-                if( szOperatorCodeNames != null )
-                {
-                    GenerateOperatorList();
-                }
-            }        
-
-
                     
             // Search for strings associated with Registration egress...
             if(      egStr.search("regOpForce")        != -1 )   myRegOpForce               = eg.set[i].items.regOpForce;       // true to force
@@ -398,28 +326,21 @@ jdo: only grab first name just in case phone data gets cleared.
     
             
             // Search for strings associated with Software Download egress...
-            else if( egStr.search("isUpdateAvailable") != -1 )  {isUpdateAvailableFromCloud = eg.set[i].items.isUpdateAvailable;  bGotUpdateAvailableRspFromCloud  = true;}
-            else if( egStr.search("SwVerNU_CF_CldVer") != -1 )  {nxtySwVerNuCfCld           = eg.set[i].items.SwVerNU_CF_CldVer;  bNeedNuCfCldId    = true;  nxtySwVerNuCfCld  = FixCloudVer(nxtySwVerNuCfCld);}
-            else if( egStr.search("SwVerCU_CF_CldVer") != -1 )  {nxtySwVerCuCfCld           = eg.set[i].items.SwVerCU_CF_CldVer;  bNeedCuCfCldId    = true;  nxtySwVerCuCfCld  = FixCloudVer(nxtySwVerCuCfCld);}
-            else if( egStr.search("SwVerNU_PIC_CldVer") != -1 ) {nxtySwVerNuPicCld          = eg.set[i].items.SwVerNU_PIC_CldVer; bNeedNuPicCldId   = true;  nxtySwVerNuPicCld = FixCloudVer(nxtySwVerNuPicCld);}
-            else if( egStr.search("SwVerCU_PIC_CldVer") != -1 ) {nxtySwVerCuPicCld          = eg.set[i].items.SwVerCU_PIC_CldVer; bNeedCuPicCldId   = true;  nxtySwVerCuPicCld = FixCloudVer(nxtySwVerCuPicCld);}
-            else if( egStr.search("SwVer_BT_CldVer")    != -1 ) {nxtySwVerCuBtCld           = eg.set[i].items.SwVer_BT_CldVer;    bNeedBtCldId      = true;  nxtySwVerCuBtCld  = FixCloudVer(nxtySwVerCuBtCld);}
-            
-            else if( egStr.search("SwVerNU_UCFG_CldVer") != -1 ) {nxtySwVerNuUCfgCld        = eg.set[i].items.SwVerNU_UCFG_CldVer; bNeedNuUCfgCldId = true;  nxtySwVerNuUCfgCld = FixCloudVer(nxtySwVerNuUCfgCld);}
-            else if( egStr.search("SwVerNU_SCFG_CldVer") != -1 ) {nxtySwVerNuSCfgCld        = eg.set[i].items.SwVerNU_SCFG_CldVer; bNeedNuSCfgCldId = true;  nxtySwVerNuSCfgCld = FixCloudVer(nxtySwVerNuSCfgCld);}
-            else if( egStr.search("SwVerNU_ART_CldVer") != -1 )  {nxtySwVerNuArtCld         = eg.set[i].items.SwVerNU_ART_CldVer;  bNeedNuArtCldId  = true;  nxtySwVerNuArtCld  = FixCloudVer(nxtySwVerNuArtCld);}
-            else if( egStr.search("SwVerNU_EVM_CldVer") != -1 )  {nxtySwVerNuEvmCld         = eg.set[i].items.SwVerNU_EVM_CldVer;  bNeedNuEvmCldId  = true;  nxtySwVerNuEvmCld  = FixCloudVer(nxtySwVerNuEvmCld);}
-            else if( egStr.search("SwVerCU_ART_CldVer") != -1 )  {nxtySwVerCuArtCld         = eg.set[i].items.SwVerCU_ART_CldVer;  bNeedCuArtCldId  = true;  nxtySwVerCuArtCld  = FixCloudVer(nxtySwVerCuArtCld);}
-            
+            else if( egStr.search("isUpdateAvailable") != -1 )  {isUpdateAvailableFromCloud     = eg.set[i].items.isUpdateAvailable;  bGotUpdateAvailableRspFromCloud  = true;}
+            else if( egStr.search("SwVerNU_CF_CldVer") != -1 )  {nxtySwVerNuCfCld               = eg.set[i].items.SwVerNU_CF_CldVer;  bNeedNuCfCldId    = true;}
+            else if( egStr.search("SwVerCU_CF_CldVer") != -1 )  {nxtySwVerCuCfCld               = eg.set[i].items.SwVerCU_CF_CldVer;  bNeedCuCfCldId    = true;}
+            else if( egStr.search("SwVerNU_PIC_CldVer") != -1 ) {nxtySwVerNuPicCld              = eg.set[i].items.SwVerNU_PIC_CldVer; bNeedNuPicCldId   = true;}
+            else if( egStr.search("SwVerCU_PIC_CldVer") != -1 ) {nxtySwVerCuPicCld              = eg.set[i].items.SwVerCU_PIC_CldVer; bNeedCuPicCldId   = true;}
+            else if( egStr.search("SwVer_BT_CldVer")    != -1 ) {nxtySwVerCuBtCld                 = eg.set[i].items.SwVer_BT_CldVer;    bNeedBtCldId      = true;}
         }
         
         
         // Remove the "700.xxx" from the "700.xxx.yyy.zzz" cloud string.
-//        nxtySwVerNuCfCld  = FixCloudVer(nxtySwVerNuCfCld);
-//        nxtySwVerCuCfCld  = FixCloudVer(nxtySwVerCuCfCld);
-//        nxtySwVerNuPicCld = FixCloudVer(nxtySwVerNuPicCld);
-//        nxtySwVerCuPicCld = FixCloudVer(nxtySwVerCuPicCld);
-//        nxtySwVerCuBtCld  = FixCloudVer(nxtySwVerCuBtCld);
+        nxtySwVerNuCfCld  = FixCloudVer(nxtySwVerNuCfCld);
+        nxtySwVerCuCfCld  = FixCloudVer(nxtySwVerCuCfCld);
+        nxtySwVerNuPicCld = FixCloudVer(nxtySwVerNuPicCld);
+        nxtySwVerCuPicCld = FixCloudVer(nxtySwVerCuPicCld);
+        nxtySwVerCuBtCld  = FixCloudVer(nxtySwVerCuBtCld);
     }
 
 
@@ -454,27 +375,17 @@ jdo: only grab first name just in case phone data gets cleared.
             else if( egStr.search(myNuPicFileName)  != -1 )   fileNuPicCldId  = eg.packages[i].instructions[0].id;                     // Future proof  
             else if( egStr.search(myCuPicFileName)  != -1 )   fileCuPicCldId  = eg.packages[i].instructions[0].id;                     // Future proof
             else if( egStr.search(myBtFileName)     != -1 )   fileBtCldId     = eg.packages[i].instructions[0].id;
-            else if( egStr.search(myNuSCfgFileName) != -1 )   fileNuSCfgCldId = eg.packages[i].instructions[0].id;  
-            else if( egStr.search(myNuUCfgFileName) != -1 )   fileNuUCfgCldId = eg.packages[i].instructions[0].id;  
-            else if( egStr.search(myNuArtFileName)  != -1 )   fileNuArtCldId  = eg.packages[i].instructions[0].id;  
-            else if( egStr.search(myNuEvmFileName)  != -1 )   fileNuEvmCldId  = eg.packages[i].instructions[0].id;  
-            else if( egStr.search(myCuArtFileName)  != -1 )   fileCuArtCldId  = eg.packages[i].instructions[0].id;  
         }
         
 
         // See if we received all needed packages after we received the set...
         if( isUpdateAvailableFromCloud )
         {  
-            if( (bNeedNuCfCldId    && (fileNuCfCldId   == 0)) || 
-                (bNeedCuCfCldId    && (fileCuCfCldId   == 0)) || 
-                (bNeedNuPicCldId   && (fileNuPicCldId  == 0)) || 
-                (bNeedNuSCfgCldId  && (fileNuSCfgCldId == 0)) || 
-                (bNeedNuUCfgCldId  && (fileNuUCfgCldId == 0)) || 
-                (bNeedNuArtCldId   && (fileNuArtCldId  == 0)) || 
-                (bNeedNuEvmCldId   && (fileNuEvmCldId  == 0)) || 
-                (bNeedCuPicCldId   && (fileCuPicCldId  == 0)) || 
-                (bNeedCuArtCldId   && (fileCuArtCldId  == 0)) || 
-                (bNeedBtCldId      && (fileBtCldId     == 0)) )
+            if( (bNeedNuCfCldId    && (fileNuCfCldId  == 0)) || 
+                (bNeedCuCfCldId    && (fileCuCfCldId  == 0)) || 
+                (bNeedNuPicCldId   && (fileNuPicCldId == 0)) || 
+                (bNeedCuPicCldId   && (fileCuPicCldId == 0)) || 
+                (bNeedBtCldId      && (fileBtCldId    == 0)) )
             {
                 bGotPackageAvailableRspFromCloud = false;    
             }

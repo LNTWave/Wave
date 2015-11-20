@@ -13,6 +13,7 @@
     <script src="http://jsconsole.com/remote.js?nxty_lnt"></script>
 -->
 
+
 <!--
     <script src="http://jsconsole.com/remote.js?nxty_owen"></script>
 -->
@@ -40,7 +41,7 @@
         <script src="lib/jquery-1.11.3.min.js"></script>
         <script src="lib/bootstrap.min.js"></script>
         <script src="lib/gauge.js"></script>
-        <!-- <script type="text/javascript" src="PushNotification.js"></script>-->          
+        <!-- <script type="text/javascript" src="PushNotification.js"></script>-->            <!-- jdo:  Added for push notifications.    -->
 
         
 <!--
@@ -50,7 +51,6 @@
 
         <script src="js/bluetoothle.js"></script>
         <script src="js/msg_nxty.js"></script>
-        <script src="js/msg_nxty_nb.js"></script>
         <script src="js/tech.js"></script>
         <script src="js/registration.js"></script>
         <script src="js/download.js"></script>
@@ -62,18 +62,18 @@
         <script src="js/arfcn.js"></script>
         <script src="js/gui.js"></script>
         <script src="js/guiData.js"></script>
-        <script src="js/operator.js"></script>
-                                
+                        
         <script src="js/main.js"></script>
-        <script type="text/javascript" src="lib/bigSlide.min.js"></script>
-        <script>
+		<script type="text/javascript" src="lib/bigSlide.min.js"></script>
+        <!-- <script>
             // Wait for the document to be ready before starting...
             /*$(document).ready(function() {
-                   app.initialize();
+				app.initialize();
             });*/
-        </script>
+        </script>--> 
     
-        
+    </head>
+    <body> 
         
     </body>
 </html>

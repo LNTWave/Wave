@@ -378,25 +378,6 @@ input[type=text], input[type=number] {
 	padding: 0 20px 0 10px !important;
 }
 
-#deviceSelectionPanel input[type=radio]{
-	visibility: hidden !important;
-}
-
-#deviceSelectionPanel{
-	font-size: 22px;
-	color: #656D78;
-}
-
-#deviceSelectionPanel label{
-	margin: 0px !important;
-	height:29px !important;
-}
-
-.deviceListContainer{
-	height:29px !important;
-	width:auto;
-}
-
 #registrationFormContainer input, #registrationFormContainer select{
 	color:#434A54;
 	font-family: Roboto-Regular;
@@ -448,7 +429,7 @@ input[type=text], input[type=number] {
 	position: fixed;
     left: -290px;
     border-radius:0px !important;
-    z-index: 1004;
+    z-index: 1002;
 }
 
 .panelLogoWrapper {
@@ -886,7 +867,7 @@ a,a:ACTIVE,a:AFTER {
 	height: 30px;
 	margin: 0 0 10px 10px !important;
 	padding-right: 10px !important;
-	width:94%;
+	width:97%;
 }
 
 #deviceUpdate, #versionUpdate {
@@ -896,7 +877,6 @@ a,a:ACTIVE,a:AFTER {
 	padding: 0 40px 0 40px !important;
 	height: 40px;
 	border-radius: 40px !important;
-	margin-right: 10px;
 }
 
 .versionLbl, #devicesFoundLbl, .antennaLbl, .boosterLbl {
@@ -1995,11 +1975,7 @@ a,a:ACTIVE,a:AFTER {
 	}
 	
 	.privacyPolicy{
-		max-height:270px !important;
-	}
-	
-	#deviceSelectionPanel{
-		margin-top: 20px;
+		max-height:260px !important;
 	}
 	
 	#popupHeader{
@@ -2021,13 +1997,8 @@ a,a:ACTIVE,a:AFTER {
 		font-family: Roboto-Regular;
 		font-size: 14px;
 		color: #656D78;
-		overflow: auto !important;
+		overflow:hidden !important;
 	}
-	
-	/*.addBodyScroller{
-		overflow: visible !important;
-		overflow-y: auto !important;
-	}*/
 	
 	#popupFooter{
 		width:100%;
@@ -2162,38 +2133,14 @@ a,a:ACTIVE,a:AFTER {
 		margin-top: 30px;
 	}
 	
-	#deviceTypeBG{
-		height:170px;
-		margin-top: 20px;
-	}
-	
 	.deviceDUO{
-		background: URL('../img/assets/images/deviceImages/Duo.png');
-		background-repeat: no-repeat;
-	    background-position: center; 
-		background-size: auto 100%;
-	}
-	
-	.devicePRO{
+		height:170px;
 		background: URL('../img/assets/images/deviceImages/Pro.png');
 		background-repeat: no-repeat;
 	    background-position: center; 
 		background-size: auto 100%;
+		margin-top: 20px;
 	}
-	
-	.deviceGO{
-		background: URL('../img/assets/images/deviceImages/Go.png');
-		background-repeat: no-repeat;
-	    background-position: center; 
-		background-size: auto 100%;
-	}
-	
-	.devicePRIME{
-		background: URL('../img/assets/images/deviceImages/Prime.png');
-		background-repeat: no-repeat;
-	    background-position: center; 
-		background-size: auto 100%;
-	}	
 	
 	.deviceSerialNumber{
 		bottom:20px;
@@ -2272,10 +2219,6 @@ a,a:ACTIVE,a:AFTER {
 	    background-color: #F5F7FA;
 	    z-index: 1006;
 	    box-shadow: inset -2px -2px 1px 0px rgba(0,0,0,0.20);
-	}
-	
-	.selectBoosterDevice{
-		display:inline;
 	}
 }
 
@@ -2618,15 +2561,5 @@ a,a:ACTIVE,a:AFTER {
 	border:none;
 	background: transparent;
 	outline: none;
-}
-
-#sliderMenuOverlay{
-	width:100%;
-	height:100vh;
-	opacity:0;
-	z-index:1003;
-	position:relative;
-	top:0;
-	background:red;
 }
 /*---------------------------End of Hamburger Help about screen---------------------------*/

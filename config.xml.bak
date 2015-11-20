@@ -3,7 +3,7 @@
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "NxtyWave"
         versionCode = "15"          
-        version     = "01.00.06">
+        version     = "01.00.04">
  
     <name>Wave</name>
  
@@ -71,7 +71,7 @@ This caused the iPhone to brick...
 
     <!-- Core plugins -->
     <gap:plugin name="org.apache.cordova.network-information" />            <!-- jdo: android: added for network connection information -->
-    <gap:plugin name="org.apache.cordova.file"  version="1.3.1" />          <!-- jdo: added for file management  -->
+    <gap:plugin name="org.apache.cordova.file" />                           <!-- jdo: added for file management  -->
     <gap:plugin name="org.apache.cordova.file-transfer" version="0.4.6" />  <!-- jdo: added to transfer files for download from the cloud. -->        
     <gap:plugin name="org.apache.cordova.dialogs" />
     <gap:plugin name="org.apache.cordova.device" />                         <!-- jdo: Added to use "window.device.platform" -->
@@ -104,9 +104,8 @@ This caused the iPhone to brick...
 
 
     <!-- Third party plugins -->
-  
+	<gap:plugin name="com.boyvanderlaak.cordova.plugin.orientationchanger" />
     
-
     <gap:plugin name="com.randdusing.bluetoothle" version="1.0.6" />                    // Use up to Phonegap Build 3.6.3
 
    
@@ -119,18 +118,15 @@ This caused the iPhone to brick...
 -->
 
 <!--
-    <gap:plugin name="com.randdusing.bluetoothle" source="npm" />       // This one is the latest and works with Phonegap Build version 3.7.0
+    <gap:plugin name="com.randdusing.bluetoothle" source="npm" />       // This one is the latest and work with Phonegap Build version 3.7.0
 -->
 
-<!--
-    <gap:plugin name="cordova-plugin-bluetoothle" source="npm" version="2.4.0" />
--->
 
     
     <gap:plugin name="hu.dpal.phonegap.plugins.spinnerdialog" version="1.2.0" />        <!-- jdo: IOS does not allow the native spinner so add plugin -->
     <gap:plugin name="com.simplec.plugins.powermanagement" version="0.4.0" />           <!-- jdo: Used to keep IOS auto lock disabled during download.  -->
 
-	<gap:plugin name="net.yoik.cordova.plugins.screenorientation" />			<!--Plugin for maintaining orientation-->
+
 
     <!-- Define app icon for each platform. -->
     <!-- icon.png is the default icon that is displayed to start the app. -->
@@ -177,10 +173,10 @@ This caused the iPhone to brick...
 -->
 
     <!-- Define app splash screen for each platform. (jdo: Use the single default splash screen.)-->
-    <!--<gap:splash src="splash.png" />-->
+    <!-- <gap:splash src="splash.png" />-->
     
     <!-- Had to add the following for acceptance to Apple iTunesConnect upload -->  
-    <!--<gap:splash src="res/screen/ios/splash-568h@2x.png" gap:platform="ios"     width="640" height="1136" />-->
+    <!-- <gap:splash src="res/screen/ios/splash-568h@2x.png" gap:platform="ios"     width="640" height="1136" /> -->
     
     
 <!--    

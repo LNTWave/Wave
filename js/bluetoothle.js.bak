@@ -9,14 +9,12 @@
 //                External functionality that must be maintained to support the SouthBound IF concept:
 //
 //                - OpenSouthBoundIf()
-//                - ConnectSouthBoundIf()
 //                - WriteSouthBoundData()
 //                - Response data must call function nxty.ProcessNxtyRxMsg().
 //
 //                - Flags
 //                  - isSouthBoundIfStarted:    Check is isSouthBoundIfEnabled after isShouthBoundIfStarted is true...
 //                  - isSouthBoundIfEnabled:
-//                  - isSouthBoundIfListDone:
 //                  - isSouthBoundIfCnx:        Set "true" or "false" accordingly.
 //
 //                - Messages
@@ -104,10 +102,10 @@
 var isSouthBoundIfStarted   = false;    // Check if isSouthBoundIfEnabled after isShouthBoundIfStarted is true...
 var isSouthBoundIfEnabled   = false;
 var isSouthBoundIfCnx       = false;
-var isSouthBoundIfListDone  = false;
 var szSouthBoundIfEnableMsg = "Bluetooth Required: Please Enable...";
 var szSouthBoundIfNotCnxMsg = "Bluetooth not connected.";
 var szSouthBoundIfInfoMsg   = "Indicates if connected to Cel-Fi device via Bluetooth.\nBlue means connected.\nGray means not connected.\nCurrent status: ";
+
 
 
 var addressKey      = "address";
@@ -240,14 +238,12 @@ function isConnectedCallback(obj)
 function StartBluetoothScan()
 {
     PrintLog(10, "BT: Starting scan for Cel-Fi devices.");
-    if(softwareVersionFlag){
-	    var paramsObj = {"serviceAssignedNumbers":[bridgeServiceUuid]};
-	    util.showSearchAnimation();
-	    bMaxRssiScanning = true;
-	    connectTimer     = null;
-	    setTimeout(scanMaxRssiTimeout, 1000 );
-	    bluetoothle.startScan(startScanSuccess, startScanError, paramsObj);
-    }
+    var paramsObj = {"serviceAssignedNumbers":[bridgeServiceUuid]};
+    
+    bMaxRssiScanning = true;
+    connectTimer     = null;
+    setTimeout(scanMaxRssiTimeout, 1000 );
+    bluetoothle.startScan(startScanSuccess, startScanError, paramsObj);
 }
 
 function scanMaxRssiTimeout()
@@ -259,8 +255,6 @@ function scanMaxRssiTimeout()
 
 function startScanSuccess(obj)
 {
-  var i;
-  clearTimeout(searchTimeOut);
   if (obj.status == "scanResult")
   {
     var scanStr = JSON.stringify(obj);  
@@ -275,7 +269,7 @@ function startScanSuccess(obj)
         // Save the Scan Results data...
         if( bytes.length != 0 )
         {
-            for( i = 0; i < SCAN_RESULTS_SIZE; i++ )
+            for( var i = 0; i < SCAN_RESULTS_SIZE; i++ )
             {
                 if( i < bytes.length )
                 {
@@ -338,6 +332,7 @@ function startScanSuccess(obj)
             //                                                                    ICD                                                  ICD
     
             // See if we can match the 128-bit, 16 byte, UUID.  128-bit UUID starts at offset [5].
+            var i;
             for( i = 5; i < nxty128Uuid.length; i++ )
             {
                 if( u8ScanResults[i] != nxty128Uuid[i] )
@@ -385,25 +380,6 @@ function startScanSuccess(obj)
                     }
                 }
                 
-               
-                // Fill the BT address list...          
-                for( i = 0; i < (guiDeviceList.length + 1); i++ )
-                {
-                    if(typeof guiDeviceList[i] === 'undefined')
-                    {
-                        guiDeviceList.push(obj.address);
-                        guiDeviceRssiList.push(obj.rssi);
-                        PrintLog(10, "BT: Add to list: " + obj.address);
-                        break;
-                    }
-                    else if( guiDeviceList[i] == obj.address )
-                    {
-                        guiDeviceRssiList[i] = obj.rssi;
-                        break;
-                    }
-                }    
-                
-                
                 // If we are still scanning for the max then do not proceed below...
                 bDeviceFound = false;
             }
@@ -423,39 +399,21 @@ function startScanSuccess(obj)
                 else
                 {
                     PrintLog(1, "BT: This Cel-Fi address: " + obj.address + " matches the last connected Cel-Fi address: " + myLastBtAddress + ".  Reconnecting..." );
-                    bluetoothle.stopScan(stopScanSuccess, stopScanError);
-                    clearScanTimeout();
-                    ConnectBluetoothDevice(myLastBtAddress);
+                    
                 }
             }
         }
+         
  
-        if( bDeviceFound && (connectTimer == null) && (guiDeviceFlag == false) )
+        if( bDeviceFound && (connectTimer == null) )
         {
             bluetoothle.stopScan(stopScanSuccess, stopScanError);
             clearScanTimeout();
     
             // Store the address on the phone...not used
 //            window.localStorage.setItem(addressKey, obj.address);
-
-/*
-            PrintLog(1, "BT: List of BT devices complete.  Number of BT devices found = " + guiDeviceList.length );
-  
-            // Automatically connect if only 1 BT in the area...
-            if( guiDeviceList.length == 1 )
-            {      
-                ConnectBluetoothDevice(maxRssiAddr);
-            }
-            else if(guiDeviceList.length > 1)
-            {
-                guiDeviceFlag = true;
-                clearTimeout(BluetoothCnxTimer);
-            }
-            
-            isSouthBoundIfListDone = true;      // Main app loop must be placed on hold until true.
-*/          
-
-            tryConnect();  
+        
+            ConnectBluetoothDevice(maxRssiAddr);
         }
         
     }  // if we have found "advertisement"
@@ -473,25 +431,6 @@ function startScanSuccess(obj)
   }
 }
 
-function tryConnect()
-{
-    PrintLog(1, "BT: List of BT devices complete.  Number of BT devices found = " + guiDeviceList.length );
-  
-    // Automatically connect if only 1 BT in the area...
-    if( guiDeviceList.length == 1 )
-    {      
-        ConnectBluetoothDevice(maxRssiAddr);
-    }
-    else if(guiDeviceList.length > 1)
-    {
-        guiDeviceFlag = true;
-        clearTimeout(BluetoothCnxTimer);
-    }
-            
-    isSouthBoundIfListDone = true;      // Main app loop must be placed on hold until true.
-}
-
-
 function startScanError(obj)
 {
   PrintLog(99, "BT: Start scan error: " + obj.error + " - " + obj.message);
@@ -501,12 +440,13 @@ function scanTimeout()
 {
   PrintLog(10, "BT: Scanning time out, stopping");
   bluetoothle.stopScan(stopScanSuccess, stopScanError);
-
-  if( (connectTimer == null) && (guiDeviceFlag == false) && (guiDeviceList.length != 0) )
-  {
-    tryConnect();
-  }
   
+  if( (maxRssiAddr != null) && (connectTimer == null) )
+  {
+    ConnectBluetoothDevice(maxRssiAddr);
+  }
+            
+              
 }
 
 function clearScanTimeout()
@@ -515,7 +455,6 @@ function clearScanTimeout()
   if (scanTimer != null)
   {
     clearTimeout(scanTimer);
-    scanTimer = null;
   }
 }
 
@@ -543,7 +482,6 @@ function UpdateBluetoothIcon(cnx)
 {
     if(cnx)
     {
-    	util.deviceIdentified();
         guiIconSbIfHtml       = szSbIfIconOn;
         isSouthBoundIfCnx     = true;
     }
@@ -567,7 +505,7 @@ function UpdateBluetoothIcon(cnx)
 // If a timeout occurs, the connection attempt should be canceled using disconnect().
 function ConnectBluetoothDevice(address)
 {
-  PrintLog(1, "BT: ConnectBluetoothdevice(" + address + ")" );
+  PrintLog(1, "BT: Connecting to: " + address + " Max RSSI= " + maxRssi );     // 5 second timeout
   
   var paramsObj = {"address":address};
   bluetoothle.connect(connectSuccess, connectError, paramsObj);
@@ -1156,15 +1094,7 @@ function SetMaxTxPhoneBuffers(numBuffers)
 
     
 
-// ConnectSouthBoundIf........................................................................
-function ConnectSouthBoundIf(myIdx)
-{
-    PrintLog(1, "BT: ConnectSouthBoundIf(" + myIdx + ") addr: " + guiDeviceList[myIdx] );
-    ConnectBluetoothDevice( guiDeviceList[myIdx] );
-    
-    // Start the saftey check...
-    BluetoothCnxTimer = setTimeout(BluetoothLoop, 5000);
-}
+
 
 
 /*
