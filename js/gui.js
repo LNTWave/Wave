@@ -3015,7 +3015,7 @@ var util = {
 	    }
 	
 	    //Device list drop down panel
-	    if (guiDeviceFlag) {
+	    //if (guiDeviceFlag) {
 	        deviceListDropDown = "<div class='panel panel-default'>"
 								+"<div class='panel-heading dropDown' id='deviceTitle'>"
 								+"<h4 class='panel-title'>"
@@ -3037,7 +3037,7 @@ var util = {
 								+"</div>";
 	
 	        $(deviceListDropDown).appendTo('#settingsDataWrapper');
-	    }
+	    //}
 	
 	    //Software update status panel
 	    var softwareUpdatePanel = "<div class='panel panel-default'>" + "<div class='panel-heading dropDown' id='softwareTitle'>" + "<h4 class='panel-title'>" + "<a data-toggle='collapse' data-parent='#settingsDataWrapper' href='#collapseThree'>" + "<div><div class='settingsDropIcns' id='versionIcn'></div>Software Version</div>" + "<span class='pull-right'>" + "<span class='toggle-icon expand-more'></span>" + "</span>" + "</a>" + "</h4>" + "</div>" + "<div id='collapseThree' class='panel-collapse collapse'>" + "<div class='panel-body'>" + "<div id='versionWrapper'>";
@@ -3090,8 +3090,6 @@ var util = {
 	    }
 	
 	    //Booster settings panel
-	    guiBoosterFlag = true;
-	    guiProductType = "GO";
 	    if (guiProductType == "GO" && guiBoosterFlag) {
 	        var boosterSettingsPanel = "<div class='panel panel-default'>" + "<div class='panel-heading dropDown'>" + "<h4 class='panel-title'>" + "<a data-toggle='collapse' data-parent='#settingsDataWrapper' href='#collapseFive'>" + "<div><div class='settingsDropIcns' id='boosterIcn'></div>Booster Settings</div>" + "<span class='pull-right'>" + "<span class='toggle-icon expand-more'></span>" + "</span>" + "</a>" + "</h4>" + "</div>" + "<div id='collapseFive' class='panel-collapse collapse'>" + "<div class='panel-body'>" + "<div id='boosterWrapper'>" + "<div class='boosterLbl'>Select by Technology:</div>" + "<div class='cb'></div>";
 	
@@ -3237,7 +3235,7 @@ var util = {
 	    $(colSMTab).appendTo('#settingsDataWrapper');
 	
 	    //Device list drop down panel
-	    if (guiDeviceFlag) {
+	    //if (guiDeviceFlag) {
 	    	deviceListDropDown = "<div class='settingsTabViewWrapper fr'>"
 					    		+"<div class='col-sm-12'>"
 					    		+"<div id='deviceTitle'>"
@@ -3255,7 +3253,7 @@ var util = {
 					    		+"</div>";
 	
 	        $(deviceListDropDown).appendTo('#settingsDataWrapper');
-	    }
+	    //}
 	
 	    //Booster settings panel
 	    if (guiProductType == "GO" && guiBoosterFlag) {
