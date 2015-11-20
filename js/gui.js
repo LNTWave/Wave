@@ -2379,7 +2379,8 @@ var waitPopUpObj =
             PrintLog(1, "Stop: ShowWaitPopUpMsg: " );
             if(ImRunningOnPhone)
             {
-                window.plugins.spinnerDialog.hide();
+                //window.plugins.spinnerDialog.hide();
+            	util.hideCommonSpinnerDialog();
             }
             else
             {
