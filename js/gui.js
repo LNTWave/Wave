@@ -3520,7 +3520,7 @@ var util = {
 	    }
 	
 	
-	    var techDataContent = "<div class='divider'>TECH DATA</div>" + "<div class='panel panel-default col-sm-6'>" + "<div class='panel-heading drop-orange dropDown'>" + "<h4 class='panel-title'>" + "<a data-toggle='collapse' data-parent='#advancedDataContainer' href='#unknownCollapse'>" + "<div>Stuff you won't understand</div>" + "<span class='pull-right'>" + "<span class='toggle-icon expand-more'></span>" + "</span></a></h4></div>" + "<div id='unknownCollapse' class='panel-collapse collapse'>" + "<div class='panel-body dropDownList'></div>" + "</div></div>";
+	    //var techDataContent = "<div class='divider'>TECH DATA</div>" + "<div class='panel panel-default col-sm-6'>" + "<div class='panel-heading drop-orange dropDown'>" + "<h4 class='panel-title'>" + "<a data-toggle='collapse' data-parent='#advancedDataContainer' href='#unknownCollapse'>" + "<div>Stuff you won't understand</div>" + "<span class='pull-right'>" + "<span class='toggle-icon expand-more'></span>" + "</span></a></h4></div>" + "<div id='unknownCollapse' class='panel-collapse collapse'>" + "<div class='panel-body dropDownList'></div>" + "</div></div>";
 	
 	
 	    var softwareVersionContent = '';
@@ -3540,7 +3540,8 @@ var util = {
 	
 	    var footer = "</div></div>";
 	
-	    var advancedPanelContent = advancedButtonWrapper + clearFloat + advancedHeader + overViewContent + clearFloat + superChannelsContent + clearFloat + deviceStateContent + clearFloat + techDataContent + clearFloat + softwareVersionContent + footer;
+	    //var advancedPanelContent = advancedButtonWrapper + clearFloat + advancedHeader + overViewContent + clearFloat + superChannelsContent + clearFloat + deviceStateContent + clearFloat + techDataContent + clearFloat + softwareVersionContent + footer;
+	    var advancedPanelContent = advancedButtonWrapper + clearFloat + advancedHeader + overViewContent + clearFloat + superChannelsContent + clearFloat + deviceStateContent + clearFloat + softwareVersionContent + footer;
 	    $('#bodyContainer').html(advancedPanelContent);
 	    $('a[data-toggle="collapse"]').click(function() {
 	        $('span.toggle-icon').not($(this).find('span.toggle-icon')).removeClass('expand-less');
