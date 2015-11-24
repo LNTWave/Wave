@@ -75,7 +75,8 @@ function HandleConfirmLocation(buttonIndex)
     // No:  Do not use location information so return to main menu immediately...
     if( buttonIndex == 2 )
     {
-        reg.handleBackKey();
+        //reg.handleBackKey();
+    	RequestModeChange(PROG_MODE_TECH);
     }        
 }
 
@@ -195,6 +196,7 @@ var reg = {
         guiRegistrationPercent = -1;
         guiCurrentMode         = PROG_MODE_REGISTRATION;
         regState               = REG_STATE_DONE;
+        DisplayLoop();
     },
 
 

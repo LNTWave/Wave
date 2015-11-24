@@ -12,6 +12,7 @@
 //                - ConnectSouthBoundIf()
 //                - WriteSouthBoundData()
 //                - Response data must call function nxty.ProcessNxtyRxMsg().
+//                - CnxAndIdentifySouthBoundDevice()
 //
 //                - Flags
 //                  - isSouthBoundIfStarted:    Check is isSouthBoundIfEnabled after isShouthBoundIfStarted is true...
@@ -140,9 +141,6 @@ var maxRssi            = -200;
 var maxRssiAddr        = null;
 
 
-var myStatusWrittenObj = {"status":"written"};
-
-
 
 var BluetoothCnxTimer = null;
 
@@ -152,9 +150,13 @@ var u8ScanResults     = new Uint8Array(SCAN_RESULTS_SIZE);
 
 var isBluetoothSubscribed   = false;
 
-var u8TxBuff          = new Uint8Array(260);    
+var u8TxBuff            = new Uint8Array(260);    
 var uTxBuffIdx          = 0;
-var uTxMsgLen         = 0;
+var uTxMsgLen           = 0;
+
+
+var getSnIdx            = 0;
+var getSnState          = 0;
 
 // OpenSouthBoundIf...................................................................................
 function OpenSouthBoundIf()
@@ -387,16 +389,16 @@ function startScanSuccess(obj)
                 
                
                 // Fill the BT address list...          
-                for( i = 0; i < (guiDeviceList.length + 1); i++ )
+                for( i = 0; i < (guiDeviceAddrList.length + 1); i++ )
                 {
-                    if(typeof guiDeviceList[i] === 'undefined')
+                    if(typeof guiDeviceAddrList[i] === 'undefined')
                     {
-                        guiDeviceList.push(obj.address);
+                        guiDeviceAddrList.push(obj.address);
                         guiDeviceRssiList.push(obj.rssi);
                         PrintLog(10, "BT: Add to list: " + obj.address);
                         break;
                     }
-                    else if( guiDeviceList[i] == obj.address )
+                    else if( guiDeviceAddrList[i] == obj.address )
                     {
                         guiDeviceRssiList[i] = obj.rssi;
                         break;
@@ -430,30 +432,13 @@ function startScanSuccess(obj)
             }
         }
  
-        if( bDeviceFound && (connectTimer == null) && (guiDeviceFlag == false) )
+        if( bDeviceFound && (scanTimer != null) && (connectTimer == null) && (guiDeviceFlag == false) )
         {
-            bluetoothle.stopScan(stopScanSuccess, stopScanError);
             clearScanTimeout();
+            bluetoothle.stopScan(stopScanSuccess, stopScanError);
     
             // Store the address on the phone...not used
 //            window.localStorage.setItem(addressKey, obj.address);
-
-/*
-            PrintLog(1, "BT: List of BT devices complete.  Number of BT devices found = " + guiDeviceList.length );
-  
-            // Automatically connect if only 1 BT in the area...
-            if( guiDeviceList.length == 1 )
-            {      
-                ConnectBluetoothDevice(maxRssiAddr);
-            }
-            else if(guiDeviceList.length > 1)
-            {
-                guiDeviceFlag = true;
-                clearTimeout(BluetoothCnxTimer);
-            }
-            
-            isSouthBoundIfListDone = true;      // Main app loop must be placed on hold until true.
-*/          
 
             tryConnect();  
         }
@@ -473,23 +458,6 @@ function startScanSuccess(obj)
   }
 }
 
-function tryConnect()
-{
-    PrintLog(1, "BT: List of BT devices complete.  Number of BT devices found = " + guiDeviceList.length );
-  
-    // Automatically connect if only 1 BT in the area...
-    if( guiDeviceList.length == 1 )
-    {      
-        ConnectBluetoothDevice(maxRssiAddr);
-    }
-    else if(guiDeviceList.length > 1)
-    {
-        guiDeviceFlag = true;
-        clearTimeout(BluetoothCnxTimer);
-    }
-            
-    isSouthBoundIfListDone = true;      // Main app loop must be placed on hold until true.
-}
 
 
 function startScanError(obj)
@@ -502,7 +470,7 @@ function scanTimeout()
   PrintLog(10, "BT: Scanning time out, stopping");
   bluetoothle.stopScan(stopScanSuccess, stopScanError);
 
-  if( (connectTimer == null) && (guiDeviceFlag == false) && (guiDeviceList.length != 0) )
+  if( (connectTimer == null) && (guiDeviceFlag == false) && (guiDeviceAddrList.length != 0) )
   {
     tryConnect();
   }
@@ -543,7 +511,7 @@ function UpdateBluetoothIcon(cnx)
 {
     if(cnx)
     {
-    	util.deviceIdentified();
+    	//util.deviceIdentified();
         guiIconSbIfHtml       = szSbIfIconOn;
         isSouthBoundIfCnx     = true;
     }
@@ -602,9 +570,9 @@ function connectSuccess(obj)
     
     if( obj.status == "disconnected" )
     {
-//        CloseBluetoothDevice();
+        CloseBluetoothDevice();
         maxRssiAddr = null;
-        DisconnectBluetoothDevice();        // Disconnect and close
+//        DisconnectBluetoothDevice();        // Disconnect and close
     }
     clearConnectTimeout();
   }
@@ -1159,8 +1127,8 @@ function SetMaxTxPhoneBuffers(numBuffers)
 // ConnectSouthBoundIf........................................................................
 function ConnectSouthBoundIf(myIdx)
 {
-    PrintLog(1, "BT: ConnectSouthBoundIf(" + myIdx + ") addr: " + guiDeviceList[myIdx] );
-    ConnectBluetoothDevice( guiDeviceList[myIdx] );
+    PrintLog(1, "BT: ConnectSouthBoundIf(" + myIdx + ") addr: " + guiDeviceAddrList[myIdx] );
+    ConnectBluetoothDevice( guiDeviceAddrList[myIdx] );
     
     // Start the saftey check...
     BluetoothCnxTimer = setTimeout(BluetoothLoop, 5000);
@@ -1195,6 +1163,311 @@ function rssiError(msg)
 */
 
 
+
+
+
+//----------------------------------------------------------------------------------------
+var numDevFound      = 0;
+function tryConnect()
+{
+    // Use guiDeviceList.length as a flag to indicate that we have already been this way just in case 
+    // called multile times while searching for guideviceAddrList[].
+    if( guiDeviceList.length == 0 )
+    {
+        PrintLog(1, "BT: List of BT devices complete.  Number of BT MAC Addresses found = " + guiDeviceAddrList.length );
+      
+        // Automatically connect if only 1 BT in the area...
+        if( guiDeviceAddrList.length == 1 )
+        {      
+            ConnectBluetoothDevice(maxRssiAddr);
+            isSouthBoundIfListDone = true;      // Main app loop must be placed on hold until true.
+        }
+        else if(guiDeviceAddrList.length > 1)
+        {
+        
+            // Sort the list based on RSSI power...
+            var tempAddr;
+            var tempRssi;
+            for( var i = 0; i < guiDeviceAddrList.length; i++ )
+            {
+                for( var j = 1; j < guiDeviceAddrList.length; j++ )
+                {
+                    if( guiDeviceRssiList[j] > guiDeviceRssiList[j-1] )
+                    {
+                        // Reverse...
+                        tempAddr = guiDeviceAddrList[j-1];
+                        tempRssi = guiDeviceRssiList[j-1];
+                        guiDeviceAddrList[j-1] = guiDeviceAddrList[j];
+                        guiDeviceRssiList[j-1] = guiDeviceRssiList[j];
+                        guiDeviceAddrList[j]   = tempAddr;
+                        guiDeviceRssiList[j]   = tempRssi;
+                    }
+                }
+            }
+            
+            // As a default throw the text "None" in the device list which will eventually contain SNs...
+            for( var i = 0; i < guiDeviceAddrList.length; i++ )
+            {
+                guiDeviceList.push("None");
+            }
+            
+        
+    //        guiDeviceFlag = true;
+            clearTimeout(BluetoothCnxTimer);
+            
+            PrintLog(1, "guiDeviceAddrList      = " + JSON.stringify(guiDeviceAddrList) ); // An array of device BT addresses to select.
+            PrintLog(1, "guiDeviceRssiList      = " + JSON.stringify(guiDeviceRssiList) ); // An array of RSSI values.
+            PrintLog(1, "guiDeviceList          = " + JSON.stringify(guiDeviceList) );     // An array of Serial Numbers.
+            
+            // Get the Serial Numbers for all detected BT devices...
+            getSnIdx    = 0;
+            getSnState  = 0;
+            numDevFound = 0;
+            setTimeout( GetDeviceSerialNumbersLoop, 100 );
+        }
+    }
+}
+
+
+// GetDeviceSerialNumbersLoop........................................................................
+var getSnLoopCounter = 0;
+function GetDeviceSerialNumbersLoop()
+{
+    
+    PrintLog(10, "BT: GetDeviceSerialNumbersLoop()... idx=" + getSnIdx + " state=" + getSnState + " Counter=" + getSnLoopCounter + " len=" + guiDeviceList.length );
+
+    // Find the SNs and place in guiDeviceAddrList[] up to a max of 5.
+    if( (getSnIdx < guiDeviceAddrList.length) && (guiDeviceList.length < 5)  )
+    {
+        switch(getSnState)
+        {
+            // Connect to BT device
+            case 0:
+            {
+                if( isSouthBoundIfCnx == false )
+                {
+                    getSnLoopCounter = 0;
+                    ConnectBluetoothDevice(guiDeviceAddrList[getSnIdx]);
+                    getSnState = 1;
+                }   
+                break;
+            }
+
+            // Wait until device connected then try to get ICD version...
+            case 1:
+            {
+                if( isSouthBoundIfCnx )
+                {
+                    isNxtyStatusCurrent = false;
+                    
+                    // Get the ICD version by getting the status message...
+                    var u8TempBuff  = new Uint8Array(2);
+                    u8TempBuff[0] = NXTY_PHONE_ICD_VER;
+                    nxty.SendNxtyMsg(NXTY_STATUS_REQ, u8TempBuff, 1);
+                    getSnState = 2;   
+                }
+                break;
+            }
+            
+            // Wait until ICD version known and then get Serial Number...
+            case 2:
+            {
+                if( isNxtyStatusCurrent )
+                {
+                    if( nxtyRxStatusIcd <= V1_ICD )
+                    {
+                        // Old ICD...do not update automatically...
+                        guiDeviceList[getSnIdx] = "Cnx to Update";
+                        numDevFound++;
+                        
+                        if( bPrivacyViewed == true )
+                        {
+                            var outText = "Found " + numDevFound + " Cel-Fi devices...";
+                            ShowWaitPopUpMsg( "Please wait", outText );
+                            UpdateStatusLine( outText );
+                        }
+                            
+                        // Disconnect from BT...
+                        DisconnectBluetoothDevice();
+                        getSnState = 0;
+                        getSnIdx++;                        
+                    }
+                    else
+                    {
+                        GetNxtySuperMsgParamSelect( NXTY_SEL_PARAM_REG_SN_MSD_TYPE, NXTY_SEL_PARAM_REG_SN_LSD_TYPE ); 
+                        getSnState = 3;
+                    }
+                }
+                else
+                {
+                    if( getSnLoopCounter == 10 )
+                    {
+                        // Try sending again...
+                        getSnState = 1; 
+                    }
+                }
+                break;
+            }
+            
+            // Wait until SN has been returned and then disconnect...
+            case 3:
+            {
+                if( bNxtySuperMsgRsp == true )
+                {
+                    var tempSn = "";
+                    for( i = 0; i < 6; i++ )
+                    {
+                        if( i < 2 )
+                        {
+                            tempSn += U8ToHexText(u8RxBuff[9+i]);
+                        }
+                        else
+                        {
+                            tempSn += U8ToHexText(u8RxBuff[12+i]);    // [14] but i is already 2 so 14-2=12
+                        }
+                    }
+            
+                    guiDeviceList[getSnIdx] = "SN:" + tempSn;
+                    numDevFound++;
+
+                    if( bPrivacyViewed == true )
+                    {
+                        var outText = "Found " + numDevFound + " Cel-Fi devices...";
+                        ShowWaitPopUpMsg( "Please wait", outText );
+                        UpdateStatusLine( outText );
+                    }
+                    
+                    
+                    
+                    // Disconnect from BT...
+                    DisconnectBluetoothDevice();
+                    getSnState = 0;
+                    getSnIdx++;
+                }            
+
+                break;            
+            }
+        }
+
+        getSnLoopCounter++;
+        
+        // Safety exit...
+        if( getSnLoopCounter > 20 )
+        {
+            if( isSouthBoundIfCnx )
+            {
+                DisconnectBluetoothDevice();
+            }
+    
+            getSnState = 0;
+            getSnIdx++;
+        }
+
+        
+        // Come back in 150 mS
+        setTimeout( GetDeviceSerialNumbersLoop, 150 );
+    }
+    else
+    {
+        StopWaitPopUpMsg();
+        
+        PrintLog(1, "guiDeviceAddrList      = " + JSON.stringify(guiDeviceAddrList) ); // An array of device BT addresses to select.
+        PrintLog(1, "guiDeviceRssiList      = " + JSON.stringify(guiDeviceRssiList) ); // An array of RSSI values.
+        PrintLog(1, "guiDeviceList          = " + JSON.stringify(guiDeviceList) );     // An array of Serial Numbers.
+
+        if( isSouthBoundIfCnx )
+        {
+            DisconnectBluetoothDevice();
+        }
+    
+        // Indicate that we are done...
+        isSouthBoundIfCnx      = false;
+        guiDeviceFlag          = true;
+        
+        // Clean up...
+        isNxtyStatusCurrent = false;
+    }
+}
+
+
+
+// CnxAndIdentifySouthBoundDevice........................................................................
+var cnxIdState       = 0;
+var cnxIdIdx         = -1;
+var cnxIdLoopCounter = 0;
+function CnxAndIdentifySouthBoundDevice(devIdx)
+{
+    PrintLog(1, "BT: CnxAndIdentifySouthBoundDevice("+ devIdx + ") = " + guiDeviceList[devIdx] );
+    
+    if( devIdx == cnxIdIdx )
+    {
+        // If we are already connected to the correct device then flash...
+        FindMyCelfi();   
+    }
+    else
+    {
+        // Start the disconnect and reconnect loop...
+        cnxIdState       = 0;
+        cnxIdIdx         = devIdx;
+        cnxIdLoopCounter = 0;
+        setTimeout( CnxId, 100 );
+    }
+}
+
+
+// CnxAndIdentifySouthBoundDevice........................................................................
+function CnxId()
+{
+    PrintLog(10, "BT: CnxId()... idx=" + cnxIdIdx + " state=" + cnxIdState + " Counter=" + cnxIdLoopCounter );
+
+    switch(cnxIdState)
+    {
+        // Disconnect if connected
+        case 0:
+        {
+            if( isSouthBoundIfCnx == true )
+            {
+                DisconnectBluetoothDevice();
+            }   
+
+            cnxIdState = 1;
+            break;
+        }
+
+
+        // Connect to BT device
+        case 1:
+        {
+            if( isSouthBoundIfCnx == false )
+            {
+                ConnectBluetoothDevice(guiDeviceAddrList[cnxIdIdx]);
+                cnxIdState = 2;
+            }   
+            break;
+        }
+
+        // Wait until device connected then send flash command...
+        case 2:
+        {
+            if( isSouthBoundIfCnx )
+            {
+                FindMyCelfi();
+                return;             // Exit stage left
+            }
+            break;
+        }
+    }
+    
+
+    cnxIdLoopCounter++;
+    
+    // Safety exit...
+    if( cnxIdLoopCounter < 40 )
+    {
+        // Come back in 250 mS
+        setTimeout( CnxId, 250 );
+    }
+}
 
 
 

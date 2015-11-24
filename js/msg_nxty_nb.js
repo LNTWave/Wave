@@ -15,7 +15,7 @@ var bGotConfigFile      = false;
 
 
 // GetNxtyPartNumber............................................................................................
-// Should return: "590NP344-NEXT-B110040"
+// Should return: "590NP34FTUK1VFUK6BB1"
 function GetNxtyPartNumber(uniqueId)
 {
     // Build the URL...
@@ -46,7 +46,13 @@ function GetNxtyPartNumber(uniqueId)
                     guiMobilityFlag = true;
                 }
                 
-                PrintLog(1, "SKU: " + mySku + "  Model Number: " + myModel + "  Product type based on SKU: " + guiProductType );
+                // The new 590 should be at least 20 characters in length...
+                if( response.length >= 20 )
+                {
+                    myOperatorCode = response.substring(12,16);
+                } 
+                
+                PrintLog(1, "SKU: " + mySku + "  Model Number: " + myModel + "  Product type based on SKU: " + guiProductType + " OpCode: " + myOperatorCode );
             }
         },
         function(response)                      // error call back
@@ -126,34 +132,43 @@ function GetNxtyOperatorCode(sevenHundredNumber)
     // Build the URL...
     var myBigUrl  = myNextivityUrl + "OperatorCodeReq/" + sevenHundredNumber;
     
-    PrintLog( 1, "GetNxtyOperatorCode: " + myBigUrl );
     
-    SendNorthBoundData( 
-        "GET",
-        myBigUrl,
-        "text/plain",
-        "",
-        "",                                 // response format
-        function(response)                      // success call back
-        {
-            PrintLog( 1, "Response success: GetNxtyOperatorCode()..." + JSON.stringify(response) );
-            if( response != null )
+    if( sevenHundredNumber.length > 5 )
+    {
+        PrintLog( 1, "GetNxtyOperatorCode: " + myBigUrl );
+        
+        SendNorthBoundData( 
+            "GET",
+            myBigUrl,
+            "text/plain",     
+            "",
+            "",                                 // response format
+            function(response)                      // success call back
             {
-                // Response looks like: "ATUS:AT&T"
-                var textIdx = response.search(":");
-                if( textIdx != -1 )
+                PrintLog( 1, "Response success: GetNxtyOperatorCode()..." + JSON.stringify(response) );
+                if( response != null )
                 {
-                    guiOperator = response.substring(textIdx+1);
-                    guiOperatorCode = response.substring(0,4);      // 4 digit code    
+                    // Response looks like: "ATUS:AT&T"
+                    guiOperatorCode = response.substring(0,4);      // 4 digit code
+                        
+                    var textIdx = response.search(":");
+                    if( textIdx != -1 )
+                    {
+                        guiOperator = response.substring(textIdx+1);
+                    }
+                    
+                    PrintLog(1, "Operator Code: " + guiOperatorCode + "  Operator: " + guiOperator );
                 }
-                
-                PrintLog(1, "Operator Code: " + guiOperatorCode + "  Operator: " + guiOperator );
+            },
+            function(xhr, textStatus, errorThrown)                      // error call back
+            {
+                PrintLog( 99, "Response error: GetNxtyOperatorCode()..." + JSON.stringify(xhr) + " status:" + textStatus + " err:" + errorThrown );
             }
-        },
-        function(xhr, textStatus, errorThrown)                      // error call back
-        {
-            PrintLog( 99, "Response error: GetNxtyOperatorCode()..." + JSON.stringify(xhr) + " status:" + textStatus + " err:" + errorThrown );
-        }
-    );
+        );
+    }
+    else
+    {
+        PrintLog(99, "GetNxtyOperatorCode: " + myBigUrl + " Invalid Secured Config PN." );
+    }
     
 }

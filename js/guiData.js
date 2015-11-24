@@ -30,8 +30,9 @@ var guiUserFirstName        = null;             // Filled in from the cloud.
 var guiOperatorFlag         = false;            // Flag:  true:  display operator selection 
 var guiOperatorList         = [];               // An array of operators to select.
 var guiDeviceFlag           = false;            // Flag:  true:  display device selection 
-var guiDeviceList           = [];               // An array of devices to select.
+var guiDeviceAddrList       = [];               // An array of device addresses to select. (Android: MAC, IOS: Mangled MAC)
 var guiDeviceRssiList       = [];               // An array of associated BT RSSI values...
+var guiDeviceList           = [];               // An array of device IDs, i.e. Serial Numbers, to display for user to select.
 var guiRegistrationFlag     = false;            // true if registered.
 var guiRegistrationLockBits = 0;                // Bit 0: Loc Lock, Bit 1: Reg, Bit 2: Reg Required, Bit 3: Reg Desired/Optional
 var guiRegistrationPercent  = -1;               // If >= 0 then display prograss bar...
@@ -547,7 +548,9 @@ function DumpDataTables()
     PrintLog(1, "guiOperatorFlag        = " + guiOperatorFlag );                   // Flag:  true:  display operator selection 
     PrintLog(1, "guiOperatorList        = " + JSON.stringify(guiOperatorList) );   // An array of operators to select.
     PrintLog(1, "guiDeviceFlag          = " + guiDeviceFlag );                     // Flag:  true:  display device selection 
-    PrintLog(1, "guiDeviceList          = " + JSON.stringify(guiDeviceList) );     // An array of devices to select.
+    PrintLog(1, "guiDeviceAddrList      = " + JSON.stringify(guiDeviceAddrList) ); // An array of device BT addresses to select.
+    PrintLog(1, "guiDeviceRssiList      = " + JSON.stringify(guiDeviceRssiList) ); // An array of RSSI values.
+    PrintLog(1, "guiDeviceList          = " + JSON.stringify(guiDeviceList) );     // An array of Serial Numbers.
     PrintLog(1, "guiSoftwareStatus      = " + guiSoftwareStatusText[guiSoftwareStatus] );                 // Number: 0=unknown, 1=Checking for updates, 2=Please update, 3=Up to date, 4=Update in progress
     PrintLog(1, "guiSoftwareButtonFlag  = " + guiSoftwareButtonFlag );             // Flag: true to enable the update button.
     
@@ -619,11 +622,37 @@ function SetOperatorSelection( opSelectionIdx )
 }
 
 //.................................................................................................................
+// 1) Disconnect BT if connected.
+// 2) Connect BT
+// 3) Send command to flash
+// 4) Remain connected...
+function ConnectAndIdentifyDevice( devSelectionIdx )
+{
+    if( (devSelectionIdx >= 0) && (devSelectionIdx < guiDeviceAddrList.length) )
+    {
+    	CnxAndIdentifySouthBoundDevice( devSelectionIdx );
+    }
+    else
+    {
+        PrintLog(99, "GUI: ConnectAndIdentifyDevice() bad index: " + devSelectionIdx );
+    }
+
+}
+
+//.................................................................................................................
+// - BT device must already be connected.   Simply sets a flag to allow main to proceed.
+function ConnectDevice()
+{
+	isSouthBoundIfListDone = true;              // Main app loop must be placed on hold until true.
+}
+
+//.................................................................................................................
 function SetDeviceSelection( devSelectionIdx )
 {
-    if( (devSelectionIdx >= 0) && (devSelectionIdx < guiDeviceList.length) )
+    if( (devSelectionIdx >= 0) && (devSelectionIdx < guiDeviceAddrList.length) )
     {
         ConnectSouthBoundIf( devSelectionIdx );
+        isSouthBoundIfListDone = true;              // Main app loop must be placed on hold until true.
     }
     else
     {

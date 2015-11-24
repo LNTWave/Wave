@@ -85,7 +85,8 @@ const   NXTY_PCCTRL_FLASH_REG             = 0xF000003C;
 
 const     NXTY_SEL_PARAM_REG_UID_TYPE     = 0x01;
 const     NXTY_SEL_PARAM_LINK_STATE       = 0x06;
-const     NXTY_SEL_PARAM_REG_SN_TYPE      = 0x08;
+const     NXTY_SEL_PARAM_REG_SN_LSD_TYPE  = 0x08;
+const     NXTY_SEL_PARAM_REG_SN_MSD_TYPE  = 0x09;
 const     NXTY_SEL_PARAM_ANT_STATUS       = 0x10;
 const     NXTY_SEL_PARAM_REG_SUPPORT_DATA = 0x11;
 const     NXTY_SEL_PARAM_REG_SECURE_3G    = 0x14;
@@ -1149,9 +1150,9 @@ var nxty = {
                                 }
                                 else
                                 {
-                                    PrintLog(99, "Secured Setup PN undefined, setting to 700N037-NEXT-00");
-                                    nxtyConfigPn    = "700N037-NEXT-00";
-                                    nxtySwVerNuSCfg = "816.144";
+                                    PrintLog(99, "Secured Setup PN undefined.");
+//                                    nxtyConfigPn    = "700N037-NEXT-00";
+                                    nxtySwVerNuSCfg = "000.000";
                                 }
                                 
                                 nxtySwVerNuSCfg = FixInternalVer(nxtySwVerNuSCfg);
@@ -1290,14 +1291,14 @@ var nxty = {
                                     nxtySwVerCuArt = "";
                                     for( i = 0; i < 3; i++ )
                                     {
-                                        nxtySwVerCuArt += String.fromCharCode(u8RxBuff[21+i]);
+                                        nxtySwVerCuArt += String.fromCharCode(rtnHexAsciiOrZero(u8RxBuff[21+i]));
                                     }
                                     
                                     nxtySwVerCuArt += ".";
                                     
                                     for( i = 0; i < 3; i++ )
                                     {
-                                        nxtySwVerCuArt += String.fromCharCode(u8RxBuff[28+i]);
+                                        nxtySwVerCuArt += String.fromCharCode(rtnHexAsciiOrZero(u8RxBuff[28+i]));
                                     }
                                 }
                                 else
@@ -1307,7 +1308,7 @@ var nxty = {
                             
                                 nxtySwVerCuArt = FixInternalVer(nxtySwVerCuArt);
                             
-                                PrintLog(1,  "  Art Display = " + nxtySwVerCuArt );
+                                PrintLog(1,  "  CU Art Display = " + nxtySwVerCuArt );
                             }
                             else
                             {
@@ -1316,14 +1317,14 @@ var nxty = {
                                     nxtySwVerNuArt = "";
                                     for( i = 0; i < 3; i++ )
                                     {
-                                        nxtySwVerNuArt += String.fromCharCode(u8RxBuff[21+i]);
+                                        nxtySwVerNuArt += String.fromCharCode(rtnHexAsciiOrZero(u8RxBuff[21+i]));
                                     }
                                     
                                     nxtySwVerNuArt += ".";
                                     
                                     for( i = 0; i < 3; i++ )
                                     {
-                                        nxtySwVerNuArt += String.fromCharCode(u8RxBuff[28+i]);
+                                        nxtySwVerNuArt += String.fromCharCode(rtnHexAsciiOrZero(u8RxBuff[28+i]));
                                     }
                                 }
                                 else
@@ -1333,7 +1334,7 @@ var nxty = {
 
                                 nxtySwVerNuArt = FixInternalVer(nxtySwVerNuArt);
                             
-                                PrintLog(1,  "  Art Display = " + nxtySwVerNuArt );
+                                PrintLog(1,  "  NU Art Display = " + nxtySwVerNuArt );
                             }
     
                             // (NU Only) ......................................................
@@ -1351,14 +1352,14 @@ var nxty = {
                                     nxtySwVerNuEvm = "";
                                     for( i = 0; i < 3; i++ )
                                     {
-                                        nxtySwVerNuEvm += String.fromCharCode(u8RxBuff[49+i]);
+                                        nxtySwVerNuEvm += String.fromCharCode(rtnHexAsciiOrZero(u8RxBuff[49+i]));
                                     }
                                     
                                     nxtySwVerNuEvm += ".";
                                     
                                     for( i = 0; i < 3; i++ )
                                     {
-                                        nxtySwVerNuEvm += String.fromCharCode(u8RxBuff[56+i]);
+                                        nxtySwVerNuEvm += String.fromCharCode(rtnHexAsciiOrZero(u8RxBuff[56+i]));
                                     }
                                 }
                             

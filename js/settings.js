@@ -237,7 +237,7 @@ function updateAntStatus()
         // Move to the next bd...
         uTemp >>= 8;
     }
-util.updateAntennaBandButtons();
+	util.updateAntennaBandButtons();
     PrintLog(1, "UpdateAntStatus(): guiAntennaManualFlag=" + guiAntennaManualFlag + " guiAntennaIntFlags=" + JSON.stringify(guiAntennaIntFlags) + " guiAntennaBands=" + JSON.stringify(guiAntennaBands) + " guiAntennaFreqArrayMHz=" + JSON.stringify(guiAntennaFreqArrayMHz) ); 
     
     guiSettingsDirtyFlag = true;

@@ -61,7 +61,7 @@ var pcBrowserPlatform           = "PcBrowser";
 
 var uIcd                    = 0;
 var swVerBtScan             = "--.--";          // Filled in by scan results. 
-var szVerApp                = "01.00.06";       // In BCD, remember config.xml as well.
+var szVerApp                = "01.00.07";       // In BCD, remember config.xml as well.
 
 // Determine which messages get sent to the console.  1 normal, 10 verbose.
 // Level  1: Flow and errors.
@@ -294,7 +294,7 @@ function PrintLog(level, txt)
     {
 //        console.log("**** Error: (" + d.getSeconds() + "." + d.getMilliseconds() + ") " + txt);
         var logText = "(" + d.getMinutes() + ":" + d.getSeconds() + "." + myMs + ") **** Error: " + txt;
-        //console.log( logText );
+        console.log( logText );
         WriteLogFile( logText );
         
 //jdo        console.error(txt);            // console.error does not work on phonegap
@@ -605,14 +605,14 @@ function HandlePrivacyConfirmation(buttonIndex)
         
         if( buttonIndex == 1 )
         {
-        	//alert(isSouthBoundIfCnx +"---"+ guiDeviceFlag);
+/*        
             if( (isSouthBoundIfCnx == false) && (guiDeviceFlag == false) )
             {
                 // Start the spinner..if BT not connected and we are not asking the user to select a BT device.
-                //ShowWaitPopUpMsg( "Please wait", "Searching for Cel-Fi devices..." );
-                //UpdateStatusLine("Searching for Cel-Fi devices...");
-				//util.showSearchAnimation();
+                ShowWaitPopUpMsg( "Please wait", "Searching for Cel-Fi devices..." );
+                UpdateStatusLine("Searching for Cel-Fi devices...");
             }
+*/            
         }
         
     }
@@ -798,6 +798,7 @@ var app = {
                 ((window.device.platform == iOSPlatform)     && (parseFloat(window.device.version) < 7.1))      )
             {
                 PrintLog(1, "Phone's Operating System is out of date.   Please upgrade to latest version." );
+                
                 ShowConfirmPopUpMsg(
                     'Phone Operating System is out of date.   Please upgrade to latest version.  Exiting Wave App.',    // message
                     HandleOsConfirmation,                   // callback to invoke with index of button pressed
@@ -815,6 +816,7 @@ var app = {
         {
                 // Start the handler to be called every second...
                 MainLoopIntervalHandle = setInterval(app.mainLoop, 1000 );
+                alert("draw registration");
         }
         
         
@@ -884,11 +886,6 @@ var app = {
                 }
                 else
                 {
-                    // Wait until the BT list has been gathered...
-                    if( isSouthBoundIfListDone == false )
-                    {
-                        return;
-                    }
                     
                     
                     // Normal flow should come here once bluetooth has been enabled...
@@ -939,6 +936,13 @@ var app = {
             return;
         }
         
+       
+
+        // Wait until the BT device has been selected...
+        if( isSouthBoundIfListDone == false )
+        {
+            return;
+        }
         
         
         // ------------------------------------------------------------------------------------------
@@ -953,7 +957,7 @@ var app = {
                     isNetworkConnected = NorthBoundConnectionActive();
                     
                     // Start the spinner..
-                    
+                    util.deviceIdentified();
                     //ShowWaitPopUpMsg( "Please wait", "Syncing data..." );
                     
                 }
@@ -1035,6 +1039,7 @@ var app = {
                         
                         // Since Tech mode pulls from the CU cloud buffer set it to the retrieved NU address...
                         nxtyCuCloudBuffAddr = nxtyNuCloudBuffAddr;
+                        nxtyCuUniqueId      = nxtyNuUniqueId;
                         
                         // Update the CU's build ID to be used on Build ID check below.
                         nxtySwBuildIdCu     = nxtySwBuildIdNu;
@@ -1149,6 +1154,7 @@ jdo                {
                     SendCloudData( "'SwVerNU_CF':'"  + SwPnNuCu + nxtySwVerNuCf  + "'" );
                     SendCloudData( "'SwVerNU_PIC':'" + SwPnPic  + nxtySwVerNuPic + "'" );
 // TBD                    SendCloudData( "'SwVerNU_BT':'"    + SwPnBt   + nxtySwVerNuBt    + "', 'OperatorCode':'" + myOperatorCode + "'"  );
+                    SendCloudData( "'OperatorCode':'" + myOperatorCode + "'"  );
                     SendCloudData( "'SwVerNU_SCFG':'" + SwPnNuCfg  + nxtySwVerNuSCfg + "'" );
                     SendCloudData( "'SwVerNU_UCFG':'" + SwPnNuCfg  + nxtySwVerNuUCfg + "'" );
                     SendCloudData( "'SwVerNU_ART':'"  + SwPnArt    + nxtySwVerNuArt  + "'" );
@@ -1364,7 +1370,6 @@ mySn = myTempSn;
                 }  
                 else
                 {
-                	//alert("clear till gathering data");
                 
                     // No critical alerts so post the buttons....
                     guiButtonSwHtml = szSwButtonImg;
@@ -1411,6 +1416,7 @@ mySn = myTempSn;
                             isRegistered = true;    
                             UpdateRegIcon(1);       // Set reg ICON to Registered...
                             UpdateRegButton(1);     // Remove the reg button.
+                            RequestModeChange(PROG_MODE_TECH);
                         }else{
                         	isRegistered = true;
                         	//mainContainerDisplayFlag = 1;
@@ -1478,7 +1484,7 @@ mySn = myTempSn;
         }   // End if( isSouthBoundIfCnx )
 
         
-    } // End of MainLoop()
+    }, // End of MainLoop()
 
 };
 
@@ -1580,4 +1586,17 @@ function GetRegLockStatus()
     return( false );
 }  
 
+// rtnHexAsciiOrZero...........................................................................................................
+function rtnHexAsciiOrZero(inByte) 
+{
+    if( ((inByte >= 0x30) && (inByte <= 0x39)) ||       // 0 to 9
+        ((inByte >= 0x41) && (inByte <= 0x46)) ||       // A to F
+        ((inByte >= 0x61) && (inByte <= 0x66)) )        // a to f
+    {
+        return( inByte );
+    }
+        
+    return( 0x30 ); // Return ASCII zero.
+    
+}
 

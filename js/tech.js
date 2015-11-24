@@ -74,7 +74,8 @@ var tech = {
                  
         DumpDataTables();         
          
-        app.renderHomeView();
+        //app.renderHomeView();
+        util.closeApplication();
     },
 
 

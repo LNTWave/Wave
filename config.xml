@@ -3,7 +3,7 @@
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "NxtyWave"
         versionCode = "15"          
-        version     = "01.00.06">
+        version     = "01.00.07">
  
     <name>Wave</name>
  
