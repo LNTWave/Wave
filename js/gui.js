@@ -49,10 +49,9 @@ var szRegCountry                = "";
 var szRegPhone                  = "";
 var szUserValidation            = "Mandatory Input: Please enter";
 var bProgBarDisplayed           = false;
-var dashboardPanelContent		= "<div class='dashboardPanel1'><div class='col-xs-12 col-sm-12 userGreets'>Welcome<span id='userDpName'></span></div><div class='col-xs-12 col-sm-12' id='fixIt'><div class='col-xs-8 col-sm-10 userGreets deviceStatusCtnr'><span id='userDeviceStatusLine'></span><span id='deviceStatus' class='good'></span></div><div class='col-xs-4 col-sm-2'><div class='fr' id='fixItArrow'></div><div class='fr' id='fixItContent'></div><div class='cb'></div></div></div><div class='col-xs-12 col-sm-12' id='deviceTypeBG'></div><div class='col-xs-12 col-sm-12 deviceSerialNumber'></div></div><div class='dashboardPanel2 col-sm-12 col-xs-12'><div class='col-xs-6 col-sm-3 dashboardContent'><div id='signalStrengthContainer' class='graphicalRep'><div class='signalContainer'><div id='networkSignal1' class='networkSignalIndi activeStatus'></div><div id='networkSignal2' class='networkSignalIndi activeStatus'></div><div id='networkSignal3' class='networkSignalIndi activeStatus'></div><div id='networkSignal4' class='networkSignalIndi deactiveStatus'></div><div id='networkSignal5' class='networkSignalIndi deactiveStatus'></div></div></div><div class='dataTypeTitle'>NETWORK STREGNTH</div></div><div class='col-xs-6 col-sm-3 dashboardContent'><div id='gaugeContainer' class='graphicalRep'><canvas id='boostGauge'></canvas><div id='boosterLevel'>7</div></div><div class='dataTypeTitle'>BOOST</div></div><div class='col-xs-6 col-sm-3 dashboardContent'><div id='operatorContainer' class='graphicalRep'> <span></span> </div><div class='dataTypeTitle'>OPERATOR</div></div><div class='col-xs-6 col-sm-3 dashboardContent'><div id='coverageNamecontainer' class='graphicalRep'> <span>LTE</span> </div><div class='dataTypeTitle'>COVERAGE</div></div></div>";
+var dashboardPanelContent		= "<div class='dashboardPanel1'><div class='col-xs-12 col-sm-12 userGreets'>Welcome<span id='userDpName'></span></div><div class='col-xs-12 col-sm-12' id='fixIt'><div class='col-xs-8 col-sm-10 userGreets deviceStatusCtnr'><span id='userDeviceStatusLine'></span><span id='deviceStatus' class='good'></span></div><div class='col-xs-4 col-sm-2'><div class='fr' id='fixItArrow'></div><div class='fr' id='fixItContent'></div><div class='cb'></div></div></div><div class='col-xs-12 col-sm-12' id='deviceTypeBG'></div><div class='col-xs-12 col-sm-12 deviceSerialNumber'></div></div><div class='dashboardPanel2 col-sm-12 col-xs-12'><div class='col-xs-6 col-sm-3 dashboardContent'><div id='signalStrengthContainer' class='graphicalRep'><div class='signalContainer'><div id='networkSignal1' class='networkSignalIndi activeStatus'></div><div id='networkSignal2' class='networkSignalIndi activeStatus'></div><div id='networkSignal3' class='networkSignalIndi activeStatus'></div><div id='networkSignal4' class='networkSignalIndi deactiveStatus'></div><div id='networkSignal5' class='networkSignalIndi deactiveStatus'></div></div></div><div class='dataTypeTitle'>NETWORK STRENGTH</div></div><div class='col-xs-6 col-sm-3 dashboardContent'><div id='gaugeContainer' class='graphicalRep'><canvas id='boostGauge'></canvas><div id='boosterLevel'>7</div></div><div class='dataTypeTitle'>BOOST</div></div><div class='col-xs-6 col-sm-3 dashboardContent'><div id='operatorContainer' class='graphicalRep'> <span></span> </div><div class='dataTypeTitle'>OPERATOR</div></div><div class='col-xs-6 col-sm-3 dashboardContent'><div id='coverageNamecontainer' class='graphicalRep'> <span>LTE</span> </div><div class='dataTypeTitle'>COVERAGE</div></div></div>";
 var topHorizontalMenu			= "<div class='headerContainer' id='headerContainer'> <div class='titlebarWrapper'> <div class='sliderMenuWrapper col-xs-2 col-sm-2'> <a href='#menu' class='menu-link'> <div class='sliderMenuIcn'></div></a> </div><div class='logoWrapper col-xs-8 col-sm-8'> <div class='logoImg'></div></div><div class='faqIcnWrapper col-xs-2 col-sm-2'> <div class='faqIcn'></div></div></div><div class='menuWrapper'> <div class='col-xs-4 col-sm-2 selectedTab' id='dashboardMenu'> <div>DASHBOARD</div></div><div class='col-xs-4 col-sm-2' id='settingsMenu'> <div>SETTINGS</div></div><div class='col-xs-4 col-sm-2' id='advancedMenu'> <div>ADVANCED</div></div></div></div><div class='cb'></div><div id='bodyContainer'></div>";
-//var mainContainerWithMenu		= "<div id='menu' class='panelMenu' role='navigation'> <div class='panelLogoWrapper'> <div class='panelLogo'></div></div><div class='panelMenuList'> <ul> <li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='finderIcn'></div><span>Signal Finder</span><div class='cb'></div></a> </li><li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='aboutIcn'></div><span onclick='util.showAboutUs()'>About</span><div class='cb'></div></a> </li><li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='feedBackIcn'></div><span onclick='util.showSendFeedback()'>Send Feedback</span><div class='cb'></div></a> </li><li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='policyIcn'></div><span onclick='util.showPrivacyPolicy()'>Privacy Policy</span><div class='cb'></div></a> </li><li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='registerIcn'></div><span>Register Booster</span><div class='cb'></div></a> </li></ul> </div><div class='socialLinkWrapper'> <div class='socialLinkTitle'>Follow us:</div><div class='socialLinkIcnWrapper'> <div class='socialIcns' id='facebookIcn' onclick='window.open(\'https://www.facebook.com/5bars\', \'_system\')'></div><div class='socialIcns' id='twitterIcn' onclick='window.open(\'http://twitter.com/#!/5bars\', \'_system\')'></div><div class='socialIcns' id='linkedinIcn' onclick='window.open(\'http://www.linkedin.com/company/nextivity-inc.\', \'_system\')'></div><div class='socialIcns' id='googleIcn'></div></div></div></div><div id='mainContainer' class='push'></div>";
-var mainContainerWithMenu		= "<div id='menu' class='panelMenu' role='navigation'> <div class='panelLogoWrapper'> <div class='panelLogo'></div></div><div class='panelMenuList'> <ul><li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='aboutIcn'></div><span onclick='util.showAboutUs()'>About</span><div class='cb'></div></a> </li><li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='feedBackIcn'></div><span onclick='util.showSendFeedback()'>Send Feedback</span><div class='cb'></div></a> </li><li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='policyIcn'></div><span onclick='util.showPrivacyPolicy()'>Privacy Policy</span><div class='cb'></div></a> </li><li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='registerIcn'></div><span>Register Booster</span><div class='cb'></div></a> </li></ul> </div><div class='socialLinkWrapper'> <div class='socialLinkTitle'>Follow us:</div><div class='socialLinkIcnWrapper'> <div class='socialIcns' id='facebookIcn' onclick='window.open(\'https://www.facebook.com/5bars\', \'_system\')'></div><div class='socialIcns' id='twitterIcn' onclick='window.open(\'http://twitter.com/#!/5bars\', \'_system\')'></div><div class='socialIcns' id='linkedinIcn' onclick='window.open(\'http://www.linkedin.com/company/nextivity-inc.\', \'_system\')'></div><div class='socialIcns' id='googleIcn'></div></div></div></div><div id='mainContainer' class='push'></div>";
+var mainContainerWithMenu       = "<div id='menu' class='panelMenu' role='navigation'> <div class='panelLogoWrapper'> <div class='panelLogo'></div></div><div class='panelMenuList'> <ul><li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='aboutIcn'></div><span onclick='util.showAboutUs()'>About</span><div class='cb'></div></a> </li><li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='feedBackIcn'></div><span onclick='util.showSendFeedback()'>Send Feedback</span><div class='cb'></div></a> </li><li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='policyIcn'></div><span onclick='util.showPrivacyPolicy()'>Privacy Policy</span><div class='cb'></div></a> </li><li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='registerIcn'></div><span>Register Booster</span><div class='cb'></div></a> </li></ul> </div><div class='socialLinkWrapper'> <div class='socialLinkTitle'>Follow us:</div><div class='socialLinkIcnWrapper'> <div class='socialIcns' id='facebookIcn' onclick='window.open(\"https://www.facebook.com/5bars\", \"_system\")'></div><div class='socialIcns' id='twitterIcn' onclick='window.open(\"http://twitter.com/5bars\", \"_system\")'></div><div class='socialIcns' id='linkedinIcn' onclick='window.open(\"https://www.linkedin.com/company/nextivity-inc-\", \"_system\")'></div><div class='socialIcns' id='googleIcn' onclick='window.open(\"https://plus.google.com/+Cel-fi/posts\", \"_system\")'></div></div></div></div><div id='mainContainer' class='push'></div>";
 var mainContainerWithoutMenu	= "<div id='mainContainer'></div>";
 var mainContainerDisplayFlag	= 0;
 var mainLoopCounter				= 0;
@@ -483,6 +482,8 @@ function SelectOperator(myIdx)
 function ProcessAdvancedView(){
 	if( lastGuiCurrentMode != guiCurrentMode )
     {
+		$(".menuWrapper").find(".selectedTab").removeClass("selectedTab");
+        $('#advancedMenu').addClass("selectedTab");
 		util.loadBodyContainer('advanced');
 		lastGuiCurrentMode  = guiCurrentMode;
     }
@@ -498,7 +499,8 @@ function ProcessRegistrationView()
     if( lastGuiCurrentMode != guiCurrentMode )
     {
         PrintLog(1, "ProcessRegistrationView()");
-
+        var whyDoIRegTitle = "Why Register";
+        var whyDoIRegBody = "In some cases, regulatory bodies and or mobile network operators may require users to register the signal booster. <br><br>Depending on which instructions were included with your Cel-Fi, registration may be required before the device will work. Or, in some cases you may have to also call your network operator to complete the registration.";
         // Draw the view...
         /*var myUniiIcon = (bUniiStatusKnown == false) ? szUniiIconButton + "</button>"  : bUniiUp ? szUniiIconButton + szUniiIconUp + "</button>" : szUniiIconButton + szUniiIconDown + "</button>";
         var mySbIfIcon = isSouthBoundIfCnx ? szSbIfIconButton + szSbIfIconOn + "</button>" : szSbIfIconButton + szSbIfIconOff + "</button>";
@@ -532,7 +534,7 @@ function ProcessRegistrationView()
 
             szMyStatusLine;*/
         document.getElementById("mainContainer").className = "";
-        var myHtml = "<div id='appHeaderDashboard' class='page-header'><div id='headerContainer'><div class='col-xs-2 col-sm-1' align='left'></div><div class='col-xs-8 col-sm-10' align='center'><img src='img/assets/logos/WaveLogoSMWhite.svg'/></div><div class='col-xs-2 col-sm-1 headerIcon' align='center'><img src='img/assets/icons/HelpOutline.svg'/></div></div></div><div id='registrationFormContainer' class='container'><div class='pageTitleContainer'>Please register your device</div><div class='registerFaq'>Why do I need to register?</div><form role='form' name='inputUser'><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>First name</label><input type='text' class='form-control' name='fName' id='fName'></div><div class='errorContainer' id='errFn'>Please enter your First name</div></div><div class='col-sm-6'><div class='form-group'><label for='text'>Last name</label><input type='text' class='form-control' name='lName' id='lName'></div><div class='errorContainer' id='errLn'>Please enter your Last name</div></div></div><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>Address line 1</label><input type='text' class='form-control' name='addr1' id='addr1'></div><div class='errorContainer' id='errAddr'>Please enter Address Line 1</div></div><div class='col-sm-6'><div class='form-group'><label for='text'>Address line 2</label><input type='text' class='form-control' name='addr2' id='addr2'></div></div></div><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>City </label><input type='text' class='form-control' name='city' id='city'></div><div class='errorContainer' id='errCity'>Please enter your City</div></div><div class='col-sm-6'><div class='form-group'><label for='text'>State/Province/Region</label><input type='text' class='form-control' name='state' id='state'></div><div class='errorContainer' id='errState'>Please enter your State/Province/Region</div></div></div><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>ZIP/Postal Code</label><input type='number' class='form-control' name='zip' id='zip'></div><div class='errorContainer' id='errZip'>Please enter your ZIP/Postal Code</div></div><div class='col-sm-6'><div class='form-group'><label for='text'>Country</label>"
+        var myHtml = "<div id='appHeaderDashboard' class='page-header'><div id='headerContainer'><div class='col-xs-2 col-sm-1' align='left'></div><div class='col-xs-8 col-sm-10' align='center'><img src='img/assets/logos/WaveLogoSMWhite.svg'/></div><div class='col-xs-2 col-sm-1 headerIcon registerHelp' align='center'><img src='img/assets/icons/HelpOutline.svg'/></div></div></div><div id='registrationFormContainer' class='container'><div class='pageTitleContainer'>Please register your device</div><div id='whyDoIRegister' class='registerFaq'>Why do I need to register?</div><form role='form' name='inputUser'><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>First name</label><input type='text' class='form-control' name='fName' id='fName'></div><div class='errorContainer' id='errFn'>Please enter your First name</div></div><div class='col-sm-6'><div class='form-group'><label for='text'>Last name</label><input type='text' class='form-control' name='lName' id='lName'></div><div class='errorContainer' id='errLn'>Please enter your Last name</div></div></div><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>Address line 1</label><input type='text' class='form-control' name='addr1' id='addr1'></div><div class='errorContainer' id='errAddr'>Please enter Address Line 1</div></div><div class='col-sm-6'><div class='form-group'><label for='text'>Address line 2</label><input type='text' class='form-control' name='addr2' id='addr2'></div></div></div><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>City </label><input type='text' class='form-control' name='city' id='city'></div><div class='errorContainer' id='errCity'>Please enter your City</div></div><div class='col-sm-6'><div class='form-group'><label for='text'>State/Province/Region</label><input type='text' class='form-control' name='state' id='state'></div><div class='errorContainer' id='errState'>Please enter your State/Province/Region</div></div></div><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>ZIP/Postal Code</label><input type='number' class='form-control' name='zip' id='zip'></div><div class='errorContainer' id='errZip'>Please enter your ZIP/Postal Code</div></div><div class='col-sm-6'><div class='form-group'><label for='text'>Country</label>"
         			+"<select class='form-control' name='country' id='country'>";
         
         for(var x=0; x<countryList.length;x++){
@@ -542,6 +544,15 @@ function ProcessRegistrationView()
         myHtml = myHtml +"</select>"
         		 +"</div><div class='errorContainer' id='errCtry'>Please select your Country</div></div></div><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>Phone Number</label><input type='number' class='form-control' name='phone' id='phone'></div><div class='errorContainer' id='errPN'>Please enter your Phone Number</div></div><div class='col-sm-6'></div></div><div class='col-sm-12 regBtnContainer'><div class='col-sm-6'></div><div class='col-sm-6'><div class='form-group buttonContainer' align='right'><input type='button' value='Skip' class='defaultButton skipButton' ><button type='button' class='defaultButton' id='regButton' onclick='javascript:return ValidateUserData();'>Register</button></div></div></div></form></div>";
         $('#mainContainer').html(myHtml);  
+        
+        $('.registerHelp').bind("click",function() {			
+			util.showRegisterHelp();
+    	});
+        
+        //createPopupWithCloseBtn
+        $('#whyDoIRegister').bind("click",function() {			
+			util.createPopupWithCloseBtn(whyDoIRegTitle, whyDoIRegBody);
+    	});
         
         // Fill in any defaults...
         document.inputUser.fName.value   = szRegFirstName;
@@ -748,61 +759,9 @@ function ProcessTechView()
 {
     if( lastGuiCurrentMode != guiCurrentMode )
     {
-        /*PrintLog(1, "GUI: ProcessTechView()");
-
-        // Draw the view...
-        var myUniiIcon = (bUniiStatusKnown == false) ? szUniiIconButton + "</button>"  : bUniiUp ? szUniiIconButton + szUniiIconUp + "</button>" : szUniiIconButton + szUniiIconDown + "</button>";
-        var mySbIfIcon = isSouthBoundIfCnx ? szSbIfIconButton + szSbIfIconOn + "</button>" : szSbIfIconButton + szSbIfIconOff + "</button>";
-        var myRegIcon  = (nxtyRxRegLockStatus == 0x00) ? szRegIconButton + "</button>" : isRegistered ? szRegIconButton + szRegIconReg + "</button>" : szRegIconButton + szRegIconNotReg + "</button>";
-        
-        var myHtml = 
-            "<img src='img/header_tech.png' width='100%' />" +
-            "<button id='back_arrow_id' type='button' class='back_icon' onclick='RequestModeChange(PROG_MODE_MAIN)'><img src='img/go_back.png'/></button>"+
-            myRegIcon +
-            mySbIfIcon +
-            myUniiIcon +
-
-//            "<br><br><br><h1 id=myH1>Heading</h1><br><br>" +
-            "<br><br>" +
-            "<table id='tech_table' align='center'>" +
-            ThreeColTable +
-            "</table>" +
-            "<button id='left_arrow_id'  type='button' class='myLeftArrow' onclick='techModeHandleLeftKey()'><img src='img/arrow_left.png' /></button>" +
-            "<button id='right_arrow_id' type='button' class='myRightArrow' onclick='techModeHandleRightKey()'><img src='img/arrow_right.png' /></button>";
-            
-        $('body').html(myHtml);
-
-        document.getElementById("sb_icon_id").addEventListener('touchstart', HandleButtonUp );      // up, adds transparency
-        document.getElementById("sb_icon_id").addEventListener('touchend',   HandleButtonDown );    // down, back to normal, no transparency
-        document.getElementById("reg_icon_id").addEventListener('touchstart', HandleButtonUp );     // up, adds transparency
-        document.getElementById("reg_icon_id").addEventListener('touchend',   HandleButtonDown );   // down, back to normal, no transparency
-        document.getElementById("unii_icon_id").addEventListener('touchstart', HandleButtonUp );      // up, adds transparency
-        document.getElementById("unii_icon_id").addEventListener('touchend',   HandleButtonDown );    // down, back to normal, no transparency
-        
-       
-        document.getElementById("back_arrow_id").addEventListener('touchstart', HandleButtonDown );
-        document.getElementById("back_arrow_id").addEventListener('touchend',   HandleButtonUp );
-        document.getElementById("left_arrow_id").addEventListener('touchstart', HandleButtonDown );
-        document.getElementById("left_arrow_id").addEventListener('touchend',   HandleButtonUp );
-        document.getElementById("right_arrow_id").addEventListener('touchstart', HandleButtonDown );
-        document.getElementById("right_arrow_id").addEventListener('touchend',   HandleButtonUp );
-        
-        // Update our HTML variables with the display...
-        guiIconUniiHtml = document.getElementById("unii_icon_id").innerHTML;
-        guiIconRegHtml  = document.getElementById("reg_icon_id").innerHTML;
-        guiIconSbIfHtml = document.getElementById("sb_icon_id").innerHTML;
-        
-        lastGuiCurrentMode  = guiCurrentMode;    
-        techModePageCurrent = 0;
-        techModePageLast    = 0;
-
-        
-        if( guiGotTechModeValues == false )
-        {
-            // Start the spinner..
-            ShowWaitPopUpMsg( "Please wait", "Gathering data..." );
-        }*/
-    	if(mainScreenSelectedTab==""){
+    	$(".menuWrapper").find(".selectedTab").removeClass("selectedTab");
+        $('#dashboardMenu').addClass("selectedTab");
+        if(mainScreenSelectedTab==""){
 			$('body').html(mainContainerWithMenu);
 			
 			mainContainer = document.getElementById("mainContainer");
@@ -828,9 +787,6 @@ function ProcessTechView()
     	});
     	lastGuiCurrentMode  = guiCurrentMode;
     }
-    
-    // Now populate the current page...
-    //PopulateTechData();
 }
 
 
@@ -1669,6 +1625,8 @@ function ProcessSettingsView()
     }*/
 	if( lastGuiCurrentMode != guiCurrentMode )
     {
+		$(".menuWrapper").find(".selectedTab").removeClass("selectedTab");
+        $('#settingsMenu').addClass("selectedTab");
 		util.loadBodyContainer('settings');
 		lastGuiCurrentMode  = guiCurrentMode;
     }
@@ -2023,7 +1981,7 @@ function ProcessDownloadView()
     
     if( lastGuiCurrentMode != guiCurrentMode )
     {
-        PrintLog(1, "GUI: ProcessDownloadView()");
+        /*PrintLog(1, "GUI: ProcessDownloadView()");
         
         // Draw the view...
         var myUniiIcon = (bUniiStatusKnown == false) ? szUniiIconButton + "</button>"  : bUniiUp ? szUniiIconButton + szUniiIconUp + "</button>" : szUniiIconButton + szUniiIconDown + "</button>";
@@ -2083,10 +2041,10 @@ function ProcessDownloadView()
         document.getElementById("update_id").addEventListener('touchend',   HandleButtonUp );
         
         
-        lastGuiCurrentMode = guiCurrentMode;    
+        lastGuiCurrentMode = guiCurrentMode;*/    
     }
     
-    if( guiSoftwareDirtyFlag == true )
+    /*if( guiSoftwareDirtyFlag == true )
     {
         for( i = 0; i < guiSwNames.length; i++ )
         {
@@ -2105,7 +2063,7 @@ function ProcessDownloadView()
         
     
         guiSoftwareDirtyFlag = false;
-    }
+    }*/
     
 }
 // End of Download View ............................................................................................
@@ -2274,6 +2232,26 @@ var decisionPopUpObj =
             		
             	case "Location":
             		util.getCurrentLocationPrompt(this.szMsg);
+            		break;
+            		
+            	case "Timeout":
+            		util.showErrorPopup();
+            		var timeoutHeader = document.getElementById("popupHeader");
+                	var timeoutBody = document.getElementById("popupBody");
+                	var timeoutFooter = document.getElementById("popupFooter");
+                	timeoutFooter.align = "center";
+                	
+                	timeoutHeader.innerHTML = this.szTitle;
+                	timeoutBody.innerHTML = this.szMsg;
+                	
+                	var locBtn = util.createAppendElem("button", "timeoutErrBtn", "defaultButton", timeoutFooter);
+    		        locBtn.innerHTML = "OK";
+    		        locBtn.addEventListener("click", function(){
+    		        	util.hideCommonPopup();
+    			        util.showSearchAnimation();
+    			        BluetoothLoop();
+    		        }, false);
+            		break;
             	}
             }
             else
@@ -2424,6 +2402,10 @@ var alertPopUpObj =
     		        	}else if(alertPopUpObj.szTitle == "Select Device."){
     		        		util.hideCommonPopup();
     		        		util.showDeviceSelectionPopup();
+    		        	}else if(alertPopUpObj.szTitle == "Bluetooth not connected."){
+    		        		$(".menuWrapper").find(".selectedTab").removeClass("selectedTab");
+    		        		$('#dashboardMenu').addClass("selectedTab");
+    		    	        RequestModeChange(PROG_MODE_TECH);
     		        	}else{
     		        		util.hideCommonPopup();
     		        	}
@@ -2867,6 +2849,21 @@ var util = {
 	    this.createAppendElem("div", "popupFooter", "", popElem);
 	},
 	
+	createPopupWithCloseBtn: function(popupTitle, popupContent) {
+		this.hidePopupWithClose();
+	    this.createBlackOverlay();
+	    this.removeElement('popupWithCloseBtn');
+	    var popupContainer = util.createAppendElem("div", "popupWithCloseBtn", "popupWithCloseBtn", mainContainer);
+	    var popupCloseHeader = this.createAppendElem("div", "popup3Header", "", popupContainer);
+	    var titleContainer = this.createAppendElem("div", "closePopupTitle", "closePopupTitle fl", popupCloseHeader);
+	    titleContainer.innerHTML = popupTitle;
+	    var popupCloseBtnEvent = this.createAppendElem("div", "closePopupBtn", "closePopupBtn fr", popupCloseHeader);
+	    popupCloseBtnEvent.addEventListener("click", util.hidePopupWithClose);
+	    this.createAppendElem("div", "popupCloseCB", "cb", popupContainer);
+	    var contentContainer = this.createAppendElem("div", "popup3Body", "", popupContainer);
+	    contentContainer.innerHTML = popupContent;
+	},
+	
 	createCommonSpinnerDialog: function(sText) {
 	    util.hideCommonSpinnerDialog();
 	    util.createBlackOverlay();
@@ -2906,6 +2903,8 @@ var util = {
 	},
 	
 	showSearchAnimation: function() {
+		util.removeElement("menu");
+		mainContainer.className = "connectionBG";
 	    if (typeof searchTimeOut != "undefined") {
 	        clearTimeout(searchTimeOut);
 	    }
@@ -2928,9 +2927,7 @@ var util = {
 	    searchMessageBox.innerHTML = util.searchMessage;
 	    var searchIconContainer = util.createAppendElem("div", "searchIconContainer", "searchIconContainer", mainContainer);
 	    //searchTimeOut = setTimeout(function(){ util.showNoDeviceFoundErrorPopup(); }, 120*1000);
-	    searchTimeOut = setTimeout(function() {
-	        util.showNoDeviceFoundErrorPopup();
-	    }, 5 * 1000);
+	    searchTimeOut = setTimeout(function(){ util.showNoDeviceFoundErrorPopup(); }, 5*1000);
 	},
 	
 	initiateSearchAnimation: function() {
@@ -3094,6 +3091,11 @@ var util = {
 	    util.removeElement("blackOverlay");
 	},
 	
+	hidePopupWithClose: function(){
+		util.removeElement("popupWithCloseBtn");
+	    util.removeElement("blackOverlay");
+	},
+	
 	showGauge: function(gValue) {
 	    var opts = {
 	        lines: 12,
@@ -3225,18 +3227,12 @@ var util = {
 	    bodyContainer.innerHTML = "";
 	    var settingScreenWrapper = util.createAppendElem("div", "settingsDataWrapper", "col-sm-12", bodyContainer);
 	
-	    /*guiOperator = "Verizon";
-	    guiOperatorList = ['AT&T', 'T-Mobile', 'Verizon', 'I don\'t see my Operator'];*/
-	
-	    /*var selectedDevice = "Device 04";
-	    guiDeviceList = ['Device 01', 'Device 02', 'Device 04', 'Device 07', 'Device 11'];*/
-	    
 	    var operatorListPanel = "";
 	    var deviceListDropDown = "";
 	
 	    //operator list drop dwon panel
 	    if (guiOperatorFlag) {
-	        operatorListPanel = "<div class='panel panel-default'>" + "<div class='panel-heading dropDown' id='operatorTitle'>" + "<h4 class='panel-title'>" + "<a data-toggle='collapse' data-parent='#settingsDataWrapper' href='#collapseOne'>" + "<div><div class='settingsDropIcns' id='operatorIcn'></div>Operator</div>" + "<span class='pull-right'>" + "<span class='toggle-icon expand-less'></span>" + "</span>" + "</a>" + "</h4>" + "</div>" + "<div id='collapseOne' class='panel-collapse collapse in'>" + "<div class='panel-body'>" + "<div>" + "<div class='operatorList col-xs-8'>" + "<button type='button' class='form-control'>" + "<span data-bind='label' id='operatorVal'>";
+	        operatorListPanel = "<div class='panel panel-default'>" + "<div class='panel-heading dropDown' id='operatorTitle'>" + "<h4 class='panel-title'>" + "<a data-toggle='collapse' href='#collapseOne'>" + "<div><div class='settingsDropIcns' id='operatorIcn'></div>Operator</div>" + "<span class='pull-right'>" + "<span class='toggle-icon expand-less'></span>" + "</span>" + "</a>" + "</h4>" + "</div>" + "<div id='collapseOne' class='panel-collapse collapse in'>" + "<div class='panel-body'>" + "<div>" + "<div class='operatorList col-xs-8'>" + "<button type='button' class='form-control'>" + "<span data-bind='label' id='operatorVal'>";
 	
 	        operatorListPanel = operatorListPanel + guiOperator + "</span>" + "</span>&nbsp;<span class='caret'></span>" + "</button>" + "<div class='operatorListWrapper'>" + "<ul>";
 	
@@ -3257,7 +3253,7 @@ var util = {
 	        deviceListDropDown = "<div class='panel panel-default'>"
 								+"<div class='panel-heading dropDown' id='deviceTitle'>"
 								+"<h4 class='panel-title'>"
-								+"<a data-toggle='collapse' data-parent='#settingsDataWrapper' href='#collapseTwo'>"
+								+"<a data-toggle='collapse' href='#collapseTwo'>"
 								+"<div><div class='settingsDropIcns' id='deviceIcn'></div>Booster Name</div>"
 								+"<span class='pull-right'>"
 								+"<span class='toggle-icon expand-more'></span>"
@@ -3278,7 +3274,7 @@ var util = {
 	    //}
 	
 	    //Software update status panel
-	    var softwareUpdatePanel = "<div class='panel panel-default'>" + "<div class='panel-heading dropDown' id='softwareTitle'>" + "<h4 class='panel-title'>" + "<a data-toggle='collapse' data-parent='#settingsDataWrapper' href='#collapseThree'>" + "<div><div class='settingsDropIcns' id='versionIcn'></div>Software Version</div>" + "<span class='pull-right'>" + "<span class='toggle-icon expand-more'></span>" + "</span>" + "</a>" + "</h4>" + "</div>" + "<div id='collapseThree' class='panel-collapse collapse'>" + "<div class='panel-body'>" + "<div id='versionWrapper'>";
+	    var softwareUpdatePanel = "<div class='panel panel-default'>" + "<div class='panel-heading dropDown' id='softwareTitle'>" + "<h4 class='panel-title'>" + "<a data-toggle='collapse' href='#collapseThree'>" + "<div><div class='settingsDropIcns' id='versionIcn'></div>Software Version</div>" + "<span class='pull-right'>" + "<span class='toggle-icon expand-more'></span>" + "</span>" + "</a>" + "</h4>" + "</div>" + "<div id='collapseThree' class='panel-collapse collapse'>" + "<div class='panel-body'>" + "<div id='versionWrapper'>";
 	
 	    var SWUpdateUIFlag = true;
 	    var deViceUpdatePositiveState = "OK";
@@ -3300,7 +3296,7 @@ var util = {
 	
 	    //Antenna settings panel
 	    if (guiAntennaFlag) {
-	        var antennaSettingsPanel = "<div class='panel panel-default'>" + "<div class='panel-heading dropDown'>" + "<h4 class='panel-title'>" + "<a data-toggle='collapse' data-parent='#settingsDataWrapper' href='#collapseFour'>" + "<div><div class='settingsDropIcns' id='antennaIcn'></div>Antenna Settings</div>" + "<span class='pull-right'>" + "<span class='toggle-icon expand-more'></span>" + "</span>" + "</a>" + "</h4>" + "</div>" + "<div id='collapseFour' class='panel-collapse collapse'>" + "<div class='panel-body'>" + "<div class='antennaDetailsWrapper'>" + "<div class='antennaLbl col-xs-6'>Antenna Control:</div>" + "<div class='antennaRadioWrapper col-xs-6'>";
+	        var antennaSettingsPanel = "<div class='panel panel-default'>" + "<div class='panel-heading dropDown'>" + "<h4 class='panel-title'>" + "<a data-toggle='collapse' href='#collapseFour'>" + "<div><div class='settingsDropIcns' id='antennaIcn'></div>Antenna Settings</div>" + "<span class='pull-right'>" + "<span class='toggle-icon expand-more'></span>" + "</span>" + "</a>" + "</h4>" + "</div>" + "<div id='collapseFour' class='panel-collapse collapse'>" + "<div class='panel-body'>" + "<div class='antennaDetailsWrapper'>" + "<div class='antennaLbl col-xs-6'>Antenna Control:</div>" + "<div class='antennaRadioWrapper col-xs-6'>";
 	        //guiAntennaManualFlag = true;
 	        if (guiAntennaManualFlag) {
 	            antennaSettingsPanel = antennaSettingsPanel + "<div class='radioButtonWrapper'>" + "<label class='radioBtnWrapper radioBtnUnSelected col-xs-3' for='antennaSettingAuto' id='radioAntennaAuto'></label>" + "<div class='boosterUnSelectedTxt' id='labelAntennaAuto'>Auto</div>" + "<input type='radio' name='antennaCtrl' value='auto' id='antennaSettingAuto' onchange='util.updateAntennaSetting(this.value)' />" + "</div>" + "<div class='cb'></div>" + "<div class='radioButtonWrapper'>" + "<label class='radioBtnWrapper radioBtnSelected col-xs-3' for='antennaSettingManual' id='radioAntennaManual'></label>" + "<div class='boosterSelectedTxt' id='labelAntennaManual'>Manual</div>" + "<input type='radio' name='antennaCtrl' value='manual' id='antennaSettingManual' checked onchange='util.updateAntennaSetting(this.value)' />" + "</div>";
@@ -3329,7 +3325,7 @@ var util = {
 	
 	    //Booster settings panel
 	    if (guiProductType == "GO" && guiBoosterFlag) {
-	        var boosterSettingsPanel = "<div class='panel panel-default'>" + "<div class='panel-heading dropDown'>" + "<h4 class='panel-title'>" + "<a data-toggle='collapse' data-parent='#settingsDataWrapper' href='#collapseFive'>" + "<div><div class='settingsDropIcns' id='boosterIcn'></div>Booster Settings</div>" + "<span class='pull-right'>" + "<span class='toggle-icon expand-more'></span>" + "</span>" + "</a>" + "</h4>" + "</div>" + "<div id='collapseFive' class='panel-collapse collapse'>" + "<div class='panel-body'>" + "<div id='boosterWrapper'>" + "<div class='boosterLbl'>Select by Technology:</div>" + "<div class='cb'></div>";
+	        var boosterSettingsPanel = "<div class='panel panel-default'>" + "<div class='panel-heading dropDown'>" + "<h4 class='panel-title'>" + "<a data-toggle='collapse' href='#collapseFive'>" + "<div><div class='settingsDropIcns' id='boosterIcn'></div>Booster Settings</div>" + "<span class='pull-right'>" + "<span class='toggle-icon expand-more'></span>" + "</span>" + "</a>" + "</h4>" + "</div>" + "<div id='collapseFive' class='panel-collapse collapse'>" + "<div class='panel-body'>" + "<div id='boosterWrapper'>" + "<div class='boosterLbl'>Select by Technology:</div>" + "<div class='cb'></div>";
 	
 	        var boosterModeArr = ["auto", "3G", "4G"];
 	        for (var bstLen = 0; bstLen < boosterModeArr.length; bstLen++) {
@@ -3384,8 +3380,8 @@ var util = {
 	    });
 	
 	    $('a[data-toggle="collapse"]').click(function() {
-	        $('span.toggle-icon').not($(this).find('span.toggle-icon')).removeClass('expand-less');
-	        $('span.toggle-icon').not($(this).find('span.toggle-icon')).addClass('expand-more');
+	        //$('span.toggle-icon').not($(this).find('span.toggle-icon')).removeClass('expand-less');
+	        //$('span.toggle-icon').not($(this).find('span.toggle-icon')).addClass('expand-more');
 	        $(this).find('span.toggle-icon').toggleClass('expand-less expand-more');
 	    });
 	
@@ -3422,9 +3418,9 @@ var util = {
 	    guiDeviceList = ['Device 01', 'Device 02', 'Device 04', 'Device 07', 'Device 11'];*/
 	
 	    var deviceListDropDown = "";
-	    var colSMTab = "<div class='col-sm-6'>";
-	    $(colSMTab).appendTo('#settingsDataWrapper');
-	
+	    //var colSMTab = "<div class='col-sm-6'>";
+	    //$(colSMTab).appendTo('#settingsDataWrapper');
+	    var settingsScreenContents = "<div class='col-sm-6'>";
 	    //operator list drop dwon panel
 	    if (guiOperatorFlag) {
 	        var operatorListPanel = "";
@@ -3439,7 +3435,8 @@ var util = {
 	        }
 	
 	        operatorListPanel = operatorListPanel + "</ul></div></div></div></div></div>";
-	        $(operatorListPanel).appendTo('#settingsDataWrapper');
+	        //$(operatorListPanel).appendTo('#settingsDataWrapper');
+	        settingsScreenContents = settingsScreenContents + operatorListPanel;
 	    }
 	
 	    //Software update status panel
@@ -3461,7 +3458,8 @@ var util = {
 	
 	    softwareUpdatePanel = softwareUpdatePanel + "</div></div></div>";
 	
-	    $(softwareUpdatePanel).appendTo('#settingsDataWrapper');
+	    //$(softwareUpdatePanel).appendTo('#settingsDataWrapper');
+	    settingsScreenContents = settingsScreenContents + softwareUpdatePanel;
 	
 	    //Antenna settings panel
 	    if (guiAntennaFlag) {
@@ -3487,17 +3485,14 @@ var util = {
 	            antennaSettingsPanel = antennaSettingsPanel + "</div></div>";
 	        }
 	        antennaSettingsPanel = antennaSettingsPanel + "<div class='restoreAntenna col-xs-11' id='restoreAntennaSettings'>Restore factory default</div>" + "</div></div>";
-	
-	        $(antennaSettingsPanel).appendTo('#settingsDataWrapper');
-	        util.updateAntennaBandButtons();
+	        settingsScreenContents = settingsScreenContents + antennaSettingsPanel;
 	    }
 	
 	    var colSMTab = "</div><div class='col-sm-6'>";
-	    $(colSMTab).appendTo('#settingsDataWrapper');
+	    settingsScreenContents = settingsScreenContents + colSMTab;
 	
 	    //Device list drop down panel
-	    //if (guiDeviceFlag) {
-	    	deviceListDropDown = "<div class='settingsTabViewWrapper fr'>"
+	    deviceListDropDown = "<div class='settingsTabViewWrapper fr'>"
 					    		+"<div class='col-sm-12'>"
 					    		+"<div id='deviceTitle'>"
 					    		+"<div class='settingsDropIcns' id='deviceIcn'></div>"
@@ -3513,12 +3508,9 @@ var util = {
 					    		+"</div>"
 					    		+"</div>";
 	
-	        $(deviceListDropDown).appendTo('#settingsDataWrapper');
-	    //}
-	
+	    settingsScreenContents = settingsScreenContents + deviceListDropDown;
+	    
 	    //Booster settings panel
-	        guiProductType = "GO";
-	        guiBoosterFlag = true;
 	    if (guiProductType == "GO" && guiBoosterFlag) {
 	        var boosterSettingsPanel = "<div class='settingsTabViewWrapper fr'>" + "<div class='col-sm-12'>" + "<div><div class='settingsDropIcns' id='boosterIcn'></div>Booster Settings</div>" + "<div id='boosterWrapper'>" + "<div class='boosterLbl'>Select by Technology:</div>" + "<div class='cb'></div>";
 	
@@ -3559,14 +3551,16 @@ var util = {
 	
 	        boosterSettingsPanel = boosterSettingsPanel + "</div></div></div>";
 	
-	        $(boosterSettingsPanel).appendTo('#settingsDataWrapper');
+	        //$(boosterSettingsPanel).appendTo('#settingsDataWrapper');
+	        settingsScreenContents = settingsScreenContents + boosterSettingsPanel;
 	    }
 	    var colSMTab = "</div>";
-	    $(colSMTab).appendTo('#settingsDataWrapper');
-	
+	    settingsScreenContents = settingsScreenContents + colSMTab;
+	    $(settingsScreenContents).appendTo('#settingsDataWrapper');
+	    util.updateAntennaBandButtons();
 	    $('a[data-toggle="collapse"]').click(function() {
-	        $('span.toggle-icon').not($(this).find('span.toggle-icon')).removeClass('glyphicon-chevron-up');
-	        $('span.toggle-icon').not($(this).find('span.toggle-icon')).addClass('glyphicon-chevron-down');
+	        //$('span.toggle-icon').not($(this).find('span.toggle-icon')).removeClass('glyphicon-chevron-up');
+	        //$('span.toggle-icon').not($(this).find('span.toggle-icon')).addClass('glyphicon-chevron-down');
 	        $(this).find('span.toggle-icon').toggleClass('glyphicon-chevron-up glyphicon-chevron-down');
 	    });
 	
@@ -3701,7 +3695,7 @@ var util = {
 	    var advancedHeader = "<div id='advancedContentwrapper'>" + "<div class='panel-group' id='advancedDataContainer'>";
 	    var overViewContent = '';
 	    overViewContent = overViewContent + "<div class='divider'>OVERVIEW</div><div class='panel panel-default col-sm-6'>";
-	    overViewContent = overViewContent + "<div class='panel-heading dropDown'>" + "<h4 class='panel-title'>" + "<a data-toggle='collapse' data-parent='#advancedDataContainer' href='#networkBarsCollapse'>" + "<div>Network Strength</div>" + "<span class='pull-right'>" + "<span class='toggle-icon expand-less'></span>" + "</span></a></h4></div>" + "<div id='networkBarsCollapse' class='panel-collapse collapse in'>" + "<div class='panel-body' id='networkDataContainer'>";
+	    overViewContent = overViewContent + "<div class='panel-heading dropDown'>" + "<h4 class='panel-title'>" + "<a data-toggle='collapse' href='#networkBarsCollapse'>" + "<div>Network Strength</div>" + "<span class='pull-right'>" + "<span class='toggle-icon expand-less'></span>" + "</span></a></h4></div>" + "<div id='networkBarsCollapse' class='panel-collapse collapse in'>" + "<div class='panel-body' id='networkDataContainer'>";
 	
 	    for (var i = 0; i < guiBands.length; i++) {
 	        overViewContent = overViewContent + "<div class='col-xs-3 col-sm-3 networkData'>" + "<div class='networkTitle'>" + guiRadios[i] + "</div><div class='networkStrength'>" + "<div class='signalContainerSM'>";
@@ -3736,7 +3730,7 @@ var util = {
 	    superChannelsContent = superChannelsContent + "<div class='divider'>SUPER CHANNELS</div>";
 	    for (var i = 0; i < guiBands.length; i++) {
 	        var techType = guiTechnologyTypes[i] === 1 ? 'LTE' : 'WCDMA';
-	        superChannelsContent = superChannelsContent + "<div class='panel panel-default'>"
+	        superChannelsContent = superChannelsContent + "<div class='panel panel-default col-sm-6 col-xs-12 radioBandDetails"+(i+1)+"'>"
 	
 	        var radioStatusColour = '';
 	        var radioHeader = '';
@@ -3748,7 +3742,7 @@ var util = {
 	            radioHeader = "<div>Radio " + guiRadios[i] + " : Unused</div>";
 	        }
 	
-	        superChannelsContent = superChannelsContent + "<div class='panel-heading " + radioStatusColour + " dropDown'>" + "<h4 class='panel-title'>" + "<a data-toggle='collapse' data-parent='#advancedDataContainer' href='#channel" + i + "'>" + radioHeader + "<span class='pull-right'>" + "<span class='toggle-icon  expand-more'></span>" + "</span></a></h4></div>";
+	        superChannelsContent = superChannelsContent + "<div class='panel-heading " + radioStatusColour + " dropDown'>" + "<h4 class='panel-title'>" + "<a data-toggle='collapse' href='#channel" + i + "'>" + radioHeader + "<span class='pull-right'>" + "<span class='toggle-icon  expand-more'></span>" + "</span></a></h4></div>";
 	
 	        superChannelsContent = superChannelsContent + "<div id='channel" + i + "' class='panel-collapse collapse'>" + "<div class='panel-body dropDownList'>";
 	        if (guiBands[i] !== 0) {
@@ -3775,7 +3769,7 @@ var util = {
 	    var deviceStateContent = '';
 	    if (guiProductType === 'DUO' || guiProductType === 'PRO') {
 	        deviceStateContent = deviceStateContent + "<div class='divider'>SYSTEM OVERVIEW</div>";
-	        deviceStateContent = deviceStateContent + "<div class='panel panel-default col-sm-6'>" + "<div class='panel-heading drop-purple dropDown'>" + "<h4 class='panel-title'>" + "<a data-toggle='collapse' data-parent='#advancedDataContainer' href='#deviceStateCollapse'>" + "<div>Device State</div>" + "<span class='pull-right'>" + "<span class='toggle-icon  expand-more'></span>" + "</span></a></h4></div>" + "<div id='deviceStateCollapse' class='panel-collapse collapse'>" + "<div class='panel-body dropDownList'>" + "<div class='dropDownInnerTitle '>" + "<div class='col-xs-8 col-sm-8'>Description</div>" + "<div class='col-xs-4 col-sm-4'>Value</div></div>";
+	        deviceStateContent = deviceStateContent + "<div class='panel panel-default col-sm-6'>" + "<div class='panel-heading drop-purple dropDown'>" + "<h4 class='panel-title'>" + "<a data-toggle='collapse' href='#deviceStateCollapse'>" + "<div>Device State</div>" + "<span class='pull-right'>" + "<span class='toggle-icon  expand-more'></span>" + "</span></a></h4></div>" + "<div id='deviceStateCollapse' class='panel-collapse collapse'>" + "<div class='panel-body dropDownList'>" + "<div class='dropDownInnerTitle '>" + "<div class='col-xs-8 col-sm-8'>Description</div>" + "<div class='col-xs-4 col-sm-4'>Value</div></div>";
 	        var deviceStates = ['WuUnniState', '5GHz DL Freq', '5GHz UL Freq', 'Distance Metric', 'Remote Shutdown State', 'NU Temp', 'CU Temp'],
 	            deviceStateUnits = ['MHz', 'MHz', 'MHz', '', '', '&deg;F', '&deg;F'],
 	            deviceStateKeys = ['NU UNII State', 'NU 5G DL', 'NU 5G UL', 'NU Dist Metric', 'Remote Shutdown', 'NU Temp', 'CU Temp'];
@@ -3809,7 +3803,7 @@ var util = {
 	    var softwareVersionContent = '';
 	    softwareVersionContent = softwareVersionContent + "<div class='divider'>DEVICE VERSION</div><div class='panel panel-default col-sm-6'>";
 	
-	    softwareVersionContent = softwareVersionContent + "<div class='panel-heading drop-teal dropDown'>" + "<h4 class='panel-title'>" + "<a data-toggle='collapse' data-parent='#advancedDataContainer' href='#versionCollapse'>" + "<div>Software Versions</div>" + "<span class='pull-right'>" + "<span class='toggle-icon expand-more'></span>" + "</span></a></h4></div>" + "<div id='versionCollapse' class='panel-collapse collapse'>" + "<div class='panel-body dropDownList'>" + "<div class='dropDownInnerTitle'>" + "<div class='col-xs-3 col-sm-3'>Name</div>" + "<div class='col-xs-3 col-sm-3'>Cel-Fi</div>" + "<div class='col-xs-3 col-sm-3'>Cloud</div>" + "<div class='col-xs-3 col-sm-3'>Status</div></div>";
+	    softwareVersionContent = softwareVersionContent + "<div class='panel-heading drop-teal dropDown'>" + "<h4 class='panel-title'>" + "<a data-toggle='collapse' href='#versionCollapse'>" + "<div>Software Versions</div>" + "<span class='pull-right'>" + "<span class='toggle-icon expand-more'></span>" + "</span></a></h4></div>" + "<div id='versionCollapse' class='panel-collapse collapse'>" + "<div class='panel-body dropDownList'>" + "<div class='dropDownInnerTitle'>" + "<div class='col-xs-3 col-sm-3'>Name</div>" + "<div class='col-xs-3 col-sm-3'>Cel-Fi</div>" + "<div class='col-xs-3 col-sm-3'>Cloud</div>" + "<div class='col-xs-3 col-sm-3'>Status</div></div>";
 	    for (var i = 0; i < guiSwNames.length; i++) {
 	        var celFiVersion = guiSwCelFiVers[i] === '' ? "000.000" : guiSwCelFiVers[i],
 	            cloudVersion = guiSwCldVers[i] === '' ? "000.000" : guiSwCldVers[i];
@@ -3827,18 +3821,19 @@ var util = {
 	    var advancedPanelContent = advancedButtonWrapper + clearFloat + advancedHeader + overViewContent + clearFloat + superChannelsContent + clearFloat + deviceStateContent + clearFloat + softwareVersionContent + footer;
 	    $('#bodyContainer').html(advancedPanelContent);
 	    $('a[data-toggle="collapse"]').click(function() {
-	        $('span.toggle-icon').not($(this).find('span.toggle-icon')).removeClass('expand-less');
-	        $('span.toggle-icon').not($(this).find('span.toggle-icon')).addClass('expand-more');
+	        //$('span.toggle-icon').not($(this).find('span.toggle-icon')).removeClass('expand-less');
+	        //$('span.toggle-icon').not($(this).find('span.toggle-icon')).addClass('expand-more');
 	        $(this).find('span.toggle-icon').toggleClass('expand-less expand-more');
 	    });
 	},
 	
 	loadDashboardContainer: function(menuElem) {
 	    /*UI element updates for Dashboard view*/
-	    if (typeof window.localStorage.getItem("firstName") != null || window.localStorage.getItem("firstName") != "") {
-	        $('#userDpName').html(" " + window.localStorage.getItem("firstName") + ",");
+		var userDPName = window.localStorage.getItem("firstName");
+	    if (userDPName===null) {
+	    	$('#userDpName').html(",");
 	    } else {
-	        $('#userDpName').html(",");
+	        $('#userDpName').html(" " + window.localStorage.getItem("firstName") + ",");
 	    }
 	
 	    if (guiBoost >= 0 && guiBoost <= 3) {
@@ -3846,12 +3841,14 @@ var util = {
 	        $('#deviceStatus').html('problem');
 	        $('#deviceStatus').removeClass().addClass('problem');
 	        $('#fixItContent').html('Fix it now');
+	        $('#fixItContent').bind("click",util.showFixItPopup);
 	        $('#userDeviceStatusLine, #deviceStatus').css('font-size', '13px');
 	    } else if (guiBoost >= 4 && guiBoost <= 5) {
 	        $('#userDeviceStatusLine').html("Things look ");
 	        $('#deviceStatus').html('poor');
 	        $('#deviceStatus').removeClass().addClass('problem');
 	        $('#fixItContent').html('Boosting tips');
+	        $('#fixItContent').bind("click",util.showFixItPopup);
 	    } else if (guiBoost >= 6 && guiBoost <= 7) {
 	        $('#userDeviceStatusLine').html("Things look ");
 	        $('#deviceStatus').html('ok');
@@ -3876,6 +3873,10 @@ var util = {
 	        $('#deviceTypeBG').addClass("devicePRO");
 	    }
 	
+	    if(guiProductType!=""){
+	    	window.localStorage.setItem('_PRDTYP',guiProductType);
+	    }
+	    
 	    $('.deviceSerialNumber').html(guiSerialNumber);
 	    $('#boosterLevel').html(guiBoost);
 	    util.showGauge(guiBoost);
@@ -3905,21 +3906,30 @@ var util = {
 	    if (typeof productType === 'undefined' || productType == null) {
 	        this.selectProductView();
 	    } else {
+	    	//productType = productType.toLowerCase();
+	    	this.createModalWrapper();
+		    $('#modalTitle').html('Help Center');
+		    var modalHelp = "<div class='modalHelpWrapper'></div>";
+		    $(modalHelp).appendTo('.modalBodyWrapper');
 	        switch (productType) {
 	            case 'DUO':
 	                {
+	            		util.createHelpMenu(1, "duo");
 	                    break;
 	                }
 	            case 'GO':
 	                {
+	            		util.createHelpMenu(2, "go");
 	                    break;
 	                }
 	            case 'PRIME':
 	                {
+	            		util.createHelpMenu(2, "prime");
 	                    break;
 	                }
 	            case 'PRO':
 	                {
+	            		util.createHelpMenu(1, "pro");
 	                    break;
 	                }
 	        }
@@ -3928,10 +3938,25 @@ var util = {
 	    $('.modalWrapper').show();
 	},
 	
+	showFixItPopup: function(){
+		util.createModalWrapper();
+	    $('#modalTitle').html('Help Center');
+	    var modalHelp = "<div class='modalHelpWrapper'></div>";
+	    $(modalHelp).appendTo('.modalBodyWrapper');
+	    $('.modalLeftBtn').removeAttr("onclick");
+	    util.removeModal();
+	    var productType = window.localStorage.getItem('_PRDTYP');
+	    if (typeof productType === 'undefined' || productType == null) {
+	    	
+	    }else if(productType=="DUO"){
+	    	util.duoTroubleShoot();
+	    }else if(productType=="PRO"){
+	    	util.proTroubleShoot();
+	    }
+	},
+	
 	selectProductView: function() {
 	    this.createModalWrapper();
-	    //helpMenuDeviceType = "";
-	    //helpMenuSelectedDevice = "";
 	    $('#modalTitle').html('Help Center');
 	    var productSelectionMenu = "<div class='modalHelpWrapper'>" + "<p class='pageTitleContainer modalContentTitle modalContentPadding'>Select your product</p>" + "<div class='modalContentPadding' onClick='util.createHelpMenu(\"1\", \"duo\");'>" + "<div class='helpDeviceIcns' id='deviceDuoIcn'></div>" + "<div class='modalBodyPanelHeaderTitle'>DUO</div>" + "<div class='modalChevronRightIcns'></div>" + "</div>" + "<div class='modalContentPadding' onClick='util.createHelpMenu(\"2\", \"go\");'>" + "<div class='helpDeviceIcns' id='deviceGoIcn'></div>" + "<div class='modalBodyPanelHeaderTitle'>GO</div>" + "<div class='modalChevronRightIcns'></div>" + "</div>" + "<div class='modalContentPadding' onClick='util.createHelpMenu(\"2\", \"prime\");'>" + "<div class='helpDeviceIcns' id='devicePrimeIcn'></div>" + "<div class='modalBodyPanelHeaderTitle'>PRIME</div>" + "<div class='modalChevronRightIcns'></div>" + "</div>" + "<div class='modalContentPadding' onClick='util.createHelpMenu(\"1\", \"pro\");'>" + "<div class='helpDeviceIcns' id='deviceProIcn'></div>" + "<div class='modalBodyPanelHeaderTitle'>PRO</div>" + "<div class='modalChevronRightIcns'></div>" + "</div></div>";
 	    $(productSelectionMenu).appendTo('.modalBodyWrapper');
@@ -3976,9 +4001,16 @@ var util = {
 	    var title = 'Cel-Fi ' + menuSelected.toUpperCase();
 	
 	    $('.modalLeftBtn').removeAttr("onclick");
-	    $('.modalLeftBtn').click(function() {
-	        util.showHelpDeviceSelection();
-	    });
+	    var productType = window.localStorage.getItem('_PRDTYP');
+	    if (typeof productType === 'undefined' || productType == null) {
+	    	$('.modalLeftBtn').click(function() {
+		        util.showHelpDeviceSelection();
+		    });
+	    }else{
+		    $('.modalLeftBtn').click(function() {
+		        util.removeModal();
+		    });
+	    }
 	    // List of menu items
 	    var menuListName = ['Installation Guide', 'Troubleshooting', 'Error Codes', 'Frequently Asked Questions', 'Registration', 'Contact Us'];
 	    var menuListId = ['menuInstall', 'menuTroubleShoot', 'menuErrorCodes', 'menuFaq', 'menuRegistration', 'menuContactUs'];
@@ -4160,7 +4192,33 @@ var util = {
 	    var operatorName = "T-Mobile";
 	    var operatorContactNum = "1-877-453-1304";
 	    var operatorContactEmail = "support@t-mobile.com";
-	    var contactInfo = '<div id="contactOperatorModal">' + '<div class="operatorDetailContainer col-sm-6 col-xs-12">' + '<div class="operatorName">It looks like your network operator is ' + operatorName + '</div>' + '<div class="operatorSupport">' + '<div class="operatorSupportContactNum">' + '<div class="contactLogo fl"></div>' + '<div class="contactNumber fl">' + operatorContactNum + '</div>' + '<div class="cb"></div>' + '</div>' + '<div class="operatorSupportEmail">' + '<div class="emailLogo fl"></div>' + '<div class="contactEmail fl">' + operatorContactEmail + '</div>' + '<div class="cb"></div>' + '</div>' + '</div>' + '</div>' + '<div class="operatorSupportContainer col-sm-6 col-xs-12">' + '<div class="supportTop">Not a ' + operatorName + ' customer?</div>' + '<div class="supportBotom">Visit <span class="supportLink">www.cel-fi.com</span> to contact us.</div>' + '</div>' + '</div>';
+	    //var contactInfo = '<div id="contactOperatorModal">' + '<div class="operatorDetailContainer col-sm-6 col-xs-12">' + '<div class="operatorName">It looks like your network operator is ' + operatorName + '</div>' + '<div class="operatorSupport">' + '<div class="operatorSupportContactNum">' + '<div class="contactLogo fl"></div>' + '<div class="contactNumber fl">' + operatorContactNum + '</div>' + '<div class="cb"></div>' + '</div>' + '<div class="operatorSupportEmail">' + '<div class="emailLogo fl"></div>' + '<div class="contactEmail fl">' + operatorContactEmail + '</div>' + '<div class="cb"></div>' + '</div>' + '</div>' + '</div>' + '<div class="operatorSupportContainer col-sm-6 col-xs-12">' + '<div class="supportTop">Not a ' + operatorName + ' customer?</div>' + '<div class="supportBotom">Visit <span class="supportLink">www.cel-fi.com</span> to contact us.</div>' + '</div>' + '</div>';
+	    var contactInfo = '<div id="contactOperatorModal">'
+							+'<div class="contactUsTop">Questions about Cel-Fi? We would love to hear from you!</div>'
+							+'<div class="contactUsSendEmail">Send us an email at <span class="supportLink">support@cel-fi.com</span></div>'
+							+'<div class="contactLocationDetails">'
+							+'<div class="ContactLocationHeader">Locations:</div>'
+							+'<div class="contactAddr">'
+							+'U.S Headquarters<br>'
+							+'12230 World Trade Drive, Suite 250<br>'
+							+'San Diego, CA 92128, USA</br><div class="contactUsSpace"></div>'
+							+'tel: <span class="supportLink">+1 858.485.9442</span><br>'
+							+'fax: <span class="supportLink">+1 858.485.9445</span>'
+							+'</div>'
+							+'<div class="contactAddr location2">'
+							+'European Office<br>'
+							+'Unit 6, Basepoint Business Centre<br>'
+							+'Rivermead Drive, Westlea<br>'
+							+'Swindon SN5 7EX, UK<br><div class="contactUsSpace"></div>'
+							+'tel: <span class="supportLink">+44 131 603 8182</span><br>'
+							+'<span class="supportLink">EMEA@NextivityInc.com</span>'
+							+'</div>'
+							+'</div>'
+							+'<div class="contactEvenmore">'
+							+'Want more information?<br>'
+							+'Visit us at <span class="supportLink">www.cel-fi.com</span>'
+							+'</div>'
+							+'</div>';
 	    $(contactInfo).appendTo('.modalBodyWrapper');
 	    $('.headerContainer, #bodyContainer').hide();
 	    $('.modalWrapper').show();
@@ -4330,7 +4388,7 @@ var util = {
       	deviceSelectionHeader.innerHTML = "Select your booster";
       	var connectDeviceBtn = util.createAppendElem("button", "connectDevice", "defaultButtonDisabled fr w50", deviceSelectionFooter);
       	connectDeviceBtn.innerHTML = "Connect";
-      	var deviceSelectBody = "Multiple boosters has been found.";
+      	var deviceSelectBody = "Multiple boosters have been found.";
       	deviceSelectBody = deviceSelectBody + "<div id='deviceSelectionPanel'>";
       	for(var i = 0; i < guiDeviceList.length; i++)
         {
@@ -4347,8 +4405,8 @@ var util = {
 	            }
 	      		
 	      		deviceSelectBody = deviceSelectBody + "<div class='col-xs-12'><label class='radioBtnWrapper radioBtnUnSelected fl' for='boosterDevice"+i+"' id='deviceLabelRadio"+i+"'></label>"
-					+"&nbsp;<div class='boosterUnSelectedTxt selectBoosterDevice fl' id='deviceLabelText"+i+"'>"+visibleDeviceName
-					+"<input type='radio' name='celfiDeviceList' value='"+i+"' id='boosterDevice"+i+"' onchange='util.highlightDeviceListLabel("+i+")' /></div>"
+					+"&nbsp;<div class='boosterUnSelectedTxt selectBoosterDevice fl' id='deviceLabelText"+i+"'><label for='boosterDevice"+i+"'>"+visibleDeviceName
+					+"</label><input type='radio' name='celfiDeviceList' value='"+i+"' id='boosterDevice"+i+"' onchange='util.highlightDeviceListLabel("+i+")' /></div>"
 					+"<div class='deviceBlinkerContainer fr' id='deviceIndicator"+i+"'></div>"
 					+"<div class='cb'></div></div>";
       		}
@@ -4357,6 +4415,10 @@ var util = {
       	deviceSelectionBody.innerHTML = deviceSelectBody;
       	//connectDeviceBtn.addEventListener("click", ConnectBluetooth, false);
       	bDisplayDeviceListActive = true;
+	},
+	
+	showRegisterHelp: function(){
+		util.registrationInfo();
 	}
 };
 

@@ -91,11 +91,11 @@ function geoSuccess(position)
     SendCloudLocation( position.coords.latitude, position.coords.longitude );
 //    ShowAlertPopUpMsg("Location Determined.",  "Lat:Long " + position.coords.latitude + ":" + position.coords.longitude );
     
-    ShowConfirmPopUpMsg(
+    /*ShowConfirmPopUpMsg(
         "Lat:Long " + position.coords.latitude + ":" + position.coords.longitude,    // message
         HandleLocationBack,             // callback to invoke with index of button pressed
         'Location Acquired',            // title
-        ['ok'] );                       // buttonLabels
+        ['ok'] );                       // buttonLabels*/
     
     
     
@@ -186,7 +186,8 @@ var reg = {
 
         clearInterval(RegLoopIntervalHandle);
         regState = REG_STATE_DONE;      
-        app.renderHomeView();
+        //app.renderHomeView();
+        util.closeApplication();
     },
 
 

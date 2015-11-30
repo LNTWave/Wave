@@ -648,6 +648,14 @@ a,a:ACTIVE,a:AFTER {
   margin-top:5px;
 }
 
+#advancedDataContainer .divider{
+	margin-top:28px !important;
+}
+
+#advancedDataContainer .divider:first-child{
+	margin-top:5px !important;
+}
+
 .divider:after {
   display: inline-block;
   content: "";
@@ -1202,7 +1210,9 @@ a,a:ACTIVE,a:AFTER {
 	color: #656D78;
 	font-size: 36px;
 	line-height:48px;
-	overflow: hidden;
+	white-space: nowrap;
+	overflow:hidden !important;
+	/*overflow: hidden;*/
 	display:table;
 }
 
@@ -1847,60 +1857,45 @@ a,a:ACTIVE,a:AFTER {
 	padding-right: 25px !important;
 }
 
-.operatorDetailContainer{
-	width:100%;
-	height: 150px;
-}
-
-.operatorSupportContainer{
-	width:100%;
-	height: 100px;
-	margin-top: 30px;
-}
-
 #contactOperatorModal{
-	padding: 22px !important;
-}
-
-.operatorName, .supportTop, .supportBotom{
-	font-family: Roboto-Regular;
-	font-size: 16px;
+	padding: 20px !important;
 	color: #656D78;
-}
-
-.operatorSupportContactNum, .operatorSupportEmail{
-	margin-top: 15px;
 	font-family: Roboto-Regular;
-	font-size: 16px;
-	color: #4FAEE0;
-	width:80%;
-}
-
-.contactLogo, .emailLogo{
-	width:24px;
-	height:24px;
-	margin-right: 20px;
-}
-
-.contactLogo{
-	background: URL('../img/assets/icons/HelpOutlineBlue.svg') no-repeat;
-}
-
-.emailLogo{
-	background: URL('../img/assets/icons/HelpOutlineBlue.svg') no-repeat;
-}
-
-.operatorSupport{
-	margin-top: 20px;
-}
-
-.supportBotom{
-	margin-top: 20px;
 	font-size: 14px;
+}
+
+.contactUsTop{
+	font-family: Roboto-Medium;
+	font-size: 16px;
+}
+
+.contactUsSendEmail, .contactLocationDetails, .contactAddr{
+	margin-top: 10px !important;
+}
+
+.contactLocationDetails{
+	margin-top: 20px !important;
+}
+
+.ContactLocationHeader{
+	font-size: 20px;
+	color: #434A54;
+}
+
+.location2{
+	margin-top: 25px !important;
+}
+
+.contactUsSpace{
+	margin-top: 7px !important;
 }
 
 .supportLink{
 	color: #4FAEE0;
+}
+
+.contactEvenmore{
+	margin-top: 30px !important;
 }
 /*-----------------------------------------Error codes help page ends here------------------------------*/
 
@@ -2025,6 +2020,56 @@ a,a:ACTIVE,a:AFTER {
 		font-size: 14px;
 		color: #656D78;
 		overflow: auto !important;
+	}
+	
+	.popupWithCloseBtn{
+		display: inline-block;
+	    position: fixed;
+	    top: 0;
+	    bottom: 0;
+	    left: 0;
+	    right: 0;
+	    width: 90%;
+	    min-height: 100px;
+	    max-height:300px;
+	    margin: auto;
+	    border-radius: 5px;
+		padding: 5% 5% 2% 5% !important;
+	    background-color: #F5F7FA;
+	    z-index: 1006;
+	}
+	
+	#popup3Header{
+		width:100%;
+		height:30px;
+		font-family: Roboto-Medium;
+		font-size: 20px;
+		white-space: nowrap;
+	    overflow:hidden !important;
+	    text-overflow: ellipsis;
+	}
+	
+	#popup3Body{
+		width:100%;
+		min-height: 85px;
+		max-height:220px;
+		margin-top: 5px;
+		line-height: 22px;
+		font-family: Roboto-Regular;
+		font-size: 14px;
+		color: #656D78;
+		overflow: auto !important;
+	}
+	
+	.closePopupTitle{
+		width:90% !important;
+	}
+	
+	.closePopupBtn{
+		width:10% !important;
+		height:100% !important;
+		background: url('../img/assets/icons/CloseDark.svg') no-repeat;
+		background-size: 100%;
 	}
 	
 	/*.addBodyScroller{
@@ -2167,7 +2212,6 @@ a,a:ACTIVE,a:AFTER {
 	
 	#deviceTypeBG{
 		height:170px;
-		margin-top: 20px;
 	}
 	
 	.deviceDUO{
@@ -2295,6 +2339,12 @@ a,a:ACTIVE,a:AFTER {
 		background: URL('../img/assets/icons/blinkerOff.png') no-repeat;
 		background-size: 100%;
 	}
+	
+	label {
+	    display: inline !important;
+	    margin-bottom: 5px;
+	    font-weight: 100 !important;
+	}
 }
 
 @media (min-width:700px){
@@ -2399,6 +2449,22 @@ a,a:ACTIVE,a:AFTER {
 	
 	#settingsDataWrapper .hr{
 		margin: 0px 0px 40px 0px;
+	}
+	
+	.radioBandDetails1, .radioBandDetails2, .radioBandDetails3, .radioBandDetails4{
+		width: 49.5% !important;
+	}
+	
+	.radioBandDetails1, .radioBandDetails3{
+		float:left !important;
+	}
+	
+	.radioBandDetails2, .radioBandDetails4{
+		float:right !important;
+	}
+	
+	.panel-group .panel+.panel{
+		margin-top: 0px !important;
 	}
 }
 

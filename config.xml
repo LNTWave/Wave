@@ -131,7 +131,7 @@ This caused the iPhone to brick...
     <gap:plugin name="com.simplec.plugins.powermanagement" version="0.4.0" />           <!-- jdo: Used to keep IOS auto lock disabled during download.  -->
 
 	<gap:plugin name="net.yoik.cordova.plugins.screenorientation" />			<!--Plugin for maintaining orientation-->
-
+	<gap:plugin name="org.apache.cordova.core.inappbrowser" />			<!--Plugin for Inappbrowser-->
     <!-- Define app icon for each platform. -->
     <!-- icon.png is the default icon that is displayed to start the app. -->
     <icon src="icon.png" />

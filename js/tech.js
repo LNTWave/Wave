@@ -60,6 +60,26 @@ function StopGatheringTechData()
     bGatheringTechData = false;    
 }
 
+var advncd = {
+		renderAdvancedView: function(){
+	    	guiCurrentMode = PROG_MODE_ADVANCED;
+	        DisplayLoop();
+	    },
+	    
+	    handleBackKey: function()
+	    {
+//	        clearInterval(TechLoopTxIntervalHandle);
+	        PrintLog(1, "");
+	        PrintLog(1, "Tech: Tech Mode Back key pressed------------------------------------------------");
+
+//	        StopGatheringTechData();
+	                 
+	        DumpDataTables();         
+	         
+	        //app.renderHomeView();
+	        RequestModeChange(PROG_MODE_TECH);
+	    },
+};
 
 var tech = {
 
@@ -190,11 +210,6 @@ var tech = {
     renderTechView: function() 
     {
         guiCurrentMode = PROG_MODE_TECH;
-        DisplayLoop();
-    },
-
-    renderAdvancedView: function(){
-    	guiCurrentMode = PROG_MODE_ADVANCED;
         DisplayLoop();
     },
 

@@ -1076,7 +1076,7 @@ function WriteBluetoothDeviceEx()
         clearTimeout(myRtnTimer);
     }
 
-    PrintLog(1,  "BT Tx: buffersLoaded=" + numBuffersOut + " msgBytes=" + uTxBuffIdx );
+    PrintLog(2,  "BT Tx: buffersLoaded=" + numBuffersOut + " msgBytes=" + uTxBuffIdx );
 }
 
 
@@ -1237,7 +1237,7 @@ function GetDeviceSerialNumbersLoop()
     PrintLog(10, "BT: GetDeviceSerialNumbersLoop()... idx=" + getSnIdx + " state=" + getSnState + " Counter=" + getSnLoopCounter + " len=" + guiDeviceList.length );
 
     // Find the SNs and place in guiDeviceAddrList[] up to a max of 5.
-    if( (getSnIdx < guiDeviceAddrList.length) && (guiDeviceList.length < 5)  )
+    if( (getSnIdx < guiDeviceAddrList.length) && (numDevFound < 5)  )
     {
         switch(getSnState)
         {

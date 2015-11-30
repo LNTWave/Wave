@@ -298,7 +298,8 @@ var Stg = {
         clearTimeout(checkUniiStatusStgTimer);
         
         DumpDataTables();         
-        app.renderHomeView();
+        //app.renderHomeView();
+        RequestModeChange(PROG_MODE_TECH);
     },
 
 

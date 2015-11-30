@@ -151,7 +151,7 @@ function RequestModeChange(newMode)
             if( isSouthBoundIfCnx )
             {
 //                clearTimeout(checkUniiStatusMainTimer);
-                setTimeout(tech.renderAdvancedView, 300);
+                setTimeout(advncd.renderAdvancedView, 300);
             }
             else
             {
@@ -263,6 +263,10 @@ function HandleBackKey()
     else if( (guiCurrentMode == PROG_MODE_DOWNLOAD) || (guiCurrentMode == PROG_MODE_DOWNLOAD_AUTO)  )
     {
         Dld.handleBackKey();
+    }
+    else if( guiCurrentMode == PROG_MODE_ADVANCED )
+    {
+    	advncd.handleBackKey();
     }
     else
     {
@@ -816,7 +820,6 @@ var app = {
         {
                 // Start the handler to be called every second...
                 MainLoopIntervalHandle = setInterval(app.mainLoop, 1000 );
-                alert("draw registration");
         }
         
         
@@ -1398,7 +1401,8 @@ mySn = myTempSn;
                         isRegistered = false;                       
                         UpdateRegButton(0);     // Add the reg button.
                         UpdateRegIcon(0);       // Set reg ICON to not registered...
-                        ShowAlertPopUpMsg("Registration Required.", "Please re-register your device by selecting the register button.");
+                        //ShowAlertPopUpMsg("Registration Required.", "Please re-register your device by selecting the register button.");
+                        RequestModeChange(PROG_MODE_REGISTRATION); //Loading registration screen without prompting to user
                     }                            
                     else if( (nxtyRxRegLockStatus == 0x09) ||                                   // State 6 (0x09)
                              (nxtyRxRegLockStatus == 0x04) || (nxtyRxRegLockStatus == 0x05) )   // State 9 (0x04) or 10 (0x05)
@@ -1407,7 +1411,8 @@ mySn = myTempSn;
                         isRegistered = false;                       
                         UpdateRegButton(0);     // Add the reg button.
                         UpdateRegIcon(0);       // Set reg ICON to not registered...
-                        ShowAlertPopUpMsg("Registration Required.", "Please register your device by selecting the register button.");
+                        //ShowAlertPopUpMsg("Registration Required.", "Please register your device by selecting the register button.");
+                        RequestModeChange(PROG_MODE_REGISTRATION); //Loading registration screen without prompting to user
                     }
                     else
                     {
@@ -1477,7 +1482,12 @@ mySn = myTempSn;
                 }
                 
                 
-                ShowAlertPopUpMsg("Timeout",  eTxt);
+                //ShowAlertPopUpMsg("Timeout",  eTxt);
+                ShowConfirmPopUpMsg(
+                		eTxt,    // message
+                        util.showSearchAnimation,      // callback to invoke with index of button pressed
+                        'Timeout',               // title
+                        ['Ok'] );  
                 UpdateStatusLine( "Timeout: " + eTxt );
             }
 
