@@ -2342,7 +2342,7 @@ a,a:ACTIVE,a:AFTER {
 
 @media (min-width:700px){
 	#bodyContainer {
-		padding: 100px 6px 0px 6px !important;
+		padding: 100px 22px 0px !important;
 	}
 	
 	.connectionBG{

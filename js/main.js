@@ -633,7 +633,8 @@ function HandleUniiRetry(buttonIndex)
     if( buttonIndex == 1 )
     {
         // Retry...
-        ShowWaitPopUpMsg( "Please wait", "Retrying..." );
+        //ShowWaitPopUpMsg( "Please wait", "Retrying..." );
+    	document.getElementById("searchMessageBox").innerHTML = "Retrying...";
         MainLoopIntervalHandle = setInterval(app.mainLoop, 1000 ); 
         nxtySwVerNuCf          = null;
         nxtySwVerCuCf          = null;      // Set to Null so new NU version gets sent to cloud.  Bug 1324
@@ -653,7 +654,8 @@ function HandleCloudRetry(buttonIndex)
     if( buttonIndex == 1 )
     {
         // Retry...
-        ShowWaitPopUpMsg( "Please wait", "Retrying..." );
+        //ShowWaitPopUpMsg( "Please wait", "Retrying..." );
+    	document.getElementById("searchMessageBox").innerHTML = "Retrying...";
         MainLoopIntervalHandle = setInterval(app.mainLoop, 1000 );
                     
         // See if we have a network connection, i.e. WiFi or Cell.

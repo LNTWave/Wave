@@ -1283,7 +1283,8 @@ function GetDeviceSerialNumbersLoop()
                         if( bPrivacyViewed == true )
                         {
                             var outText = "Found " + numDevFound + " Cel-Fi devices...";
-                            ShowWaitPopUpMsg( "Please wait", outText );
+                            //ShowWaitPopUpMsg( "Please wait", outText );
+                            document.getElementById("searchMessageBox").innerHTML = outText;
                             UpdateStatusLine( outText );
                         }
                             
@@ -1333,7 +1334,8 @@ function GetDeviceSerialNumbersLoop()
                     if( bPrivacyViewed == true )
                     {
                         var outText = "Found " + numDevFound + " Cel-Fi devices...";
-                        ShowWaitPopUpMsg( "Please wait", outText );
+                        //ShowWaitPopUpMsg( "Please wait", outText );
+                        document.getElementById("searchMessageBox").innerHTML = outText;
                         UpdateStatusLine( outText );
                     }
                     
