@@ -2177,7 +2177,7 @@ a,a:ACTIVE,a:AFTER {
 	}
 	#searchBoxContainer{
 		width:500px;
-		height:500px;
+		height:800px;
 		overflow-y: hidden;
 	}
 	#phoneNumber{
