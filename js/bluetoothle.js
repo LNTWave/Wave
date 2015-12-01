@@ -107,7 +107,7 @@ var isSouthBoundIfEnabled   = false;
 var isSouthBoundIfCnx       = false;
 var isSouthBoundIfListDone  = false;
 var szSouthBoundIfEnableMsg = "Bluetooth Required: Please Enable...";
-var szSouthBoundIfNotCnxMsg = "Bluetooth not connected.";
+var szSouthBoundIfNotCnxMsg = "Bluetooth connection lost.";
 var szSouthBoundIfInfoMsg   = "Indicates if connected to Cel-Fi device via Bluetooth.\nBlue means connected.\nGray means not connected.\nCurrent status: ";
 
 

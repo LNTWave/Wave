@@ -33,13 +33,17 @@ function SendCloudAsset()
             myAssetUrl,
             "application/json;charset=utf-8",
             myAsset,
-            'json',                                 // response format
+            "",  // 'json',                         // response format
             function(response)                      // success call back
             {
-                PrintLog( 1, "Response success: SendCloudAsset()..." + JSON.stringify(response) );
                 if( response != null )
                 {
-                    ProcessEgressResponse(response);
+                    var responseText = JSON.stringify(response);    // Returns "" at a minimum
+                    if( responseText.length > 2 )
+                    {
+                        PrintLog( 1, "Response success: SendCloudAsset()..." + responseText );
+                        ProcessEgressResponse(response);
+                    }
                 }
             },
             function(response)                      // error call back
@@ -70,13 +74,17 @@ function SendCloudData(dataText)
             myDataUrl,
             "application/json;charset=utf-8",
             myData,
-            'json',    // response format
+            "",  // 'json',    // response format
             function(response) 
             {
                 if( response != null )
                 {
-                    PrintLog( 1, "Response success: SendCloudData()..." + JSON.stringify(response)  );
-                    ProcessEgressResponse(response);
+                    var responseText = JSON.stringify(response);    // Returns "" at a minimum
+                    if( responseText.length > 2 )
+                    {
+                        PrintLog( 1, "Response success: SendCloudData()..." + responseText );
+                        ProcessEgressResponse(response);
+                    }
                 }
             },
             function(response) 
@@ -109,13 +117,17 @@ function SendCloudLocation(lat, long)
             myDataUrl,
             "application/json;charset=utf-8",
             myData,
-            'json',    // response format
+            "",     // 'json',    // response format
             function(response) 
             {
-                PrintLog( 1, "Response success: SendCloudLocation()..." + JSON.stringify(response) );
                 if( response != null )
                 {
-                    ProcessEgressResponse(response);
+                    var responseText = JSON.stringify(response);    // Returns "" at a minimum
+                    if( responseText.length > 2 )
+                    {
+                        PrintLog( 1, "Response success: SendCloudLocation()..." + responseText );
+                        ProcessEgressResponse(response);
+                    }
                 }
             },
             function(response) 
@@ -151,13 +163,17 @@ function SendCloudEgressStatus(packageId, myStatus)
             myDataUrl,
             "application/json;charset=utf-8",
             myData,
-            'json',    // response format
+            "",     // 'json',    // response format
             function(response) 
             {
-                PrintLog( 1, "Response success: SendCloudEgressStatus()..." + JSON.stringify(response) );
                 if( response != null )
                 {
-                    ProcessEgressResponse(response);
+                    var responseText = JSON.stringify(response);    // Returns "" at a minimum
+                    if( responseText.length > 2 )
+                    {
+                        PrintLog( 1, "Response success: SendCloudEgressStatus()..." + responseText );
+                        ProcessEgressResponse(response);
+                    }
                 }
             },
             function(response) 
@@ -191,13 +207,17 @@ function SendCloudPoll()
             myAssetUrl,
             "",         // no contentType
             "",         // no data
-            'json',     // response format
+            "",     // 'json',     // response format
             function(response) 
             {
-            	PrintLog( 1, "Response success: SendCloudPoll()..." + JSON.stringify(response) );
                 if( response != null )
                 {
-                    ProcessEgressResponse(response);
+                    var responseText = JSON.stringify(response);    // Returns "" at a minimum
+                    if( responseText.length > 2 )
+                    {
+                        PrintLog( 1, "Response success: SendCloudPoll()..." + responseText );
+                        ProcessEgressResponse(response);
+                    }
                 }
             },
             function(response) 

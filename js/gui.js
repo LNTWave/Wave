@@ -159,52 +159,6 @@ function DisplayLoop()
     {
         ProcessAdvancedView();
     }
-    
-    
-    
-    
-    // Handle common stuff here such as the ICONs
-    /*if( document.getElementById("unii_icon_id") )
-    {
-        if( lastGuiIconUniiDisabled != guiIconUniiDisabled )
-        {
-            document.getElementById("unii_icon_id").disabled = lastGuiIconUniiDisabled = guiIconUniiDisabled;
-        }    
-        
-        if( document.getElementById("unii_icon_id").innerHTML != guiIconUniiHtml )
-        {
-            document.getElementById("unii_icon_id").innerHTML = guiIconUniiHtml;
-        }
-    }
-
-
-    if( document.getElementById("reg_icon_id") )
-    {
-        if( lastGuiIconRegDisabled != guiIconRegDisabled )
-        {
-            document.getElementById("reg_icon_id").disabled  = lastGuiIconRegDisabled = guiIconRegDisabled;
-        }    
-        
-        if( document.getElementById("reg_icon_id").innerHTML != guiIconRegHtml )
-        {
-            document.getElementById("reg_icon_id").innerHTML = guiIconRegHtml;
-        }
-    }
-
-
-
-    if( document.getElementById("sb_icon_id") )
-    {
-        if( lastGuiIconSbIfDisabled != guiIconSbIfDisabled )
-        {
-            document.getElementById("sb_icon_id").disabled  = lastGuiIconSbIfDisabled = guiIconSbIfDisabled;
-        }    
-        
-        if( document.getElementById("sb_icon_id").innerHTML != guiIconSbIfHtml )
-        {
-            document.getElementById("sb_icon_id").innerHTML = guiIconSbIfHtml;
-        }
-    }*/
 }
 
 
@@ -2514,7 +2468,7 @@ var countryList = ["Abkhazia",
                    "Costa Rica",
                    "Croatia",
                    "Cuba",
-                   "CuraÃ§ao",
+                   "Curaçao",
                    "Cyprus",
                    "Czech Republic",
                    "Democratic Republic of the Congo",
@@ -2706,7 +2660,7 @@ var countryList = ["Abkhazia",
 
 var faqQuesAns = [{
 	    "question": "What is Cel-Fi?",
-	    "answer": "Cel-Fi is Nextivity's brand of self-configuring, environmentally aware, indoor coverage solutions. Each Cel-Fi system consists of two units. The Network Unit is placed in the area where the strongest native signal can be received from the carrier network (signal levels as low as -120 dBm are acceptable). The Network Unit comprises a transmitter and receiver which communicates with the cell tower. The Coverage Unit is placed in the center of the home, communicates wirelessly with the Network Unit and Â“lights upÂ” the interior of the house with significantly enhanced signal levels, thus enabling better quality calls and greater data throughput."
+	    "answer": "Cel-Fi is Nextivity's brand of self-configuring, environmentally aware, indoor coverage solutions. Each Cel-Fi system consists of two units. The Network Unit is placed in the area where the strongest native signal can be received from the carrier network (signal levels as low as -120 dBm are acceptable). The Network Unit comprises a transmitter and receiver which communicates with the cell tower. The Coverage Unit is placed in the center of the home, communicates wirelessly with the Network Unit and “lights up” the interior of the house with significantly enhanced signal levels, thus enabling better quality calls and greater data throughput."
 	},
 	
 	{
@@ -2931,8 +2885,8 @@ var util = {
 	    searchMessageBox.align = "center";
 	    searchMessageBox.innerHTML = util.searchMessage;
 	    var searchIconContainer = util.createAppendElem("div", "searchIconContainer", "searchIconContainer", mainContainer);
-	    //searchTimeOut = setTimeout(function(){ util.showNoDeviceFoundErrorPopup(); }, 120*1000);
-	    searchTimeOut = setTimeout(function(){ util.showNoDeviceFoundErrorPopup(); }, 5*1000);
+	    searchTimeOut = setTimeout(function(){ util.showNoDeviceFoundErrorPopup(); }, 120*1000);
+	    //searchTimeOut = setTimeout(function(){ util.showNoDeviceFoundErrorPopup(); }, 5*1000);
 	},
 	
 	initiateSearchAnimation: function() {
@@ -3735,7 +3689,12 @@ var util = {
 	    superChannelsContent = superChannelsContent + "<div class='divider'>SUPER CHANNELS</div>";
 	    for (var i = 0; i < guiBands.length; i++) {
 	        var techType = guiTechnologyTypes[i] === 1 ? 'LTE' : 'WCDMA';
-	        superChannelsContent = superChannelsContent + "<div class='panel panel-default col-sm-6 col-xs-12 radioBandDetails"+(i+1)+"'>"
+	        if(i==0){
+	        	superChannelsContent = superChannelsContent + "<div class='firstGroup col-sm-6'>";
+	        }else if(i==2){
+	        	superChannelsContent = superChannelsContent + "<div class='secondGroup col-sm-6'>";
+	        }
+	        superChannelsContent = superChannelsContent + "<div class='panel panel-default'>";
 	
 	        var radioStatusColour = '';
 	        var radioHeader = '';
@@ -3768,6 +3727,9 @@ var util = {
 	        }
 	        superChannelsContent = superChannelsContent + "</div></div>";
 	        superChannelsContent = superChannelsContent + "</div>";
+	        if(i==1 || i==3){
+	        	superChannelsContent = superChannelsContent + "</div>";
+	        }
 	    }
 	
 	
@@ -4309,18 +4271,6 @@ var util = {
 	    $(modalWrapper).appendTo('body');
 	    $('.headerContainer, #bodyContainer').hide();
 	    $('.modalWrapper').show();
-	},
-	
-	appendMenuSliderOverlay: function() {
-	    var sliderMenuOverlay = util.createAppendElem("div", "sliderMenuOverlay", "", mainContainer);
-	    sliderMenuOverlay.addEventListener('click', function() {
-	        alert("Close menu");
-	    }, false);
-	    $('#sliderMenuOverlay').bigSlide();
-	},
-	
-	removeMenuSliderOverlay: function() {
-	    util.removeElement("sliderMenuOverlay");
 	},
 	
 	highlightDeviceListLabel: function(lblId) {

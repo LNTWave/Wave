@@ -57,6 +57,7 @@ var bGotRegLockStatus           = false;
 var iOSPlatform                 = "iOS";
 var androidPlatform             = "Android";
 var pcBrowserPlatform           = "PcBrowser";
+var szNoBoosterCnxMsg           = "This functionality is not available until you reconnect to your booster.";
 
 
 var uIcd                    = 0;
@@ -110,7 +111,7 @@ function RequestModeChange(newMode)
             {
                 if( isSouthBoundIfCnx == false )
                 {
-                    ShowAlertPopUpMsg(szSouthBoundIfNotCnxMsg, "Registration mode not allowed...");
+                    ShowAlertPopUpMsg(szSouthBoundIfNotCnxMsg, szNoBoosterCnxMsg);
                 }
                 else
                 {
@@ -135,7 +136,7 @@ function RequestModeChange(newMode)
             }
             else
             {
-                ShowAlertPopUpMsg(szSouthBoundIfNotCnxMsg, "Tech mode not allowed...");
+                ShowAlertPopUpMsg(szSouthBoundIfNotCnxMsg, szNoBoosterCnxMsg);
             }
         }   // if button is displayed...
     }
@@ -155,7 +156,7 @@ function RequestModeChange(newMode)
             }
             else
             {
-                ShowAlertPopUpMsg(szSouthBoundIfNotCnxMsg, "Advanced mode not allowed...");
+                ShowAlertPopUpMsg(szSouthBoundIfNotCnxMsg, szNoBoosterCnxMsg);
             }
         }   // if button is displayed...
     }
@@ -179,7 +180,7 @@ function RequestModeChange(newMode)
             {
                 if( isSouthBoundIfCnx == false )
                 {
-                    ShowAlertPopUpMsg(szSouthBoundIfNotCnxMsg, "Antenna mode not allowed...");
+                    ShowAlertPopUpMsg(szSouthBoundIfNotCnxMsg, szNoBoosterCnxMsg);
                 }
                 else
                 {
@@ -205,7 +206,7 @@ function RequestModeChange(newMode)
             }
             else
             {
-                ShowAlertPopUpMsg(szSouthBoundIfNotCnxMsg, "SW Update mode not allowed..." );
+                ShowAlertPopUpMsg(szSouthBoundIfNotCnxMsg, szNoBoosterCnxMsg );
             }
         } // if button is displayed...            
         
@@ -226,7 +227,7 @@ function RequestModeChange(newMode)
             }
             else
             {
-                ShowAlertPopUpMsg(szSouthBoundIfNotCnxMsg, "SW Update mode not allowed..." );
+                ShowAlertPopUpMsg(szSouthBoundIfNotCnxMsg, szNoBoosterCnxMsg );
             }
         } // if button is displayed...            
         
@@ -898,7 +899,7 @@ var app = {
                     
                     if(window.localStorage.getItem("privacyPolicy")==null){
                     ShowConfirmPopUpMsg(
-                        "Your privacy is important to us. Please refer to 'www.cel-fi.com/privacypolicy' for our detailed privacy policy.",    // message
+                        "Your privacy is important to us. Please refer to <span class='emailTo' onclick='window.open(\"https://www.cel-fi.com/privacypolicy\", \"_system\")'>www.cel-fi.com/privacypolicy</span> for our detailed privacy policy.",    // message
                         HandlePrivacyConfirmation,      // callback to invoke with index of button pressed
                         'Privacy Policy',               // title
                         ['Ok'] );                       // buttonLabels

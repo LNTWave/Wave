@@ -1102,6 +1102,7 @@ function DldLoop()
             {
                 // Send a request to the cloud to send updates...
                 // Bug #1361:  Make sure version on HW is current...
+/*                
                 var cloudText = "'SwVerCU_CF':'"   + SwPnNuCu   + nxtySwVerCuCf   + "',"    + 
                                 "'SwVerCU_PIC':'"  + SwPnPic    + nxtySwVerCuPic  + "',"    +
                                 "'SwVer_BT':'"     + SwPnBt     + nxtySwVerCuBt   + "',"    +
@@ -1113,6 +1114,21 @@ function DldLoop()
                                 "'SwVerNU_EVM':'"  + SwPnNuEvm  + nxtySwVerNuEvm  + "',"    +
                                 "'SwVerCU_ART':'"  + SwPnArt    + nxtySwVerCuArt  + "',"    +
                                 "'isUpdateAvailable':'true'";
+*/
+                var cloudText = "'isUpdateAvailable':'true'";
+                 
+                if( nxtySwVerCuCf   != null)  cloudText += ",'SwVerCU_CF':'"   + SwPnNuCu   + nxtySwVerCuCf   + "'"; 
+                if( nxtySwVerCuPic  != null)  cloudText += ",'SwVerCU_PIC':'"  + SwPnPic    + nxtySwVerCuPic  + "'";
+                if( nxtySwVerCuBt   != null)  cloudText += ",'SwVer_BT':'"     + SwPnBt     + nxtySwVerCuBt   + "'";
+                if( nxtySwVerNuCf   != null)  cloudText += ",'SwVerNU_CF':'"   + SwPnNuCu   + nxtySwVerNuCf   + "'";
+                if( nxtySwVerNuPic  != null)  cloudText += ",'SwVerNU_PIC':'"  + SwPnPic    + nxtySwVerNuPic  + "'";
+                if( nxtySwVerNuSCfg != null)  cloudText += ",'SwVerNU_SCFG':'" + SwPnNuCfg  + nxtySwVerNuSCfg + "'";
+                if( nxtySwVerNuUCfg != null)  cloudText += ",'SwVerNU_UCFG':'" + SwPnNuCfg  + nxtySwVerNuUCfg + "'";
+                if( nxtySwVerNuArt  != null)  cloudText += ",'SwVerNU_ART':'"  + SwPnArt    + nxtySwVerNuArt  + "'";
+                if( nxtySwVerNuEvm  != null)  cloudText += ",'SwVerNU_EVM':'"  + SwPnNuEvm  + nxtySwVerNuEvm  + "'";
+                if( nxtySwVerCuArt  != null)  cloudText += ",'SwVerCU_ART':'"  + SwPnArt    + nxtySwVerCuArt  + "'";
+
+                                
                 SendCloudData( cloudText );
                 
                 DldState                    = DLD_STATE_CHECK_FOR_UPDATES;
