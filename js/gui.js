@@ -3846,7 +3846,7 @@ var util = {
 	    
 	    $('.deviceSerialNumber').html(guiSerialNumber);
 	    $('#boosterLevel').html(guiBoost);
-	    util.showGauge(guiBoost);
+	     guiBoost >= 0 ? util.showGauge(guiBoost) : util.showGauge(0);
 	
 	    var netWorkSignalArr = ['networkSignal1', 'networkSignal2', 'networkSignal3', 'networkSignal4', 'networkSignal5'];
 	    var networkBarArr = guiNetworkBars;
