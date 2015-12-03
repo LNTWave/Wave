@@ -1132,7 +1132,7 @@ a,a:ACTIVE,a:AFTER {
 #fixIt{
 	font-family: Roboto-Regular;
 	color: #4FAEE0 !important;
-	font-size: 16px;
+	font-size: 18px;
 	line-height: 24px;
 	text-align: right;
 	/*background: url('../img/assets/icons/ArrowForward.svg') no-repeat;*/
@@ -1171,7 +1171,8 @@ a,a:ACTIVE,a:AFTER {
 }
 
 .graphicalRep{
-	width:100%;
+	/*width:100%;*/
+	width:99%;
 	height:80%;
 }
 
@@ -1186,6 +1187,7 @@ a,a:ACTIVE,a:AFTER {
 
 #boostGauge{
 	width:100%;
+	margin-top: 20px;
 }
 
 #boosterLevel{
@@ -2264,7 +2266,7 @@ a,a:ACTIVE,a:AFTER {
 	}
 	
 	#boosterLevel{
-		margin-top: -25px !important
+		margin-top: -35px !important
 	}
 	
 	.trblShtBtn{
@@ -2459,6 +2461,10 @@ a,a:ACTIVE,a:AFTER {
 	.panel-group .panel+.panel{
 		margin-top: 0px !important;
 	}
+	
+	.signalContainer {
+		height: 85%;
+	}
 }
 
 @media (min-width:700px) and (orientation:portrait) {
@@ -2499,6 +2505,14 @@ a,a:ACTIVE,a:AFTER {
 		z-index:1006;
 		padding: 1.5% 2% 0.5% 2% !important;
 	}
+	
+	#boostGauge {
+		margin-top: 30px;
+	}
+	
+	#boosterLevel {
+		margin-top: -30px !important;
+	}
 }
 
 @media (min-width:700px) and (orientation:landscape) {
@@ -2534,6 +2548,10 @@ a,a:ACTIVE,a:AFTER {
 		max-height:225px;
 		z-index:1006;
 		padding: 1.5% 2% 0.5% 2% !important;
+	}
+	
+	#boostGauge {
+		margin-top: 0px;
 	}
 }
 

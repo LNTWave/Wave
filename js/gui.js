@@ -49,7 +49,8 @@ var szRegCountry                = "";
 var szRegPhone                  = "";
 var szUserValidation            = "Mandatory Input: Please enter";
 var bProgBarDisplayed           = false;
-var dashboardPanelContent		= "<div class='dashboardPanel1'><div class='col-xs-12 col-sm-12 userGreets'>Welcome<span id='userDpName'></span></div><div class='col-xs-12 col-sm-12' id='fixIt'><div class='col-xs-8 col-sm-10 userGreets deviceStatusCtnr'><span id='userDeviceStatusLine'></span><span id='deviceStatus' class='good'></span></div><div class='col-xs-4 col-sm-2'><div class='fr' id='fixItArrow'></div><div class='fr' id='fixItContent'></div><div class='cb'></div></div></div><div class='col-xs-12 col-sm-12' id='deviceTypeBG'></div><div class='col-xs-12 col-sm-12 deviceSerialNumber'></div></div><div class='dashboardPanel2 col-sm-12 col-xs-12'><div class='col-xs-6 col-sm-3 dashboardContent'><div id='signalStrengthContainer' class='graphicalRep'><div class='signalContainer'><div id='networkSignal1' class='networkSignalIndi activeStatus'></div><div id='networkSignal2' class='networkSignalIndi activeStatus'></div><div id='networkSignal3' class='networkSignalIndi activeStatus'></div><div id='networkSignal4' class='networkSignalIndi deactiveStatus'></div><div id='networkSignal5' class='networkSignalIndi deactiveStatus'></div></div></div><div class='dataTypeTitle'>NETWORK STRENGTH</div></div><div class='col-xs-6 col-sm-3 dashboardContent'><div id='gaugeContainer' class='graphicalRep'><canvas id='boostGauge'></canvas><div id='boosterLevel'>7</div></div><div class='dataTypeTitle'>BOOST</div></div><div class='col-xs-6 col-sm-3 dashboardContent'><div id='operatorContainer' class='graphicalRep'> <span></span> </div><div class='dataTypeTitle'>OPERATOR</div></div><div class='col-xs-6 col-sm-3 dashboardContent'><div id='coverageNamecontainer' class='graphicalRep'> <span>LTE</span> </div><div class='dataTypeTitle'>COVERAGE</div></div></div>";
+//var dashboardPanelContent		= "<div class='dashboardPanel1'><div class='col-xs-12 col-sm-12 userGreets'>Welcome<span id='userDpName'></span></div><div class='col-xs-12 col-sm-12'><div class='col-xs-8 col-sm-10 userGreets deviceStatusCtnr'><span id='userDeviceStatusLine'></span><span id='deviceStatus' class='good'></span></div><div class='col-xs-4 col-sm-2' id='fixIt'><div class='fr' id='fixItArrow'></div><div class='fr' id='fixItContent'></div><div class='cb'></div></div></div><div class='col-xs-12 col-sm-12' id='deviceTypeBG'></div><div class='col-xs-12 col-sm-12 deviceSerialNumber'></div></div><div class='dashboardPanel2 col-sm-12 col-xs-12'><div class='col-xs-6 col-sm-3 dashboardContent'><div id='signalStrengthContainer' class='graphicalRep'><div class='signalContainer'><div id='networkSignal1' class='networkSignalIndi activeStatus'></div><div id='networkSignal2' class='networkSignalIndi activeStatus'></div><div id='networkSignal3' class='networkSignalIndi activeStatus'></div><div id='networkSignal4' class='networkSignalIndi deactiveStatus'></div><div id='networkSignal5' class='networkSignalIndi deactiveStatus'></div></div></div><div class='dataTypeTitle'>NETWORK STRENGTH</div></div><div class='col-xs-6 col-sm-3 dashboardContent'><div id='gaugeContainer' class='graphicalRep'><canvas id='boostGauge'></canvas><div id='boosterLevel'>7</div></div><div class='dataTypeTitle'>BOOST</div></div><div class='col-xs-6 col-sm-3 dashboardContent'><div id='operatorContainer' class='graphicalRep'> <span></span> </div><div class='dataTypeTitle'>OPERATOR</div></div><div class='col-xs-6 col-sm-3 dashboardContent'><div id='coverageNamecontainer' class='graphicalRep'> <span>LTE</span> </div><div class='dataTypeTitle'>COVERAGE</div></div></div>";
+var dashboardPanelContent		= "<div class='dashboardPanel1'><div class='col-xs-12 col-sm-12 userGreets'>Welcome<span id='userDpName'></span></div><div class='col-xs-12 col-sm-12'><div class='fl userGreets deviceStatusCtnr'><span id='userDeviceStatusLine'></span><span id='deviceStatus' class='good'></span></div><div class='fr' id='fixIt'><div class='fr' id='fixItArrow'></div><div class='fr' id='fixItContent'></div><div class='cb'></div></div></div><div class='col-xs-12 col-sm-12' id='deviceTypeBG'></div><div class='col-xs-12 col-sm-12 deviceSerialNumber'></div></div><div class='dashboardPanel2 col-sm-12 col-xs-12'><div class='col-xs-6 col-sm-3 dashboardContent'><div id='signalStrengthContainer' class='graphicalRep'><div class='signalContainer'><div id='networkSignal1' class='networkSignalIndi activeStatus'></div><div id='networkSignal2' class='networkSignalIndi activeStatus'></div><div id='networkSignal3' class='networkSignalIndi activeStatus'></div><div id='networkSignal4' class='networkSignalIndi deactiveStatus'></div><div id='networkSignal5' class='networkSignalIndi deactiveStatus'></div></div></div><div class='dataTypeTitle'>NETWORK STRENGTH</div></div><div class='col-xs-6 col-sm-3 dashboardContent'><div id='gaugeContainer' class='graphicalRep'><canvas id='boostGauge'></canvas><div id='boosterLevel'>7</div></div><div class='dataTypeTitle'>BOOST</div></div><div class='col-xs-6 col-sm-3 dashboardContent'><div id='operatorContainer' class='graphicalRep'> <span></span> </div><div class='dataTypeTitle'>OPERATOR</div></div><div class='col-xs-6 col-sm-3 dashboardContent'><div id='coverageNamecontainer' class='graphicalRep'> <span>LTE</span> </div><div class='dataTypeTitle'>COVERAGE</div></div></div>";
 var topHorizontalMenu			= "<div class='headerContainer' id='headerContainer'> <div class='titlebarWrapper'> <div class='sliderMenuWrapper col-xs-2 col-sm-2'> <a href='#menu' class='menu-link'> <div class='sliderMenuIcn'></div></a> </div><div class='logoWrapper col-xs-8 col-sm-8'> <div class='logoImg'></div></div><div class='faqIcnWrapper col-xs-2 col-sm-2'> <div class='faqIcn'></div></div></div><div class='menuWrapper'> <div class='col-xs-4 col-sm-2 selectedTab' id='dashboardMenu'> <div>DASHBOARD</div></div><div class='col-xs-4 col-sm-2' id='settingsMenu'> <div>SETTINGS</div></div><div class='col-xs-4 col-sm-2' id='advancedMenu'> <div>ADVANCED</div></div></div></div><div class='cb'></div><div id='bodyContainer'></div>";
 var mainContainerWithMenu       = "<div id='menu' class='panelMenu' role='navigation'> <div class='panelLogoWrapper'> <div class='panelLogo'></div></div><div class='panelMenuList'> <ul><li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='aboutIcn'></div><span onclick='util.showAboutUs()'>About</span><div class='cb'></div></a> </li><li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='feedBackIcn'></div><span onclick='util.showSendFeedback()'>Send Feedback</span><div class='cb'></div></a> </li><li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='policyIcn'></div><span onclick='util.showPrivacyPolicy()'>Privacy Policy</span><div class='cb'></div></a> </li><li> <a id='' href='javascript:void(0)'> <div class='menuIcns' id='registerIcn'></div><span>Register Booster</span><div class='cb'></div></a> </li></ul> </div><div class='socialLinkWrapper'> <div class='socialLinkTitle'>Follow us:</div><div class='socialLinkIcnWrapper'> <div class='socialIcns' id='facebookIcn' onclick='window.open(\"https://www.facebook.com/5bars\", \"_system\")'></div><div class='socialIcns' id='twitterIcn' onclick='window.open(\"http://twitter.com/5bars\", \"_system\")'></div><div class='socialIcns' id='linkedinIcn' onclick='window.open(\"https://www.linkedin.com/company/nextivity-inc-\", \"_system\")'></div><div class='socialIcns' id='googleIcn' onclick='window.open(\"https://plus.google.com/+Cel-fi/posts\", \"_system\")'></div></div></div></div><div id='mainContainer' class='push'></div>";
 var mainContainerWithoutMenu	= "<div id='mainContainer'></div>";
@@ -145,6 +146,9 @@ function DisplayLoop()
     }
     else if( guiCurrentMode == PROG_MODE_TECH )
     {
+    	if (typeof StgLoopIntervalHandle != "undefined") {
+	        clearTimeout(StgLoopIntervalHandle);
+	    }
         ProcessTechView();
     }
     else if( guiCurrentMode == PROG_MODE_SETTINGS )
@@ -153,10 +157,16 @@ function DisplayLoop()
     }
     else if( guiCurrentMode == PROG_MODE_DOWNLOAD )
     {
+    	if (typeof StgLoopIntervalHandle != "undefined") {
+	        clearTimeout(StgLoopIntervalHandle);
+	    }
         ProcessDownloadView();
     }
     else if( guiCurrentMode == PROG_MODE_ADVANCED )
     {
+    	if (typeof StgLoopIntervalHandle != "undefined") {
+	        clearTimeout(StgLoopIntervalHandle);
+	    }
         ProcessAdvancedView();
     }
 }
@@ -489,14 +499,14 @@ function ProcessRegistrationView()
             szMyStatusLine;*/
         document.getElementById("mainContainer").className = "";
         var myHtml = "<div id='appHeaderDashboard' class='page-header'><div id='headerContainer'><div class='col-xs-2 col-sm-1' align='left'></div><div class='col-xs-8 col-sm-10' align='center'><img src='img/assets/logos/WaveLogoSMWhite.svg'/></div><div class='col-xs-2 col-sm-1 headerIcon registerHelp' align='center'><img src='img/assets/icons/HelpOutline.svg'/></div></div></div><div id='registrationFormContainer' class='container'><div class='pageTitleContainer'>Please register your device</div><div id='whyDoIRegister' class='registerFaq'>Why do I need to register?</div><form role='form' name='inputUser'><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>First name</label><input type='text' class='form-control' name='fName' id='fName'></div><div class='errorContainer' id='errFn'>Please enter your First name</div></div><div class='col-sm-6'><div class='form-group'><label for='text'>Last name</label><input type='text' class='form-control' name='lName' id='lName'></div><div class='errorContainer' id='errLn'>Please enter your Last name</div></div></div><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>Address line 1</label><input type='text' class='form-control' name='addr1' id='addr1'></div><div class='errorContainer' id='errAddr'>Please enter Address Line 1</div></div><div class='col-sm-6'><div class='form-group'><label for='text'>Address line 2</label><input type='text' class='form-control' name='addr2' id='addr2'></div></div></div><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>City </label><input type='text' class='form-control' name='city' id='city'></div><div class='errorContainer' id='errCity'>Please enter your City</div></div><div class='col-sm-6'><div class='form-group'><label for='text'>State/Province/Region</label><input type='text' class='form-control' name='state' id='state'></div><div class='errorContainer' id='errState'>Please enter your State/Province/Region</div></div></div><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>ZIP/Postal Code</label><input type='number' class='form-control' name='zip' id='zip'></div><div class='errorContainer' id='errZip'>Please enter your ZIP/Postal Code</div></div><div class='col-sm-6'><div class='form-group'><label for='text'>Country</label>"
-        			+"<select class='form-control' name='country' id='country'>";
+        			+"<select class='form-control' name='country' id='country'><option value=''>Select a country</option>";
         
         for(var x=0; x<countryList.length;x++){
         	myHtml = myHtml + "<option value='"+countryList[x]+"'>"+countryList[x]+"</option>";
         }
         
         myHtml = myHtml +"</select>"
-        		 +"</div><div class='errorContainer' id='errCtry'>Please select your Country</div></div></div><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>Phone Number</label><input type='number' class='form-control' name='phone' id='phone'></div><div class='errorContainer' id='errPN'>Please enter your Phone Number</div></div><div class='col-sm-6'></div></div><div class='col-sm-12 regBtnContainer'><div class='col-sm-6'></div><div class='col-sm-6'><div class='form-group buttonContainer' align='right'><input type='button' value='Skip' class='defaultButton skipButton' ><button type='button' class='defaultButton' id='regButton' onclick='javascript:return ValidateUserData();'>Register</button></div></div></div></form></div>";
+        		 +"</div><div class='errorContainer' id='errCtry'>Please select your Country</div></div></div><div class='col-sm-12'><div class='col-sm-6'><div class='form-group'><label for='text'>Phone Number</label><input type='tel' class='form-control' name='phone' id='phone'></div><div class='errorContainer' id='errPN'>Please enter your Phone Number</div></div><div class='col-sm-6'></div></div><div class='col-sm-12 regBtnContainer'><div class='col-sm-6'></div><div class='col-sm-6'><div class='form-group buttonContainer' align='right'><input type='button' value='Skip' class='defaultButton skipButton' ><button type='button' class='defaultButton' id='regButton' onclick='javascript:return ValidateUserData();'>Register</button></div></div></div></form></div>";
         $('#mainContainer').html(myHtml);  
         
         $('.registerHelp').bind("click",function() {			
@@ -3803,19 +3813,23 @@ var util = {
 	        $('#userDpName').html(" " + window.localStorage.getItem("firstName") + ",");
 	    }
 	
-	    if (guiBoost >= 0 && guiBoost <= 3) {
+	    //if (guiBoost >= 0 && guiBoost <= 3) {
+	    if (guiBoost <= 3) {
 	        $('#userDeviceStatusLine').html("Looks like there's a ");
 	        $('#deviceStatus').html('problem');
 	        $('#deviceStatus').removeClass().addClass('problem');
 	        $('#fixItContent').html('Fix it now');
 	        $('#fixItContent').bind("click",util.showFixItPopup);
-	        $('#userDeviceStatusLine, #deviceStatus').css('font-size', '13px');
+	        if(deviceType=="phone"){
+	        	$('.deviceStatusCtnr, #fixIt').css('font-size', '14px');
+	        }
 	    } else if (guiBoost >= 4 && guiBoost <= 5) {
 	        $('#userDeviceStatusLine').html("Things look ");
 	        $('#deviceStatus').html('poor');
 	        $('#deviceStatus').removeClass().addClass('problem');
 	        $('#fixItContent').html('Boosting tips');
 	        $('#fixItContent').bind("click",util.showFixItPopup);
+	        //$('.deviceStatusCtnr, #fixIt').css('font-size', '14px');
 	    } else if (guiBoost >= 6 && guiBoost <= 7) {
 	        $('#userDeviceStatusLine').html("Things look ");
 	        $('#deviceStatus').html('ok');
@@ -3846,8 +3860,9 @@ var util = {
 	    
 	    $('.deviceSerialNumber').html(guiSerialNumber);
 	    $('#boosterLevel').html(guiBoost);
-	     guiBoost >= 0 ? util.showGauge(guiBoost) : util.showGauge(0);
-	
+	    //guiBoost >= 0 ? util.showGauge(guiBoost) : util.showGauge(0);
+	    //guiBoost >= 0 ? util.showGauge(guiBoost) : $("#boostGauge").html("<span class='noSignalBoosterGauge'>No Signal</span>");
+	    guiBoost >= 0 ? util.showGauge(guiBoost) : util.showGaugeNoSignal();
 	    var netWorkSignalArr = ['networkSignal1', 'networkSignal2', 'networkSignal3', 'networkSignal4', 'networkSignal5'];
 	    var networkBarArr = guiNetworkBars;
 	    var i = networkBarArr.indexOf(Math.max.apply(Math, networkBarArr));
@@ -3855,17 +3870,65 @@ var util = {
 	        $('#networkSignal' + n).removeClass('deactiveStatus').addClass('activeStatus');
 	    }
 	
+	    var operatorDPName = null;
 	    if(guiOperator){
-	    	$('#operatorContainer').html('<span>'+guiOperator+'</span>');
+	    	//$('#operatorContainer').html('<span>'+guiOperator+'</span>');
+	    	operatorDPName = guiOperator;
 	    }else{
-	    	$('#operatorContainer').html('<span>Unknown</span>');
+	    	//$('#operatorContainer').html('<span>Unknown</span>');
+	    	operatorDPName = "Unknown";
 	    }
+	    
+	    if(operatorDPName.length > 6){
+	    	switch (operatorDPName.length){
+	    		case 7:
+	    		$('#operatorContainer').css('font-size','34px');
+	    		break;
+	
+	    		case 8:
+	    		$('#operatorContainer').css('font-size','29px');
+	    		break;
+				
+				case 9:
+	    		$('#operatorContainer').css('font-size','26px');
+	    		break;
+				
+				case 10:
+	    		$('#operatorContainer').css('font-size','23px');
+	    		break;
+				
+				case 11:
+	    		$('#operatorContainer').css('font-size','20px');
+	    		break;
+				
+				case 12:
+	    		$('#operatorContainer').css('font-size','18px');
+	    		break;
+				
+				default:
+	    			operatorDPName = operatorDPName.substr(0, 10);
+					operatorDPName = operatorDPName + "...";
+	    			$('#operatorContainer').css('font-size','18px');
+	    		break;
+	    	}
+	    }
+	    
+	    $('#operatorContainer').html('<span>'+operatorDPName+'</span>');
 	    
 	    if (guiTechnologyTypes.indexOf(1) > -1) {
 	        $('#coverageNamecontainer').html('<span>LTE</span>');
 	    } else {
 	        $('#coverageNamecontainer').html('<span>3G/4G</span>');
 	    }
+	},
+	
+	showGaugeNoSignal: function(){
+		var c=document.getElementById("boostGauge");
+		var ctx=c.getContext("2d");
+
+		ctx.font="30px Roboto-Regular";
+		ctx.fillStyle = "#E60038";
+		ctx.fillText("No Signal",90,50);
 	},
 	
 	showHelpMenu: function() {
